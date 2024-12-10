@@ -7,6 +7,7 @@ class ProfessionalsController < ApplicationController
   end
 
   def index
+    @professionals = Professional.all
   end
 
   def new

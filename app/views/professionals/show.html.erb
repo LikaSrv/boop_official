@@ -1,0 +1,24 @@
+<div class="text-center m-4">
+  <h1><%= @professional.name %></h1>
+</div>
+<div class="grid-professional-show">
+
+  <div class="m-4">
+    <%= cl_image_tag @professional.photo.key, width: 400, crop: :fill%>
+    <div class="card_pro">
+      <h4>Contact : </h4>
+      <p>Adresse : <%=@professional.address%></p>
+      <p>Numéro de téléphone : <%=@professional.phone%></p>
+    </div>
+    <div class="card_pro">
+      <h4>Description : </h4>
+      <p><%=@professional.description%></p>
+    </div>
+  </div>
+
+  <div class="m-4">
+    <h4>Prochains rendez-vous disponibles</h4>
+
+  </div>
+
+</div>

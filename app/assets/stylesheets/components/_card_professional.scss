@@ -4,10 +4,11 @@
   background-color: white;
   margin: 8px;
   padding: 8px;
+  box-shadow: 4px 4px 2px rgb(219, 216, 216);
 }
 
 .grid-professional-show{
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 16px;
 }

@@ -1,3 +1,6 @@
+<div>
+  <%= link_to 'Back', :back %>
+</div>
 <div class="text-center m-4">
   <h1><%= @professional.name %></h1>
   <p><%= @professional.specialty%></p>
@@ -18,29 +21,21 @@
     </div>
     <div class="card_pro">
       <div class="d-flex flex-row justify-content-between">
-        <h4>Commentaires : </h4>
-        <div>
+        <h4>Les avis : </h4>
+        <div class="d-flex flex-row align-items-center">
           <% @professional.rating.times do %>
-            <i class="fas fa-star text-warning"></i>
+            <i class="fas fa-star text-warning m-0"></i>
           <% end %>
+          <p class="m-0 mx-1">(<%=@reviews.count%>)</p>
         </div>
       </div>
-      <p><%=@professional.description%></p>
+      <div class="d-flex flex-row justify-content-between m-2">
+        <% @reviews.each do |review| %>
+          <p><%= review.content %></p>
+          <p><%= review.rating %></p>
+        <% end %>
+      </div>
     </div>
   </div>
-  <div class="m-4">
-    <h4>Prochains rendez-vous disponibles</h4>
-    <% 7.times do %>
-      <li class="nav-item dropdown d-flex align-items-end flex-column ">
-        <a href="#" class="btn btn-outline-primary w-100 m-1" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= DateTime.current.to_date %>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-          <%= link_to "Mes rendez-vous", "#", class: "dropdown-item" %>
-          <%= link_to "Mon profil", "#", class: "dropdown-item" %>
-          <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
-        </div>
-      </li>
-    <% end %>
-  </div>
+  <%= render "available_slots", professional: @professional%>
 </div>

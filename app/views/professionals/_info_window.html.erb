@@ -1,0 +1,7 @@
+<a href="<%=professional_path(professional)%>" class="text-decoration-none text-black">
+  <div>
+    <%= cl_image_tag professional.photo.key, crop: :fill, width: 180%>
+    <h4><%= professional.name %></h4>
+    <p class="m-0 p-0"><%= professional.address %></p>
+  </div>
+</a>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_09_143140) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_09_185607) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,17 +64,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_143140) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_professionals_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.string "content"
     t.integer "rating"
-    t.bigint "professional_id", null: false
-    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["professional_id"], name: "index_reviews_on_professional_id"
-    t.index ["user_id"], name: "index_reviews_on_user_id"
+    t.bigint "appointment_id", null: false
+    t.index ["appointment_id"], name: "index_reviews_on_appointment_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -93,6 +93,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_143140) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
-  add_foreign_key "reviews", "professionals"
-  add_foreign_key "reviews", "users"
+  add_foreign_key "professionals", "users"
+  add_foreign_key "reviews", "appointments"
 end

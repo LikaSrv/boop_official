@@ -15,18 +15,57 @@
   font-weight: lighter;
 }
 
+// Card professionnels
+
 .card-category {
-  display: inline-block;
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
-  height: 180px;
+  height: 200px !important;
+  width: 500px !important;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: lighter;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
   border-radius: 5px;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  margin-right: 20px;
+
+  p {
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+
+// scrollbar
+
+.custom-scroll::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: white;
+  border: 1px solid #cacaca;
+  box-shadow: inset 0 0 px rgba(0, 0, 0, .3);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: #efa690;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .custom-scroll {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .custom-scroll::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
 }

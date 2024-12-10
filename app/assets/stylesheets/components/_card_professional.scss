@@ -1,7 +1,6 @@
 .card_pro{
   border: 1px solid white;
   border-radius: 8px;
-  width: 40%;
   background-color: white;
   margin: 8px;
   padding: 8px;
@@ -10,5 +9,5 @@
 .grid-professional-show{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin: auto;
+  gap: 16px;
 }

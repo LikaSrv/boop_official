@@ -18,6 +18,16 @@
 
   <div class="m-4">
     <h4>Prochains rendez-vous disponibles</h4>
+    <li class="nav-item dropdown d-flex align-items-end flex-column">
+            <a href="#" class="btn btn-outline-primary" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= DateTime.current.to_date %>
+            </a>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+              <%= link_to "Mes rendez-vous", "#", class: "dropdown-item" %>
+              <%= link_to "Mon profil", "#", class: "dropdown-item" %>
+              <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
+            </div>
+          </li>
 
   </div>
 

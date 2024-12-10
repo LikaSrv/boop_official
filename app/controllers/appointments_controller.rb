@@ -3,10 +3,20 @@ class AppointmentsController < ApplicationController
   def new
     @appointment = Appointment.new
     @professionals = Professional.all
+    @professional = Professional.find(params[:professional_id])
     @users = User
   end
 
   def create
+    @appointment = Appointment.new(appointment_params)
+    @appointment.professional = Professional.find(params[:professional_id])
+    @appointment.user = current_user
+    if @appointment.save
+      redirect_to appointment_path(@appointment)
+    else
+      render :new
+    end
+
   end
 
   def show

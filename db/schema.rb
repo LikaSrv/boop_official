@@ -73,8 +73,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_185607) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "appointment_id", null: false
-    t.index ["appointment_id"], name: "index_reviews_on_appointment_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,5 +92,4 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_09_185607) do
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
   add_foreign_key "professionals", "users"
-  add_foreign_key "reviews", "appointments"
 end

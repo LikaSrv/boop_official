@@ -2,8 +2,9 @@ class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :home, :index, :show ]
 
   def home
-    #cartes des catégories de professionnels
-    #afficher les rdv à venir si user connecté
+    if user_signed_in?
+      @appointments = current_user.appointments.upcoming
+    end
   end
 
   def index
@@ -28,6 +29,7 @@ class ProfessionalsController < ApplicationController
   end
 
   def new
+    @professional = Professional.new
   end
 
   def create
@@ -41,9 +43,11 @@ class ProfessionalsController < ApplicationController
       @reviews << Review.find_by(appointment: appointment.review)
     end
     @appointment = Appointment.new
+
   end
 
   def edit
+
   end
 
   def update

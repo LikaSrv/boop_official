@@ -10,6 +10,8 @@ export default class extends Controller {
       e.preventDefault();
 
       this.timesTarget.classList.toggle('d-none');
+      this.selectedDateTarget.classList.toggle('bg-primary');
+      this.selectedDateTarget.classList.toggle('text-black');
     });
   }
 }

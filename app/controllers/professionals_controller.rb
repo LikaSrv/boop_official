@@ -2,8 +2,9 @@ class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :home, :index, :show ]
 
   def home
-    #cartes des catégories de professionnels
-    #afficher les rdv à venir si user connecté
+    if user_signed_in?
+      @appointments = current_user.appointments.upcoming
+    end
   end
 
   def index

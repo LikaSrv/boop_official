@@ -1,13 +1,17 @@
 class AppointmentsController < ApplicationController
 
   def new
+    @appointment = Appointment.new
+    @professionals = Professional.all
+    @users = User
   end
 
   def create
   end
 
   def show
-  end
+    @appointment = Appointment.find(params[:id])
+    end
 
   private
 

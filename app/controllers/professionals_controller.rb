@@ -7,18 +7,22 @@ class ProfessionalsController < ApplicationController
   end
 
   def index
+    @professionals = Professional.all
   end
 
   def new
+    @professional = Professional.new
   end
 
   def create
   end
 
   def show
+    @professional = Professional.find(params[:id])
   end
 
   def edit
+    
   end
 
   def update

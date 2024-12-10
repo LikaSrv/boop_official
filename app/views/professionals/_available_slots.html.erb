@@ -1,0 +1,16 @@
+<div class="m-4">
+    <h4>Prochains rendez-vous disponibles</h4>
+    <% 7.times do |i| %>
+      <div class="nav-item dropdown d-flex align-items-end flex-column" data-controller="appointment-selected">
+        <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
+          <%= DateTime.current.to_date + i %>
+        </a>
+        <div class="d-none" data-appointment-selected-target="times">
+          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary">10:00</a>
+          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary">11:00</a>
+          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary">14:00</a>
+          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary">15:00</a>
+        </div>
+      </div>
+    <% end %>
+  </div>

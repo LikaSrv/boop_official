@@ -1,14 +1,26 @@
-<p>hi</p>
-<body>
-  <h1>Purchase your new kit</h1>
-  <!-- Paste your embed code script here. -->
-  <script
-    async
-    src="https://js.stripe.com/v3/buy-button.js">
-  </script>
-  <stripe-buy-button
-    buy-button-id='{{BUY_BUTTON_ID}}'
-    publishable-key="pk_test_oKhSR5nslBRnBZpjO6KuzZeX"
-  >
-  </stripe-buy-button>
-</body>
+<div class="d-flex flex-row justify-content-center">
+  <div>
+    <% @professionals.each do |professional|%>
+      <div class="d-flex flex-row justify-content-center">
+        <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black">
+          <div class="card_pro" style="width: 90%">
+            <%= cl_image_tag professional.photo.key, crop: :fill, width: 380%>
+            <h2><%= professional.name %> </h2>
+            <p><%= professional.specialty %></p>
+            <p><%= professional.address %></p>
+            <p><%= professional.description %></p>
+          </div>
+        </a>
+        <div class="card_pro">
+          <%= render "available_slots", professional: professional%>
+        </div>
+      </div>
+    <%end%>
+  </div>
+  <div  style="width: 40%; height: 600px; border-radius: 8px; position: sticky; top: 100px;"
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
+</div>
+

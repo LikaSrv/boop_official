@@ -20,7 +20,9 @@ class AppointmentsController < ApplicationController
   end
 
   def show
+
     @appointment = Appointment.find(params[:id])
+    # edirect_to professional_appointment_path(@appointment)
     end
 
   private

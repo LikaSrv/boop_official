@@ -51,7 +51,7 @@
 
   <h3 class="mt-5">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>
-    <% if @appointments.any? %>
+    <% if @appointments.present? %>
       <% @appointments.each do |appointment| %>
         <div class="card-appointment">
           <div class="card-appointment-header">

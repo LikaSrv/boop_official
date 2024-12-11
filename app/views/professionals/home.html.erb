@@ -6,6 +6,15 @@
     </div>
   </div>
 
+  <%= simple_form_for :search, url: root_path, method: :get do |f| %>
+    <div class="mt-1 d-flex justify-content-end search-form-control form-group", style="width: 24%; height:30px;">
+      <input class="form-control string required" type="text" name="search[query]" id="search_query" />
+      <button name="button" type="submit" class="btn btn-primary">
+        <span class="text-white d-flex justify-content-center"><i class="fas fa-search"></i><span class="ms-2">Rechercher</span></span>
+      </button>
+    </div>
+  <% end %>
+
   <h3 class="mt-5">Nos professionnels</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
     <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg)">
@@ -51,23 +60,24 @@
 
   <h3 class="mt-5">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>
-    <% if @appointments.present? %>
-      <% @appointments.each do |appointment| %>
-        <div class="card-appointment">
-          <div class="card-appointment-header">
-            <div class="d-flex ">
-              <i class="fa-regular fa-calendar-days"></i>
-              <h5><%= appointment.professional.speciality %></h5>
-              <p><%= appointment.date.strftime("%d/%m/%Y") %></p>
-              <i class="fa-regular fa-clock"></i> <p><%= appointment.date.strftime("%H:%M") %></p>
-            </div>
-          </div>
-        </div>
-        <div class="card-appointment-body d-flex">
-          <img src="<%= appointment.professional.photo %>" alt="Photo du professionnel" class="rounded-circle">
-          <%= link_to appointment.professional.name, professional_appointment_path %>
-        </div>
-      <% end %>
+    <% if @appointments.exists? %>
+      <p>HELLO<p>
+      <%# <% @appointments.each do |appointment| %> %>
+        <%# <div class="card-appointment"> %>
+          <%# <div class="card-appointment-header"> %>
+            <%# <div class="d-flex "> %>
+              <%# <i class="fa-regular fa-calendar-days"></i> %>
+              <%# <h5><%= appointment.professional.speciality %></h5> %>
+              <%# <p><%= appointment.date.strftime("%d/%m/%Y") %></p> %>
+              <%# <i class="fa-regular fa-clock"></i> <p><%= appointment.date.strftime("%H:%M") %></p> %>
+            <%# </div> %>
+          <%# </div> %>
+        <%# </div> %>
+        <%# <div class="card-appointment-body d-flex"> %>
+          <%# <img src="<%= appointment.professional.photo %>" alt="Photo du professionnel" class="rounded-circle"> %>
+          <%# <%= link_to appointment.professional.name, professional_appointment_path %> %>
+        <%# </div> %>
+      <%# <% end %> %>
     <% else %>
       <div class="d-flex justify-content-center align-items-center">
         <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">

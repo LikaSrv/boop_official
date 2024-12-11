@@ -1,69 +1,57 @@
 <div>
   <%= link_to 'Retour', :back %>
 </div>
-
-<div class="text-center m-4">
-  <h1>Confirmer le rendez-vous</h1>
+<div class="text-center">
+  <h1>Confirmation du rendez-vous</h1>
 </div>
-
 <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-
-  <div class="card d-flex flex-column mb-3">
-    <div class="card-header">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person iconsvg" viewBox="0 0 16 16">
-        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
-        </svg>
+  <%= simple_form_for [@professional, Appointment.new] do |a| %>
+    <div class="card d-flex flex-column mb-3">
+      <div class="card-header">
+        <i class="fa-regular fa-user"></i>
         <p> Le vétérinaire :</p>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title"><%=@professional.name%></h5>
+      </div>
     </div>
-        <div class="card-body">
-          <h5 class="card-title">Nom veterinaire</h5>
-        </div>
-  </div>
-
-
-
-  <div class="card d-flex flex-column mb-3">
-    <div class="card-header">
-       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar" viewBox="0 0 16 16">
-        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
-        </svg>
+    <div class="card d-flex flex-column mb-3">
+      <div class="card-header">
+        <i class="fa-regular fa-calendar"></i>
         <p> Date du rendez-vous:</p>
+      </div>
+      <div class="card-body">
+        <h5>
+          <%= a.input :date, as: :string, input_html: { value: @date, readonly: true, style: 'border: none; text-align: center;'  }, label: false %>
+        </h5>
+      </div>
     </div>
-        <div class="card-body">
-          <h5 class="card-title">date rendez-vous affichage</h5>
-        </div>
-  </div>
-
-
- <div class="card">
-    <div class="card-header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
-      <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
-      <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
-      </svg>
+    <div class="card">
+      <div class="card-header">
+        <i class="fa-regular fa-clock"></i>
         <p> Heure du rendez-vous:</p>
+      </div>
+      <div class="card-body">
+        <h5>
+          <%= a.input :start_time, as: :string, input_html: { value: @time, readonly: true, style: 'border: none; text-align: center'  }, label: false %>
+        </h5>
+      </div>
     </div>
-    <div class="card-body">
-      <h5 class="card-title">Heure du rendez-vous affichage</h5>
-    </div>
-  </div>
+    <%= a.button :submit, "Confirmer le rendez-vous", class: "btn btn-primary my-4 rounded rounded-4" %>
+  <% end %>
 </div>
 
-
- <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+<%# <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded"> %>
+<%# <div class="p-2">
+    <p>Pour confirmer votre rendez-vous, une somme de 10 € sera débitée. Cet acompte sera déduit du montant total des frais de consultation.</p>
+  </div> %>
+<%# boutton pour continuer
     <div class="p-2">
-      <p>Pour confirmer votre rendez-vous, une somme de 10 € sera débitée. Cet acompte sera déduit du montant total des frais de consultation.</p>
-    </div>
-
-   <%# boutton pour continuer %>
-    <div class="p-2">
-      <%# <%= link_to 'Continuer', professional_appointment_path(@professional, id:@appointment), class: "btn btn-primary"%> 
-
-    </div>
-
-  <div class="p-2">
-   <!-- Stripe Payment Button ptt copilot terminal-->
-    <form action="/your-stripe-endpoint" method="POST">
+      <button class="btn btn-primary">Confirmer le rendez-vous</button>
+    </div> %>
+<%# <div class="p-2"> %>
+<!-- Stripe Payment Button ptt copilot terminal-->
+<%# <form action="/your-stripe-endpoint" method="POST">
       <script
         src="https://checkout.stripe.com/checkout.js" class="stripe-button"
         data-key="your-publishable-key"
@@ -72,11 +60,9 @@
         data-description="Acompte pour le rendez-vous"
         data-currency="eur">
       </script>
-    </form>
-
-
-   <!-- PayPal Payment Button ptt copilot terminal-->
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal">
+    </form> %>
+<!-- PayPal Payment Button ptt copilot terminal-->
+<%# <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal">
        <input type="hidden" name="cmd" value="_xclick">
        <input type="hidden" name="business" value="your-paypal-email@example.com">
        <input type="hidden" name="item_name" value="Confirmer le rendez-vous">
@@ -85,7 +71,5 @@
        <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
         <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
       </form>
-    </div>
-
-
-</div>
+    </div> %>
+<%# </div> %>

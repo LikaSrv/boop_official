@@ -27,6 +27,7 @@ puts "create users"
 
 user1 = User.create!(email: "user1@test.fr", password: "123456")
 user2 = User.create!(email: "user2@test.fr", password: "123456")
+user3 = User.create!(email: "user3@test.fr", password: "123456")
 
 puts "create professionals"
 

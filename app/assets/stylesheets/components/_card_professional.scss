@@ -1,5 +1,5 @@
-.card_pro{
-  border: 1px solid white;
+.card_pro {
+  border: 1px solid rgb(213, 204, 204);
   border-radius: 8px;
   background-color: white;
   margin: 8px;
@@ -7,7 +7,7 @@
   box-shadow: 4px 4px 2px rgb(219, 216, 216);
 }
 
-.grid-professional-show{
+.grid-professional-show {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 16px;

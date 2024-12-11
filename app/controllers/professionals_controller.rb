@@ -8,14 +8,22 @@ class ProfessionalsController < ApplicationController
   end
 
   def index
-    @professionals = Professional.all
+    # search
+    @professionals = Professional.search_by_specialty_address_and_name(params[:query])
+
+    if params[:query].present?
+      @professionals = Professional.search_by_specialty_address_and_name(params[:query])
+    elsif params[:specialty].present?
+      @professionals = Professional.where(specialty: params[:specialty])
+    else
+      @professionals = Professional.all
+    end
 
     @appointments = Appointment.where(professional: @professional)
     @reviews = []
     @appointments.each do |appointment|
       @reviews << Review.find_by(appointment: appointment.review)
     end
-    @appointment = Appointment.new
 
   # The `geocoded` scope filters only flats with coordinates
     @markers = @professionals.geocoded.map do |professional|

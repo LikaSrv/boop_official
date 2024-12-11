@@ -19,10 +19,7 @@ class AppointmentsController < ApplicationController
   end
 
   def show
-    @professional = Professional.find(params[:professional_id])
-    @date = params[:date]
-    @time = params[:time]
-    @appointment = Appointment.new
+    @appointment = Appointment.find(params[:id])
     end
 
   private

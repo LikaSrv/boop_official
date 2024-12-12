@@ -1,75 +1,88 @@
+
 <div>
-  <%= link_to 'Retour', :back %>
-</div>
-<div class="text-center">
-  <h1>Confirmation du rendez-vous</h1>
-</div>
-<div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-  <%= simple_form_for [@professional, Appointment.new] do |a| %>
-    <div class="card d-flex flex-column mb-3">
-      <div class="card-header">
-        <i class="fa-regular fa-user"></i>
-        <p> Le vétérinaire :</p>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title"><%=@professional.name%></h5>
-      </div>
-    </div>
-    <div class="card d-flex flex-column mb-3">
-      <div class="card-header">
-        <i class="fa-regular fa-calendar"></i>
-        <p> Date du rendez-vous:</p>
-      </div>
-      <div class="card-body">
-        <h5>
-          <%= a.input :date, as: :string, input_html: { value: @date, readonly: true, style: 'border: none; text-align: center;'  }, label: false %>
-        </h5>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <i class="fa-regular fa-clock"></i>
-        <p> Heure du rendez-vous:</p>
-      </div>
-      <div class="card-body">
-        <h5>
-          <%= a.input :start_time, as: :string, input_html: { value: @time, readonly: true, style: 'border: none; text-align: center'  }, label: false %>
-        </h5>
-      </div>
-    </div>
-    <%= a.button :submit, "Confirmer le rendez-vous", class: "btn btn-primary my-4 rounded rounded-4" %>
-  <% end %>
+  <i class="fa-solid fa-chevron-left text-primary ms-4"></i><%= link_to 'Retour', :back, class:"text-decoration-none" %>
 </div>
 
-<%# <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded"> %>
-<%# <div class="p-2">
-    <p>Pour confirmer votre rendez-vous, une somme de 10 € sera débitée. Cet acompte sera déduit du montant total des frais de consultation.</p>
-  </div> %>
-<%# boutton pour continuer
-    <div class="p-2">
-      <button class="btn btn-primary">Confirmer le rendez-vous</button>
-    </div> %>
-<%# <div class="p-2"> %>
-<!-- Stripe Payment Button ptt copilot terminal-->
-<%# <form action="/your-stripe-endpoint" method="POST">
-      <script
-        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-        data-key="your-publishable-key"
-        data-amount="1000"
-        data-name="Confirmer le rendez-vous"
-        data-description="Acompte pour le rendez-vous"
-        data-currency="eur">
-      </script>
-    </form> %>
-<!-- PayPal Payment Button ptt copilot terminal-->
-<%# <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal">
-       <input type="hidden" name="cmd" value="_xclick">
-       <input type="hidden" name="business" value="your-paypal-email@example.com">
-       <input type="hidden" name="item_name" value="Confirmer le rendez-vous">
-       <input type="hidden" name="amount" value="10.00">
-       <input type="hidden" name="currency_code" value="EUR">
-       <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-      </form>
-    </div> %>
-<%# </div> %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-4 col-lg-6">
+      <div class="form-devise">
+        <i class="fa-solid fa-paw float-end text-primary"></i>
+        <div class="text-center my-5">
+          <h1>Confirmation du rendez-vous</h1>
+        </div>
+        <div class="text-center rounded-3">
+
+          <%= simple_form_for [@professional, Appointment.new] do |a| %>
+            <div class="card d-flex flex-column mb-3">
+              <div class="card-header rounded-3">
+                <i class="fa-regular fa-user"></i>
+                <p> Le vétérinaire :</p>
+              </div>
+              <div class="card-body rounded-3">
+                <h5 class="card-title"><%=@professional.name%></h5>
+              </div>
+            </div>
+            <div class="card d-flex flex-column mb-3">
+              <div class="card-header rounded-3">
+                <i class="fa-regular fa-calendar"></i>
+                <p> Date du rendez-vous:</p>
+              </div>
+              <div class="card-body rounded-3">
+                <h5>
+                  <%= a.input :date, as: :string, input_html: { value: @date, readonly: true, style: 'border: none; text-align: center;'  }, label: false %>
+                </h5>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header rounded-3">
+                <i class="fa-regular fa-clock"></i>
+                <p> Heure du rendez-vous:</p>
+              </div>
+              <div class="card-body rounded-3">
+                <h5>
+                  <%= a.input :start_time, as: :string, input_html: { value: @time, readonly: true, style: 'border: none; text-align: center'  }, label: false %>
+                </h5>
+              </div>
+            </div>
+            <%= a.button :submit, "Confirmer le rendez-vous", class: "btn btn-primary my-4 rounded rounded-4" %>
+          <% end %>
+        </div>
+
+        <%# <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded"> %>
+        <%# <div class="p-2">
+            <p>Pour confirmer votre rendez-vous, une somme de 10 € sera débitée. Cet acompte sera déduit du montant total des frais de consultation.</p>
+          </div> %>
+        <%# boutton pour continuer
+            <div class="p-2">
+              <button class="btn btn-primary">Confirmer le rendez-vous</button>
+            </div> %>
+        <%# <div class="p-2"> %>
+        <!-- Stripe Payment Button ptt copilot terminal-->
+        <%# <form action="/your-stripe-endpoint" method="POST">
+              <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="your-publishable-key"
+                data-amount="1000"
+                data-name="Confirmer le rendez-vous"
+                data-description="Acompte pour le rendez-vous"
+                data-currency="eur">
+              </script>
+            </form> %>
+        <!-- PayPal Payment Button ptt copilot terminal-->
+        <%# <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" class="paypal">
+              <input type="hidden" name="cmd" value="_xclick">
+              <input type="hidden" name="business" value="your-paypal-email@example.com">
+              <input type="hidden" name="item_name" value="Confirmer le rendez-vous">
+              <input type="hidden" name="amount" value="10.00">
+              <input type="hidden" name="currency_code" value="EUR">
+              <input type="image" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-large.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+              </form>
+            </div> %>
+        <%# </div> %>
+
+      </div>
+    </div>
+  </div>
+</div>

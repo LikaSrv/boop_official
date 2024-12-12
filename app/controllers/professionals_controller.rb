@@ -41,6 +41,14 @@ class ProfessionalsController < ApplicationController
   end
 
   def create
+    @professional = Professional.new(appointment_params)
+    @professional.user = current_user
+    @user = current_user
+    if @professional.save!
+      redirect_to pro_show_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
+    else
+      render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
+    end
   end
 
   def show
@@ -52,6 +60,12 @@ class ProfessionalsController < ApplicationController
     end
     @appointment = Appointment.new
 
+  end
+
+  def pro_show
+    @professionals = Professional.where(user: current_user)
+    start_date = params.fetch(:start_date, Date.today).to_date
+    @appointments = Appointment.where(professional: @professionals[0], start_time: start_date.beginning_of_week..start_date.end_of_week)
   end
 
   def edit
@@ -70,6 +84,6 @@ class ProfessionalsController < ApplicationController
   private
 
   def appointment_params
-    params.require(:professional).permit(:name, :address, :phone, :email, :specialty, :description, :rating, :latitude, :longitude)
+    params.require(:professional).permit(:name, :address, :phone, :email, :specialty, :description, :rating, :latitude, :longitude, :photo)
   end
 end

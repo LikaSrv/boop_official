@@ -20,7 +20,7 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment = Appointment.find(params[:id])
-
+    @professional = @appointment.professional
   end
 
   def pro_show

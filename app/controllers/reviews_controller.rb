@@ -6,21 +6,26 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    @review = Review.new(review_params)
     @professional = Professional.find(params[:professional_id])
-    @appointment = Appointment.find(params[:appointment_id])
-    @review = @appointment.build_review(review_params)
+    @review = @professional.reviews.build(review_params)
+    @review.user = current_user
+    update_professional_rating
     if @review.save!
-      @professional.update(rating: ((@professional.rating + @review.rating) / 2).round.to_i)
       redirect_to professional_path(@professional), notice: "Votre commentaire a bien été pris en compte"
     else
-      render :new, alert: "Une erreur est survenue. Merci de réessayer plus tard"
+      flash.now[:alert] = @review.errors.full_messages.join(", ")
+      render :new
     end
   end
 
   private
 
+  def update_professional_rating
+    new_rating = @professional.reviews.average(:rating).to_f.round
+    @professional.update(rating: new_rating)
+  end
+
   def review_params
-    params.require(:review).permit(:content, :rating)
+    params.require(:review).permit(:content, :rating, :professional_id, :user_id)
   end
 end

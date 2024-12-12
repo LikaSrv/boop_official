@@ -6,7 +6,7 @@
         <h2>Donnez votre avis ! </h2>
         <p>Qu'avez-vous pensé de votre expérience avec <%=@professional.name%> ?</p>
 
-        <%= simple_form_for [@professional, @appointment, @review] do |r| %>
+        <%= simple_form_for [@professional, @review] do |r| %>
           <%= r.input :rating, label: "Note sur 5", collection: 1..5, as: :radio_buttons%>
           <%= r.input :content, label: "Commentaire", as: :text %>
           <%= r.button :submit, "Valider", class: "btn btn-primary mt-3" %>

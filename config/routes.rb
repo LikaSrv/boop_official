@@ -14,5 +14,9 @@ Rails.application.routes.draw do
     resources :appointments, only: [:new, :create, :show, :index]
     resources :reviews, only: [:new, :create]
   end
+  resources :users, only: [:show] do
+    member do
+      get 'professionals', to: 'professionals#pro_show', as: :pro_show
+    end
+  end
 end
-

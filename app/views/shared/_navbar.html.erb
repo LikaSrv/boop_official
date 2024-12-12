@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand mx-4" do %>
-      <%= image_tag "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824548/Boop_-_LOGO_FINAL_RVB_q1laee.png" %>
+      <%= image_tag "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824548/Boop_-_LOGO_FINAL_BLANC_qgyjvj.png" %>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -27,6 +27,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end" style="width: fit-content;" aria-labelledby="navbarDropdown">
               <%= link_to "Mes rendez-vous", "#", class: "dropdown-item" %>
+              <%= link_to "Mes services", pro_show_user_path(current_user), class: "dropdown-item" %>
               <%= link_to "Mon profil", "#", class: "dropdown-item" %>
               <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>

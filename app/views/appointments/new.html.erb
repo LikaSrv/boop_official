@@ -1,9 +1,11 @@
+
 <div>
   <%= link_to 'Retour', :back %>
 </div>
 <div class="text-center">
   <h1>Confirmation du rendez-vous</h1>
 </div>
+
 <div class="container text-center shadow-lg p-3 mb-5 bg-body-tertiary rounded">
   <%= simple_form_for [@professional, Appointment.new] do |a| %>
     <div class="card d-flex flex-column mb-3">

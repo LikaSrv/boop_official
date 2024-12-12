@@ -20,11 +20,13 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment = Appointment.find(params[:id])
+    @professional = Professional.find(params[:professional_id])
+    
     end
 
   private
 
   def appointment_params
-    params.require(:appointment).permit(:date, :start_time, :professional_id, :user_id)
+    params.require(:appointment).permit(:date, :start_time, :professional_id, :user_id, :address)
   end
 end

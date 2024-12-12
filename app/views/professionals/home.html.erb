@@ -7,18 +7,27 @@
   </div>
 
   <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-    <div class="mt-1 d-flex justify-content-end search-form-control form-group", style="width: 24%; height:30px;">
-      <%= text_field_tag :query,
-            params[:query],
-            class: "form-control",
-            placeholder: "Rechercher un professionnel"
-        %>
-      <%= submit_tag "Search", class: "btn btn-primary" %>
+    <div class="mt-1 d-flex justify-content-end search-form-control form-group", style="width: 100%;" >
+      <div class="mt-1 d-flex align-items-center search-form-control form-group", style="width: 24%; height:30px;">
+        <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Rechercher un professionnel"
+          %>
+        <div class="ms-2">
+          <%= submit_tag "Rechercher", class: "btn btn-primary text-white" %>
+        </div>
+      </div>
     </div>
   <% end %>
 
   <h3 class="mt-5">Nos professionnels</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
+    <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg)">
+      <div class="d-inline text-center">
+        <%= link_to "Tous nos professionnels", professionals_path, style: "text-decoration:none; color:white;" %>
+      </div>
+    </div>
     <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg)">
       <%= link_to "Vétérinaires", professionals_path(specialty: "Vétérinaire"), style: "text-decoration:none; color:white;" %>
     </div>
@@ -92,7 +101,7 @@
     <div class="d-flex justify-content-center align-items-center">
       <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
         <p class="text-center">Veuillez vous connecter pour voir vos rendez-vous.</p>
-        <%= link_to "Se connecter", new_user_session_path, class: "text-center btn btn-primary"%>
+        <%= link_to "Se connecter", new_user_session_path, class: "text-center btn btn-primary text-white"%>
         <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733842167/business-solution_cqdmbl.png">
       </div>
     </div>

@@ -7,7 +7,7 @@
       </a>
       <div class="d-none d-flex justify-content-between mx-2" data-appointment-selected-target="times">
         <% ["10:00", "11:00", "14:00", "15:00"].each do |time| %>
-          <a href="#" class="btn btn-outline-primary" data-time="<%= time %>" data-action="click->appointment-selected#confirm">
+          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary" data-time="<%= time %>" data-action="click->appointment-selected#confirm">
             <%= time %>
           </a>
         <% end %>

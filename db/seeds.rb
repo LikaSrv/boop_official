@@ -53,7 +53,7 @@ appointment2 = Appointment.create!(date: "2022-12-13", start_time: "10:00", end_
 
 puts "create reviews"
 
-review1 = Review.create!(content: "Super professionnel", rating: 5, appointment: appointment1)
-review2 = Review.create!(content: "Super professionnel", rating: 4, appointment: appointment2)
+review1 = Review.create!(content: "Super professionnel", rating: 5, professional: professional1)
+review2 = Review.create!(content: "Super professionnel", rating: 4, professional: professional2)
 
 puts "seed done"

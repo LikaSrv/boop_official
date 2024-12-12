@@ -46,7 +46,7 @@ class ProfessionalsController < ApplicationController
   def show
     @professional = Professional.find(params[:id])
     @appointments = Appointment.where(professional: @professional)
-    @reviews = []
+    @reviews = @professional.reviews
     @appointments.each do |appointment|
       @reviews << Review.find_by(appointment: appointment.review)
     end

@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :appointments, dependent: :destroy
   has_one :professional, dependent: :destroy
+  has_many :reviews
 end

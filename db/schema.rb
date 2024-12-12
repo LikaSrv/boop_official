@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_12_10_142423) do
+ActiveRecord::Schema[7.1].define(version: 2024_12_12_115454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,8 +75,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_10_142423) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "appointment_id", null: false
-    t.index ["appointment_id"], name: "index_reviews_on_appointment_id"
+    t.bigint "user_id"
+    t.bigint "professional_id"
+    t.index ["professional_id"], name: "index_reviews_on_professional_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -96,5 +98,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_10_142423) do
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
   add_foreign_key "professionals", "users"
-  add_foreign_key "reviews", "appointments"
+  add_foreign_key "reviews", "professionals"
+  add_foreign_key "reviews", "users"
 end

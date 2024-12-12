@@ -53,11 +53,7 @@ class ProfessionalsController < ApplicationController
 
   def show
     @professional = Professional.find(params[:id])
-    @appointments = Appointment.where(professional: @professional)
-    @reviews = []
-    @appointments.each do |appointment|
-      @reviews << Review.find_by(appointment: appointment.review)
-    end
+    @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
 
   end

@@ -9,10 +9,10 @@
     <div data-appointment-target="times">
       <% while current_time <= end_time do %>
         <% is_active = @appointments.any? { |appointment| appointment.start_time.strftime("%H:%M") == current_time.strftime("%H:%M") } %>
-        <a href="#"
-     class="btn btn-outline-primary m-2 <%= 'active' if is_active %>"
-     data-time="<%= current_time.strftime("%H:%M") %>"
-     data-action="click->appointment#select">
+        <a  href="#"
+            class="btn btn-outline-primary m-2 <%= 'active' if is_active %>"
+            data-time="<%= current_time.strftime("%H:%M") %>"
+            data-action="click->appointment#select">
           <%= current_time.strftime("%H:%M") %>
         </a>
         <% current_time += interval.minutes %>

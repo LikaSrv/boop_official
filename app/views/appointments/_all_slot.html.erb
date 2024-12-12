@@ -8,7 +8,7 @@
     <% end_time = Time.parse("#{end_hour}:00") %>
     <div data-appointment-target="times">
       <% while current_time <= end_time do %>
-        <a href="<%= professional_appointment_path(professional, appointment) %>" class="btn btn-outline-primary m-2" data-time="<%= current_time.strftime("%H:%M") %>" data-action="click->appointment#select">
+        <a href="#" class="btn btn-outline-primary m-2" data-time="<%= current_time.strftime("%H:%M") %>" data-action="click->appointment#select">
           <%= current_time.strftime("%H:%M") %>
         </a>
         <% current_time += interval.minutes %>

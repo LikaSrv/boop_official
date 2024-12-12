@@ -59,6 +59,10 @@ class ProfessionalsController < ApplicationController
 
   end
 
+  def pro_index
+    @professionals = Professional.where(user: current_user)
+  end
+
   def pro_show
     @professionals = Professional.where(user: current_user)
     start_date = params.fetch(:start_date, Date.today).to_date

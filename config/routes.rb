@@ -11,12 +11,16 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :professionals do
+    member do
+      get 'appointments', to: 'appointments#pro_show', as: :pro_show
+    end
     resources :appointments, only: [:new, :create, :show, :index]
     resources :reviews, only: [:new, :create]
   end
   resources :users, only: [:show] do
     member do
-      get 'professionals', to: 'professionals#pro_show', as: :pro_show
+      get 'professionals', to: 'professionals#pro_index', as: :pro_index
+      # get 'professionals', to: 'professionals#pro_show', as: :pro_show
     end
   end
 end

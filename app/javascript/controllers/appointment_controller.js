@@ -8,6 +8,6 @@ export default class extends Controller {
   select(event) {
     console.log(this.dateTarget.innerHTML);
     console.log(event.target.dataset.time);
-    this.timesTarget.classList.toggle("btn-primary");
+    this.timesTarget.classList.toggle("active");
   }
 }

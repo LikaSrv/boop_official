@@ -9,12 +9,26 @@
       </button>
     <% end %>
   </div>
-  <div class="text-center m-4 w-100">
-    <%= week_calendar(events: @appointments) do |date, events| %>
-      <%= date %>
-      <% events.each do |event| %>
-        <p><%= event.user.email%></p>
+  <div class="text-center m-4 w-100" data-controller="appointment">
+    <div >
+      <%= week_calendar(events: @appointments) do |date, events| %>
+      <p data-appointment-target="date">
+        <%= date %>
+      </p>
+        <% events.each do |event| %>
+          <p><%= event.user.email%></p>
+        <% end %>
       <% end %>
-    <% end %>
+    </div>
+    <div>
+      <%= turbo_frame_tag :all_slot do %>
+        <% render "all_slot" %>
+      <% end %>
+    </div>
+    <div>
+      <%= turbo_frame_tag :appointment_details do %>
+        <% render "appointment_details" %>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -20,9 +20,15 @@ class AppointmentsController < ApplicationController
 
   def show
     @appointment = Appointment.find(params[:id])
-    @professional = Professional.find(params[:professional_id])
-    
-    end
+
+  end
+
+  def pro_show
+    @professionals = Professional.where(user: current_user)
+    @professional = Professional.find(params[:id])
+    @appointments = Appointment.where(professional: @professional)
+  end
+
 
   private
 

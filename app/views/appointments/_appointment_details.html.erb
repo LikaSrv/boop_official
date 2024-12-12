@@ -1,0 +1,16 @@
+<%= turbo_frame_tag :appointment_details do %>
+  <div class="card_pro">
+    <div class="d-flex flex-row">
+      <p>Nom : </p>
+      <h5 class="mx-2"> Nom de client </h5>
+    </div>
+    <div class="d-flex flex-row my-4">
+      <p>Nom : </p>
+      <h5 class="mx-2"> <%= appointment.date%> </h5>
+    </div>
+    <div class="d-flex flex-row">
+      <p>Nom : </p>
+      <h5 class="mx-2"> <%= appointment.start_time%> </h5>
+    </div>
+  </div>
+<% end %>

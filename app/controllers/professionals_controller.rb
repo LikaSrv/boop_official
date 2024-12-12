@@ -53,9 +53,14 @@ class ProfessionalsController < ApplicationController
 
   def show
     @professional = Professional.find(params[:id])
+    @professional.rating = 0
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
 
+  end
+
+  def pro_index
+    @professionals = Professional.where(user: current_user)
   end
 
   def pro_show

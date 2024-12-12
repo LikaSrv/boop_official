@@ -1,0 +1,34 @@
+<div class="d-flex flex-row " style="height: 100%;">
+  <div class="d-flex flex-column shadow"  style="width: 300px; height: 100vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px">
+    <div class="text-center m-4">
+      <h3> Mes Services </h3>
+    </div>
+    <% @professionals.each do |professional| %>
+      <a href="<%= pro_show_professional_path(professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
+        <%= professional.specialty %>
+      </a>
+    <% end %>
+  </div>
+  <div class="text-center m-4 w-100" data-controller="appointment">
+    <div >
+      <%= week_calendar(events: @appointments) do |date, events| %>
+        <p data-appointment-target="date">
+          <%= date %>
+        </p>
+        <% events.each do |event| %>
+          <p><%= event.user.email%></p>
+        <% end %>
+      <% end %>
+    </div>
+    <div>
+      <%= turbo_frame_tag :all_slot do %>
+        <% render "all_slot" %>
+      <% end %>
+    </div>
+    <div>
+    <%# <%= turbo_frame_tag :appointment_details do %> %>
+      <%# <% render "appointment_details", appointment: @appointments %> %>
+      <%# <% end %> %>
+      <%# </div> %>
+    </div>
+  </div>

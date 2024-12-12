@@ -1,0 +1,15 @@
+<div class="d-flex flex-row " style="height: 100%;">
+  <div class="d-flex flex-column shadow"  style="width: 300px; height: 100vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px">
+    <div class="text-center m-4">
+      <h3> Mes Services </h3>
+    </div>
+    <% @professionals.each do |professional| %>
+      <a href="<%= pro_show_professional_path(professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
+        <%= professional.specialty %>
+      </a>
+    <% end %>
+  </div>
+  <div>
+    <p>Cliquez pour afficher le détail</p>
+  </div>
+</div>

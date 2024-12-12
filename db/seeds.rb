@@ -32,17 +32,17 @@ user3 = User.create!(email: "user3@test.fr", password: "123456")
 puts "create professionals"
 
 vet_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg").open
-professional1 = Professional.create!(name: "Jean MEDECIN", address: "Nice", phone: "0123456789", email: "jean.medecin@test.fr", specialty: "Vétérinaire", description: "Vétérinaire depuis 10ans. J'ai soigné tous les animaux.", rating: 5, user_id: user1.id)
+professional1 = Professional.new(name: "Jean MEDECIN", address: "Nice", phone: "0123456789", email: "jean.medecin@test.fr", specialty: "Vétérinaire", description: "Vétérinaire depuis 10ans. J'ai soigné tous les animaux.", rating: 5, user_id: user1.id)
 professional1.photo.attach(io: vet_file, filename: 'vet.jpg', content_type: 'image/jpg')
 professional1.save!
 
 groomer_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/reba-spike-PEQIIwnIGdo-unsplash_yfvjlt.jpg").open
-professional2 = Professional.create!(name: "Jean DUPONT", address: "Paris", phone: "0123456789", email: "jean.dupont@test.fr", specialty: "Toiletteur", description: "Toiletteur depuis 10ans. J'ai nettoyé tous les animaux", rating: 4, user_id: user2.id)
+professional2 = Professional.new(name: "Jean DUPONT", address: "Paris", phone: "0123456789", email: "jean.dupont@test.fr", specialty: "Toiletteur", description: "Toiletteur depuis 10ans. J'ai nettoyé tous les animaux", rating: 4, user_id: user2.id)
 professional2.photo.attach(io: groomer_file, filename: 'groomer.jpg', content_type: 'image/jpg')
 professional2.save!
 
 walker_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/matt-nelson-aI3EBLvcyu4-unsplash_drfsex.jpg").open
-professional3 = Professional.create!(name: "Jean DURAND", address: "Lyon", phone: "0123456789", email: "jean.durant@test.fr", specialty: "Promeneur", description: "Promeneur depuis 10ans. J'ai promené tous les animaux", rating: 3, user_id: user2.id)
+professional3 = Professional.new(name: "Jean DURAND", address: "Lyon", phone: "0123456789", email: "jean.durant@test.fr", specialty: "Promeneur", description: "Promeneur depuis 10ans. J'ai promené tous les animaux", rating: 3, user_id: user2.id)
 professional3.photo.attach(io: walker_file, filename: 'walker.jpg', content_type: 'image/jpg')
 professional3.save!
 
@@ -53,7 +53,7 @@ appointment2 = Appointment.create!(date: "2022-12-13", start_time: "10:00", end_
 
 puts "create reviews"
 
-review1 = Review.create!(content: "Super professionnel", rating: 5, professional: professional1)
-review2 = Review.create!(content: "Super professionnel", rating: 4, professional: professional2)
+review1 = Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)
+review2 = Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
 
 puts "seed done"

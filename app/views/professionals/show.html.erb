@@ -42,27 +42,22 @@
           </div>
         <% else %>
           <% @reviews.each do |review| %>
-            <div class="border-bottom mt-2">
-              <div class="d-flex flex-row">
-                <%# <p><%= review.user.first_name %></p>
-              Prénom%>
-              <%# <p><%= review.user.last_name %></p>
-            Nom%>
-          </div>
-          <div class="d-flex flex-row justify-content-between">
-            <p><%= review.content %></p>
-            <p><%= review.rating %> / 5</p>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
+            <div class="border-bottom mt-2" style="width: 100%;">
+              <div class="d-flex flex-row justify-content-between">
+                <p><%= review.user.first_name%> <%= review.user.last_name%></p>
+                <p><%= review.rating %> / 5</p>
+              </div>
+              <p><%= review.content %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <%= link_to "Ajouter un avis",  new_professional_review_path(@professional, @appointment), class:"btn btn-primary text-white", style:"width: 20%;"%>
+      </div>
+    </div>
   </div>
-  <div class="d-flex justify-content-center mt-3">
-    <%= link_to "Ajouter un avis",  new_professional_review_path(@professional, @appointment), class:"btn btn-primary text-white", style:"width: 20%;"%>
+  <div id="available-pro", style="position: sticky; top: 100px;">
+    <%= render "available_slots", professional: @professional %>
   </div>
-</div>
-</div>
-<div id="available-pro", style="position: sticky; top: 100px;">
-  <%= render "available_slots", professional: @professional %>
-</div>
 </div>

@@ -1,5 +1,5 @@
 <div>
-  <i class="fa-solid fa-chevron-left text-primary ms-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
+  <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
 </div>
 <div>
   <div class="text-center m-4">
@@ -34,7 +34,7 @@
           <p class="m-0 mx-1">(<%=@reviews.count%>)</p>
         </div>
       </div>
-      <div class="mt-2">
+      <div class="mt-2 d-flex flex-column justify-content-center align-items-center">
         <% if @reviews.empty? %>
           <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
             <p class="text-center">Soyez le premier à mettre un avis !</p>

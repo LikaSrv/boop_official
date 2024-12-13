@@ -9,9 +9,9 @@
       </a>
     <% end %>
   </div>
-  <div class="text-center w-100 m-4" data-controller="appointment">
+  <div class="text-center m-4" data-controller="appointment">
     <div >
-      <%= week_calendar(events: @appointments) do |date, events| %>
+      <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
         <p data-appointment-target="date">
           <%= date %>
         </p>
@@ -24,6 +24,9 @@
       <%= turbo_frame_tag :all_slot do %>
         <% render "all_slot", professional: @professional %>
       <% end %>
+    </div>
+    <div>
+      <p>Veuillez sélectionner un créneau de rendez-vous pour voir le détail</p>
     </div>
   </div>
 </div>

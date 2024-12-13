@@ -4,7 +4,7 @@
       <h3> Mes Services </h3>
     </div>
     <% @professionals.each do |professional| %>
-      <a href="<%= pro_show_professional_path(professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
+      <a href="<%= pro_show_user_path(@user, professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
         <%= professional.specialty %>
       </a>
     <% end %>

@@ -62,7 +62,7 @@ class ProfessionalsController < ApplicationController
     else
       @average_rating = @reviews.average(:rating).round.to_i
     end
-    @professional.update(rating: ((@professional.rating + @average_rating) / 2).round.to_i)
+    @professional.update(rating: @average_rating)
   end
 
   def pro_index

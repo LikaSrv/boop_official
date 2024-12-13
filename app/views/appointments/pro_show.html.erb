@@ -16,7 +16,7 @@
           <%= date %>
         </p>
         <% events.each do |event| %>
-          <p><%= event.user.email%></p>
+          <p><%= event.user.first_name%> <%= event.user.last_name%></p>
         <% end %>
       <% end %>
     </div>

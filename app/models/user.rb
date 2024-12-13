@@ -7,4 +7,7 @@ class User < ApplicationRecord
   has_many :appointments, dependent: :destroy
   has_many :professional, dependent: :destroy
   has_many :reviews, dependent: :destroy
+
+  validates :first_name, :last_name, :photo, presence: true
+  has_one_attached :photo
 end

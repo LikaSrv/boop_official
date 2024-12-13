@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <div class="row justify-content-center">
     <div class="col-12 col-sm-4">
       <div class="form-devise">
@@ -9,6 +9,17 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
+            <%= f.input :first_name,
+                        label: "Nom",
+                        required: true,
+                        autofocus: true %>
+            <%= f.input :last_name,
+                        label: "Prénom",
+                        required: true,
+                        autofocus: true %>
+            <%= f.input :photo,
+                as: :file,
+                label: "Photo" %>
             <%= f.input :email,
                         required: true,
                         autofocus: true,

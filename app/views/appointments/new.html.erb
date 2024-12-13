@@ -45,6 +45,17 @@
                 </h5>
               </div>
             </div>
+            <div class="card">
+              <div class="card-header rounded-3">
+                <i class="fa-regular fa-clock"></i>
+                <p> Motif de la visite:</p>
+              </div>
+              <div class="card-body rounded-3">
+                <h5>
+              <%= a.input :reason, label: false, as: :text, input_html: { rows: 3 }%>
+                </h5>
+              </div>
+            </div>
             <%= a.button :submit, "Confirmer le rendez-vous", class: "btn btn-primary my-4 rounded rounded-4" %>
           <% end %>
         </div>

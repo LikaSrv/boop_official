@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col card_pro p-4 m-4 text-center">
+    <h2> <strong> Mon Profil </strong> </h2>
+    <%= cl_image_tag @user.photo.key, width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;" %>
+    <p>Nom : <strong> <%=@user.first_name%> </strong></p>
+    <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
+    <p>Email : <strong> <%=@user.email%> </strong></p>
+    <div class="d-flex flex-row justify-content-around">
+      <%= link_to "Modifier mon profil", edit_user_path(current_user), class: "btn btn-primary my-4" %>
+      <%= link_to "Supprimer mon profil", user_path(current_user), class: "btn btn-outline-danger my-4" %>
+    </div>
+  </div>
+  <div class="col card_pro p-4 m-4 text-center">
+    <h2> <strong> Mes rendez-vous </strong> </h2>
+    <% if @appointments.empty? %>
+      <p class="mt-3">Vous n'avez pas de rendez-vous</p>
+      <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png">
+    <% else %>
+      <% @appointments.each do |a| %>
+        <div class="card_pro p-4 m-4 ">
+          <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row">
+              <p>Date : <%= a.date.strftime("%d/%m/%Y")%></p>
+            </div>
+            <div class="d-flex flex-row">
+              <p>Heure : <%= a.start_time.strftime("%H:%M")%></p>
+            </div>
+          </div>
+          <p>Professionnel : <%= a.professional.name %></p>
+          <p>Motif de la visite : <%= a.reason %></p>
+        </div>
+      <% end %>
+    <% end%>
+  </div>
+</div>

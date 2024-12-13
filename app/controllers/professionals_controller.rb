@@ -46,7 +46,7 @@ class ProfessionalsController < ApplicationController
     @professional.user = current_user
     @user = current_user
     if @professional.save!
-      redirect_to pro_show_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
+      redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
     end

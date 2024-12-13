@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :edit, :destroy] do
     member do
       get 'professionals', to: 'professionals#pro_index', as: :pro_index
       get '/professionals/:id', to: 'professionals#pro_show', as: :pro_show

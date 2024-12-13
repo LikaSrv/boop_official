@@ -25,9 +25,20 @@ User.destroy_all
 
 puts "create users"
 
-user1 = User.create!(email: "user1@test.fr", password: "123456")
-user2 = User.create!(email: "user2@test.fr", password: "123456")
-user3 = User.create!(email: "user3@test.fr", password: "123456")
+user1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
+user1 = User.new(email: "user1@test.fr", password: "123456", first_name: "Jean", last_name: "Dupont")
+user1.photo.attach(io: user1_photo, filename: 'user1.jpg', content_type: 'image/jpg')
+user1.save!
+
+user2_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/people/smiling-man.jpg").open
+user2 = User.new(email: "user2@test.fr", password: "123456", first_name: "Jean", last_name: "Durand")
+user2.photo.attach(io: user2_photo, filename: 'user2.jpg', content_type: 'image/jpg')
+user2.save!
+
+user3_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869242/samples/man-portrait.jpg").open
+user3 = User.new(email: "user3@test.fr", password: "123456", first_name: "Jean", last_name: "Duchemin")
+user3.photo.attach(io: user3_photo, filename: 'user3.jpg', content_type: 'image/jpg')
+user3.save!
 
 puts "create professionals"
 

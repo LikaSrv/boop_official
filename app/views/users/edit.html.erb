@@ -1,0 +1,19 @@
+<div class="container mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="form-devise">
+        <i class="fa-solid fa-paw float-end text-primary"></i>
+        <div class="col">
+          <h2> <strong> Mon Profil </strong> </h2>
+          <%= simple_form_for @user, url: user_path(current_user) do |u| %>
+            <%= u.input :first_name, label: "Prénom" %>
+            <%= u.input :last_name, label: "Nom" %>
+            <%= u.input :email, label: "Email", readonly: true %>
+            <%= u.input :photo, as: :file, label: "Photo" %>
+            <%= u.button :submit, "Mettre à jour", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,5 @@
 class Appointment < ApplicationRecord
-  validates :date, :start_time, presence: true
+  validates :date, :start_time, :reason, presence: true
 
   belongs_to :professional
   belongs_to :user

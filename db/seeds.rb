@@ -59,8 +59,8 @@ professional3.save!
 
 puts "create appointments"
 
-appointment1 = Appointment.create!(date: "2022-12-12", start_time: "10:00", end_time: "11:00", professional: professional1, user: user1)
-appointment2 = Appointment.create!(date: "2022-12-13", start_time: "10:00", end_time: "11:00", professional: professional2, user: user2)
+appointment1 = Appointment.create!(date: "2022-12-12", start_time: "10:00", end_time: "11:00", professional: professional1, user: user1, reason: "Mon chat est malade")
+appointment2 = Appointment.create!(date: "2022-12-13", start_time: "10:00", end_time: "11:00", professional: professional2, user: user2, reason: "Mon chien est sale")
 
 puts "create reviews"
 

@@ -17,10 +17,18 @@
       <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png">
     <% else %>
       <% @appointments.each do |a| %>
-      <div class="card_pro p-4 m-4">
-
-        <%= a.date.strftime("%d/%m/%Y")%>
-      </div>
+        <div class="card_pro p-4 m-4 ">
+          <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row">
+              <p>Date : <%= a.date.strftime("%d/%m/%Y")%></p>
+            </div>
+            <div class="d-flex flex-row">
+              <p>Heure : <%= a.start_time.strftime("%H:%M")%></p>
+            </div>
+          </div>
+          <p>Professionnel : <%= a.professional.name %></p>
+          <p>Motif de la visite : <%= a.reason %></p>
+        </div>
       <% end %>
     <% end%>
   </div>

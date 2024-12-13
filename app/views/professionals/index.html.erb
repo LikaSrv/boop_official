@@ -2,12 +2,13 @@
   <div>
     <% @professionals.each do |professional|%>
       <div class="d-flex flex-row justify-content-center">
-        <div class="card_pro d-flex flex-row">
-          <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black">
+        <div class="card_pro d-flex flex-row" style="width: 900px">
+
+          <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black" style="width: 400px">
             <%= cl_image_tag professional.photo.key, crop: :fill, width: 380%>
             <h2><%= professional.name %> </h2>
-            <p><%= professional.specialty %></p>
-            <p><%= professional.address %></p>
+            <p>Specialité : <%= professional.specialty %></p>
+            <p>Adresse : <%= professional.address %></p>
             <p><%= professional.description %></p>
           </a>
           <%= render "available_slots", professional: professional%>

@@ -28,6 +28,9 @@
           <% @professional.rating.times do %>
             <i class="fas fa-star text-warning m-0"></i>
           <% end %>
+          <% (5 - @professional.rating).times do %>
+            <i class="fas fa-star text-muted m-0"></i>
+          <% end %>
           <p class="m-0 mx-1">(<%=@reviews.count%>)</p>
         </div>
       </div>

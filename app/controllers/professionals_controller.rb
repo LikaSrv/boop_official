@@ -45,6 +45,7 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.new(appointment_params)
     @professional.user = current_user
     @user = current_user
+    @professional.rating = 0
     if @professional.save!
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
@@ -54,10 +55,11 @@ class ProfessionalsController < ApplicationController
 
   def show
     @professional = Professional.find(params[:id])
-    @professional.rating = 0
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
 
+    @average_rating = @reviews.average(:rating).round.to_i
+    @professional.update(rating: ((@professional.rating + @average_rating) / 2).round.to_i)
   end
 
   def pro_index

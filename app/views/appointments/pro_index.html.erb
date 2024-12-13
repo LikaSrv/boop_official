@@ -10,6 +10,7 @@
     <% end %>
   </div>
   <div class="text-center m-4" data-controller="appointment">
+    <%@selected_date = params[:date]%>
     <div >
       <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
         <p data-appointment-target="date">
@@ -22,7 +23,7 @@
     </div>
     <div>
       <%= turbo_frame_tag :all_slot do %>
-        <% render "all_slot", professional: @professional %>
+        <% render "all_slot", professional: @professional, selected_date: @selected_date %>
       <% end %>
     </div>
     <div>

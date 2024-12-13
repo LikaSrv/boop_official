@@ -19,11 +19,12 @@ class ProfessionalsController < ApplicationController
       @professionals = Professional.all
     end
 
-    @appointments = Appointment.where(professional: @professional)
-    @reviews = []
-    @appointments.each do |appointment|
-      @reviews << Review.find_by(appointment: appointment.review)
-    end
+    @reviews = Review.where(professional: @professionals)
+
+    # @reviews = []
+    # @appointments.each do |appointment|
+    #   @reviews << Review.find_by(appointment: appointment.review)
+    # end
 
   # The `geocoded` scope filters only flats with coordinates
     @markers = @professionals.geocoded.map do |professional|
@@ -45,7 +46,7 @@ class ProfessionalsController < ApplicationController
     @professional.user = current_user
     @user = current_user
     if @professional.save!
-      redirect_to pro_show_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
+      redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
     end
@@ -61,12 +62,15 @@ class ProfessionalsController < ApplicationController
 
   def pro_index
     @professionals = Professional.where(user: current_user)
+    @user = current_user
   end
 
   def pro_show
     @professionals = Professional.where(user: current_user)
+    @user = current_user
+    @professional = Professional.find(params[:id])
     start_date = params.fetch(:start_date, Date.today).to_date
-    @appointments = Appointment.where(professional: @professionals[0], start_time: start_date.beginning_of_week..start_date.end_of_week)
+    @appointments = Appointment.where(professional: @professional, start_time: start_date.beginning_of_week..start_date.end_of_week)
   end
 
   def edit

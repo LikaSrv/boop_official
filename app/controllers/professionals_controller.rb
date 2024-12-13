@@ -57,8 +57,11 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.find(params[:id])
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
-
-    @average_rating = @reviews.average(:rating).round.to_i
+    if @reviews.empty?
+      @average_rating = 0
+    else
+      @average_rating = @reviews.average(:rating).round.to_i
+    end
     @professional.update(rating: ((@professional.rating + @average_rating) / 2).round.to_i)
   end
 

@@ -15,17 +15,18 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :professionals do
-    resources :appointments, only: [:new, :create, :show]
-    resources :reviews, only: [:new, :create]
-  end
-
   resources :professionals, only: [:show] do
     member do
       get 'appointments', to: 'appointments#pro_index', as: :pro_index
       get 'appointments/:id', to: 'appointments#pro_show', as: :pro_show
     end
   end
+  
+  resources :professionals do
+    resources :appointments, only: [:new, :create, :show]
+    resources :reviews, only: [:new, :create]
+  end
+
 
   resources :users, only: [:show, :edit, :destroy] do
     member do

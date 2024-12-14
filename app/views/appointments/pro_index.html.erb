@@ -1,17 +1,14 @@
-<div class="d-flex flex-row " style="height: 100%;">
-  <div class="d-flex flex-column shadow"  style="width: 300px; height: 100vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px">
-    <div class="text-center m-4">
-      <h3> Mes Services </h3>
-    </div>
-    <% @professionals.each do |professional| %>
-      <a href="<%= pro_show_user_path(@user, professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
-        <%= professional.specialty %>
-      </a>
-    <% end %>
+<div class="d-flex flex-row justify-content-between" style="height: 100%;">
+  <%# sidebar all my services %>
+  <div>
+    <%= render "all_services" %>
   </div>
-  <div class="text-center m-4" data-controller="appointment">
+  <div class="text-center m-4" data-controller="appointment" style="width: 100%;">
+        <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
+
     <%@selected_date = params[:date]%>
-    <div >
+    <div class="m-4">
+      <%# calendar %>
       <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
         <p data-appointment-target="date">
           <%= date %>
@@ -22,6 +19,7 @@
       <% end %>
     </div>
     <div>
+      <%# all appointment slot %>
       <%= turbo_frame_tag :all_slot do %>
         <% render "all_slot", professional: @professional, selected_date: @selected_date %>
       <% end %>

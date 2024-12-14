@@ -8,19 +8,18 @@
     <% end_time = Time.parse("#{selected_date} #{end_hour}:00") %>
     <div data-appointment-target="times">
       <% while current_time <= end_time do %>
-        <% has_appointment = @appointments.any? { |appointment| appointment.start_time.strftime("%Y-%m-%d %H:%M") == current_time.strftime("%Y-%m-%d %H:%M") } %>
-        <%appointment = Appointment.find_by(start_time: current_time.strftime("%Y-%m-%d %H:%M"))%>
-        <% if (has_appointment==false) %>
+        <%appointment = Appointment.find_by(start_time: current_time.strftime("%Y-%m-%d %H:%M"), professional: professional)%>
+        <% if (appointment.nil?) %>
           <%= link_to current_time.strftime("%H:%M"), professionals_path,
               class:"btn btn-outline-primary m-2 ",
               data: {time: current_time.strftime("%H:%M"),
                     action:"click->appointment#select"}%>
         <% else %>
           <%= link_to current_time.strftime("%H:%M"), pro_show_professional_path(professional.id, appointment.id),
-              class:"btn btn-outline-primary m-2 #{'btn-info text-dark' if has_appointment} ",
+              class:"btn btn-outline-primary m-2 btn-info text-dark",
               data: {time: current_time.strftime("%H:%M"),
                     action:"click->appointment#select",
-                    turbo_frame: :appointment_details,}%>
+                    turbo: false}%>
         <% end %>
         <% current_time += interval.minutes %>
       <% end %>

@@ -19,10 +19,10 @@
         <tr>
           <% week.each do |day| %>
             <%= content_tag :td, class: calendar.td_classes_for(day) do %>
-              <%= link_to pro_index_professional_path(@professional, date: day.strftime("%Y-%m-%d")), class: "full-cell-link" do %>
+              <%= link_to pro_show_user_path(current_user, @professional, date: day.strftime("%Y-%m-%d")), class: "full-cell-link" do %>
                 <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
                   <% capture_haml(day, sorted_events.fetch(day, []), &passed_block) %>
-               <% else %>
+                <% else %>
                   <% passed_block.call day, sorted_events.fetch(day, []) %>
                 <% end %>
               <% end %>

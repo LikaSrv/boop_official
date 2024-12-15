@@ -17,11 +17,11 @@ Rails.application.routes.draw do
 
   resources :professionals, only: [:show] do
     member do
-      get 'appointments', to: 'appointments#pro_index', as: :pro_index
       get 'appointments/:id', to: 'appointments#pro_show', as: :pro_show
+      resources :slots, only: [:index]
     end
   end
-  
+
   resources :professionals do
     resources :appointments, only: [:new, :create, :show]
     resources :reviews, only: [:new, :create]

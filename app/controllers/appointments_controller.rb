@@ -33,12 +33,8 @@ class AppointmentsController < ApplicationController
   end
 
   def pro_show
-    @professionals = Professional.where(user: current_user)
-    @user = current_user
-    start_date = params.fetch(:start_date, Date.today).to_date
-    @appointments = Appointment.where(professional: @professional, start_time: start_date.beginning_of_week..start_date.end_of_week)
     @appointment = Appointment.find(params[:id])
-    @professional = @appointment.professional
+    render partial: "appointment_details", locals: { appointment: @appointment }
   end
 
 

@@ -1,23 +1,33 @@
 <%= turbo_frame_tag :all_slot do %>
-  
-  <%# all appointment slot %>
   <div>
     <% start_hour = 8 # Heure de début
         end_hour = 17  # Heure de fin
         interval = 60  # Durée entre les créneaux en minutes
       %>
-    <% current_time = Time.parse("#{start_hour}:00") %>
-    <% end_time = Time.parse("#{end_hour}:00") %>
+    <% current_time = Time.parse("#{selected_date} #{start_hour}:00") %>
+    <% end_time = Time.parse("#{selected_date} #{end_hour}:00") %>
     <div data-appointment-target="times">
       <% while current_time <= end_time do %>
-        <a href="<%= pro_index_professional_path(@professional) %>" class="btn btn-outline-primary m-2" data-time="<%= current_time.strftime("%H:%M") %>" data-action="click->appointment#select">
-          <%= current_time.strftime("%H:%M") %>
-        </a>
+        <%appointment = Appointment.find_by(start_time: current_time.strftime("%Y-%m-%d %H:%M"), professional: @professional)%>
+        <% if (appointment.nil?) %>
+          <%= link_to current_time.strftime("%H:%M"), professionals_path,
+              class:"btn btn-outline-primary m-2 ",
+              data: {time: current_time.strftime("%H:%M"),
+                    action:"click->appointment#select"}%>
+        <% else %>
+
+
+
+
+          <%= link_to current_time.strftime("%H:%M"), pro_show_professional_path(@professional.id, appointment.id),
+              class:"btn btn-outline-primary m-2 btn-info text-dark",
+              data: {time: current_time.strftime("%H:%M"),
+                      turbo_frame: "appointment_details",
+                    action:"click->appointment#select",
+                    turbo: false}%>
+        <% end %>
         <% current_time += interval.minutes %>
       <% end %>
     </div>
-  </div>
-  <div>
-    <p>Veuillez sélectionner un créneau de rendez-vous pour voir le détail</p>
   </div>
 <% end %>

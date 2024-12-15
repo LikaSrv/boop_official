@@ -1,23 +1,21 @@
 <div class="d-flex flex-row justify-content-between" style="height: 100%;">
-  <%# sidebar all my services %>
+  <%# sidebar all my service %>
   <div>
-    <%= render "all_services" %>
+    <%= render "all_service" %>
   </div>
   <%# calendar %>
   <div class="text-center m-4" data-controller="appointment" style="width: 100%;">
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
-    <div class="m-4">
-      <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
-        <p data-appointment-target="date">
-          <%= date %>
-        </p>
-        <% events.each do |event| %>
-          <p><%= event.user.first_name%> <%= event.user.last_name%></p>
-        <% end %>
-      <% end %>
-      </div>
-      <div>
-        <%= render "all_slot" %>
-      </div>
+
+    <div>
+      <%= render "calendar"%>
+    </div>
+    <%@selected_date = params[:date]%>
+    <div>
+      <%= render "all_slot", professional: @professional, selected_date: @selected_date%>
+    </div>
+    <div>
+      <%= render "appointment_details", appointment: @appointment%>
     </div>
   </div>
+</div>

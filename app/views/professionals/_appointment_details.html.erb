@@ -1,0 +1,12 @@
+<%= turbo_frame_tag :appointment_details do %>
+  <div>
+    <% if appointment %>
+      <h3>Détails du rendez-vous</h3>
+      <p>Heure : <%= appointment.start_time.strftime("%H:%M") %></p>
+      <p>Client : <%= appointment.user.first_name %></p>
+      <p>Description : <%= appointment.reason %></p>
+    <% else %>
+      <p>Aucun rendez-vous pour ce créneau.</p>
+    <% end %>
+  </div>
+<% end %>

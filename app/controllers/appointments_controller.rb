@@ -1,5 +1,4 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:pro_show]
 
   def new
     @date = params[:date]
@@ -24,25 +23,7 @@ class AppointmentsController < ApplicationController
     @professional = @appointment.professional
   end
 
-  def pro_index
-    @professionals = Professional.where(user: current_user)
-    @user = current_user
-    @professional = Professional.find(params[:id])
-    start_date = params.fetch(:start_date, Date.today).to_date
-    @appointments = Appointment.where(professional: @professional, start_time: start_date.beginning_of_week..start_date.end_of_week)
-  end
-
-  def pro_show
-    @appointment = Appointment.find(params[:id])
-    render partial: "appointment_details", locals: { appointment: @appointment }
-  end
-
-
   private
-
-  def set_appointment
-    @appointment = Appointment.find(params[:id])
-  end
 
   def appointment_params
     params.require(:appointment).permit(:date, :start_time, :professional_id, :user_id, :address, :reason)

@@ -1,0 +1,14 @@
+<%= turbo_frame_tag :appointment_details do %>
+  <h5 class="text-start m-4"> <strong>Détail du rendez-vous : </strong> </h5>
+  <% @appointment = Appointment.find(appointment) %>
+  <div class="card_pro">
+    <div class="d-flex flex-row">
+      <p>Nom : </p>
+      <h5 class="mx-2"> <strong><%= @appointment.user.first_name%> <%= @appointment.user.last_name%></strong></h5>
+    </div>
+    <div class="d-flex flex-row my-4">
+      <p>Motif du rendez-vous : </p>
+      <h5 class="mx-2"> <%= @appointment.reason%> </h5>
+    </div>
+  </div>
+<% end %>

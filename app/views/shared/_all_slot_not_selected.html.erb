@@ -1,0 +1,20 @@
+<%= turbo_frame_tag :all_slot do %>
+
+  <%# all appointment slot %>
+  <div>
+    <% start_hour = 8 # Heure de début
+        end_hour = 17  # Heure de fin
+        interval = 60  # Durée entre les créneaux en minutes
+      %>
+    <% current_time = Time.parse("#{start_hour}:00") %>
+    <% end_time = Time.parse("#{end_hour}:00") %>
+    <div data-appointment-target="times">
+      <% while current_time <= end_time do %>
+        <a href="#" class="btn btn-outline-primary m-2" data-time="<%= current_time.strftime("%H:%M") %>" data-action="click->appointment#select">
+          <%= current_time.strftime("%H:%M") %>
+        </a>
+        <% current_time += interval.minutes %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

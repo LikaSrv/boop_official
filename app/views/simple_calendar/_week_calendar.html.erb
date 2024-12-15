@@ -1,4 +1,4 @@
-<div class="simple-calendar">
+<div class="simple-calendar" >
   <div class="calendar-heading d-flex justify-content-between align-items-end">
     <%= link_to t('simple_calendar.previous', default: 'Précédente'), calendar.url_for_previous_view, class: "m-2" %>
     <h5 class="m-2"> Les rendez-vous de la semaine </h5>
@@ -9,7 +9,7 @@
       <tr>
         <% date_range.slice(0, 7).each do |day| %>
           <th>
-            <%= t('date.abbr_day_names')[day.wday] %>
+            <%= I18n.t('date.abbr_day_names', locale: :fr)[day.wday] %>
           </th>
         <% end %>
       </tr>
@@ -18,8 +18,9 @@
       <% date_range.each_slice(7) do |week| %>
         <tr>
           <% week.each do |day| %>
-            <%= content_tag :td, class: calendar.td_classes_for(day) do %>
-              <%= link_to pro_show_user_path(current_user, @professional, date: day.strftime("%Y-%m-%d")), class: "full-cell-link" do %>
+            <%= content_tag :td, class: "#{calendar.td_classes_for(day)} " do %>
+              <%= link_to pro_show_user_path(current_user, @professional, date: day.strftime("%Y-%m-%d")),
+                            class: "full-cell-link" do %>
                 <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
                   <% capture_haml(day, sorted_events.fetch(day, []), &passed_block) %>
                 <% else %>

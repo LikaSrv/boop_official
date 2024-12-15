@@ -1,12 +1,13 @@
-<%= turbo_frame_tag :calendar do %>
-  <div class="m-4">
-    <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
+
+<div class="m-4">
+  <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
+    <div>
       <p data-appointment-target="date">
         <%= date %>
       </p>
       <% events.each do |event| %>
         <p><%= event.user.first_name%> <%= event.user.last_name%></p>
       <% end %>
-    <% end %>
-  </div>
-<% end %>
+    </div>
+  <% end %>
+</div>

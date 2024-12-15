@@ -1,21 +1,36 @@
-<div class="d-flex flex-row justify-content-between" style="height: 100%;">
+<div class="d-flex flex-row justify-content-between" style="height: 100%;" data-controller="appointment">
   <%# sidebar all my service %>
   <div>
-    <%= render "all_service" %>
+    <%= render "shared/all_service", selected_professional: @professional %>
   </div>
   <%# calendar %>
-  <div class="text-center m-4" data-controller="appointment" style="width: 100%;">
+  <div class="text-center m-4" style="width: 100%;">
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
-
-    <div>
-      <%= render "calendar"%>
-    </div>
+    <%= render "shared/calendar", selected_date: @selected_date%>
     <%@selected_date = params[:date]%>
     <div>
-      <%= render "all_slot", professional: @professional, selected_date: @selected_date%>
+      <p class="text-start mx-4">Les horaires du rendez-vous : </p>
+      <% if @selected_date.nil? %>
+        <%= turbo_frame_tag :all_slot_not_selected do %>
+          <%= render "shared/all_slot_not_selected", professional: @professional %>
+        <% end %>
+      <%else%>
+        <%= turbo_frame_tag :all_slot do %>
+          <% render "shared/all_slot", professional: @professional, selected_date: @selected_date %>
+        <% end %>
+      <%end%>
     </div>
     <div>
-      <%= render "appointment_details", appointment: @appointment%>
+      <%= turbo_frame_tag :appointment_details do %>
+        <% @appointment = params[:appointment]%>
+        <% if @appointment.nil? %>
+
+        <% else %>
+          <div>
+            <%= render "shared/appointment_details", appointment: @appointment%>
+          </div>
+        <%end%>
+      <% end %>
     </div>
   </div>
 </div>

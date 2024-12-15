@@ -1,11 +1,11 @@
 <div class="d-flex flex-row justify-content-between" style="height: 100%;">
   <%# sidebar all my service %>
   <div>
-    <%= render "all_service" %>
+    <%= render "shared/all_service", selected_professional: nil %>
   </div>
 
   <div class="text-center m-4" style="width: 100%;">
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
-    <p>Veuillez sélectionner un service pour voir votre planning </p>
+    <p class="m-4">Veuillez sélectionner un service pour voir votre planning </p>
   </div>
 </div>

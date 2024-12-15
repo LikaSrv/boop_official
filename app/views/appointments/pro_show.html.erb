@@ -1,6 +1,6 @@
 <div class="d-flex flex-row justify-content-between" style="height: 100%;">
   <div>
-    <%= render "all_services" %>
+    <%= render "shared/all_service" %>
   </div>
   <div class="text-center m-4" data-controller="appointment" style="width: 100%;">
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
@@ -17,7 +17,7 @@
     </div>
     <div>
       <%= turbo_frame_tag :all_slot do %>
-        <% render "all_slot", professional: @professional, selected_date: @selected_date %>
+        <% render "shared/all_slot", professional: @professional, selected_date: @selected_date %>
       <% end %>
     </div>
     <div>

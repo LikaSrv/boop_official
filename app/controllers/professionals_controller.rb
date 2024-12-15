@@ -67,12 +67,11 @@ class ProfessionalsController < ApplicationController
 
   def pro_index
     @professionals = Professional.where(user: current_user)
-    @user = current_user
   end
 
   def pro_show
     @professionals = Professional.where(user: current_user)
-    @professional = Professional.find(params[:id])
+    @professional = Professional.find(params[:professional_id])
 
     start_date = params.fetch(:start_date, Date.today).to_date
     @appointments = Appointment.where(professional: @professional, start_time: start_date.beginning_of_week..start_date.end_of_week)

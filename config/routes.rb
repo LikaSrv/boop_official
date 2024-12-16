@@ -28,4 +28,6 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pets, only: [:index, :show]
+
 end

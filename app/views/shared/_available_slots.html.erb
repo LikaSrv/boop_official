@@ -1,17 +1,33 @@
-<div class="m-4" data-controller="appointment-selected">
+<div class="m-4" style="width: 100%">
   <h4>Prochains rendez-vous disponibles</h4>
-
   <% 7.times do |i| %>
+
+    <% date = (DateTime.current.to_date + i).strftime('%Y-%m-%d')%>
+
     <div class="nav-item dropdown" data-controller="appointment-selected", data-appointment-selected-api-key-value=<%=professional.id%>>
       <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
-        <%= (DateTime.current.to_date + i).strftime('%Y-%m-%d') %>
+
+        <%# get all the appointments for this professional %>
+        <%= date %>
+        <% @appointments = Appointment.where(professional: professional, date: Time.parse(date))%>
+
+        <%# get all the appointment times for this professional %>
+        <% @appointment_times = [] %>
+        <% @appointments.each do |appointment| %>
+          <% @appointment_times << appointment.start_time.strftime("%H:%M") %>
+        <% end%>
       </a>
-      <div class="d-none d-flex justify-content-between mx-2" data-appointment-selected-target="times">
-        <% ["10:00", "11:00", "14:00", "15:00"].each do |time| %>
-          <a href="<%=new_professional_appointment_path(professional)%>" class="btn btn-outline-primary" data-time="<%= time %>" data-action="click->appointment-selected#confirm">
+
+      <%# show all available slot for appointment %>
+      <div class="d-none d-flex justify-content-between mx-2" data-appointment-selected-target="times" style="display: flex; flex-wrap: wrap;">
+        <% ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"].each do |time| %>
+          <a href="<%=new_professional_appointment_path(professional)%>"
+              class="btn btn-outline-primary m-1 <%= 'd-none' if @appointment_times.include?(time)%>"
+              data-time="<%= time %>"
+              data-action="click->appointment-selected#confirm">
             <%= time %>
           </a>
-        <% end %>
+        <%end%>
       </div>
     </div>
   <% end %>

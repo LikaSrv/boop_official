@@ -11,7 +11,7 @@
             <p>Adresse : <%= professional.address %></p>
             <p><%= professional.description %></p>
           </a>
-          <%= render "available_slots", professional: professional%>
+          <%= render "shared/available_slots", professional: professional%>
         </div>
       </div>
     <%end%>

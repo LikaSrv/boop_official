@@ -57,11 +57,6 @@ professional3 = Professional.new(name: "Jean DURAND", address: "Lyon", phone: "0
 professional3.photo.attach(io: walker_file, filename: 'walker.jpg', content_type: 'image/jpg')
 professional3.save!
 
-puts "create appointments"
-
-appointment1 = Appointment.create!(date: "2022-12-12", start_time: "10:00", end_time: "11:00", professional: professional1, user: user1, reason: "Mon chat est malade")
-appointment2 = Appointment.create!(date: "2022-12-13", start_time: "10:00", end_time: "11:00", professional: professional2, user: user2, reason: "Mon chien est sale")
-
 puts "create reviews"
 
 review1 = Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)

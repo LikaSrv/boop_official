@@ -1,5 +1,6 @@
-<div class="m-4">
+<div class="m-4" data-controller="appointment-selected">
   <h4>Prochains rendez-vous disponibles</h4>
+
   <% 7.times do |i| %>
     <div class="nav-item dropdown" data-controller="appointment-selected", data-appointment-selected-api-key-value=<%=professional.id%>>
       <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">

@@ -1,27 +1,32 @@
 <div class="container-all">
   <div class="banner">
-    <div class="container">
+    <div class="container text-end">
       <h1>Adopter avec amour,</h1>
-      <h1>accompagner avec soin</h1>
+      <h1>accompagner avec soin.</h1>
+      <%= link_to professionals_path, class: "btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
+      <span class="icon-custom">🐾</span> Je veux adopter !
+      <%end%>
     </div>
   </div>
+
   <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-    <div class="mt-1 d-flex justify-content-end search-form-control form-group", style="width: 100%;" >
-      <div class="mt-1 d-flex align-items-center search-form-control form-group", style="width: 24%; height:30px;">
+    <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
+      <div class="d-flex align-items-center search-form-control form-group w-form">
         <%= text_field_tag :query,
               params[:query],
-              class: "form-control",
-              placeholder: "Rechercher un professionnel"
+              class: "form-control search-bar bg-secondary ps-5",
+              placeholder: "Rechercher un professionnel..."
           %>
-        <div class="ms-2">
-          <%= submit_tag "Rechercher", class: "btn btn-primary text-white" %>
+        <div>
+          <%= submit_tag "Rechercher", class: "btn btn-primary text-white search-bar p-3" %>
         </div>
       </div>
     </div>
   <% end %>
+
   <h3 class="mt-5">Nos professionnels</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
-    <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg)">
+    <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg);">
       <div class="d-inline text-center">
         <%= link_to "Tous nos professionnels", professionals_path, style: "text-decoration:none; color:white;" %>
       </div>
@@ -66,7 +71,7 @@
       </div>
     </div>
   </div>
-  <h3 class="mt-5">Vos futurs rendez-vous</h3>
+  <h3 class="mt-5 mb-4">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>
     <% if @appointments.exists? %>
       <% @appointments.each do |appointment| %>
@@ -102,7 +107,7 @@
       <% end %>
     <% else %>
       <div class="d-flex justify-content-center align-items-center">
-        <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
+        <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
           <p>Vous n'avez pas de rendez-vous à venir.</p>
           <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png">
         </div>
@@ -110,10 +115,10 @@
     <% end %>
   <% else %>
     <div class="d-flex justify-content-center align-items-center">
-      <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
+      <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
         <p class="text-center">Veuillez vous connecter pour voir vos rendez-vous.</p>
         <%= link_to "Se connecter", new_user_session_path, class: "text-center btn btn-primary text-white"%>
-        <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733842167/business-solution_cqdmbl.png">
+        <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1734099737/business-solution-removebg-preview_c0hr67.png">
       </div>
     </div>
   <% end %>

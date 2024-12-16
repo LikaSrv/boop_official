@@ -3,16 +3,33 @@
   background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)), url('https://res.cloudinary.com/dsbteudoz/image/upload/v1733824584/andrew-s-ouo1hbizWwo-unsplash_ym5hee.jpg');
   background-size: cover;
   background-position: center;
-  padding: 250px 0;
+  padding: 300px 0;
   width: 100%;
+  border-radius: 0 0 25px 25px;
+
+  @media (max-width: 768px) {
+    padding: 200px 0;
+  }
+
+  @media (max-width: 480px) {
+    padding: 150px 0;
+  }
 }
 
 .banner h1 {
   margin: 0;
   color: white;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
-  font-size: 32px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+  font-size: 40px;
   font-weight: lighter;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 }
 
 // Card professionnels
@@ -72,4 +89,30 @@
 
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
+}
+
+
+// icon
+.icon-custom{
+  font-size: 24px;
+  color: black !important;
+}
+
+// btn-spa
+.btn-spa{
+  font-size: 20px;
+
+  @media (max-width: 768px) {
+    height:50px;
+    padding: 5px 15px !important;
+    font-size: 15px;
+    margin-top: 10px !important;
+  }
+
+  @media (max-width: 480px) {
+    height:40px;
+    padding: 0 10px !important;
+    font-size: 12px;
+    margin-top: 10px !important;
+  }
 }

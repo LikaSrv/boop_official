@@ -1,0 +1,31 @@
+.search-bar {
+  border-radius: 32px;
+  height:70px;
+  margin-top: -32px;
+  font-size: 20px;
+
+  @media (max-width: 768px) {
+    height:60px;
+    padding: 0 15px !important;
+    font-size: 14px;
+  }
+
+  @media (max-width: 480px) {
+    height:50px;
+    padding: 0 10px !important;
+    font-size: 12px;
+  }
+}
+
+.w-form{
+  width: 80%;
+
+  @media (max-width: 768px) {
+    width: 95% !important;
+  }
+
+  @media (max-width: 480px) {
+    width: 90% !important;
+  }
+}
+

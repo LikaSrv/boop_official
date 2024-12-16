@@ -20,17 +20,11 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
-  resources :professionals, only: [:show] do
-    member do
-      get 'appointments', to: 'appointments#pro_index', as: :pro_index
-      get 'appointments/:id', to: 'appointments#pro_show', as: :pro_show
-    end
-  end
 
   resources :users, only: [:show, :edit, :destroy] do
     member do
       get 'professionals', to: 'professionals#pro_index', as: :pro_index
-      get '/professionals/:id', to: 'professionals#pro_show', as: :pro_show
+      get 'professionals/:professional_id', to: 'professionals#pro_show', as: :pro_show
     end
   end
 

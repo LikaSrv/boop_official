@@ -1,63 +1,64 @@
 <div>
   <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Retour', :back, class:"text-decoration-none" %>
 </div>
-<div class="container mb-5">
+<div class="container">
   <div class="row justify-content-center">
     <div class="col-12 col-sm-4 col-lg-6">
       <div class="form-devise">
         <i class="fa-solid fa-paw float-end text-primary"></i>
-        <div class="container text-center shadow-lg p-3 mb-5 rounded">
-          <div class="text-center m-4">
-            <h1>Votre rendez-vous est confirmé!</h1>
+          <div class="text-center m-4 my-5">
+            <h1>Détails de votre rendez-vous</h1>
           </div>
           <button class="d-none">Déplacer rendez-vous</button>
           <button class="d-none">Annuler rendez-vous</button>
-          <div class="card d-flex flex-column mb-3">
-            <div class="card-header">
-              <i class="fa-regular fa-user"></i>
-              <p> Le vétérinaire :</p>
+          <div class=" d-flex flex-column justify-content-center align-items-center">
+            <div class="card mb-3 d-flex justify-content-center", style="width: 90%;">
+              <div class="card-header d-flex justify-content-center align-items-center">
+                <i class="fa-regular fa-user me-3"></i>
+                <p> Le vétérinaire :</p>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <%= image_tag url_for(@appointment.professional.photo), alt:"Photo du professionnel", class:"small-rounded-circle me-4"%>
+                <h5 class="card-title"><%=@professional.name%></h5>
+              </div>
             </div>
-            <div class="card-body">
-              <h5 class="card-title"><%=@professional.name%></h5>
+            <div class="card d-flex justify-content-center mb-3", style="width: 90%;">
+              <div class="card-header d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-location-dot me-3"></i>
+                <p> Addresse :</p>
+              </div>
+              <div class="card-body d-flex justify-content-center">
+                <h5 class="card-title"><%= @professional.address %></h5>
+              </div>
+            </div>
+            <div class="card d-flex justify-content-center mb-3", style="width: 90%;">
+              <div class="card-header d-flex justify-content-center align-items-center">
+                <i class="fa-solid fa-phone me-3"></i>
+                <p> Téléphone :</p>
+              </div>
+              <div class="card-body d-flex justify-content-center">
+                <h5 class="card-title"><%= @professional.phone %></h5>
+              </div>
+            </div>
+            <div class="card d-flex justify-content-center mb-3", style="width: 90%;">
+              <div class="card-header d-flex justify-content-center align-items-center">
+                <i class="fa-regular fa-calendar me-3"></i>
+                <p> Date du rendez-vous:</p>
+              </div>
+              <div class="card-body d-flex justify-content-center">
+                <h5 class="card-title"><%= @appointment.date.strftime("%d/%m/%Y") %></h5>
+              </div>
+            </div>
+            <div class="card d-flex justify-content-center mb-3", style="width: 90%;">
+              <div class="card-header d-flex justify-content-center align-items-center">
+                <i class="fa-regular fa-clock me-3"></i>
+                <p> Heure du rendez-vous:</p>
+              </div>
+              <div class="card-body d-flex justify-content-center">
+                <h5 class="card-title"><%= @appointment.start_time.strftime("%H:%M") %></h5>
+              </div>
             </div>
           </div>
-          <div class="card d-flex flex-column mb-3">
-            <div class="card-header">
-              <i class="fa-solid fa-location-dot"></i>
-              <p> Addresse :</p>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= @professional.address %></h5>
-            </div>
-          </div>
-          <div class="card d-flex flex-column mb-3">
-            <div class="card-header">
-              <i class="fa-solid fa-phone"></i>
-              <p> Téléphone :</p>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= @professional.phone %></h5>
-            </div>
-          </div>
-          <div class="card d-flex flex-column mb-3">
-            <div class="card-header">
-              <i class="fa-regular fa-calendar"></i>
-              <p> Date du rendez-vous:</p>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= @appointment.date.strftime("%d/%m/%Y") %></h5>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header">
-              <i class="fa-regular fa-clock"></i>
-              <p> Heure du rendez-vous:</p>
-            </div>
-            <div class="card-body">
-              <h5 class="card-title"><%= @appointment.start_time.strftime("%H:%M") %></h5>
-            </div>
-          </div>
-        </div>
         <div class="text-center m-4">
           <div class="p-2">
             <%= link_to 'Retour à la page d\'accueil', root_path, class: 'btn btn-primary' %>

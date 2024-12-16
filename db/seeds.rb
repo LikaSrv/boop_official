@@ -10,6 +10,9 @@
 
 require 'open-uri'
 
+require "json"
+require "rest-client"
+
 
 puts "destroy all reviews"
 Review.destroy_all
@@ -66,5 +69,21 @@ puts "create reviews"
 
 review1 = Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)
 review2 = Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
+
+puts "create pets"
+# pet2 = Pet.create!(name: "Felix", species: "Chat", age: 5, user_id: user2.id)
+# pet3 = Pet.create!(name: "Rex", species: "Chien", age: 3, user_id: user3.id)
+# pet4 = Pet.create!(name: "Médor", species: "Chien", age: 7, user_id: user4.id)
+
+response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
+repos = JSON.parse(response)
+repos["results"].each do |animal|
+  file = URI.parse(animal["image"]).open
+  pet = Pet.new(name: animal["name"], species: animal["species"])
+  pet.photo.attach(io: file, filename: 'pet.jpg', content_type: 'image/jpg')
+  pet.save!
+end
+
+# puts repos["results"].size
 
 puts "seed done"

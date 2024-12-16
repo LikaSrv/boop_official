@@ -8,9 +8,8 @@
     <p>Nom : <strong> <%=@user.first_name%> </strong></p>
     <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
     <p>Email : <strong> <%=@user.email%> </strong></p>
-    <div class="d-flex flex-row justify-content-around">
-      <%= link_to "Modifier mon profil", edit_user_path(current_user), class: "btn btn-primary my-4" %>
-      <%= link_to "Supprimer mon profil", user_path(current_user), class: "btn btn-outline-danger my-4" %>
+    <div>
+      <%= link_to "Modifier mon profil", edit_user_registration_path(current_user), class: "btn btn-primary my-4" %>
     </div>
   </div>
   <div class="col card_pro p-4 m-4 text-center">

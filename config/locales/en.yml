@@ -29,7 +29,3 @@
 
 en:
   hello: "Hello world"
-
-fr:
-  date:
-    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]

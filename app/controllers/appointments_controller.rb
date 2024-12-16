@@ -9,6 +9,7 @@ class AppointmentsController < ApplicationController
 
   def create
     @appointment = Appointment.new(appointment_params)
+    @appointment.start_time = Time.zone.parse("#{params[:appointment][:date]} #{params[:appointment][:start_time]}")
     @appointment.professional = Professional.find(params[:professional_id])
     @appointment.user = current_user
     if @appointment.save!

@@ -74,8 +74,7 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.find(params[:professional_id])
 
     start_date = params.fetch(:start_date, Date.today).to_date
-    @appointments = Appointment.where(professional: @professional, start_time: start_date.beginning_of_week..start_date.end_of_week)
-
+    @appointments = Appointment.where(professional: @professional, date: start_date.beginning_of_week..start_date.end_of_week)
   end
 
   def edit

@@ -90,3 +90,29 @@
 h1, h2, h3, h4, h5, h6, p {
   margin: 0;
 }
+
+
+// icon
+.icon-custom{
+  font-size: 24px;
+  color: black !important;
+}
+
+// btn-spa
+.btn-spa{
+  font-size: 20px;
+
+  @media (max-width: 768px) {
+    height:50px;
+    padding: 5px 15px !important;
+    font-size: 15px;
+    margin-top: 10px !important;
+  }
+
+  @media (max-width: 480px) {
+    height:40px;
+    padding: 0 10px !important;
+    font-size: 12px;
+    margin-top: 10px !important;
+  }
+}

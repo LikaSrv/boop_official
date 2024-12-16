@@ -13,7 +13,18 @@
         </div>
         <div class="text-center rounded-3">
 
-          <%= simple_form_for [@professional, Appointment.new] do |a| %>
+          <%= simple_form_for [@professional, Appointment.new], html:{
+            data: {
+            controller: "alert",
+            alert_icon_value: "success",
+            alert_title_value: "Félicitation!",
+            alert_html_value: "Le rendez-vous a bien été confirmé!",
+            confirm_button_text_value: "Voir les détails",
+            confirm_button_color_value: "#EFA690",
+            action: "submit->alert#initSweetalert",
+            turbo: false,
+          }
+          } do |a| %>
             <div class="card d-flex flex-column mb-3">
               <div class="card-header rounded-3">
                 <i class="fa-regular fa-user"></i>
@@ -52,7 +63,7 @@
               </div>
               <div class="card-body rounded-3">
                 <h5>
-              <%= a.input :reason, label: false, as: :text, input_html: { rows: 3 }%>
+                <%= a.input :reason, label: false, as: :text, input_html: { rows: 3 }%>
                 </h5>
               </div>
             </div>

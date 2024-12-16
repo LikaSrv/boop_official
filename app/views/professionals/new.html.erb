@@ -7,7 +7,7 @@
 
             <%= simple_form_for @professional do |p|%>
                 <%= p.input :name, label: "Nom du professionnel" %>
-                <%= p.input :specialty, label: "Spécialité", collection: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter", "Autre"] %>
+                <%= p.input :specialty, label: "Spécialité", collection: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Pension", "Promeneur", "Nutritionniste", "Petsitter"] %>
                 <%= p.input :phone, label: "Numéro de téléphone" %>
                 <%= p.input :email, label: "Adresse email" %>
                 <%= p.input :address,

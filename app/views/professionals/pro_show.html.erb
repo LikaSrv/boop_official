@@ -6,7 +6,11 @@
   <%# calendar %>
   <div class="text-center m-4" style="width: 100%;">
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
-    <%= render "shared/calendar", selected_date: @selected_date%>
+    <% if @date %>
+      <%= render "shared/calendar", start_date: @date.beginning_of_week%>
+    <%else%>
+      <%= render "shared/calendar", start_date: Date.today.beginning_of_week%>
+    <%end%>
     <%@selected_date = params[:date]%>
     <div>
       <p class="text-start mx-4">Les horaires du rendez-vous : </p>
@@ -24,7 +28,6 @@
       <%= turbo_frame_tag :appointment_details do %>
         <% @appointment = params[:appointment]%>
         <% if @appointment.nil? %>
-
         <% else %>
           <div>
             <%= render "shared/appointment_details", appointment: @appointment%>

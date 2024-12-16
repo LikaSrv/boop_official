@@ -1,0 +1,26 @@
+<%= turbo_frame_tag :all_slot do %>
+  <div>
+    <% start_hour = 8 # Heure de début
+        end_hour = 17  # Heure de fin
+        interval = 60  # Durée entre les créneaux en minutes
+      %>
+    <% current_time = Time.parse("#{selected_date} #{start_hour}:00") %>
+    <% end_time = Time.parse("#{selected_date} #{end_hour}:00") %>
+    <div data-appointment-target="times">
+      <% while current_time <= end_time do %>
+        <%@appointment = Appointment.find_by(start_time: current_time.strftime("%Y-%m-%d %H:%M"), professional: professional)%>
+        <% if (@appointment.nil?) %>
+          <%= link_to current_time.strftime("%H:%M"), pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),
+              class:"btn btn-outline-primary m-2",
+              data: {time: current_time.strftime("%H:%M")}%>
+        <% else %>
+          <%= link_to current_time.strftime("%H:%M"), pro_show_user_path(current_user, professional,date: @selected_date, appointment: @appointment),
+              class:"btn btn-outline-primary m-2 btn-info text-dark",
+              data: {time: current_time.strftime("%H:%M"),
+                    turbo: false}%>
+        <% end %>
+        <% current_time += interval.minutes %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

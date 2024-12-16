@@ -1,32 +1,36 @@
-<div class="d-flex flex-row " style="height: 100%;">
-  <div class="d-flex flex-column shadow"  style="width: 300px; height: 100vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px">
-    <div class="text-center m-4">
-      <h3> Mes Services </h3>
-    </div>
-    <% @professionals.each do |professional| %>
-      <a href="<%= pro_show_user_path(@user, professional) %>" class="btn btn-outline-info m-1 text-black rounded rounded-4">
-        <%= professional.specialty %>
-      </a>
-    <% end %>
+<div class="d-flex flex-row justify-content-between" style="height: 100%;" data-controller="appointment">
+  <%# sidebar all my service %>
+  <div>
+    <%= render "shared/all_service", selected_professional: @professional %>
   </div>
-  <div class="text-center m-4" data-controller="appointment">
-    <div >
-      <%= week_calendar(events: @appointments, professional: @professional) do |date, events| %>
-        <p data-appointment-target="date">
-          <%= date %>
-        </p>
-        <% events.each do |event| %>
-          <p><%= event.user.first_name%> <%= event.user.last_name%></p>
+  <%# calendar %>
+  <div class="text-center m-4" style="width: 100%;">
+    <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
+    <%= render "shared/calendar", selected_date: @selected_date%>
+    <%@selected_date = params[:date]%>
+    <div>
+      <p class="text-start mx-4">Les horaires du rendez-vous : </p>
+      <% if @selected_date.nil? %>
+        <%= turbo_frame_tag :all_slot_not_selected do %>
+          <%= render "shared/all_slot_not_selected", professional: @professional %>
         <% end %>
-      <% end %>
+      <%else%>
+        <%= turbo_frame_tag :all_slot do %>
+          <% render "shared/all_slot", professional: @professional, selected_date: @selected_date %>
+        <% end %>
+      <%end%>
     </div>
     <div>
-      <%= turbo_frame_tag :all_slot do %>
-        <% render "all_slot", professional: @professional %>
+      <%= turbo_frame_tag :appointment_details do %>
+        <% @appointment = params[:appointment]%>
+        <% if @appointment.nil? %>
+
+        <% else %>
+          <div>
+            <%= render "shared/appointment_details", appointment: @appointment%>
+          </div>
+        <%end%>
       <% end %>
-    </div>
-    <div>
-      <p>Veuillez sélectionner un créneau de rendez-vous pour voir le détail</p>
     </div>
   </div>
 </div>

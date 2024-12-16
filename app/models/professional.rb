@@ -4,7 +4,7 @@ class Professional < ApplicationRecord
   validates :name, :address, :email, :specialty, :description, :photo, presence: true
   validates :phone, numericality: { only_integer: true }, presence: true
   validates :email, uniqueness: true
-  validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter", "Autre"]}
+  validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
 
   # photo with cloudinary
   has_one_attached :photo

@@ -5,7 +5,7 @@
         <div class="card_pro d-flex flex-row" style="width: 900px">
 
           <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black" style="width: 400px">
-            <%= cl_image_tag professional.photo.key, crop: :fill, width: 380%>
+            <%= cl_image_tag professional.photo.key, crop: :fill, width: 380, height: 300%>
             <h2><%= professional.name %> </h2>
             <p>Specialité : <%= professional.specialty %></p>
             <p>Adresse : <%= professional.address %></p>

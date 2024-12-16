@@ -34,7 +34,6 @@ class ProfessionalsController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {professional: professional})
       }
     end
-
   end
 
   def new

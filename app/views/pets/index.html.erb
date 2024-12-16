@@ -6,11 +6,11 @@
   <h1 class="text-center my-4">Animaux disponibles pour adoption</h1>
   <div class="row">
     <% @pets.each do |pet| %>
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <%= image_tag pet.photo.url, class: "card-img-top" if pet.photo.present? %>
+      <div class="col-md-4 mb-4" style="width: 300px">
+        <div class="card_pro">
+          <%= image_tag pet.photo.url, class: "card-img-top", style: "object-fit: cover;" if pet.photo.present?%>
           <div class="card-body">
-            <h5 class="card-title"><%= pet.name %></h5>
+            <h5 class="card-title"><strong><%= pet.name %></strong></h5>
             <p class="card-text">Âge: <%= pet.age %></p>
             <p class="card-text">Sexe: <%= pet.sex %></p>
             <p class="card-text">Espèce: <%= pet.species %></p>

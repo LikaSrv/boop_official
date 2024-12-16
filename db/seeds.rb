@@ -74,7 +74,7 @@ response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/sear
 repos = JSON.parse(response)
 repos["results"].each do |animal|
   file = URI.parse(animal["image"]).open
-  pet = Pet.new(name: animal["name"], species: animal["species"])
+  pet = Pet.new(name: animal["name"], species: animal["species"], description: animal["description"], age: animal["age"])
   pet.photo.attach(io: file, filename: 'pet.jpg', content_type: 'image/jpg')
   pet.save!
 end

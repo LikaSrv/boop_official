@@ -8,7 +8,7 @@
     <% end_time = Time.parse("#{selected_date} #{end_hour}:00") %>
     <div data-appointment-target="times">
       <% while current_time <= end_time do %>
-        <%@appointment = Appointment.find_by(start_time: current_time.strftime("%Y-%m-%d %H:%M"), professional: professional)%>
+        <%@appointment = Appointment.find_by(start_time: current_time, professional: professional)%>
         <% if (@appointment.nil?) %>
           <%= link_to current_time.strftime("%H:%M"), pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),
               class:"btn btn-outline-primary m-2",

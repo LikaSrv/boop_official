@@ -23,11 +23,14 @@ Appointment.destroy_all
 puts "destroy all professionals"
 Professional.destroy_all
 
+puts "destroy all pets"
+Pet.destroy_all
+
 puts "destroy all users"
 User.destroy_all
 
-puts "destroy all pets"
-Pet.destroy_all
+puts "destroy all animals"
+Animal.destroy_all
 
 puts "create users"
 

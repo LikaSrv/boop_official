@@ -4,5 +4,5 @@ class Appointment < ApplicationRecord
   belongs_to :professional
   belongs_to :user
 
-  scope :upcoming, -> { where('date >= ?', Time.now).order(date: :asc) }
+  scope :upcoming_and_today, -> {where('start_time >= ?', Time.zone.now).order(start_time: :asc)}
 end

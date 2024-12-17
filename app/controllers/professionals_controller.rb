@@ -3,7 +3,7 @@ class ProfessionalsController < ApplicationController
 
   def home
     if user_signed_in?
-      @appointments = current_user.appointments.upcoming
+      @appointments = current_user.appointments.upcoming_and_today
     end
 
     @all_specialty = [

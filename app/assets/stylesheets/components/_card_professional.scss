@@ -12,3 +12,15 @@
   grid-template-columns: 2fr 1fr;
   gap: 16px;
 }
+
+.card_pro_index {
+  width: 90%;
+
+  @media (max-width: 768px) {
+    width: 90%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+}

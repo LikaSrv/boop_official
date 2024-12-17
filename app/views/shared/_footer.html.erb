@@ -1,40 +1,66 @@
 <footer class="bg-light text-center text-lg-start mt-5" style="sticky-bottom: 0;">
   <div class="container p-4">
     <div class="row">
-      <div class="col-lg-6 col-md-12 mb-4">
+      <div class="col-lg-8 col-sm-7">
         <%= image_tag  "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824548/Boop_-_LOGO_FINAL_RVB_q1laee.png", style:"width: 30%;" %>
-        <i class="fa-solid fa-paw float-end text-primary"></i>
       </div>
+      <div class="col-lg-4 col-sm-7 d-flex flex-row">
+        <div>
+          <ul class="list-unstyled mb-0 text-start">
+           <h5 class="text-uppercase">Liens utiles</h5>
+            <li>
+              <%= link_to 'Accueil', root_path, class: 'text-dark' %>
+            </li>
+            <li>
+              <%= link_to 'À propos', about_path, class: 'text-dark' %>
+            </li>
+            <li>
+              <%= link_to 'Contact', contact_path, class: 'text-dark' %>
+            </li>
+            <li>
+              <%= link_to 'Conditions générales', terms_path, class: 'text-dark' %>
+            </li>
+          </ul>
+        </div>
 
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h5 class="text-uppercase">Liens utiles</h5>
-        <ul class="list-unstyled mb-0">
-          <li>
-            <%= link_to 'Accueil', root_path, class: 'text-dark' %>
-          </li>
-          <li>
-            <%= link_to 'À propos', about_path, class: 'text-dark' %>
-          </li>
-          <li>
-            <%= link_to 'Contact', contact_path, class: 'text-dark' %>
-          </li>
-          <li>
-            <%= link_to 'Conditions générales', terms_path, class: 'text-dark' %>
-          </li>
-        </ul>
+        <div>
+
+              <h5 class="text-uppercase">Suivez-nous</h5>
+                      <ul class="list-inline footer-links">
+                          <li class="list-inline-item">
+                              <a href="https://www.instagram.com/boop_officiel/">
+                                  <i class="fab fa-instagram"></i>
+                              </a>
+                          </li>
+
+                          <li class="list-inline-item">
+                              <a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1">
+                                  <i class="fab fa-tiktok"></i>
+                              </a>
+                          </li>
+
+                          <%# <li class="list-inline-item">
+                              <a href="#">
+                                  <i class="fab fa-facebook"></i>
+                              </a>
+                          </li>
+
+                          <li class="list-inline-item">
+                              <a href="#">
+                                  <i class="fab fa-twitter"></i>
+                              </a>
+                          </li> %>
+
+                      </ul>
+                  </div>
+              </div>
+
+
+        </div>
       </div>
-
-      <div class="col-lg-3 col-md-6 mb-4">
-        <h5 class="text-uppercase">Suivez-nous</h5>
-          <ul class="social-links">
-           <li><a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1" target="_blank"><i class="fab fa-tiktok"></i></a></li>
-           <li><a href="https://www.instagram.com/boop_officiel/" target="_blank"><i class="fab fa-instagram"></i></a></li>
-            <li><a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a></li>
-           <li><a href="https://www.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a></li> </ul>
-       </div>
     </div>
   </div>
+
 
 
   <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">

@@ -1,24 +1,24 @@
-
 <div>
   <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
 </div>
 <div class="container">
-  <h1 class="text-center my-4">Animaux disponibles pour adoption</h1>
-  <div class="row">
+  <h1 class="text-center my-4">🐾 Ils cherchent une nouvelle famille 🏠</h1>
+  <div class="d-flex flex-wrap justify-content-center">
     <% @pets.each do |pet| %>
-      <div class="col-md-4 mb-4" style="width: 300px">
-        <div class="card_pro">
-          <%= image_tag pet.photo.url, class: "card-img-top", style: "object-fit: cover;" if pet.photo.present?%>
-          <div class="card-body">
-            <h5 class="card-title"><strong><%= pet.name %></strong></h5>
-            <p class="card-text">Âge: <%= pet.age %></p>
-            <p class="card-text">Sexe: <%= pet.sex %></p>
-            <p class="card-text">Espèce: <%= pet.species %></p>
-            <p class="card-text"><%= truncate(pet.description, length: 100) %></p>
-            <%= link_to 'Voir plus', pet_path(pet), class: 'btn btn-primary' %>
+      <a href="<%=pet_path(pet)%>" style="text-decoration: none; color: black; margin: 20px">
+        <div class="col">
+          <div class="m-2 card_pro p-0 d-flex flex-column" style="width: 300px; aspect-ratio: 1/1; overflow: hidden;">
+            <!-- En-tête -->
+            <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
+              <%=pet.name %>
+            </div>
+            <!-- Image qui prend le reste de la place -->
+            <div class="flex-grow-1" style="overflow: hidden;">
+              <%= image_tag pet.photo, style: "width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
           </div>
         </div>
-      </div>
+      </a>
     <% end %>
   </div>
 </div>

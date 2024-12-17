@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get 'à propos', to: 'pages#about', as: 'about'
+  get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'terms', to: 'pages#terms', as: 'terms'
     # autres routes...

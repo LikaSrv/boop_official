@@ -26,6 +26,9 @@ Professional.destroy_all
 puts "destroy all users"
 User.destroy_all
 
+puts "destroy all pets"
+Pet.destroy_all
+
 puts "create users"
 
 user1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
@@ -66,16 +69,18 @@ review1 = Review.create!(content: "Super professionnel", rating: 5, professional
 review2 = Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
 
 puts "create pets"
-# pet2 = Pet.create!(name: "Felix", species: "Chat", age: 5, user_id: user2.id)
-# pet3 = Pet.create!(name: "Rex", species: "Chien", age: 3, user_id: user3.id)
-# pet4 = Pet.create!(name: "Médor", species: "Chien", age: 7, user_id: user4.id)
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
 repos = JSON.parse(response)
 repos["results"].each do |animal|
   file = URI.parse(animal["image"]).open
-  pet = Pet.new(name: animal["name"], species: animal["species"], description: animal["description"], age: animal["age"])
-  pet.photo.attach(io: file, filename: 'pet.jpg', content_type: 'image/jpg')
+  pet = Pet.new(name: animal["name"],
+                species: animal["races_label"],
+                description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
+                age: animal["age"],
+                sex: animal["sex_label"],
+                shelter: animal["establishment"]["name"],
+                photo: animal["image"])
   pet.save!
 end
 

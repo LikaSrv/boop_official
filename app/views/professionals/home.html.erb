@@ -4,11 +4,10 @@
       <h1>Adopter avec amour,</h1>
       <h1>accompagner avec soin.</h1>
       <%= link_to pets_path, class: "btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
-      <span class="icon-custom">🐾</span> Je veux adopter !
+        <span class="icon-custom">🐾</span> Je veux adopter !
       <%end%>
     </div>
   </div>
-
   <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
     <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
       <div class="d-flex align-items-center search-form-control form-group w-form">
@@ -23,36 +22,34 @@
       </div>
     </div>
   <% end %>
-
   <h3 class="mt-5">Nos professionnels</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
-
-    <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg);">
-      <div class="d-inline text-center">
-        <%= link_to "Tous nos professionnels", professionals_path, style: "text-decoration:none; color:white;" %>
+    <a href="<%=professionals_path%>"  style="text-decoration:none; color: white;">
+      <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg);">
+        <h4>Tous nos professionnels</h4>
       </div>
-    </div>
-
+    </a>
     <% (0...@all_specialty.length).each do |i| %>
       <% specialty = @all_specialty[i][:specialty]%>
       <% photo = @all_specialty[i][:photo]%>
       <% if @available_specialty.include?(specialty)%>
-        <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>);">
-          <div class="d-inline text-center" >
-            <%= link_to specialty, professionals_path(specialty: specialty), style: "text-decoration:none; color:white;" %>
+        <a href="<%=professionals_path(specialty: specialty)%>" style="text-decoration:none; color: white;">
+          <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>);">
+            <h4><%=specialty%></h4>
           </div>
-        </div>
+        </a>
       <% else %>
-        <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>);">
-          <div class="d-inline text-center" >
-            <%= link_to specialty, professionals_path(specialty: specialty), style: "text-decoration:none; color:white; cursor: default;", onclick: "return false;" %>
-            <p>Bientôt disponible</p>
+        <a href="<%=professionals_path(specialty: specialty)%>" style="text-decoration:none; color: white;">
+          <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>);">
+            <div class="d-inline text-center" >
+              <h4><%=specialty%></h4>
+              <p>Bientôt disponible</p>
+            </div>
           </div>
-        </div>
+        </a>
       <% end %>
     <% end %>
   </div>
-
   <%# appointments to come %>
   <h3 class="mt-5 mb-4">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>

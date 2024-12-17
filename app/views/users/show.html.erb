@@ -8,7 +8,7 @@
         <%# my profil %>
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <h2> <strong> Mon Profil </strong> </h2>
-          <%= cl_image_tag @user.photo.key, width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;" %>
+          <%= cl_image_tag @user.photo.key, width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
           <p>Nom : <strong> <%=@user.first_name%> </strong></p>
           <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
           <p>Email : <strong> <%=@user.email%> </strong></p>
@@ -20,7 +20,7 @@
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <div class="d-flex flex-row justify-content-center">
             <h2 class="mx-3"> <strong> Mes animaux </strong> </h2>
-            <a href="<%=new_pet_path(current_user)%>" class="btn btn-primary rounded-circle shadow " >
+            <a href="<%=new_pet_path(current_user)%>" class="btn btn-primary rounded-circle shadow object-fit-cover" >
               <i class="fa-solid fa-plus"></i>
             </a>
           </div>
@@ -28,7 +28,6 @@
 
           <% if @pets.empty? %>
             <p class="mt-3">Vous n'avez pas d'animaux</p>
-
             <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1734435780/dog-thinking-about-bone-removebg-preview_nlayll.png" alt="pas d'animaux" style="width: 200px; ">
           <% else %>
             <div class="d-flex flex-row justify-content-center" >
@@ -43,11 +42,13 @@
       </div>
     </div>
     <%# my appointments %>
-    <div class="row card_pro p-4 m-3 text-center">
+    <div class="row card_pro p-4 mx-3 text-center">
       <h2 class="mb-3"> <strong> Mes rendez-vous </strong> </h2>
       <% if @appointments.empty? %>
-        <p class="mt-3">Vous n'avez pas de rendez-vous</p>
-        <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png">
+        <div class="text-center">
+          <p >Vous n'avez pas de rendez-vous</p>
+          <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png" alt="pas de rdv" style="width: 200px;" >
+        </div>
       <% else %>
         <% @appointments.each do |a| %>
           <div class="col">

@@ -68,22 +68,20 @@ puts "create reviews"
 review1 = Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)
 review2 = Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
 
-puts "create pets"
+puts "create animals"
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
 repos = JSON.parse(response)
 repos["results"].each do |animal|
   file = URI.parse(animal["image"]).open
-  pet = Pet.new(name: animal["name"],
+  animal = Animal.new(name: animal["name"],
                 species: animal["races_label"],
                 description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
                 age: animal["age"],
                 sex: animal["sex_label"],
                 shelter: animal["establishment"]["name"],
                 photo: animal["image"])
-  pet.save!
+  animal.save!
 end
-
-# puts repos["results"].size
 
 puts "seed done"

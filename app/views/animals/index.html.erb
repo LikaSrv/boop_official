@@ -3,6 +3,20 @@
 </div>
 <div class="container">
   <h1 class="text-center my-4">🐾 Ils cherchent une nouvelle famille 🏠</h1>
+<div class="row justify-content-center">
+  <div class="col-sm-8 my-3">
+    <%= form_with url: animals_path, method: :get, class: "d-flex" do %>
+      <%= text_field_tag :query,
+            params[:query],
+            class: "form-control",
+            placeholder: "Rechercher"
+        %>
+      <%= submit_tag "Recherche", name: "", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+
   <div class="d-flex flex-wrap justify-content-center">
     <% @animals.each do |animal| %>
       <a href="<%=animal_path(animal)%>" style="text-decoration: none; color: black; margin: 20px">

@@ -5,6 +5,8 @@
   margin: 8px;
   padding: 8px;
   box-shadow: 4px 4px 2px rgb(219, 216, 216);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+
 
   // @media (max-width: 480px) {
   //   font-size: 0.8rem;
@@ -13,6 +15,7 @@
   //   flex-direction: column;
   //   justify-content: center;
   // }
+
 }
 
 .grid-professional-show {
@@ -36,4 +39,9 @@
   @media (max-width: 480px) {
     width: 100%;
   }
+}
+
+.card_pro.hovered {
+  transform: scale(1.05); /* Agrandissement à 105% */
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2); /* Optionnel : ajoute une ombre */
 }

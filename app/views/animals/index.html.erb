@@ -17,11 +17,15 @@
 </div>
 
 
-  <div class="d-flex flex-wrap justify-content-center">
+  <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
     <% @animals.each do |animal| %>
-      <a href="<%=animal_path(animal)%>" style="text-decoration: none; color: black; margin: 20px">
+      <a  href="<%=animal_path(animal)%>"
+          style="text-decoration: none; color: black; margin: 20px">
         <div class="col">
-          <div class="m-2 card_pro p-0 d-flex flex-column" style="width: 300px; aspect-ratio: 1/1; overflow: hidden;">
+          <div  class="m-2 card_pro p-0 d-flex flex-column"
+                style="width: 300px; aspect-ratio: 1/1; overflow: hidden;"
+                data-animal-index-target="animal"
+                data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
             <!-- En-tête -->
             <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
               <%=animal.name %>

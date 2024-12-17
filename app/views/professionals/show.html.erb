@@ -23,7 +23,7 @@
           <h4>Description : </h4>
           <p><%=@professional.description%></p>
         </div>
-        <div class="card_pro">
+        <div class="card_pro" data-controller="alert">
           <div class="d-flex flex-row justify-content-between">
             <h4>Les avis : </h4>
             <div class="d-flex flex-row align-items-center">
@@ -36,7 +36,8 @@
               <p class="m-0 mx-1">(<%=@reviews.count%>)</p>
             </div>
           </div>
-          <div class="mt-2 d-flex flex-column justify-content-center align-items-center">
+          <%# list of reviews %>
+          <div class="mt-2 d-flex flex-column justify-content-center align-items-center" id="reviews-container">
             <% if @reviews.empty? %>
               <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
                 <p class="text-center">Soyez le premier à mettre un avis !</p>
@@ -55,7 +56,12 @@
             <% end %>
           </div>
           <div class="d-flex justify-content-center mt-3">
-            <%= link_to "Ajouter un avis",  new_professional_review_path(@professional, @appointment), class:"btn btn-primary text-white mt-3", style:"width: 80%;"%>
+            <%= link_to "Ajouter un avis",
+                        "#",
+                        class: "btn btn-primary text-white mt-3",
+                        style: "width: 80%;",
+                        data: { controller: "alert", action: "click->alert#reviewSweetalert", professional_id: @professional.id } %>
+
           </div>
         </div>
       </div>

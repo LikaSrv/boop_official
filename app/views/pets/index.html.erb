@@ -3,32 +3,18 @@
 </div>
 <div class="container">
   <h1 class="text-center my-4">🐾 Ils cherchent une nouvelle famille 🏠</h1>
-<div class="row justify-content-center">
-  <div class="col-sm-8 my-3">
-    <%= form_with url: animals_path, method: :get, class: "d-flex" do %>
-      <%= text_field_tag :query,
-            params[:query],
-            class: "form-control",
-            placeholder: "Rechercher"
-        %>
-      <%= submit_tag "Recherche", name: "", class: "btn btn-primary" %>
-    <% end %>
-  </div>
-</div>
-
-
   <div class="d-flex flex-wrap justify-content-center">
-    <% @animals.each do |animal| %>
-      <a href="<%=animal_path(animal)%>" style="text-decoration: none; color: black; margin: 20px">
+    <% @pets.each do |pet| %>
+      <a href="<%=pet_path(pet)%>" style="text-decoration: none; color: black; margin: 20px">
         <div class="col">
           <div class="m-2 card_pro p-0 d-flex flex-column" style="width: 300px; aspect-ratio: 1/1; overflow: hidden;">
             <!-- En-tête -->
             <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
-              <%=animal.name %>
+              <%=pet.name %>
             </div>
             <!-- Image qui prend le reste de la place -->
             <div class="flex-grow-1" style="overflow: hidden;">
-              <%= image_tag animal.photo, style: "width: 100%; height: 100%; object-fit: cover;" %>
+              <%= image_tag pet.photo, style: "width: 100%; height: 100%; object-fit: cover;" %>
             </div>
           </div>
         </div>

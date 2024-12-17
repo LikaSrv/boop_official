@@ -1,0 +1,21 @@
+<div>
+  <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
+</div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-4">
+      <div class="form-devise">
+        <i class="fa-solid fa-paw float-end text-primary"></i>
+        <h3 class="text-center my-4">Ajouter un nouvel animal</h3>
+        <%= simple_form_for @pet do |p| %>
+          <%= p.input :name, label: "Nom de l'animal" %>
+          <%= p.input :age, label: "Âge"%>
+          <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
+          <%= p.input :species, label: "Espèce" %>
+          <%= p.input :photo, label: "Photo" %>
+          <%= p.button :submit, "Ajouter l'animal", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

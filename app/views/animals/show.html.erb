@@ -4,14 +4,16 @@
 <div class="container">
   <div class="row">
     <div class="col card_pro">
-      <%= image_tag @pet.photo, class: "card-img-top" if @pet.photo.present? %>
+      <%= image_tag @animal.photo, class: "card-img-top" if @animal.photo.present? %>
     </div>
     <div class="col card_pro d-flex flex-column justify-content-between">
       <div>
-        <h3 class="text-center"><%= @pet.name %></h3>
-        <p class="my-2">Âge: <%= @pet.age %></p>
-        <p>Sexe: <%= @pet.sex %></p>
-        <p class="my-2">Race: <%= @pet.species %></p>
+        <h3 class="text-center"><%= @animal.name %></h3>
+        <p class="my-2">Âge: <%= @animal.age %></p>
+        <p>Sexe: <%= @animal.sex %></p>
+        <p class="my-2">Race: <%= @animal.species %></p>
+        <p>Description: <%= @animal.description %></p>
+        <p class="my-2">Refuge: <%=@animal.shelter%></p>
       </div>
       <div>
         <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
@@ -19,4 +21,3 @@
     </div>
   </div>
 </div>
-  

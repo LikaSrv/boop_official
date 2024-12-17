@@ -3,16 +3,16 @@
   background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)), url('https://res.cloudinary.com/dsbteudoz/image/upload/v1733824584/andrew-s-ouo1hbizWwo-unsplash_ym5hee.jpg');
   background-size: cover;
   background-position: center;
-  padding: 300px 0;
+  padding: 200px 0;
   width: 100%;
   border-radius: 0 0 25px 25px;
 
   @media (max-width: 768px) {
-    padding: 200px 0;
+    padding: 150px 0;
   }
 
   @media (max-width: 480px) {
-    padding: 150px 0;
+    padding: 100px 0;
   }
 }
 

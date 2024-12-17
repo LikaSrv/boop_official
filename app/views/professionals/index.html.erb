@@ -1,24 +1,30 @@
-<div class="d-flex flex-row justify-content-center">
-  <div>
-    <% @professionals.each do |professional|%>
-      <div class="d-flex flex-row justify-content-center">
-        <div class="card_pro d-flex flex-row" style="width: 900px">
-
-          <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black" style="width: 400px">
-            <%= cl_image_tag professional.photo.key, crop: :fill, width: 380, height: 300%>
-            <h2><%= professional.name %> </h2>
-            <p>Specialité : <%= professional.specialty %></p>
-            <p>Adresse : <%= professional.address %></p>
-            <p><%= professional.description %></p>
-          </a>
-          <%= render "shared/available_slots", professional: professional%>
+<div>
+  <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
+</div>
+<div class="container-all">
+  <div class="grid-map">
+    <div>
+      <% @professionals.each do |professional|%>
+        <div class="card_pro_index d-block mx-auto">
+          <div class="card_pro grid-index d-block mx-auto">
+            <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black ms-3" style="width: 100%">
+              <%= cl_image_tag professional.photo.key, class:"rounded-3 d-block mx-auto img-fluid", crop: :fill, width: 400 %>
+              <h2 class="text-center my-3"><%= professional.name %> </h2>
+              <div class="ms-2">
+                <p>Specialité : <%= professional.specialty %></p>
+                <p>Adresse : <%= professional.address %></p>
+              </div>
+                <p class="text-center"><%= professional.description %></p>
+            </a>
+            <%= render "shared/available_slots", professional: professional%>
+          </div>
         </div>
-      </div>
-    <%end%>
-  </div>
-  <div  style="width: 40%; height: 600px; border-radius: 8px; position: sticky; top: 100px;"
+      <%end%>
+    </div>
+    <div class="map" style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
         data-controller="map"
         data-map-markers-value="<%= @markers.to_json %>"
         data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+    </div>
   </div>
 </div>

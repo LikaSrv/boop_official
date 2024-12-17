@@ -13,11 +13,16 @@ export default class extends Controller {
 
     this.map = new mapboxgl.Map({
       container: this.element,
-      style: "mapbox://styles/mapbox/streets-v10"
+      style: "mapbox://styles/mapbox/streets-v10",
+      scrollZoom: false, // Désactiver le zoom à la molette
+      dragRotate: false, // Désactiver la rotation
+      doubleClickZoom: false, // Désactiver le zoom par double-clic
+      touchZoomRotate: false // Désactiver le zoom et la rotation sur écran tactile
     })
 
     this.#addMarkersToMap()
     this.#fitMapToMarkers()
+    this.map.addControl(new mapboxgl.NavigationControl({ showZoom: true })) // Ajouter les boutons de zoom
   }
 
   #fitMapToMarkers() {

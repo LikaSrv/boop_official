@@ -2,9 +2,12 @@
   <%= render "shared/back"%>
 </div>
 <div class="container">
+
   <h1 class="text-center my-4">À propos</h1>
   <div class="row">
-    <div class="col-md-12">
+    <div class="form-devise col-md-12">
+
+
       <p>
         Bienvenue sur notre page À propos. Ici, vous pouvez trouver des informations sur nos politiques et notre mission.
       </p>
@@ -16,14 +19,15 @@
       <p>
         Nous nous engageons à respecter les normes les plus élevées en matière de bien-être animal. Nos politiques sont conçues pour assurer la sécurité et le bonheur de chaque animal adopté.
       </p>
-      <h3>Politique de confidentialité</h3>
+      <h2>Politique de confidentialité</h2>
       <p>
         Nous respectons votre vie privée et nous nous engageons à protéger vos informations personnelles. Pour en savoir plus, veuillez consulter notre <%= link_to 'Politique de confidentialité', privacy_policy_path %>.
       </p>
-      <h3>Conditions générales</h3>
+      <h2>Conditions générales</h2>
       <p>
         En utilisant notre site, vous acceptez nos <%= link_to 'Conditions générales', terms_path %>. Veuillez les lire attentivement.
       </p>
+
 
     </div>
   </div>

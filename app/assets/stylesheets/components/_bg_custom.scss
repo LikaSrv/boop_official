@@ -1,0 +1,10 @@
+.bg-custom {
+  background-image: url('https://res.cloudinary.com/dsbteudoz/image/upload/v1734531768/Design_sans_titre_2_no_bg_qwk3am.png'), url('https://res.cloudinary.com/dsbteudoz/image/upload/v1734531768/Design_sans_titre_3_no_bg_y8tslc.png');
+  background-size: 20%, 25%;
+  background-repeat: no-repeat;
+  background-position: 7% bottom, 99% bottom;
+
+  @media (max-width: 500px) {
+      background-image: none;
+  }
+}

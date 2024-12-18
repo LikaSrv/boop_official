@@ -81,24 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_18_110125) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "payment_plans", force: :cascade do |t|
-    t.string "specialty"
-    t.float "price_per_month"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "price_cents", default: 0, null: false
-  end
-
-  create_table "payments", force: :cascade do |t|
-    t.bigint "professional_id", null: false
-    t.bigint "payment_plan_id", null: false
-    t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["payment_plan_id"], name: "index_payments_on_payment_plan_id"
-    t.index ["professional_id"], name: "index_payments_on_professional_id"
-  end
-
   create_table "pets", force: :cascade do |t|
     t.string "name"
     t.string "age"
@@ -167,8 +149,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_12_18_110125) do
   add_foreign_key "appointments", "users"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"
-  add_foreign_key "payments", "payment_plans"
-  add_foreign_key "payments", "professionals"
   add_foreign_key "pets", "users"
   add_foreign_key "professionals", "users"
   add_foreign_key "reviews", "professionals"

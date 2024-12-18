@@ -4,7 +4,7 @@
 <div class="container">
   <div class="row d-flex justify-content-center">
     <div class="col-lg-5 col-sm-10 card_pro">
-      <%= image_tag @animal.photo, class: "card-img-top w-100 h-100" if @animal.photo.present? %>
+      <%= image_tag @animal.photo, class: "card-img-top w-100 h-100", style: "object-fit: cover" if @animal.photo.present? %>
     </div>
     <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div>

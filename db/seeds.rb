@@ -25,6 +25,18 @@ Animal.destroy_all
 puts "destroy all pricing"
 Pricing.destroy_all
 
+puts "destroy all orders"
+Order.destroy_all
+
+
+puts "create payment plans"
+
+pricing1 = Pricing.create!(specialty: "Vétérinaire", price: 100)
+pricing2 = Pricing.create!(specialty: "Toiletteur", price: 50)
+pricing3 = Pricing.create!(specialty: "Promeneur", price: 30)
+pricing4 = Pricing.create!(specialty: "Pension", price: 100)
+
+
 puts "create users"
 
 user1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
@@ -80,11 +92,6 @@ repos["results"].each do |animal|
   animal.save!
 end
 
-puts "create payment plans"
 
-pricing1 = Pricing.create!(specialty: "Vétérinaire", price: 100)
-pricing2 = Pricing.create!(specialty: "Toiletteur", price: 50)
-pricing3 = Pricing.create!(specialty: "Promeneur", price: 30)
-pricing4 = Pricing.create!(specialty: "Pension", price: 100)
 
 puts "seed done"

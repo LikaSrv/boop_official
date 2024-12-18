@@ -32,6 +32,7 @@ export default class extends Controller {
     })
   }
 
+  // add review alert
   reviewSweetalert(event) {
     event.preventDefault();
 
@@ -110,6 +111,8 @@ export default class extends Controller {
     return `/professionals/${professionalId}/reviews`;
   }
 
+
+  // Add review to the page without actulisating the page
   addReviewToPage(review) {
     const reviewsContainer = document.getElementById("reviews-container");
 
@@ -131,6 +134,23 @@ export default class extends Controller {
     } else {
       console.error("L'élément #reviews-container est introuvable dans le DOM.");
     }
+  }
+
+
+  // alert when user is not connected yet
+  notConnectedSweetalert(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      icon: "error",
+      title: "Veuillez vous connecter pour donner votre avis",
+      confirmButtonText: "Se connecter",
+      confirmButtonColor: '#EFA690',
+    }).then((action) => {
+      if (action.isConfirmed) {
+        window.location = "/users/sign_in";
+      }
+    })
   }
 
 }

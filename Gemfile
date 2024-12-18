@@ -57,6 +57,7 @@ gem "cloudinary"
 gem "geocoder"
 gem "pg_search"
 gem "simple_calendar", "~> 2.4" #added for calendar
+gem 'money-rails' #added for paiment Stripe
 
 group :development, :test do
   gem "dotenv-rails"

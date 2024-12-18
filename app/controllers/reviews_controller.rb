@@ -11,10 +11,16 @@ class ReviewsController < ApplicationController
     @review.user = current_user
     update_professional_rating
     if @review.save!
-      redirect_to professional_path(@professional), notice: "Votre commentaire a bien été pris en compte"
+      respond_to do |format|
+        format.json { render json: { success: true, message: "Avis ajouté avec succès", review: @review.as_json(include: { user: { only: [:first_name, :last_name] } })
+        }, status: :created }
+        format.html { redirect_to professional_path(@professional), notice: "Avis ajouté avec succès." }
+      end
     else
-      flash.now[:alert] = @review.errors.full_messages.join(", ")
-      render :new
+      respond_to do |format|
+        format.json { render json: { success: false, errors: @review.errors.full_messages }, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :professional, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :pets, dependent: :destroy
+  has_many :orders
 
   validates :first_name, :last_name, :photo, presence: true
   has_one_attached :photo

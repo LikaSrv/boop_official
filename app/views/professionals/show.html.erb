@@ -1,5 +1,5 @@
 <div>
-  <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Back', :back, class:"m-3 text-decoration-none" %>
+  <%= render "shared/back"%>
 </div>
 <div class="container-all">
   <div>
@@ -56,12 +56,19 @@
             <% end %>
           </div>
           <div class="d-flex justify-content-center mt-3">
-            <%= link_to "Ajouter un avis",
-                        "#",
-                        class: "btn btn-primary text-white mt-3",
-                        style: "width: 80%;",
-                        data: { controller: "alert", action: "click->alert#reviewSweetalert", professional_id: @professional.id } %>
-
+            <% if user_signed_in? %>
+              <%= link_to "Ajouter un avis",
+                          "#",
+                          class: "btn btn-primary text-white mt-3 active",
+                          style: "width: 80%;",
+                          data: { controller: "alert", action: "click->alert#reviewSweetalert", professional_id: @professional.id } %>
+            <% else %>
+              <%= link_to "Ajouter un avis",
+                          new_user_session_path,
+                          class: "btn btn-secondary text-white mt-3",
+                          style: "width: 80%;",
+                          data: { controller: "alert", action: "click->alert#notConnectedSweetalert"}%>
+            <% end %>
           </div>
         </div>
       </div>

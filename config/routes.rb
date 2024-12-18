@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "professionals#home"
+
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -34,5 +37,12 @@ Rails.application.routes.draw do
   end
 
   resources :animals, only: [:index, :show]
+
+  resources :pricings, only: [:index, :show]
+
+  resources :orders, only: [:show, :create] do
+    resources :payments, only: :new
+  end
+
 
 end

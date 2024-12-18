@@ -12,6 +12,7 @@ class Professional < ApplicationRecord
   # associations
   has_many :appointments, dependent: :destroy
   has_many :reviews, dependent: :destroy
+  has_many :payments
   belongs_to :user
 
   # geocoding

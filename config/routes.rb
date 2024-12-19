@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "professionals#home"
+  root to: "pages#home"
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 

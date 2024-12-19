@@ -1,10 +1,17 @@
-<div>
-  <%= render "shared/back"%>
+<div class="d-flex flex-row align-items-center">
+  <%= link_to user_path(current_user), class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour à mon profil
+  <% end %>
+</div>
+<div class="text-end">
+  <a href="<%=new_pet_path(current_user)%>" class="btn btn-primary text-white me-5 shadow-sm" >
+    Ajouter un autre animal
+  </a>
 </div>
 <div class="container">
   <div class="row d-flex justify-content-center">
     <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px">
-      <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover" if @pet.photo.present? %>
+      <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded" if @pet.photo.present? %>
     </div>
     <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div>
@@ -15,6 +22,7 @@
       </div>
       <div>
         <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
+
       </div>
     </div>
   </div>

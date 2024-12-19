@@ -14,7 +14,7 @@
         <%= text_field_tag :query,
               params[:query],
               class: "form-control search-bar bg-secondary ps-5",
-              placeholder: "Rechercher un professionnel..."
+              placeholder: "Rechercher un service..."
           %>
         <div>
           <%= submit_tag "Rechercher", class: "btn btn-primary text-white search-bar p-3" %>
@@ -22,11 +22,11 @@
       </div>
     </div>
   <% end %>
-  <h3 class="mt-5">Nos professionnels</h3>
+  <h3 class="mt-5">Nos services</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
     <a href="<%=professionals_path%>"  style="text-decoration:none; color: white;">
       <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://res.cloudinary.com/dsbteudoz/image/upload/v1734016805/vitaly-gariev-HURf5iUtSQg-unsplash_haxcr5.jpg);">
-        <h4>Tous nos professionnels</h4>
+        <h4>Tous nos services</h4>
       </div>
     </a>
     <% (0...@all_specialty.length).each do |i| %>
@@ -39,7 +39,7 @@
           </div>
         </a>
       <% else %>
-        <a href="<%=professionals_path(specialty: specialty)%>" style="text-decoration:none; color: white;">
+        <a href="#" style="text-decoration:none; color: white; pointer-events: none;">
           <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>);">
             <div class="d-inline text-center" >
               <h4><%=specialty%></h4>

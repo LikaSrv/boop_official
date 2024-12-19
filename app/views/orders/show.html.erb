@@ -3,18 +3,18 @@
 </div>
 <div class="container">
   <div class="row d-flex justify-content-center py-4">
-    <div class="col-lg-5 col-sm-10">
+    <div class="col-lg-5 col-sm-10 card_pro">
       <%= image_tag(@photo, style: "width: 100%; height: auto; border-radius: 8px") %>
     </div>
-    <div class="col-lg-5 col-sm-10 text-center d-flex flex-column align-items-center justify-content-around">
-      <h1>Votre demande est bien validée ! </h1>
+    <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-around p-5">
+      <h3 class="text-center">Votre demande est bien validée ! </h3>
       <ul class="list-unstyled text-start">
-        <li style="font-size: 24px"><strong>Date : </strong> <%= @order.created_at.to_date %></li>
-        <li style="font-size: 24px"><strong>Mensualité : </strong> <%= humanized_money_with_symbol @order.amount %>  /mois</li>
+        <li style="font-size: 20px"><strong>Date : </strong> <%= @order.created_at.to_date %></li>
+        <li style="font-size: 20px"><strong>Mensualité : </strong> <%= humanized_money_with_symbol @order.amount %>  /mois</li>
       </ul>
 
-    <div>
-      <%= link_to "Créer le service #{@order.pricing.specialty}",new_professional_path, class:"btn btn-primary px-5 py-3 rounded-pill", style:"text-light" %>
+    <div class="text-center">
+      <%= link_to "Créer le service #{@order.pricing.specialty}",new_professional_path, class:"btn btn-primary px-5 py-3 rounded-pill text-white" %>
     </div>
     </div>
 </div>

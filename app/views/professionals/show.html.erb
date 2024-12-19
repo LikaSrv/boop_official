@@ -5,7 +5,7 @@
   <div>
     <div class="text-center m-4">
       <h1><%= @professional.name %></h1>
-      <p><%= @professional.specialty%></p>
+      <h3><%= @professional.specialty%></h3>
     </div>
   </div>
   <div class="grid">
@@ -17,7 +17,8 @@
         <div class="card_pro">
           <h4>Contact : </h4>
           <p>Adresse : <%=@professional.address%></p>
-          <p>Numéro de téléphone : <%=@professional.phone%></p>
+          <p>Numéro de téléphone : 0<%=@professional.phone%></p>
+          <p>Email : <%= @professional.email%></p>
         </div>
         <div class="card_pro">
           <h4>Description : </h4>

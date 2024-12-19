@@ -50,10 +50,10 @@ user2 = User.new(email: "user2@test.fr", password: "123456", first_name: "Jean",
 user2.photo.attach(io: user2_photo, filename: 'user2.jpg', content_type: 'image/jpg')
 user2.save!
 
-user3_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869242/samples/man-portrait.jpg").open
-user3 = User.new(email: "user3@test.fr", password: "123456", first_name: "Jean", last_name: "Duchemin")
-user3.photo.attach(io: user3_photo, filename: 'user3.jpg', content_type: 'image/jpg')
-user3.save!
+lika_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
+lika = User.new(email: "lika@test.fr", password: "123456", first_name: "Lika", last_name: "Wagon")
+lika.photo.attach(io: lika_photo, filename: 'lika.jpg', content_type: 'image/jpg')
+lika.save!
 
 puts "create professionals"
 
@@ -72,12 +72,41 @@ professional3 = Professional.new(name: "Thibault DURAND", address: "25 Rue du Pr
 professional3.photo.attach(io: walker_file, filename: 'walker.jpg', content_type: 'image/jpg')
 professional3.save!
 
+toiletteur_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734622835/slider-formation-toiletteur_tlg2lq.jpg").open
+toiletteur = Professional.new(name: "Lika Le Wagon", address: "21 avenue thiers 06000 Nice", phone: "0123456789", email: "lika_nice@toiletteuse.fr", specialty: "Toiletteur", description: "Toiletteuse depuis 2ans. J'ai nettoyé tous les animaux", rating: 5, user_id: lika.id)
+toiletteur.photo.attach(io: toiletteur_file, filename: 'toiletteur.jpg', content_type: 'image/jpg')
+toiletteur.save!
+
 puts "create reviews"
 
-review1 = Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)
-review2 = Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
+Review.create!(content: "Super professionnel", rating: 5, professional_id: professional1.id, user_id: user1.id)
+Review.create!(content: "Super professionnel", rating: 4, professional_id: professional2.id, user_id: user2.id)
+Review.create!(content: "Lika a été absolument fantastique avec mon chien ! Elle a su le mettre en confiance dès le début, et le résultat est impeccable. Son travail est soigné, et on voit qu'elle aime vraiment les animaux. Je recommande vivement ses services !", rating: 5, professional_id: toiletteur.id, user_id: user2.id)
+Review.create!(content: "Lika est incroyable ! Mon chat, pourtant très stressé d'habitude, est ressorti détendu et magnifiquement toiletté. Merci pour votre patience et votre douceur.", rating: 5, professional_id: toiletteur.id, user_id: user1.id)
+
+puts "create pets"
+
+shelby_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734624011/FB6EB1F3-E55C-4FFD-BEFA-C862930CA3DB_1_105_c_mcpsnj.jpg").open
+shelby = Pet.new(name: "Shelby", species: "American Bully", age: "5 ans", sex: "Femelle", description: "Shelby est une American Bully de 5 ans, au caractère bien trempé. Elle est très protectrice envers sa famille, et n'hésitera pas à défendre son territoire", user_id: lika.id)
+shelby.photo.attach(io: shelby_photo, filename: 'shelby.jpg', content_type: 'image/jpg')
+shelby.save!
 
 puts "create animals"
+
+
+response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
+repos = JSON.parse(response)
+repos["results"].each do |animal|
+  file = URI.parse(animal["image"]).open
+  animal = Animal.new(name: animal["name"],
+  species: animal["races_label"],
+  description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
+  age: animal["age"],
+  sex: animal["sex_label"],
+  shelter: animal["establishment"]["name"],
+  photo: animal["image"])
+  animal.save!
+end
 
 chat_nice = Animal.create!(
   name: "Boubouille!",
@@ -90,20 +119,6 @@ Prêt(e) à donner une nouvelle maison à cette adorable boule de poils ? Contac
   sex: "Femelle",
   shelter: "Refuge de Nice",
   photo: "https://images.ctfassets.net/denf86kkcx7r/60vrtzRElLvV9hP4rLJtLE/be095a3baec8cc3ecb122f2c61d91dbb/Maine_Coon_assurance_santevet")
-
-response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
-repos = JSON.parse(response)
-repos["results"].each do |animal|
-  file = URI.parse(animal["image"]).open
-  animal = Animal.new(name: animal["name"],
-                species: animal["races_label"],
-                description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
-                age: animal["age"],
-                sex: animal["sex_label"],
-                shelter: animal["establishment"]["name"],
-                photo: animal["image"])
-  animal.save!
-end
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=2"
 repos = JSON.parse(response)

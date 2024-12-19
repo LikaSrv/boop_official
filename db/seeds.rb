@@ -16,6 +16,9 @@ Professional.destroy_all
 puts "destroy all pets"
 Pet.destroy_all
 
+puts "destroy all orders"
+Order.destroy_all
+
 puts "destroy all users"
 User.destroy_all
 
@@ -25,8 +28,6 @@ Animal.destroy_all
 puts "destroy all pricing"
 Pricing.destroy_all
 
-puts "destroy all orders"
-Order.destroy_all
 
 
 puts "create payment plans"

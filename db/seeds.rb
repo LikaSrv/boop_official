@@ -111,7 +111,7 @@ end
 chat_nice = Animal.create!(
   name: "Boubouille!",
   species: "Maine coon",
-  description: "Boubouille est une magnifique Maine Coon de 2 ans au pelage [insérez couleur : gris argenté avec des reflets crème, par exemple]. Avec son allure élégante et ses grands yeux expressifs, elle ne passe jamais inaperçue.
+  description: "Boubouille est une magnifique Maine Coon de 2 ans au pelage gris argenté avec des reflets crème. Avec son allure élégante et ses grands yeux expressifs, elle ne passe jamais inaperçue.
 De nature douce et affectueuse, Boubouille adore passer du temps avec ses humains, que ce soit pour des câlins sur le canapé ou pour jouer avec ses jouets préférés. Curieuse et intelligente, elle s'adapte facilement à son environnement et saura s'entendre aussi bien avec les enfants qu'avec d'autres animaux.
 Habituée à vivre à l’intérieur, elle apprécie toutefois un petit coin ensoleillé où elle peut se prélasser. Son tempérament calme et équilibré fait d’elle une compagne idéale pour toute la famille.
 Prêt(e) à donner une nouvelle maison à cette adorable boule de poils ? Contactez-nous vite pour en savoir plus !",

@@ -36,7 +36,7 @@ pricing1 = Pricing.create!(specialty: "Vétérinaire", price: 100)
 pricing2 = Pricing.create!(specialty: "Toiletteur", price: 50)
 pricing3 = Pricing.create!(specialty: "Promeneur", price: 30)
 pricing4 = Pricing.create!(specialty: "Pension", price: 100)
-
+pricing4 = Pricing.create!(specialty: "Petsitter", price: 40)
 
 puts "create users"
 
@@ -79,7 +79,33 @@ review2 = Review.create!(content: "Super professionnel", rating: 4, professional
 
 puts "create animals"
 
+chat_nice = Animal.create!(
+  name: "Boubouille!",
+  species: "Maine coon",
+  description: "Boubouille est une magnifique Maine Coon de 2 ans au pelage [insérez couleur : gris argenté avec des reflets crème, par exemple]. Avec son allure élégante et ses grands yeux expressifs, elle ne passe jamais inaperçue.
+De nature douce et affectueuse, Boubouille adore passer du temps avec ses humains, que ce soit pour des câlins sur le canapé ou pour jouer avec ses jouets préférés. Curieuse et intelligente, elle s'adapte facilement à son environnement et saura s'entendre aussi bien avec les enfants qu'avec d'autres animaux.
+Habituée à vivre à l’intérieur, elle apprécie toutefois un petit coin ensoleillé où elle peut se prélasser. Son tempérament calme et équilibré fait d’elle une compagne idéale pour toute la famille.
+Prêt(e) à donner une nouvelle maison à cette adorable boule de poils ? Contactez-nous vite pour en savoir plus !",
+  age: "2 ans",
+  sex: "Femelle",
+  shelter: "Refuge de Nice",
+  photo: "https://images.ctfassets.net/denf86kkcx7r/60vrtzRElLvV9hP4rLJtLE/be095a3baec8cc3ecb122f2c61d91dbb/Maine_Coon_assurance_santevet")
+
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
+repos = JSON.parse(response)
+repos["results"].each do |animal|
+  file = URI.parse(animal["image"]).open
+  animal = Animal.new(name: animal["name"],
+                species: animal["races_label"],
+                description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
+                age: animal["age"],
+                sex: animal["sex_label"],
+                shelter: animal["establishment"]["name"],
+                photo: animal["image"])
+  animal.save!
+end
+
+response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=2"
 repos = JSON.parse(response)
 repos["results"].each do |animal|
   file = URI.parse(animal["image"]).open

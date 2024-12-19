@@ -22,6 +22,8 @@
       </div>
     </div>
   <% end %>
+
+  <%# Service categories %>
   <h3 class="mt-5">Nos services</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
     <a href="<%=professionals_path%>"  style="text-decoration:none; color: white;">
@@ -50,6 +52,30 @@
       <% end %>
     <% end %>
   </div>
+
+  <%# Add a service %>
+  <h3 class="mt-5 text-center">Vous aussi, vous souhaitez proposer un service ?</h3>
+  <div class="row d-flex justify-content-center align-items-center mt-4">
+    <div class="col-12 col-lg-5 text-center pe-5">
+      <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1734608983/guy-walking-with-dog-in-the-park_ltkcew.png" alt="Proposer un service">
+    </div>
+    <div class="col-12 col-lg-5" style="word-wrap: break-word; word-break: break-word; white-space: normal; text-align: justify;">
+      <h5>Vous adorez les animaux et vous avez des compétences à partager ?</h5>
+      <br>
+      <h5>Que vous soyez vétérinaire, comportementaliste, nutritionniste ou pet-sitter, Boop est fait pour vous ! </h5>
+      <br>
+      <h5>Rejoignez notre communauté et proposez vos services à des propriétaires d'animaux qui cherchent des solutions fiables et de confiance.</h5>
+
+      <h5>C’est simple, rapide, et vous pouvez faire une vraie différence dans la vie des animaux tout en développant votre activité. Inscrivez-vous maintenant et commencez à aider nos compagnons à quatre pattes !
+      </h5>
+      <div class="text-center">
+        <%= link_to "Proposer un service", new_professional_path, class: "btn btn-primary text-white mt-4 rounded-pill"%>
+      </div>
+
+    </div>
+
+  </div>
+
   <%# appointments to come %>
   <h3 class="mt-5 mb-4">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>

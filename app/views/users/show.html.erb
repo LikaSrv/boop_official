@@ -1,6 +1,4 @@
-<div>
-  <%= render "shared/back"%>
-</div>
+
 <div>
   <div>
     <div class="p-4 text-center">
@@ -51,8 +49,8 @@
         </div>
       <% else %>
         <% @appointments.each do |a| %>
-          <div class="col">
-            <a href="<%=professional_appointment_path(a.professional, a)%>" style="text-decoration: none; color: black">
+          <div class="col-lg-4 col-md-12 col-12">
+            <a href="<%=professional_appointment_path(a.professional, a)%>" style="text-decoration: none; color: black;">
               <div class="card_pro p-4 m-1 text-start" style="background-color: #f7e6d4;">
                 <div class="text-end">
                   <div >

@@ -55,6 +55,11 @@ lika = User.new(email: "lika@test.fr", password: "123456", first_name: "Lika", l
 lika.photo.attach(io: lika_photo, filename: 'lika.jpg', content_type: 'image/jpg')
 lika.save!
 
+marie_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869241/samples/outdoor-woman.jpg").open
+marie = User.new(email: "marie@test.fr", password: "123456", first_name: "Marie", last_name: "Beliben")
+marie.photo.attach(io: marie_photo, filename: 'marie.jpg', content_type: 'image/jpg')
+marie.save!
+
 puts "create professionals"
 
 vet_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg").open
@@ -90,6 +95,11 @@ shelby_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v173
 shelby = Pet.new(name: "Shelby", species: "American Bully", age: "5 ans", sex: "Femelle", description: "Shelby est une American Bully de 5 ans, au caractère bien trempé. Elle est très protectrice envers sa famille, et n'hésitera pas à défendre son territoire", user_id: lika.id)
 shelby.photo.attach(io: shelby_photo, filename: 'shelby.jpg', content_type: 'image/jpg')
 shelby.save!
+
+kimbo_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734685816/7C3E2014-E245-4DCE-A02C-5725EE5E81C3_1_105_c_a86eei.jpg").open
+kimbo = Pet.new(name: "Kimbo", species: "American Bully", age: "7 ans", sex: "Mâle", description: "Kimbo est un American Bully de 7 ans, très joueur et affectueux. Il adore les balades et les câlins", user_id: marie.id)
+kimbo.photo.attach(io: kimbo_photo, filename: 'kimbo.jpg', content_type: 'image/jpg')
+kimbo.save!
 
 puts "create animals"
 

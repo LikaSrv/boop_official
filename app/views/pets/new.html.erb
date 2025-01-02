@@ -12,6 +12,11 @@
           <%= p.input :age, label: "Âge"%>
           <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
           <%= p.input :species, label: "Espèce" %>
+          <%= p.input :races, label: "Race"%>
+          <%= p.input :birthday, label: "Date de naissance"%>
+          <%= p.input :weight, label: "Poids"%>
+          <%= p.input :spayed_neutered, label: "Stérilisation/castration", collection: ["Oui", "Non"]%>
+          <%= p.input :identification, label: "Signes d'identification", as: :text, input_html: { rows: 3}%>
           <%= p.input :photo, label: "Photo" %>
           <%= p.button :submit, "Ajouter l'animal", class: "btn btn-primary" %>
         <% end %>

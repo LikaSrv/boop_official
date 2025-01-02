@@ -5,10 +5,6 @@ export default class extends Controller {
 
   static targets = [ "animal" ]
 
-  connect() {
-    console.log("hi");
-  }
-
   hover(event) {
     event.currentTarget.classList.add("hovered");
   }

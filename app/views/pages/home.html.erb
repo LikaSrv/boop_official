@@ -2,8 +2,8 @@
   <div class="banner">
     <div class="container text-end">
       <h1>Adopter avec amour,</h1>
-      <h1>accompagner avec soin.</h1>
-      <%= link_to animals_path, class: "btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
+      <h1>Accompagner avec soin.</h1>
+      <%= link_to animals_path, class: "hoveredbutton btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
         <span class="icon-custom">🐾</span> Je veux adopter !
       <%end%>
     </div>
@@ -69,7 +69,8 @@
       <h5>C’est simple, rapide, et vous pouvez faire une vraie différence dans la vie des animaux tout en développant votre activité. Inscrivez-vous maintenant et commencez à aider nos compagnons à quatre pattes !
       </h5>
       <div class="text-center">
-        <%= link_to "Proposer un service", new_professional_path, class: "btn btn-primary text-white mt-4 rounded-pill"%>
+        <%= link_to "Proposer un service", pricings_path,
+              class: "hoveredbutton btn btn-primary text-white mt-4 rounded-pill"%>
       </div>
 
     </div>

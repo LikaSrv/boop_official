@@ -6,16 +6,13 @@ class PetsController < ApplicationController
 
   def new
     @pet = Pet.new
-    @vaccination = Vaccination.new
+    @pet.vaccinations.build # Initialise un champ pour une première vaccination
   end
 
   def create
     @pet = Pet.new(pet_params)
     @pet.user = current_user
     if @pet.save!
-      @vaccination = Vaccination.new(vaccination_params)
-      @pet = Pet.find(params[:pet_id])
-      @vaccination.pet = @pet
       redirect_to pet_path(@pet), notice: "Votre animal a bien été créé"
     else
       render new, alert: "Erreur lors de la création de votre animal"
@@ -25,12 +22,14 @@ class PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id])
+    @vaccinations = @pet.vaccinations
   end
 
   private
 
   def pet_params
-    params.require(:pet).permit(:name, :age, :sex, :photo, :species, :user, :appointment, :races, :birthday, :weight, :identification, :spayed_neutered, :medical_background)
+    params.require(:pet).permit(:name, :sex, :photo, :species, :user, :appointment, :races, :birthday, :weight, :identification, :spayed_neutered, :medical_background,
+                        vaccinations_attributes: [:id, :name, :administration_date, :next_booster_date, :_destroy])
   end
 
   def vaccination_params

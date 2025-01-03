@@ -7,10 +7,8 @@ class VaccinationController < ApplicationController
 
   def create
     @vaccination = Vaccination.new(vaccination_params)
-    @pet = Pet.find(params[:pet_id])
-    @vaccination.pet = @pet
     if @vaccination.save!
-      redirect_to pet_path(@pet), notice: "Votre vaccination a bien été créée"
+      notice: "Votre vaccination a bien été créée"
     else
       render new, alert: "Erreur lors de la création de votre vaccination"
     end

@@ -2,25 +2,31 @@
   <%= render "shared/back"%>
 </div>
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-12 col-sm-4">
-      <div class="form-devise">
-        <i class="fa-solid fa-paw float-end text-primary"></i>
-        <h3 class="text-center my-4">Ajouter un nouvel animal</h3>
-        <%= simple_form_for @pet do |p| %>
+  <div class="form-devise">
+    <h3 class="text-center my-4"><i class="fa-solid fa-paw float-end text-primary"></i> Ajouter un nouvel animal</h3>
+    <%= simple_form_for @pet do |p| %>
+      <div class="row mx-4">
+        <div class="col-lg-6 col-sm-12">
           <%= p.input :name, label: "Nom de l'animal" %>
           <%= p.input :age, label: "Âge"%>
           <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
           <%= p.input :species, label: "Espèce" %>
           <%= p.input :races, label: "Race"%>
-          <%= p.input :birthday, label: "Date de naissance"%>
-          <%= p.input :weight, label: "Poids"%>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <%= p.input :birthday, label: "Date de naissance",
+                as: :string,
+                input_html: { data: { controller: "datepicker" } } %>
+          <%= p.input :weight, label: "Poids (kg)"%>
           <%= p.input :spayed_neutered, label: "Stérilisation/castration", collection: ["Oui", "Non"]%>
           <%= p.input :identification, label: "Signes d'identification", as: :text, input_html: { rows: 3}%>
           <%= p.input :photo, label: "Photo" %>
-          <%= p.button :submit, "Ajouter l'animal", class: "btn btn-primary" %>
-        <% end %>
+        </div>
       </div>
-    </div>
+      <div class="text-center">
+
+        <%= p.button :submit, "Ajouter l'animal", class: "btn btn-primary", style: "width: fit-content;" %>
+      </div>
+    <% end %>
   </div>
 </div>

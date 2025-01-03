@@ -3,3 +3,5 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "@popperjs/core";
 import "bootstrap";
+import { Chart } from "chart.js";
+import * as Chartjs from "chart.js";

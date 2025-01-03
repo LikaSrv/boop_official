@@ -1,8 +1,10 @@
 <div>
-  <%= render "shared/back"%>
+  <%= link_to user_path(current_user), class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
 </div>
 <div class="container">
-  <div class="form-devise mx-4">
+  <div class="form-devise mx-2">
     <h3 class="text-center my-4"><i class="fa-solid fa-paw float-end text-primary"></i> Ajouter un nouvel animal</h3>
     <%= simple_form_for @pet do |p| %>
       <%# general information %>
@@ -12,15 +14,14 @@
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <%= p.input :name, label: "Nom de l'animal" %>
-          <%= p.input :age, label: "Âge"%>
           <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
           <%= p.input :species, label: "Espèce" %>
           <%= p.input :races, label: "Race"%>
-        </div>
-        <div class="col-lg-6 col-sm-12">
           <%= p.input :birthday, label: "Date de naissance",
                 as: :string,
                 input_html: { data: { controller: "datepicker" } } %>
+        </div>
+        <div class="col-lg-6 col-sm-12">
           <%= p.input :weight, label: "Poids (kg)"%>
           <%= p.input :spayed_neutered, label: "Stérilisation/castration", collection: ["Oui", "Non"]%>
           <%= p.input :identification, label: "Signes d'identification", as: :text, input_html: { rows: 3}%>
@@ -28,17 +29,19 @@
         </div>
       </div>
       <%# medical history %>
-      <div class="my-4"  data-controller="medical-history">
+      <div class="my-2"  data-controller="medical-history">
         <%# add medical history button %>
-        <button class="text-start my-4"
+        <button type="button"
+                class="text-start mb-4"
                 style="text-decoration: none; background: none; border: none;"
                 data-medical-history-target="addButton"
                 data-action="click->medical-history#click">
           <h5><i class="fa-solid fa-circle-plus"></i> Ajouter l'historique médical</h5>
         </button>
+
         <%# medical history fields %>
         <div class="d-none" data-medical-history-target="medical_fields">
-          <div class="mb-4">
+          <div class="my-2">
             <h4>Historique médical</h4>
           </div>
           <div class="row">
@@ -46,10 +49,10 @@
               <%= p.input :medical_background, label: "Antécédents médicaux (allergies, maladies chroniques, accidents, chirurgies, etc. )", as: :text, input_html: {rows:5}%>
             </div>
             <div class="col-lg-6 col-sm-12">
-              <%= simple_form_for @vaccination do |v| %>
-                <div>
+              <%= p.fields_for :vaccinations, Vaccination.new do |v| %>
+                <div class="nested-fields" data-medical-history-target="formContainer">
                   <%= v.input :name, label: "Nom de vaccin" %>
-                  <div class="d-flex flex-row justify-content-between">
+                  <div class="d-flex flex-wrap justify-content-between">
                     <%= v.input :administration_date, label: "Date d'injection",
                               as: :string,
                               input_html: {data: {controller: "datepicker"}}%>
@@ -57,20 +60,37 @@
                               as: :string,
                               input_html: {data: {controller: "datepicker"}}%>
                   </div>
-                  <button class="text-start my-4"
-                style="text-decoration: none; background: none; border: none;"
-                data-medical-history-target="addButton"
-                data-action="click->medical-history#click">
-                    <p><i class="fa-solid fa-circle-plus"></i> Ajouter un vaccin</p>
-                  </button>
                 </div>
+                <button class="text-start"
+                          style="text-decoration: none; background: none; border: none;"
+                          data-medical-history-target="addButton"
+                          data-action="click->medical-history#addVaccination">
+                  <p><i class="fa-solid fa-circle-plus"></i> Ajouter un vaccin</p>
+                </button>
+                <!-- Template pour un nouveau champ -->
+                <template class="nested-fields" data-medical-history-target="template">
+                  <div class="mt-3">
+                    <%= v.input :name, label: "Nom de vaccin" %>
+                    <div class="d-flex flex-wrap justify-content-between">
+                      <%= v.input :administration_date, label: "Date d'injection",
+                    as: :string,
+                    input_html: { data: { controller: "datepicker" } } %>
+                      <%= v.input :next_booster_date, label: "Date de prochaine injection",
+                    as: :string,
+                    input_html: { data: { controller: "datepicker" } } %>
+                    </div>
+                  </div>
+                </template>
               <% end %>
             </div>
           </div>
         </div>
-      </div>
-      <div class="text-center">
-        <%= p.button :submit, "Ajouter", class: "btn btn-primary", style: "width: fit-content;" %>
+
+        <div class="text-end">
+          <%= p.button :submit, "Enregistrer", class: "btn btn-primary", style: "width: fit-content;" %>
+        </div>
+
+
       </div>
     <% end %>
   </div>

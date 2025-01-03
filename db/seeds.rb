@@ -89,20 +89,19 @@ Review.create!(content: "Super professionnel", rating: 4, professional_id: profe
 Review.create!(content: "Lika a été absolument fantastique avec mon chien ! Elle a su le mettre en confiance dès le début, et le résultat est impeccable. Son travail est soigné, et on voit qu'elle aime vraiment les animaux. Je recommande vivement ses services !", rating: 5, professional_id: toiletteur.id, user_id: user2.id)
 Review.create!(content: "Lika est incroyable ! Mon chat, pourtant très stressé d'habitude, est ressorti détendu et magnifiquement toiletté. Merci pour votre patience et votre douceur.", rating: 5, professional_id: toiletteur.id, user_id: user1.id)
 
-puts "create pets"
+# puts "create pets"
 
-shelby_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734624011/FB6EB1F3-E55C-4FFD-BEFA-C862930CA3DB_1_105_c_mcpsnj.jpg").open
-shelby = Pet.new(name: "Shelby", species: "American Bully", age: "5 ans", sex: "Femelle", description: "Shelby est une American Bully de 5 ans, au caractère bien trempé. Elle est très protectrice envers sa famille, et n'hésitera pas à défendre son territoire", user_id: lika.id)
-shelby.photo.attach(io: shelby_photo, filename: 'shelby.jpg', content_type: 'image/jpg')
-shelby.save!
+# shelby_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734624011/FB6EB1F3-E55C-4FFD-BEFA-C862930CA3DB_1_105_c_mcpsnj.jpg").open
+# shelby = Pet.new(name: "Shelby", species: "American Bully", age: "5 ans", sex: "Femelle", description: "Shelby est une American Bully de 5 ans, au caractère bien trempé. Elle est très protectrice envers sa famille, et n'hésitera pas à défendre son territoire", user_id: lika.id)
+# shelby.photo.attach(io: shelby_photo, filename: 'shelby.jpg', content_type: 'image/jpg')
+# shelby.save!
 
-kimbo_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734685816/7C3E2014-E245-4DCE-A02C-5725EE5E81C3_1_105_c_a86eei.jpg").open
-kimbo = Pet.new(name: "Kimbo", species: "American Bully", age: "7 ans", sex: "Mâle", description: "Kimbo est un American Bully de 7 ans, très joueur et affectueux. Il adore les balades et les câlins", user_id: marie.id)
-kimbo.photo.attach(io: kimbo_photo, filename: 'kimbo.jpg', content_type: 'image/jpg')
-kimbo.save!
+# kimbo_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734685816/7C3E2014-E245-4DCE-A02C-5725EE5E81C3_1_105_c_a86eei.jpg").open
+# kimbo = Pet.new(name: "Kimbo", species: "American Bully", age: "7 ans", sex: "Mâle", description: "Kimbo est un American Bully de 7 ans, très joueur et affectueux. Il adore les balades et les câlins", user_id: marie.id)
+# kimbo.photo.attach(io: kimbo_photo, filename: 'kimbo.jpg', content_type: 'image/jpg')
+# kimbo.save!
 
 puts "create animals"
-
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
 repos = JSON.parse(response)

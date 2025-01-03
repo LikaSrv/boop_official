@@ -44,5 +44,6 @@ Rails.application.routes.draw do
     resources :payments, only: :new
   end
 
+  resources :vaccinations, only: [:new, :create, :destroy]
 
 end

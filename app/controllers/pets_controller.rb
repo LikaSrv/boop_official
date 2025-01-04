@@ -23,13 +23,21 @@ class PetsController < ApplicationController
   def show
     @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations
+    @weight_histories = @pet.weight_histories
+    @weight_histories_labels = []
+    @weight_histories_data = []
+    @weight_histories.each do |w|
+      @weight_histories_data << w.weight
+      @weight_histories_labels << w.date
+    end
   end
 
   private
 
   def pet_params
     params.require(:pet).permit(:name, :sex, :photo, :species, :user, :appointment, :races, :birthday, :weight, :identification, :spayed_neutered, :medical_background,
-                        vaccinations_attributes: [:id, :name, :administration_date, :next_booster_date, :_destroy])
+                        vaccinations_attributes: [:id, :name, :administration_date, :next_booster_date, :_destroy],
+                        weight_histories_attributes: [:id, :weight, :date, :_destroy])
   end
 
   def vaccination_params

@@ -22,7 +22,12 @@
                 input_html: { data: { controller: "datepicker" } } %>
         </div>
         <div class="col-lg-6 col-sm-12">
-          <%= p.input :weight, label: "Poids (kg)"%>
+          <%= p.fields_for :weight_histories, WeightHistory.new do |w|%>
+          <div class="nested-fields">
+            <%= w.input :weight, label: "Poids actuel (kg)"%>
+            <%= w.hidden_field :date, value: Date.today %>
+          </div>
+          <% end %>
           <%= p.input :spayed_neutered, label: "Stérilisation/castration", collection: ["Oui", "Non"]%>
           <%= p.input :identification, label: "Signes d'identification", as: :text, input_html: { rows: 3}%>
           <%= p.input :photo, label: "Photo" %>

@@ -6,53 +6,34 @@ Chart.register(LineController, LineElement, PointElement, LinearScale, Title, Ca
 
 // Connects to data-controller="chart"
 export default class extends Controller {
+
+
   connect() {
-    console.log("hi");
+    // console.log("hi");
 
     const myLine = document.querySelector('#myLine');
-    const worldPopulationGrowth = {
-      "2020": 7794798739,
-      "2019": 7894798739,
-      "2018": 7774798739,
-      "2017": 7794798739,
-      "2016": 7654798739,
-      "2015": 7604798739,
-      "2014": 7514798739,
-      "2013": 7494798739,
-      "2012": 7444798739,
-      "2011": 7334798739,
-      "2010": 7224798739,
-    };
+    const labels = JSON.parse(myLine.dataset.label);
+    const data = JSON.parse(myLine.dataset.values);
 
-    const mychartLine = new Chart(myLine, {
+    new Chart(myLine, {
       type: 'line',
       data: {
-        labels: Object.keys(worldPopulationGrowth),
+        labels: labels,
         datasets: [{
-          label: 'World Population Growth',
-          data: Object.values(worldPopulationGrowth),
+          label: 'Exemple de données',
+          data: data,
           borderColor: 'rgba(75, 192, 192, 1)',
           borderWidth: 2,
-          tension: 0.4, // Lissage des courbes
-        }]
+          tension: 0.4,
+        }],
       },
       options: {
         responsive: true,
         plugins: {
-          title: {
-            display: true,
-            text: 'World Population Growth Over Time',
-          },
+          legend: { position: 'top' },
+          tooltip: { enabled: true },
         },
-        scales: {
-          x: {
-            type: 'category', // Utilisation de l'échelle "category"
-          },
-          y: {
-            beginAtZero: true,
-          },
-        },
-      }
-    })
+      },
+    });
   }
 }

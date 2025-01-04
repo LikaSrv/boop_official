@@ -231,7 +231,9 @@ export default class extends Controller {
   // Add vaccination to the page without actulisating the page
   addVaccinToPage(vaccin) {
     const vaccinsContainer = document.getElementById("vaccins-container");
+    // console.log("hi");
 
+    // console.log(Array.from(vaccinsContainer.children).length + 1);
     if (vaccinsContainer) {
       // Crée dynamiquement une nouvelle vaccination
       const vaccinElement = document.createElement("div");
@@ -240,8 +242,8 @@ export default class extends Controller {
 
       vaccinElement.innerHTML = `
       <div class="d-flex flex-row">
-        <p>5.</p>
-        <div class="mx-2">
+        <p>${Array.from(vaccinsContainer.children).length + 1}.</p>
+      <div class="mx-2">
           <p>Nom de vaccin : <strong>${vaccin.name}</strong></p>
           <p>Date d'administration : ${vaccin.administration_date}</p>
           <div class="d-flex flex-row">
@@ -259,6 +261,80 @@ export default class extends Controller {
     } else {
       console.error("L'élément #vaccins-container est introuvable dans le DOM.");
     }
+  }
+
+  // add weight history
+  addWeight(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Ajouter une historique de poids",
+      html: `
+        <div class="d-flex flex-row justify-content-between my-4">
+          <div class="mb-3 text-start">
+            <label for="weight" class="form-label ">Le poids (en kg)</label>
+            <input type="text" id="weight" class="form-control" placeholder="Saisir le poids">
+          </div>
+          <div class="mb-3 text-start">
+            <label for="date" class="form-label ">Date de pesée</label>
+            <input type="date" id="date" class="form-control">
+          </div>
+        </div>
+      `,
+      focusConfirm: false,
+      confirmButtonText: "Enregistrer",
+      cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
+      preConfirm: () => {
+        const weight = document.getElementById("weight").value;
+        const date = document.getElementById("date").value;
+
+        if (!weight || !date) {
+          Swal.showValidationMessage("Tous les champs sont obligatoires !");
+          return false; // Empêche la fermeture si validation échoue
+        }
+
+        return { weight, date };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        // Envoi des données au serveur Rails via Fetch POST
+        fetch(`/pets/${this.element.dataset.petId}/weight_histories`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+          body: JSON.stringify({
+            weight_history:{
+              weight: result.value.weight,
+              date: result.value.date,
+            },
+          }),
+        })
+        .then((response) => {
+          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+          return response.json();
+        })
+        .then((data) => {
+          // Appelle le contrôleur Chart pour ajouter le poids localement
+          this.application
+            .getControllerForElementAndIdentifier(document.querySelector('[data-controller="chart"]'), "chart")
+            .addWeight(data.weight_history.weight, data.weight_history.date);
+
+          Swal.fire("Poids ajouté !", "", "success");
+        })
+        .catch((error) => {
+          Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
+          console.error("Erreur :", error);
+        });
+      }
+    });
   }
 
 }

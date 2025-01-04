@@ -24,12 +24,12 @@ class PetsController < ApplicationController
     @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations
     @weight_histories = @pet.weight_histories
-    @weight_histories_labels = []
     @weight_histories_data = []
     @weight_histories.each do |w|
       @weight_histories_data << w.weight
-      @weight_histories_labels << w.date
     end
+    @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+
   end
 
   private

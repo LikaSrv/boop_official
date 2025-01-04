@@ -50,8 +50,8 @@
         </div>
 
       </div>
-      <div class="text-end" data-controller="alert">
-        <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3'></i>"),
+      <div class="text-end m-3" data-controller="alert">
+        <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                           "#",
                           class: "hoveredCircleButton",
                           style: "font-size: 36px;",
@@ -61,18 +61,19 @@
     </div>
     <%# Weight  %>
     <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between">
-      <div data-controller="chart">
+      <div data-controller="chart alert">
         <h3 class="text-center m-3">Le suivi de poids</h3>
-        <div class="chart">
-          <canvas id="myLine" data-label="<%=@weight_histories_labels.to_json%>" data-values="<%=@weight_histories_data.to_json%>" >
-            <!-- line chart display below -->
+        <div data-controller="chart">
+          <canvas id="myLine" data-chart-target="chart" data-label="<%= @weight_histories_labels.to_json %>" data-values="<%= @weight_histories_data.to_json %>">
           </canvas>
         </div>
       </div>
-      <div class="text-end">
-        <button class="hoveredCircleButton" style="text-decoration: none; background: none; border: none;">
-          <p style="font-size: 36px"> <i class="fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3"></i></p>
-        </button>
+      <div class="text-end m-3" data-controller="alert">
+        <%= link_to raw("<i class='fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+                          "#",
+                          class: "hoveredCircleButton",
+                          style: "font-size: 36px;",
+                          data: { controller: "alert", action: "click->alert#addWeight", pet_id: @pet.id } %>
       </div>
 
     </div>

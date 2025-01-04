@@ -8,18 +8,18 @@
     Ajouter un autre animal
   </a>
 </div>
+<%# General information %>
 <div class="container">
   <div class="row d-flex justify-content-center">
-    <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px; margin-left: 30px !important;">
+    <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px;">
       <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded" if @pet.photo.present? %>
     </div>
-    <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between" style="margin-right: 30px !important;">
+    <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div>
         <h3 class="text-center m-3"><%= @pet.name %></h3>
         <p class="my-2">Âge: <%= (Date.today - @pet.birthday).to_i/ 365.25.round %> ans</p>
         <p>Sexe: <%= @pet.sex %></p>
         <p class="my-2">Race: <%= @pet.species %></p>
-        <p class="my-2">Poids: <%= @pet.weight %> kg </p>
         <p class="my-2">Identification: <%= @pet.identification %></p>
       </div>
       <div>
@@ -28,21 +28,21 @@
       </div>
     </div>
     <%# les vaccins %>
-    <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between">
+    <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between" data-controller="alert" >
       <div>
         <h3 class="text-center m-3">Les vaccins</h3>
         <%i=0%>
-        <div class="d-flex flex-wrap">
+        <div class="d-flex flex-wrap" id="vaccins-container">
           <% @vaccinations.each do |vaccin| %>
             <% i = i+1 %>
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-row mb-4">
               <p><%=i%>.</p>
               <div class="mx-2">
-                <p>Nom de vaccin : <%=vaccin.name%></p>
+                <p>Nom de vaccin : <strong><%=vaccin.name%></strong></p>
                 <p>Date d'administration : <%=vaccin.administration_date%></p>
                 <div class="d-flex flex-row">
                   <p>Prochaine date d'injection : </p>
-                  <p class="mx-2 <%="text-success" if vaccin.next_booster_date > Date.today%>"><%=vaccin.next_booster_date%></p>
+                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %>"><%=vaccin.next_booster_date%></p>
                 </div>
               </div>
             </div>
@@ -50,23 +50,31 @@
         </div>
 
       </div>
-      <div>
-        <p style="font-size: 36px"> <i class="fa-solid fa-syringe float-end text-primary"></i></p>
+      <div class="text-end" data-controller="alert">
+        <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3'></i>"),
+                          "#",
+                          class: "hoveredCircleButton",
+                          style: "font-size: 36px;",
+                          data: { controller: "alert", action: "click->alert#addVaccination", pet_id: @pet.id } %>
       </div>
+
     </div>
     <%# Weight  %>
     <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div data-controller="chart">
         <h3 class="text-center m-3">Le suivi de poids</h3>
         <div class="chart">
-          <canvas id="myLine">
-            <!-- Display line chart below -->
+          <canvas id="myLine" data-label="<%=@weight_histories_labels.to_json%>" data-values="<%=@weight_histories_data.to_json%>" >
+            <!-- line chart display below -->
           </canvas>
         </div>
       </div>
-      <div>
-        <p style="font-size: 36px"> <i class="fa-solid fa-weight-scale float-end text-primary"></i></p>
+      <div class="text-end">
+        <button class="hoveredCircleButton" style="text-decoration: none; background: none; border: none;">
+          <p style="font-size: 36px"> <i class="fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3"></i></p>
+        </button>
       </div>
+
     </div>
   </div>
 </div>

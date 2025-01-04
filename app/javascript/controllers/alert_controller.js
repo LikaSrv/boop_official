@@ -154,4 +154,111 @@ export default class extends Controller {
     })
   }
 
+  // add vaccination
+  addVaccination(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Ajouter un vaccin",
+      // <label for="vaccineName" class="form-label">Nom du vaccin</label>
+      html: `
+        <div class="mb-3">
+          <input type="text" id="vaccineName" class="form-control" placeholder="Entrez le nom du vaccin">
+        </div>
+        <div class="mb-3 text-start">
+          <label for="administrationDate" class="form-label ">Date d'administration</label>
+          <input type="date" id="administrationDate" class="form-control">
+        </div>
+        <div class="mb-3 text-start">
+          <label for="nextBoosterDate" class="form-label ">Date de prochaine administration</label>
+          <input type="date" id="nextBoosterDate" class="form-control">
+        </div>
+      `,
+      focusConfirm: false,
+      confirmButtonText: "Enregistrer",
+      cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
+      preConfirm: () => {
+        const vaccineName = document.getElementById("vaccineName").value;
+        const administrationDate = document.getElementById("administrationDate").value;
+        const nextBoosterDate = document.getElementById("nextBoosterDate").value;
+
+        if (!vaccineName || !administrationDate || !nextBoosterDate) {
+          Swal.showValidationMessage("Tous les champs sont obligatoires !");
+          return false; // Empêche la fermeture si validation échoue
+        }
+
+        return { vaccineName, administrationDate, nextBoosterDate };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Envoi des données au serveur Rails via Fetch POST
+        fetch(`/pets/${this.element.dataset.petId}/vaccinations`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+          body: JSON.stringify({
+            vaccination:{
+              name: result.value.vaccineName,
+              administration_date: result.value.administrationDate,
+              next_booster_date: result.value.nextBoosterDate
+            },
+          }),
+        })
+        .then((response) => {
+          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+          return response.json();
+        })
+        .then((data) => {
+          Swal.fire("Le vaccin a été ajouté", "", "success");
+          console.log("Réponse du serveur :", data);
+          this.addVaccinToPage(data.vaccination); // Appelle une fonction pour ajouter l'avis
+        })
+        .catch((error) => {
+          Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
+          console.error("Erreur :", error);
+        });
+      }
+    });
+  }
+
+  // Add vaccination to the page without actulisating the page
+  addVaccinToPage(vaccin) {
+    const vaccinsContainer = document.getElementById("vaccins-container");
+
+    if (vaccinsContainer) {
+      // Crée dynamiquement une nouvelle vaccination
+      const vaccinElement = document.createElement("div");
+      // Initialisation de la date d'aujourd'hui pour la comparaison
+      const today = new Date().toISOString().split("T")[0];  // Format YYYY-MM-DD
+
+      vaccinElement.innerHTML = `
+      <div class="d-flex flex-row">
+        <p>5.</p>
+        <div class="mx-2">
+          <p>Nom de vaccin : <strong>${vaccin.name}</strong></p>
+          <p>Date d'administration : ${vaccin.administration_date}</p>
+          <div class="d-flex flex-row">
+            <p>Prochaine date d'injection : </p>
+            <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date(today) ? 'text-success' : 'text-danger'}">
+              ${vaccin.next_booster_date}
+            </p>
+          </div>
+        </div>
+      </div>
+      `;
+
+      // Ajoute la nouvelle vaccination au conteneur
+      vaccinsContainer.appendChild(vaccinElement);
+    } else {
+      console.error("L'élément #vaccins-container est introuvable dans le DOM.");
+    }
+  }
+
 }

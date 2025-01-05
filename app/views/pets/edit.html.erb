@@ -1,0 +1,41 @@
+<%# back button %>
+<div class="d-flex flex-row align-items-center">
+  <%= render "shared/back"%>
+</div>
+<%# body %>
+<div class="container">
+  <div class="form-devise mx-2">
+    <h3 class="text-center my-4"><i class="fa-solid fa-paw float-end text-primary"></i> Modifier les informations générales</h3>
+    <%= simple_form_for @pet do |p| %>
+      <div class="row">
+        <div class="col-lg-6 col-sm-12">
+          <%= p.input :name, label: "Nom de l'animal" %>
+          <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
+          <%= p.input :species, label: "Espèce" %>
+          <%= p.input :races, label: "Race"%>
+          <%= p.input :birthday, label: "Date de naissance",
+                  as: :string,
+                  input_html: { data: { controller: "datepicker" } } %>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <%= p.input :medical_background, label: "Antécédents médicaux (allergies, maladies chroniques, accidents, chirurgies, etc. )", as: :text, input_html: {rows:5}%>
+          <%= p.input :spayed_neutered, label: "Stérilisation/castration", collection: ["Oui", "Non"]%>
+          <%= p.input :identification, label: "Signes d'identification", as: :text, input_html: { rows: 3}%>
+          <%= p.input :photo, label: "Photo" %>
+        </div>
+        <div class="text-end">
+          <%= p.button :submit, "Enregistrer", class: "btn btn-primary", style: "width: fit-content;" %>
+        </div>
+      </div>
+    <% end %>
+    <div class="d-flex flex-wrap align-items-center">
+      <p>Vous souhaitez supprimer <%=@pet.name%> de vos animaux ?</p>
+      <div>
+              <%= link_to "Supprimer",
+                          user_path(current_user),
+                          class: "text-danger my-0 mx-2",
+                          data: { controller: "alert", action: "click->alert#deletePet", pet_id: @pet.id, user_id: current_user } %>
+      </div>
+    </div>
+  </div>
+</div>

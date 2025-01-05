@@ -1,15 +1,17 @@
+<%# back button %>
 <div class="d-flex flex-row align-items-center">
   <%= link_to user_path(current_user), class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
-  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour à mon profil
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour à mon profil
   <% end %>
 </div>
+<%# body %>
 <div class="text-end">
   <a href="<%=new_pet_path(current_user)%>" class="btn btn-primary text-white me-5 shadow-sm" >
     Ajouter un autre animal
   </a>
 </div>
-<%# General information %>
 <div class="container">
+  <%# General information %>
   <div class="row d-flex justify-content-center">
     <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px;">
       <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded" if @pet.photo.present? %>
@@ -21,61 +23,111 @@
         <p>Sexe: <%= @pet.sex %></p>
         <p class="my-2">Race: <%= @pet.species %></p>
         <p class="my-2">Identification: <%= @pet.identification %></p>
+        <p class="my-2">Antécédents médicaux: <%= @pet.medical_background %></p>
       </div>
       <div>
-        <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
-
+        <div class="text-center">
+          <a href="<%=edit_pet_path(@pet)%>" class="btn btn-primary text-white shadow-sm" >
+            Modifier les informations
+          </a>
+        </div>
+        <div>
+          <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
+        </div>
       </div>
     </div>
-    <%# les vaccins %>
-    <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between" data-controller="alert" >
-      <div>
-        <h3 class="text-center m-3">Les vaccins</h3>
-        <%i=0%>
-        <div class="d-flex flex-wrap" id="vaccins-container">
-          <% @vaccinations.each do |vaccin| %>
-            <% i = i+1 %>
-            <div class="d-flex flex-row mb-4">
-              <p><%=i%>.</p>
-              <div class="mx-2">
-                <p>Nom de vaccin : <strong><%=vaccin.name%></strong></p>
-                <p>Date d'administration : <%=vaccin.administration_date%></p>
-                <div class="d-flex flex-row">
-                  <p>Prochaine date d'injection : </p>
-                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %>"><%=vaccin.next_booster_date%></p>
+  </div>
+  <%# appointments %>
+  <div class="row card_pro text-center">
+    <h3 class="text-center m-3">Les rendez-vous</h3>
+    <% if @appointments.empty? %>
+      <div class="text-center">
+        <p >Vous n'avez pas de rendez-vous</p>
+        <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png" alt="pas de rdv" style="width: 200px;" >
+      </div>
+    <% else %>
+      <% @appointments.each do |a| %>
+        <div class="col-lg-4 col-md-12 col-12">
+          <a href="<%=professional_appointment_path(a.professional, a)%>" style="text-decoration: none; color: black;">
+            <div class="card_pro p-4 m-1 text-start" style="background-color: #f7e6d4;">
+              <div class="text-end">
+                <div >
+                  <p><%= a.date.strftime("%d/%m/%Y")%></p>
+                  <p><%= a.start_time.strftime("%H:%M")%></p>
                 </div>
               </div>
+              <p>Professionnel : <strong><%= a.professional.name %></strong></p>
+              <p style="word-wrap: break-word; word-break: break-word;">Motif de la visite : <%= truncate(a.reason, length: 100, omission: '...') %></p>
             </div>
-          <% end %>
+          </a>
         </div>
+      <% end %>
+    <% end%>
+  </div>
+  <%# les vaccins %>
+  <div class="card_pro d-flex flex-column justify-content-between p-4" data-controller="alert" >
+    <div>
+      <h3 class="text-center m-3">Les vaccins</h3>
+      <%i=0%>
+      <div class="d-flex flex-wrap justify-content-center align-items-center" id="vaccins-container">
+        <% @vaccinations.each do |vaccin| %>
+          <% i = i+1 %>
+          <div class="d-flex flex-row m-4 vaccination-item">
+            <p><%=i%>.</p>
+            <div class="mx-2">
+              <p class="vaccin-name">Nom de vaccin : <strong><%=vaccin.name%></strong></p>
+              <p class="vaccin-administration-date">Date d'administration : <%=vaccin.administration_date%></p>
+              <div class="d-flex flex-row">
+                <p>Prochaine date d'injection : </p>
+                <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date"><%=vaccin.next_booster_date%></p>
+              </div>
+            </div>
+            <div class="d-flex flex-column justify-content-around">
+              <%= link_to raw("<i class='fa-solid fa-edit float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+                          "#",
+                          class: "hoveredCircleButton ",
+                          style: "font-size: 12px;",
+                          data: { controller: "alert",
+                                  action: "click->alert#editVaccination",
+                                  pet_id: @pet.id,
+                                  vaccin_id: vaccin.id,
+                                  vaccin_name: vaccin.name,
+                                  administrationDate:  vaccin.administration_date,
+                                  nextBoosterDate: vaccin.next_booster_date} %>
 
+              <%= link_to raw("<i class='fa-solid fa-trash float-end text-danger shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+                          "#",
+                          class: "hoveredCircleButton my-2",
+                          style: "font-size: 12px;",
+                          data: { controller: "alert", action: "click->alert#deleteVaccination", pet_id: @pet.id, vaccin_id: vaccin.id } %>
+            </div>
+          </div>
+        <% end %>
       </div>
-      <div class="text-end m-3" data-controller="alert">
-        <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+    </div>
+    <div class="text-end m-3" data-controller="alert">
+      <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                           "#",
                           class: "hoveredCircleButton",
                           style: "font-size: 36px;",
                           data: { controller: "alert", action: "click->alert#addVaccination", pet_id: @pet.id } %>
-      </div>
-
     </div>
-    <%# Weight  %>
-    <div class="col-lg-10 col-sm-10 card_pro d-flex flex-column justify-content-between">
-      <div data-controller="chart alert">
-        <h3 class="text-center m-3">Le suivi de poids</h3>
-        <div data-controller="chart">
-          <canvas id="myLine" data-chart-target="chart" data-label="<%= @weight_histories_labels.to_json %>" data-values="<%= @weight_histories_data.to_json %>">
-          </canvas>
-        </div>
+  </div>
+  <%# Weight  %>
+  <div class="card_pro d-flex flex-column justify-content-between">
+    <div data-controller="chart alert">
+      <h3 class="text-center m-3">Le suivi de poids</h3>
+      <div data-controller="chart">
+        <canvas id="myLine" data-chart-target="chart" data-label="<%= @weight_histories_labels.to_json %>" data-values="<%= @weight_histories_data.to_json %>">
+        </canvas>
       </div>
-      <div class="text-end m-3" data-controller="alert">
-        <%= link_to raw("<i class='fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+    </div>
+    <div class="text-end m-3" data-controller="alert">
+      <%= link_to raw("<i class='fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                           "#",
                           class: "hoveredCircleButton",
                           style: "font-size: 36px;",
                           data: { controller: "alert", action: "click->alert#addWeight", pet_id: @pet.id } %>
-      </div>
-
     </div>
   </div>
 </div>

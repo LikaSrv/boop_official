@@ -19,7 +19,6 @@ class PetsController < ApplicationController
     end
   end
 
-
   def show
     @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations
@@ -29,7 +28,38 @@ class PetsController < ApplicationController
       @weight_histories_data << w.weight
     end
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+    @appointments = @pet.appointments
+  end
 
+  def edit
+    @pet = Pet.find(params[:id])
+    @vaccinations = @pet.vaccinations
+    @weight_histories = @pet.weight_histories
+    @weight_histories_data = []
+    @weight_histories.each do |w|
+      @weight_histories_data << w.weight
+    end
+    @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+  end
+
+  def update
+    @pet = Pet.find(params[:id])
+    # Mise à jour de l'animal et de ses attributs principaux
+    if @pet.update(pet_params)
+      # Si la mise à jour réussit, on redirige avec un message de succès
+      flash[:notice] = "L'animal a bien été mis à jour."
+      redirect_to @pet
+    else
+      # Si la mise à jour échoue, on rend la vue d'édition avec les erreurs
+      flash[:alert] = "Impossible de mettre à jour l'animal."
+      render :edit
+    end
+  end
+
+  def destroy
+    @pet = Pet.find(params[:id])
+    @pet.destroy
+    redirect_to user_path(current_user), notice: "L'animal a bien été supprimé"
   end
 
   private

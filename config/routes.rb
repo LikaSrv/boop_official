@@ -45,8 +45,8 @@ Rails.application.routes.draw do
   end
 
   resources :pets, only: [:show] do
-    resources :vaccinations, only: [:new, :create, :destroy]
-    resources :weight_histories, only: [:new, :create, :destroy]
+    resources :vaccinations, only: [:new, :create, :destroy, :update]
+    resources :weight_histories, only: [:new, :create, :destroy, :update]
   end
 
 end

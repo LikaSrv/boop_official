@@ -204,26 +204,26 @@ export default class extends Controller {
             "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
           },
           body: JSON.stringify({
-            vaccination:{
+            vaccination: {
               name: result.value.vaccineName,
               administration_date: result.value.administrationDate,
               next_booster_date: result.value.nextBoosterDate
             },
           }),
         })
-        .then((response) => {
-          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
-          return response.json();
-        })
-        .then((data) => {
-          Swal.fire("Le vaccin a été ajouté", "", "success");
-          console.log("Réponse du serveur :", data);
-          this.addVaccinToPage(data.vaccination); // Appelle une fonction pour ajouter l'avis
-        })
-        .catch((error) => {
-          Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
-          console.error("Erreur :", error);
-        });
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+            return response.json();
+          })
+          .then((data) => {
+            Swal.fire("Le vaccin a été ajouté", "", "success");
+            console.log("Réponse du serveur :", data);
+            this.addVaccinToPage(data.vaccination); // Appelle une fonction pour ajouter l'avis
+          })
+          .catch((error) => {
+            Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
+            console.error("Erreur :", error);
+          });
       }
     });
   }
@@ -261,6 +261,165 @@ export default class extends Controller {
     } else {
       console.error("L'élément #vaccins-container est introuvable dans le DOM.");
     }
+  }
+
+  // Delete vaccination
+  deleteVaccination(event) {
+    event.preventDefault();
+
+    console.log("Current target:", event.currentTarget);
+    const vaccinId = event.currentTarget.dataset.vaccinId;
+    console.log("vaccinId:", vaccinId);
+
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas revenir en arrière!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Oui supprimer!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Envoi de la requête DELETE
+        fetch(`/pets/${this.element.dataset.petId}/vaccinations/${vaccinId}`, {
+          method: "DELETE",
+          headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de la suppression du vaccin.");
+            return response.json();
+          })
+          .then(() => {
+            Swal.fire({
+              title: "Supprimé !",
+              text: "Le vaccin a été enlevé du carnet de santé.",
+              icon: "success",
+            });
+
+            // Supprimer l'élément du DOM (optionnel)
+            const vaccinationElement = event.target.closest(".vaccination-item"); // Modifier selon votre structure HTML
+            if (vaccinationElement) vaccinationElement.remove();
+          })
+          .catch((error) => {
+            console.error("Erreur :", error);
+            Swal.fire({
+              title: "Erreur",
+              text: "Une erreur est survenue lors de la suppression.",
+              icon: "error",
+            });
+          });
+      }
+    });
+  }
+
+  // Edit vaccination
+  editVaccination(event) {
+    event.preventDefault();
+
+    const vaccinId = event.currentTarget.dataset.vaccinId;
+    const vaccinName = event.currentTarget.dataset.vaccinName;
+    const administrationDate = event.currentTarget.dataset.administrationdate.replace(/"/g, '');
+    const nextBoosterDate = event.currentTarget.dataset.nextboosterdate.replace(/"/g, '');
+    console.log("Current target:", event.currentTarget);
+
+    console.log("vaccinId:", vaccinId);
+    console.log("vaccinName:", vaccinName);
+    console.log("administrationDate:", administrationDate);
+    console.log("nextBoosterDate:", nextBoosterDate);
+
+
+
+    Swal.fire({
+      title: "Modifier les informations d'un vaccin",
+      // <label for="vaccineName" class="form-label">Nom du vaccin</label>
+      html: `
+        <div class="mb-3">
+          <input type="text" id="vaccineName" class="form-control" value="${vaccinName}">
+        </div>
+        <div class="mb-3 text-start">
+          <label for="administrationDate" class="form-label ">Date d'administration</label>
+          <input type="date" id="administrationDate" class="form-control" value="${administrationDate}">
+        </div>
+        <div class="mb-3 text-start">
+          <label for="nextBoosterDate" class="form-label ">Date de prochaine administration</label>
+          <input type="date" id="nextBoosterDate" class="form-control" value="${nextBoosterDate}">
+        </div>
+      `,
+      focusConfirm: false,
+      confirmButtonText: "Enregistrer",
+      cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
+      didOpen: () => {
+        // S'assurer que les dates sont bien pré-remplies avec les bonnes valeurs
+        document.getElementById("administrationDate").value = administrationDate;
+        document.getElementById("nextBoosterDate").value = nextBoosterDate;
+      },
+      preConfirm: () => {
+        const vaccineName = document.getElementById("vaccineName").value;
+        const administrationDate = document.getElementById("administrationDate").value;
+        const nextBoosterDate = document.getElementById("nextBoosterDate").value;
+
+        if (!vaccineName || !administrationDate || !nextBoosterDate) {
+          Swal.showValidationMessage("Tous les champs sont obligatoires !");
+          return false; // Empêche la fermeture si validation échoue
+        }
+
+        return { vaccineName, administrationDate, nextBoosterDate };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Envoi des données au serveur Rails via Fetch POST
+        fetch(`/pets/${this.element.dataset.petId}/vaccinations/${vaccinId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+          body: JSON.stringify({
+            vaccination: {
+              name: result.value.vaccineName,
+              administration_date: result.value.administrationDate,
+              next_booster_date: result.value.nextBoosterDate
+            },
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+            return response.json();
+          })
+          .then((data) => {
+            Swal.fire("Le vaccin a été modifié", "", "success");
+            console.log("Réponse du serveur :", data);
+            // Mettre à jour l'élément dans le DOM
+            this.updateVaccinationInPage(data.vaccination);
+          })
+          .catch((error) => {
+            Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
+            console.error("Erreur :", error);
+          });
+      }
+    });
+
+  }
+
+  // Fonction pour mettre à jour la vaccination dans le DOM sans recharger la page
+  updateVaccinationInPage(vaccin) {
+    // Sélectionne l'élément correspondant à la vaccination modifiée
+    const vaccinElement = document.querySelector('.vaccination-item');
+    console.log("vaccinElement:", vaccinElement);
+
+
+    // Mettre à jour le nom, la date d'administration et la date de la prochaine injection
+    vaccinElement.querySelector('.vaccin-name').innerText = vaccin.name;
+    vaccinElement.querySelector('.vaccin-administration-date').innerText = vaccin.administration_date;
+    vaccinElement.querySelector('.vaccin-next-booster-date').innerText = vaccin.next_booster_date;
   }
 
   // add weight history
@@ -311,30 +470,78 @@ export default class extends Controller {
             "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
           },
           body: JSON.stringify({
-            weight_history:{
+            weight_history: {
               weight: result.value.weight,
               date: result.value.date,
             },
           }),
         })
-        .then((response) => {
-          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
-          return response.json();
-        })
-        .then((data) => {
-          // Appelle le contrôleur Chart pour ajouter le poids localement
-          this.application
-            .getControllerForElementAndIdentifier(document.querySelector('[data-controller="chart"]'), "chart")
-            .addWeight(data.weight_history.weight, data.weight_history.date);
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+            return response.json();
+          })
+          .then((data) => {
+            // Appelle le contrôleur Chart pour ajouter le poids localement
+            this.application
+              .getControllerForElementAndIdentifier(document.querySelector('[data-controller="chart"]'), "chart")
+              .addWeight(data.weight_history.weight, data.weight_history.date);
 
-          Swal.fire("Poids ajouté !", "", "success");
-        })
-        .catch((error) => {
-          Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
-          console.error("Erreur :", error);
-        });
+            Swal.fire("Poids ajouté !", "", "success");
+          })
+          .catch((error) => {
+            Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
+            console.error("Erreur :", error);
+          });
       }
     });
+  }
+
+  // Delete pet
+  deletePet(event) {
+    event.preventDefault();
+
+    const userId = event.currentTarget.dataset.userId;
+    console.log(userId);
+  
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer?",
+      text: "Vous ne pourrez pas revenir en arrière!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Oui supprimer!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Envoi de la requête DELETE
+        fetch(`/users/${userId}/pets/${this.element.dataset.petId}`, {
+          method: "DELETE",
+          headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de la suppression.");
+            return response.json();
+          })
+          .then(() => {
+            Swal.fire({
+              title: "Supprimé !",
+              text: "L'animal a été enlevé.",
+              icon: "success",
+            });
+          })
+          .catch((error) => {
+            console.error("Erreur :", error);
+            Swal.fire({
+              title: "Erreur",
+              text: "Une erreur est survenue lors de la suppression.",
+              icon: "error",
+            });
+          });
+      }
+    });
+
   }
 
 }

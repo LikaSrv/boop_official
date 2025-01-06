@@ -141,8 +141,12 @@
       <% if @weight_histories.empty?%>
         <p>Saisir le premier poids</p>
       <% else %>
-        <div data-controller="chart">
-          <canvas id="myLine" data-chart-target="chart" data-label="<%= @weight_histories_labels.to_json %>" data-values="<%= @weight_histories_data.to_json %>">
+        <div data-controller="chart" class="p-4">
+          <canvas id="myLine" data-chart-target="chart"
+                              data-label="<%= @weight_histories_labels.to_json %>"
+                              data-values="<%= @weight_histories_data.to_json %>"
+                              data-ids="<%= @weight_histories_ids.to_json %>"
+                              data-petId="<%= @pet.id %>">
           </canvas>
         </div>
       <% end %>

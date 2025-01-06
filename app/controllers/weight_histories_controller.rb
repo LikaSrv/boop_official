@@ -16,6 +16,16 @@ class WeightHistoriesController < ApplicationController
     end
   end
 
+  def update
+    @pet = Pet.find(params[:pet_id])
+    @weight_history = WeightHistory.find(params[:id])
+    if @weight_history.update(weight_history_params)
+      render json: { weight_history: @weight_history }, status: :created
+    else
+      render json: { errors: @weight_history.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   # destroy à revoir
   def destroy
     @weight_history = @pet.weight_histories.find(params[:id])

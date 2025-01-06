@@ -28,6 +28,7 @@ class PetsController < ApplicationController
       @weight_histories_data << w.weight
     end
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+    @weight_histories_ids = @weight_histories.map { |w| w.id }
     @appointments = @pet.appointments
   end
 
@@ -40,6 +41,7 @@ class PetsController < ApplicationController
       @weight_histories_data << w.weight
     end
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+    @weight_histories_ids = @weight_histories.map { |w| w.id }
   end
 
   def update

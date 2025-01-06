@@ -7,6 +7,10 @@
         <p>Nom : </p>
         <h5 class="mx-2"> <strong><%= @appointment.user.first_name%> <%= @appointment.user.last_name%></strong></h5>
       </div>
+      <div class="d-flex flex-row">
+        <p>Date : </p>
+        <h5 class="mx-2"> <strong><%= @appointment.start_time.strftime("%d-%m-%Y")%> à <%= @appointment.start_time.strftime("%H:%M")%></strong></h5>
+      </div>
       <div class="d-flex flex-row my-1 mt-4">
         <p>Animal concerné : </p>
         <p class="mx-2"> <%= Pet.find(@appointment.pet_id).name%> </p>
@@ -20,8 +24,11 @@
         <p class="mx-2"> <%= @appointment.reason%> </p>
       </div>
     </div>
-    <div>
-      <%= cl_image_tag Pet.find(@appointment.pet_id).photo.key,  style:"width: 100px; aspect-ratio:1; border-radius: 20px" %>
+    <div class="d-flex flex-column justify-content-start align-items-center">
+      <%= cl_image_tag Pet.find(@appointment.pet_id).photo.key,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;" %>
+      <% if @professional.specialty=="Vétérinaire"%>
+        <a href="<%=user_pet_path(@appointment.user_id, @appointment.pet_id)%>" target="_blank">Voir le carnet de santé</a>
+      <%end%>
     </div>
   </div>
 <% end %>

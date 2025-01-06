@@ -24,17 +24,14 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
-
-  resources :users, only: [:show, :edit, :destroy] do
+  resources :users do
     member do
       get 'professionals', to: 'professionals#pro_index', as: :pro_index
       get 'professionals/:professional_id', to: 'professionals#pro_show', as: :pro_show
     end
-
-    member do
-      resources :pets
-    end
+    resources :pets
   end
+
 
   resources :animals, only: [:index, :show]
 

@@ -6,7 +6,7 @@
 <div class="container">
   <div class="form-devise mx-2">
     <h3 class="text-center my-4"><i class="fa-solid fa-paw float-end text-primary"></i> Ajouter un nouvel animal</h3>
-    <%= simple_form_for @pet do |p| %>
+    <%= simple_form_for @pet, url: user_pets_path(current_user) do |p| %>
       <%# general information %>
       <div class="mb-4">
         <h4>Informations générales</h4>

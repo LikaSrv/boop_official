@@ -279,6 +279,7 @@ export default class extends Controller {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Oui supprimer!",
+      cancelButtonText: "Annuler",
     }).then((result) => {
       if (result.isConfirmed) {
         // Envoi de la requête DELETE
@@ -501,16 +502,18 @@ export default class extends Controller {
     event.preventDefault();
 
     const userId = event.currentTarget.dataset.userId;
-    console.log(userId);
-  
+    console.log("user id:", userId);
+    console.log("pet id:", this.element.dataset.petId);
+
     Swal.fire({
       title: "Êtes-vous sûr de vouloir supprimer?",
       text: "Vous ne pourrez pas revenir en arrière!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#EFA690",
+      cancelButtonColor: "#0E0000",
       confirmButtonText: "Oui supprimer!",
+      cancelButtonText: "Annuler",
     }).then((result) => {
       if (result.isConfirmed) {
         // Envoi de la requête DELETE
@@ -521,15 +524,31 @@ export default class extends Controller {
           },
         })
           .then((response) => {
-            if (!response.ok) throw new Error("Erreur lors de la suppression.");
-            return response.json();
+            // Vérifiez si la réponse est OK (et a un corps si besoin)
+            if (response.ok) {
+              if (response.status === 204) {
+                Swal.fire({
+                  title: "Supprimé !",
+                  text: "L'animal a été enlevé.",
+                  icon: "success",
+                }).then(() => {
+                  window.location.href = `/users/${userId}`;  // Redirige vers la page d'accueil (root_path)
+                });
+              } else {
+                return response.json(); // Convertir la réponse en JSON si elle n'est pas vide
+              }
+            } else {
+              throw new Error("Erreur lors de la suppression.");
+            }
           })
-          .then(() => {
-            Swal.fire({
-              title: "Supprimé !",
-              text: "L'animal a été enlevé.",
-              icon: "success",
-            });
+          .then((data) => {
+            if (data) {
+              Swal.fire({
+                title: "Supprimé !",
+                text: data.message || "L'animal a été enlevé.",
+                icon: "success",
+              });
+            }
           })
           .catch((error) => {
             console.error("Erreur :", error);
@@ -541,7 +560,5 @@ export default class extends Controller {
           });
       }
     });
-
-  }
-
+}
 }

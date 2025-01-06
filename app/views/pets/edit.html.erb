@@ -6,7 +6,7 @@
 <div class="container">
   <div class="form-devise mx-2">
     <h3 class="text-center my-4"><i class="fa-solid fa-paw float-end text-primary"></i> Modifier les informations générales</h3>
-    <%= simple_form_for @pet do |p| %>
+    <%= simple_form_for [current_user, @pet] do |p| %>
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <%= p.input :name, label: "Nom de l'animal" %>
@@ -31,10 +31,7 @@
     <div class="d-flex flex-wrap align-items-center">
       <p>Vous souhaitez supprimer <%=@pet.name%> de vos animaux ?</p>
       <div>
-              <%= link_to "Supprimer",
-                          user_path(current_user),
-                          class: "text-danger my-0 mx-2",
-                          data: { controller: "alert", action: "click->alert#deletePet", pet_id: @pet.id, user_id: current_user } %>
+          <%= link_to "Supprimer", "#", class: "text-danger my-0 mx-2", data: { controller: "alert", action: "click->alert#deletePet", pet_id: @pet.id, user_id: current_user.id } %>
       </div>
     </div>
   </div>

@@ -1,17 +1,17 @@
 class UsersController < ApplicationController
 
   def show
-    @user = User.find(params[:id])
+    @user = current_user
     @appointments = Appointment.where(user_id: @user.id)
     @pets = Pet.where(user_id: @user.id)
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     @user.first_name = user_params[:first_name]
     @user.last_name = user_params[:last_name]
     @user.photo.attach(user_params[:photo])
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = current_user
     @user.destroy
     redirect_to root_path
   end

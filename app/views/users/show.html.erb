@@ -18,7 +18,7 @@
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <div class="d-flex flex-row justify-content-center">
             <h2 class="mx-3"> <strong> Mes animaux </strong> </h2>
-            <a href="<%=new_pet_path(current_user)%>" class="btn btn-primary rounded-circle shadow object-fit-cover" >
+            <a href="<%=new_user_pet_path(current_user)%>" class="btn btn-primary rounded-circle shadow object-fit-cover" >
               <i class="fa-solid fa-plus"></i>
             </a>
           </div>
@@ -30,7 +30,7 @@
           <% else %>
             <div class="d-flex flex-row justify-content-center align-items-center h-75 hoveredCircleButton" >
               <% @pets.each do |pet| %>
-                <a href="<%=pet_path(current_user, pet)%>" class="text-decoration-none">
+                <a href="<%=user_pet_path(current_user, pet)%>" class="text-decoration-none">
                   <%= cl_image_tag pet.photo.key, width: 200, style: "border-radius: 50%; aspect-ratio: 1;", class:"shadow object-fit-cover"%>
                 </a>
               <% end %>

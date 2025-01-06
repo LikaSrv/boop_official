@@ -30,7 +30,7 @@
         <% if @appointment.nil? %>
         <% else %>
           <div>
-            <%= render "shared/appointment_details", appointment: @appointment%>
+            <%= render "shared/appointment_details", appointment: @appointment, professional: @professional%>
           </div>
         <%end%>
       <% end %>

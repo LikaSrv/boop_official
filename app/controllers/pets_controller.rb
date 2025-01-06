@@ -48,7 +48,7 @@ class PetsController < ApplicationController
     if @pet.update(pet_params)
       # Si la mise à jour réussit, on redirige avec un message de succès
       flash[:notice] = "L'animal a bien été mis à jour."
-      redirect_to @pet
+      redirect_to user_pet_path(current_user, @pet)
     else
       # Si la mise à jour échoue, on rend la vue d'édition avec les erreurs
       flash[:alert] = "Impossible de mettre à jour l'animal."
@@ -57,9 +57,17 @@ class PetsController < ApplicationController
   end
 
   def destroy
-    @pet = Pet.find(params[:id])
-    @pet.destroy
-    redirect_to user_path(current_user), notice: "L'animal a bien été supprimé"
+    @pet = Pet.find_by(id: params[:id], user: current_user) # Sécurise avec current_user
+    if @pet.destroy
+      render json: { message: "L'animal a été supprimé." }, status: :no_content
+    else
+      render json: { errors: @pet.errors.full_messages }, status: :unprocessable_entity
+    end
+    # if @pet.destroy!
+    #   redirect_to root_path, notice: "L'animal a bien été supprimé"
+    # else
+    #   redirect_to root_path, alert: "Animal introuvable"
+    # end
   end
 
   private

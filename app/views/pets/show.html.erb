@@ -90,10 +90,10 @@
       <% if @vaccinations.empty? %>
         <p class="mt-3 text-center">Vous n'avez pas encore saisi les informations de vaccins.</p>
       <% else %>
-        <div class="d-flex flex-wrap justify-content-center align-items-center" id="vaccins-container">
+        <div class="d-flex flex-wrap" id="vaccins-container" >
           <% @vaccinations.each do |vaccin| %>
             <% i = i+1 %>
-            <div class="d-flex flex-row m-4 vaccination-item">
+            <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" style="background-color: #f7e6d4;">
               <p><%=i%>.</p>
               <div class="mx-2">
                 <p class="vaccin-name">Nom de vaccin : <strong><%=vaccin.name%></strong></p>
@@ -104,9 +104,8 @@
                 </div>
               </div>
               <div class="d-flex flex-column justify-content-around">
-                <%= link_to raw("<i class='fa-solid fa-edit float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+                <%= link_to raw("<i class='fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                             "#",
-                            class: "hoveredCircleButton ",
                             style: "font-size: 12px;",
                             data: { controller: "alert",
                                     action: "click->alert#editVaccination",
@@ -115,7 +114,7 @@
                                     vaccin_name: vaccin.name,
                                     administrationDate:  vaccin.administration_date,
                                     nextBoosterDate: vaccin.next_booster_date} %>
-                <%= link_to raw("<i class='fa-solid fa-trash float-end text-danger shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
+                <%= link_to raw("<i class='fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                             "#",
                             class: "hoveredCircleButton my-2",
                             style: "font-size: 12px;",

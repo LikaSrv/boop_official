@@ -28,11 +28,12 @@ class WeightHistoriesController < ApplicationController
 
   # destroy à revoir
   def destroy
-    @weight_history = @pet.weight_histories.find(params[:id])
+    @pet = Pet.find(params[:pet_id])
+    @weight_history = WeightHistory.find(params[:id])
     if @weight_history.destroy
-      redirect_to pet_path(@pet), notice: "Le poids a bien été supprimée"
+      render json: { weight_history: @weight_history }, status: :created
     else
-      render new, alert: "Erreur lors de la suppression de le poids"
+      render json: { errors: @weight_history.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

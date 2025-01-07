@@ -137,7 +137,6 @@ export default class extends Controller {
     }
   }
 
-
   // alert when user is not connected yet
   notConnectedSweetalert(event) {
     event.preventDefault();
@@ -240,21 +239,40 @@ export default class extends Controller {
       // Initialisation de la date d'aujourd'hui pour la comparaison
       const today = new Date().toISOString().split("T")[0];  // Format YYYY-MM-DD
 
+      // Reconstruire le contenu HTML de la vaccination
       vaccinElement.innerHTML = `
-      <div class="d-flex flex-row">
-        <p>${Array.from(vaccinsContainer.children).length + 1}.</p>
+    <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" style="background-color: #f7e6d4;">
       <div class="mx-2">
-          <p>Nom de vaccin : <strong>${vaccin.name}</strong></p>
-          <p>Date d'administration : ${vaccin.administration_date}</p>
-          <div class="d-flex flex-row">
-            <p>Prochaine date d'injection : </p>
-            <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date(today) ? 'text-success' : 'text-danger'}">
-              ${vaccin.next_booster_date}
-            </p>
-          </div>
+        <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
+        <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
+        <div class="d-flex flex-row">
+          <p>Prochaine date d'injection : </p>
+          <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
+            ${vaccin.next_booster_date}
+          </p>
         </div>
       </div>
-      `;
+      <div class="d-flex flex-column justify-content-around">
+        <a href="#" style="font-size: 12px;"
+          data-controller="alert"
+          data-action="click->alert#editVaccination"
+          data-pet-id="${vaccin.pet_id}"
+          data-vaccin-id="${vaccin.id}"
+          data-vaccin-name="${vaccin.name}"
+          data-administration-date="${vaccin.administration_date}"
+          data-next-booster-date="${vaccin.next_booster_date}">
+          <i class="fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+        </a>
+        <a href="#" class="hoveredCircleButton my-2" style="font-size: 12px;"
+          data-controller="alert"
+          data-action="click->alert#deleteVaccination"
+          data-pet-id="${vaccin.pet_id}"
+          data-vaccin-id="${vaccin.id}">
+          <i class="fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+        </a>
+      </div>
+  </div>
+  `;
 
       // Ajoute la nouvelle vaccination au conteneur
       vaccinsContainer.appendChild(vaccinElement);
@@ -418,9 +436,10 @@ export default class extends Controller {
 
 
     // Mettre à jour le nom, la date d'administration et la date de la prochaine injection
+
     vaccinElement.querySelector('.vaccin-name').innerText = vaccin.name;
-    vaccinElement.querySelector('.vaccin-administration-date').innerText = vaccin.administration_date;
-    vaccinElement.querySelector('.vaccin-next-booster-date').innerText = vaccin.next_booster_date;
+    vaccinElement.querySelector('.vaccin-administration-date').innerText = vaccin.administration_date.strftime("%d-%m-%Y");
+    vaccinElement.querySelector('.vaccin-next-booster-date').innerText = vaccin.next_booster_date.strftime("%d-%m-%Y");
   }
 
   // add weight history
@@ -430,17 +449,17 @@ export default class extends Controller {
     Swal.fire({
       title: "Ajouter une historique de poids",
       html: `
-        <div class="d-flex flex-row justify-content-between my-4">
-          <div class="mb-3 text-start">
-            <label for="weight" class="form-label ">Le poids (en kg)</label>
-            <input type="text" id="weight" class="form-control" placeholder="Saisir le poids">
+          <div class="d-flex flex-row justify-content-between my-4">
+            <div class="mb-3 text-start">
+              <label for="weight" class="form-label ">Le poids (en kg)</label>
+              <input type="text" id="weight" class="form-control" placeholder="Saisir le poids">
+            </div>
+            <div class="mb-3 text-start">
+              <label for="date" class="form-label ">Date de pesée</label>
+              <input type="date" id="date" class="form-control">
+            </div>
           </div>
-          <div class="mb-3 text-start">
-            <label for="date" class="form-label ">Date de pesée</label>
-            <input type="date" id="date" class="form-control">
-          </div>
-        </div>
-      `,
+        `,
       focusConfirm: false,
       confirmButtonText: "Enregistrer",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
@@ -560,5 +579,7 @@ export default class extends Controller {
           });
       }
     });
-}
+
+  }
+
 }

@@ -21,7 +21,7 @@ class PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id])
-    @vaccinations = @pet.vaccinations
+    @vaccinations = @pet.vaccinations.sort_by { |v| [v.name.downcase, v.next_booster_date] }
     @weight_histories = @pet.weight_histories
     @weight_histories_data = []
     @weight_histories.each do |w|

@@ -96,11 +96,19 @@
             <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" style="background-color: #f7e6d4;">
               <p><%=i%>.</p>
               <div class="mx-2">
-                <p class="vaccin-name">Nom de vaccin : <strong><%=vaccin.name%></strong></p>
-                <p class="vaccin-administration-date">Date d'administration : <%=vaccin.administration_date%></p>
                 <div class="d-flex flex-row">
-                  <p>Prochaine date d'injection : </p>
-                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date"><%=vaccin.next_booster_date%></p>
+                  <p>Nom de vaccin : </p>
+                  <p class="mx-2 vaccin-name"> <strong><%= vaccin.name%></strong></p>
+                </div>
+                <div class="d-flex flex-row">
+                  <p>Date d'injection : </p>
+                  <p class="mx-2 vaccin-administration-date"> <%= vaccin.administration_date.strftime("%d-%m-%Y")%></p>
+                </div>
+                <div class="d-flex flex-row">
+                  <p>Prochaine date : </p>
+                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date">
+                    <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
+                  </p>
                 </div>
               </div>
               <div class="d-flex flex-column justify-content-around">

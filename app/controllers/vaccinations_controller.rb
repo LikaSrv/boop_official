@@ -26,7 +26,6 @@ class VaccinationsController < ApplicationController
     end
   end
 
-  # destroy à revoir
   def destroy
     @pet = Pet.find(params[:pet_id])
     @vaccination = Vaccination.find(params[:id])

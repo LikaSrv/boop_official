@@ -27,7 +27,7 @@ export default class extends Controller {
     const data = JSON.parse(myLine.dataset.values);
     const ids = JSON.parse(myLine.dataset.ids);
     const petId = JSON.parse(myLine.dataset.petid);
-    console.log("Pet ID: ", petId);
+    // console.log("Pet ID: ", petId);
 
     // console.log(ids);
 
@@ -123,6 +123,7 @@ export default class extends Controller {
               confirmButtonText: "Enregistrer",
               cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
               showCancelButton: true,
+              footer: `<a href="#" id="delete-weight-history" class="text-danger">Supprimer</a>`,
               customClass: {
                 confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
                 cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
@@ -131,6 +132,38 @@ export default class extends Controller {
                 // S'assurer que les dates sont bien pré-remplies avec les bonnes valeurs
                 document.getElementById("weight").value = value;
                 document.getElementById("date").value = formattedDate;
+                document.getElementById("delete-weight-history").addEventListener("click", (e) => {
+                  e.preventDefault(); // Empêche le comportement par défaut du lien
+                  Swal.close(); // Ferme la modal avant d'exécuter la suppression
+
+                  fetch(`/pets/${petId}/weight_histories/${weightHistoryId}`, {
+                    method: "DELETE",
+                    headers: {
+                      "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+                    },
+                  })
+                    .then((response) => {
+                      if (!response.ok) throw new Error("Erreur lors de la suppression.");
+                      return response.json();
+                    })
+                    .then(() => {
+                      Swal.fire("Supprimé !", "La pesée a été supprimée avec succès.", "success");
+                      // Supprime l'élément correspondant dans le graphique
+                      const pointIndex = this.chart.data.datasets[0].meta.findIndex(
+                        (item) => item === weightHistoryId
+                      );
+                      if (pointIndex !== -1) {
+                        this.chart.data.datasets[0].data.splice(pointIndex, 1);
+                        this.chart.data.labels.splice(pointIndex, 1);
+                        this.chart.data.datasets[0].meta.splice(pointIndex, 1);
+                        this.chart.update();
+                      }
+                    })
+                    .catch((error) => {
+                      Swal.fire("Erreur", "Impossible de supprimer la pesée.", "error");
+                      console.error("Erreur :", error);
+                    });
+                });
               },
               preConfirm: () => {
                 const weight = document.getElementById("weight").value;

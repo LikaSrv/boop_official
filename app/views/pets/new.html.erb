@@ -14,15 +14,15 @@
       <div class="row">
         <div class="col-lg-6 col-sm-12">
           <%= p.input :name, label: "Nom de l'animal" %>
-          <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
           <%= p.input :species, label: "Espèce" %>
+          <%= p.input :sex, label: "Sexe", collection: ["Mâle", "Femelle"]%>
           <%= p.input :races, label: "Race"%>
           <%= p.input :birthday, label: "Date de naissance",
                 as: :string,
                 input_html: { data: { controller: "datepicker" } } %>
         </div>
         <div class="col-lg-6 col-sm-12">
-          <%= p.fields_for :weight_histories, WeightHistory.new do |w|%>
+          <%= p.fields_for :weight_histories do |w|%>
           <div class="nested-fields">
             <%= w.input :weight, label: "Poids actuel (kg)"%>
             <%= w.hidden_field :date, value: Date.today %>

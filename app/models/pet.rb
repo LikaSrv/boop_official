@@ -1,5 +1,5 @@
 class Pet < ApplicationRecord
-  validates :name, :species, :photo, :sex, :races, :birthday, :spayed_neutered, presence: true
+  validates :name, :species, presence: true
 
   belongs_to :user
 

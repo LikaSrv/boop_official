@@ -14,7 +14,13 @@
   <%# General information %>
   <div class="row d-flex justify-content-center">
     <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px;">
-      <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded" if @pet.photo.present? %>
+      <% if @pet.photo.present? %>
+        <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded"%>
+      <% else %>
+        <img  src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736071797/production/l36dmns98zvw0qbpvjtduy102ebz.jpg"
+              alt="photo_pet_default"
+              class= "card-img-top w-100 h-100 object-fit-cover rounded">
+      <% end %>
     </div>
     <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div>

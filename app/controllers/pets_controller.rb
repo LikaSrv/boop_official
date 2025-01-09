@@ -7,11 +7,16 @@ class PetsController < ApplicationController
   def new
     @pet = Pet.new
     @pet.vaccinations.build # Initialise un champ pour une première vaccination
+    @pet.weight_histories.build if params[:weight] # Crée un WeightHistory uniquement si un poids est fourni
   end
 
   def create
     @pet = Pet.new(pet_params)
     @pet.user = current_user
+
+    # Supprimer les WeightHistories vides
+    @pet.weight_histories.reject { |wh| wh.weight.blank? }
+
     if @pet.save!
       redirect_to pet_path(@pet), notice: "Votre animal a bien été créé"
     else
@@ -30,6 +35,7 @@ class PetsController < ApplicationController
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
     @weight_histories_ids = @weight_histories.map { |w| w.id }
     @appointments = @pet.appointments
+    # raise
   end
 
   def edit
@@ -77,10 +83,18 @@ class PetsController < ApplicationController
   def pet_params
     params.require(:pet).permit(:name, :sex, :photo, :species, :user, :appointment, :races, :birthday, :weight, :identification, :spayed_neutered, :medical_background,
                         vaccinations_attributes: [:id, :name, :administration_date, :next_booster_date, :_destroy],
-                        weight_histories_attributes: [:id, :weight, :date, :_destroy])
+                        weight_histories_attributes: [:id, :weight, :date, :_destroy]).tap do |whitelisted|
+                          # Remplacer les valeurs vides ou contenant uniquement des espaces par "Non renseigné"
+                          whitelisted.each do |key, value|
+                            if value.is_a?(String) && value.strip.blank?
+                              whitelisted[key] = "Non renseigné"
+                            end
+                          end
+                        end
   end
 
   def vaccination_params
     params.require(:vaccination).permit(:name, :administation_date, :next_booster_date, :vet_name, :vet_phone, :pet_id)
   end
+
 end

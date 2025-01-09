@@ -70,14 +70,20 @@ class ProfessionalsController < ApplicationController
     @appointments = Appointment.where(professional: @professional, date: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
   end
 
-  def edit
+  def profil_pro
+    @professional = Professional.find(params[:professional_id])
+  end
 
+  def edit
   end
 
   def update
   end
 
   def destroy
+    @professional = Professional.find(params[:id])
+    @professional.destroy
+    redirect_to pro_index_user_path(current_user), notice: 'Votre profil professionnel a bien été supprimé'
   end
 
   def search

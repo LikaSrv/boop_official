@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     member do
       get 'professionals', to: 'professionals#pro_index', as: :pro_index
       get 'professionals/:professional_id', to: 'professionals#pro_show', as: :pro_show
+      get 'professionals/:professional_id/profil', to: 'professionals#profil_pro', as: :profil_pro
     end
     resources :pets
   end

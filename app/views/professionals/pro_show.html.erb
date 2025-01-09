@@ -4,7 +4,12 @@
     <%= render "shared/all_service", selected_professional: @professional %>
   </div>
   <%# calendar %>
+
   <div class="text-center m-4" style="width: 100%;">
+    <div class="text-end m-4">
+    <a href="<%=profil_pro_user_path(current_user, @professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
+  </div>
+
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
     <% if @date %>
       <%= render "shared/calendar", start_date: @date.beginning_of_week%>

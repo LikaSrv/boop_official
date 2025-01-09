@@ -13,7 +13,7 @@
 <div class="container">
   <%# General information %>
   <div class="row d-flex justify-content-center">
-    <div class="col-lg-5 col-sm-10 card_pro" style="height: 400px;">
+    <div class="col-lg-5 col-md-5 col-sm-10 card_pro" style="height: 400px;">
       <% if @pet.photo.present? %>
         <%= image_tag @pet.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded"%>
       <% else %>
@@ -22,7 +22,7 @@
               class= "card-img-top w-100 h-100 object-fit-cover rounded">
       <% end %>
     </div>
-    <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
+    <div class="col-lg-5 col-md-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
       <div>
         <h3 class="text-center m-3"><%= @pet.name %></h3>
         <p class="my-2">Âge:

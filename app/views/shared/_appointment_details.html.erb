@@ -25,7 +25,13 @@
       </div>
     </div>
     <div class="d-flex flex-column justify-content-start align-items-center">
-      <%= cl_image_tag Pet.find(@appointment.pet_id).photo.key,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;" %>
+      <% if Pet.find(@appointment.pet_id).photo.present? %>
+        <%= cl_image_tag Pet.find(@appointment.pet_id).photo.key,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;" %>
+      <% else %>
+        <img  src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736071797/production/l36dmns98zvw0qbpvjtduy102ebz.jpg"
+              alt="photo_pet_default"
+              style="width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;">
+      <% end %>
       <% if @professional.specialty=="Vétérinaire"%>
         <a href="<%=user_pet_path(@appointment.user_id, @appointment.pet_id)%>" target="_blank">Voir le carnet de santé</a>
       <%end%>

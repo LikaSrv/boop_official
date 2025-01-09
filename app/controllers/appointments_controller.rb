@@ -6,7 +6,7 @@ class AppointmentsController < ApplicationController
     @appointment = Appointment.new
     @professional = Professional.find(params[:professional_id])
     @current_user_pets = current_user.pets
-    @pets_name = @current_user_pets.map { |pet| pet.name }
+    # @pets_name = @current_user_pets.map { |pet| pet.name }
   end
 
   def create

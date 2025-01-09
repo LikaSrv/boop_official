@@ -17,3 +17,10 @@
   padding: 10px; /* Ajouter un espace autour de l'icône */
   display: inline-block; /* Assurer que les styles s'appliquent correctement */
 }
+
+
+.custom_card {
+  border-radius: 20px;
+  background-color: $light-pink;
+  padding: 20px;
+}

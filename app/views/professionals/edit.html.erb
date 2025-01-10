@@ -1,82 +1,91 @@
 <div>
-  <%= render "shared/back"%>
+  <%= link_to pro_show_user_path(current_user, @professional), class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
 </div>
-
 <%# title %>
-<div class=" text-center mb-4 d-flex flex-row justify-content-center">
-  <h1>Créer un nouveau professionnel</h1>
+<div class=" text-center mb-4 d-flex flex-row justify-content-center position-relative">
+  <h1>Mon profil pro</h1>
   <i class="fa-solid fa-paw float-end text-primary"></i>
+  <a  href="#"
+      class="position-absolute top-0 end-0 mb-4 me-4 btn btn-primary"
+      data-controller="alert"
+      data-alert-professional-id="<%=@professional.id%>"
+      data-alert-user-id="<%= current_user.id %>"
+      data-action="click->alert#duplicateProfil"
+      >
+    Dupliquer mon profil
+  </a>
 </div>
 <%# form %>
 <%= simple_form_for @professional do |p|%>
   <div class="row justify-content-center">
+    <div class="card_pro col-lg-5 col-md-5 col-sm-10">
+      <%= image_tag @professional.photo, class: "card-img-top object-fit-cover"%>
+      <div class="text-center" style="margin-top: 50px;">
+        <h5>Profession : <strong><%=@professional.specialty%></strong></h5>
+      </div>
+    </div>
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <%# name %>
       <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
         <%= p.label :name, "Nom du professionnel :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <div style="width: 70%;">
           <%= p.input :name, label: false%>
         </div>
       </div>
-      <%# specialty %>
-      <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
-        <%= p.label :specialty, "Spécialité :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
-          <%= p.input :specialty, label: false, collection: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Pension", "Promeneur", "Nutritionniste", "Petsitter"] %>
-        </div>
-      </div>
-      <%# phone number %>
+      <%# phone %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :phone, "Numéro de téléphone :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <%= p.label :phone, "Numéro de téléphone", class: "me-2 mb-0" %>
+        <div style="width: 70%;">
           <%= p.input :phone, label: false, class: "form-control" %>
         </div>
       </div>
       <%# email %>
       <div class="d-flex align-items-center justify-content-between">
         <%= p.label :email, "Adresse email :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <div style="width: 70%;">
           <%= p.input :email, label: false, class: "form-control" %>
         </div>
       </div>
       <%# address %>
       <div class="d-flex align-items-center justify-content-between">
         <%= p.label :address, "Adresse :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <div style="width: 70%;">
           <%= p.input :address,
                     label: false,
-                    input_html: {value: @professional.address, data: {address_autocomplete_target: "address"}, class: "d-none"},
+                    input_html: {value: @professional.address, data: {address_autocomplete_target: "address"}, class: "form-control"},
                     wrapper_html: {data: {controller: "address-autocomplete", address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
                   %>
         </div>
       </div>
-    </div>
-
-    <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <%# capacity %>
       <div class="d-flex align-items-start justify-content-between">
         <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
-          <%= p.input :capacity, label: false%>
+        <div style="width: 70%;">
+          <%= p.input :capacity, label: false %>
         </div>
       </div>
       <%# description %>
-      <div class="d-flex align-items-start justify-content-between">
+      <div class="d-flex align-items-center justify-content-between">
         <%= p.label :description, "Description :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <div style="width: 70%;">
           <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
         </div>
       </div>
       <%# photo %>
       <div class="d-flex align-items-center justify-content-between">
         <%= p.label :photo, "Photo :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
+        <div style="width: 70%;">
           <%= p.input :photo, label: false, value: @professional.photo %>
         </div>
       </div>
       <%# submit button %>
       <div class="text-center my-4">
         <%= p.button :submit, "Enregistrer", class: "btn btn-primary" %>
+      </div>
+      <div class="text-end " style="margin-top: 50px;">
+        <a href="<%=pro_index_user_path(current_user)%>" methode="DELETE" class="text-danger" >Je souhaite supprimer mon compte pro</a>
       </div>
     </div>
   </div>

@@ -1,0 +1,31 @@
+<div class="m-4">
+  <%= calendar(events: @appointments, professional: @professional) do |date, events| %>
+    <div>
+      <p data-appointment-target="date">
+        <%= date.strftime("%d-%m-%Y") %>
+      </p>
+      <div>
+        <p class="my-3" >Les rendez-vous de la journée</p>
+      </div>
+      <div>
+        <% start_hour = 8 # Heure de début
+        end_hour = 17  # Heure de fin
+        interval = 60  # Durée entre les créneaux en minutes
+        %>
+        <% current_time = Time.parse("#{date} #{start_hour}:00") %>
+        <% end_time = Time.parse("#{date} #{end_hour}:00") %>
+        <% while current_time <= end_time do %>
+          <div class="p-2 my-2 card" style="border-radius: 12px">
+            <p class="text-start"><%=current_time.strftime("%H:%M")%></p>
+            <% events.each do |event| %>
+              <% if event.start_time === current_time %>
+                <p class="mx-2 text-start"><%= event.user.first_name%> <%= event.user.last_name%> (<%=event.professional.name%>)</p>
+              <% end %>
+            <% end %>
+          </div>
+          <% current_time += interval.minutes %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

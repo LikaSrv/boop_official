@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'terms', to: 'pages#terms', as: 'terms'
+  post 'professionals/duplicate', to: 'professionals#duplicate', as: 'duplicate_professional'
+
     # autres routes...
 
   # Defines the root path route ("/")
@@ -28,7 +30,6 @@ Rails.application.routes.draw do
     member do
       get 'professionals', to: 'professionals#pro_index', as: :pro_index
       get 'professionals/:professional_id', to: 'professionals#pro_show', as: :pro_show
-      get 'professionals/:professional_id/profil', to: 'professionals#profil_pro', as: :profil_pro
     end
     resources :pets
   end

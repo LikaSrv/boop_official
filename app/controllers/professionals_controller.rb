@@ -32,19 +32,40 @@ class ProfessionalsController < ApplicationController
 
   def new
     @professional = Professional.new
+    @professional.capacity = 1
   end
 
   def create
-    @professional = Professional.new(appointment_params)
+    @professional = Professional.new(professional_params)
     @professional.user = current_user
     @user = current_user
     @professional.rating = 0
+    @professional.capacity = 1
     if @professional.save!
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
     end
   end
+
+
+  def duplicate
+    professional = Professional.find(params[:professional_id])
+    duplicated_professional = professional.dup
+    duplicated_professional.user = current_user
+    duplicated_professional.photo.attach(professional.photo.blob)
+
+    Rails.logger.debug "Duplicating professional: #{duplicated_professional.attributes}"
+
+    if duplicated_professional.save!
+      render json: { success: true }, status: :ok
+    else
+      Rails.logger.error "Duplication failed: #{duplicated_professional.errors.full_messages}"
+      render json: { success: false, errors: duplicated_professional.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+
 
   def show
     @professional = Professional.find(params[:id])
@@ -60,6 +81,7 @@ class ProfessionalsController < ApplicationController
 
   def pro_index
     @professionals = Professional.where(user: current_user)
+    @appointments = Appointment.where(professional: @professionals)
   end
 
   def pro_show
@@ -70,14 +92,18 @@ class ProfessionalsController < ApplicationController
     @appointments = Appointment.where(professional: @professional, date: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
   end
 
-  def profil_pro
-    @professional = Professional.find(params[:professional_id])
-  end
-
   def edit
+    @professional = Professional.find(params[:id])
   end
 
   def update
+    @professional = Professional.find(params[:id])
+
+    if @professional.update!(professional_params)
+      redirect_to edit_professional_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
+    else
+      render :edit, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être mis à jour car tous les champs n\'ont pas été remplis'
+    end
   end
 
   def destroy
@@ -91,7 +117,7 @@ class ProfessionalsController < ApplicationController
 
   private
 
-  def appointment_params
-    params.require(:professional).permit(:name, :address, :phone, :email, :specialty, :description, :rating, :latitude, :longitude, :photo)
+  def professional_params
+    params.require(:professional).permit(:name, :address, :phone, :email, :specialty, :description, :rating, :latitude, :longitude, :photo, :capacity)
   end
 end

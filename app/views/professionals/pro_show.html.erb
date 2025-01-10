@@ -1,14 +1,14 @@
 <div class="d-flex flex-row justify-content-between" style="height: 100%;" data-controller="appointment">
   <%# sidebar all my service %>
   <div>
-    <%= render "shared/all_service", selected_professional: @professional %>
+    <%= render "all_service", selected_professional: @professional %>
   </div>
   <%# calendar %>
 
   <div class="text-center m-4" style="width: 100%;">
     <div class="text-end m-4">
-    <a href="<%=profil_pro_user_path(current_user, @professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
-  </div>
+    <a href="<%=edit_professional_path(@professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
+    </div>
 
     <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
     <% if @date %>

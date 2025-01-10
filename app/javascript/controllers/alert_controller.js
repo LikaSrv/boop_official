@@ -551,7 +551,7 @@ export default class extends Controller {
                   text: "L'animal a été enlevé.",
                   icon: "success",
                 }).then(() => {
-                  window.location.href = `/users/${userId}`;  // Redirige vers la page d'accueil (root_path)
+                  window.location.href = `/users/${userId}`;  // Redirige
                 });
               } else {
                 return response.json(); // Convertir la réponse en JSON si elle n'est pas vide
@@ -580,6 +580,90 @@ export default class extends Controller {
       }
     });
 
+  }
+
+  // Duplicate a professional profile
+  duplicateProfil(event) {
+    event.preventDefault();
+
+    const { value: capacity } = Swal.fire({
+      title: "Nombre de profils",
+      input: "select",
+      inputOptions: {
+        1: "1 profil",
+        2: "2 profils",
+        3: "3 profils",
+        4: "4 profils",
+        5: "5 profils",
+        6: "6 profils",
+        7: "7 profils",
+        8: "8 profils",
+        9: "9 profils",
+        10: "10 profils"
+      },
+      inputLabel: "Indiquer le nombre de profils que vous souhaitez dupliquer",
+      inputPlaceholder: "Nombre de profil",
+      confirmButtonText: "Enregistrer",
+      customClass: {
+        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed && result.value) {
+        const capacity = parseInt(result.value, 10);
+
+        // Montre un message de chargement
+        Swal.fire({
+          title: "Duplication en cours...",
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
+        try {
+          // Appelle le backend pour chaque duplication
+          const professionalId = this.element.dataset.alertProfessionalId;
+          const userId = this.element.dataset.alertUserId;
+          console.log("Professional ID:", professionalId);
+          console.log(this.element.dataset.alertUserId);
+          console.log("User ID:", userId);
+
+          for (let i = 0; i < capacity; i++) {
+            await fetch('/professionals/duplicate', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+              },
+              body: JSON.stringify({
+                professional_id:professionalId, // ID du profil à dupliquer
+              }),
+            });
+          }
+
+          // Succès
+          Swal.fire({
+            icon: "success",
+            title: `${capacity} profil(s) dupliqué(s) avec succès !`,
+          });
+
+          // Redirige la page
+          window.location.replace(`/users/${userId}/professionals`);
+        } catch (error) {
+          // Gère les erreurs
+          Swal.fire({
+            icon: "error",
+            title: "Erreur lors de la duplication",
+            text: "Veuillez réessayer.",
+          });
+          console.error("Erreur de duplication:", error);
+        }
+      }
+    });
+    if (capacity) {
+      Swal.fire(`Indiquez le nombre de profil à dupliquer: ${capacity}`);
+    }
   }
 
 }

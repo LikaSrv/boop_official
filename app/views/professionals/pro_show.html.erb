@@ -1,44 +1,57 @@
-<div class="d-flex flex-row justify-content-between" style="height: 100%;" data-controller="appointment">
+<div class="d-flex flex-row justify-content-between" style="height: 85vh;" data-controller="appointment">
   <%# sidebar all my service %>
   <div>
     <%= render "all_service", selected_professional: @professional %>
   </div>
   <%# calendar %>
-
-  <div class="text-center m-4" style="width: 100%;">
-    <div class="text-end m-4">
-    <a href="<%=edit_professional_path(@professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
+  <div class="text-center" style="width: 100%;">
+    <%# title + button edit %>
+    <div class="position-relative py-4">
+      <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
+      <%# edit profil pro button %>
+      <div class="text-end position-absolute top-0 end-0 me-4 mt-4">
+        <a href="<%=edit_professional_path(@professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
+      </div>
     </div>
-
-    <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
-    <% if @date %>
-      <%= render "shared/calendar", start_date: @date.beginning_of_week%>
-    <%else%>
-      <%= render "shared/calendar", start_date: Date.today.beginning_of_week%>
-    <%end%>
-    <%@selected_date = params[:date]%>
-    <div>
-      <p class="text-start mx-4">Les horaires du rendez-vous : </p>
-      <% if @selected_date.nil? %>
-        <%= turbo_frame_tag :all_slot_not_selected do %>
-          <%= render "shared/all_slot_not_selected", professional: @professional %>
-        <% end %>
+    <div class="custom-scroll" style="height: calc(85vh - 100px); overflow-y: auto">
+      <%# calendar %>
+      <% if @date %>
+        <%= render "calendar", start_date: @date.beginning_of_week%>
       <%else%>
-        <%= turbo_frame_tag :all_slot do %>
-          <% render "shared/all_slot", professional: @professional, selected_date: @selected_date %>
-        <% end %>
+        <%= render "calendar", start_date: Date.today.beginning_of_week%>
       <%end%>
-    </div>
-    <div>
-      <%= turbo_frame_tag :appointment_details do %>
-        <% @appointment = params[:appointment]%>
-        <% if @appointment.nil? %>
-        <% else %>
-          <div>
-            <%= render "shared/appointment_details", appointment: @appointment, professional: @professional%>
-          </div>
+      <%@selected_date = params[:date]%>
+      <%# slots %>
+      <div>
+        <p class="text-start mx-4">Les horaires du rendez-vous : </p>
+        <% if @selected_date.nil? %>
+          <%= turbo_frame_tag :all_slot_not_selected do %>
+            <%= render "all_slot_not_selected", professional: @professional %>
+          <% end %>
+        <%else%>
+          <%= turbo_frame_tag :all_slot do %>
+            <% render "all_slot_selected", professional: @professional, selected_date: @selected_date %>
+          <% end %>
         <%end%>
-      <% end %>
+      </div>
+      <%# appointment details %>
+      <div class="mx-4 mb-4">
+        <p class="text-start my-4">Les détails du rendez-vous : </p>
+        <% if !params[:appointments].nil? %>
+          <%= turbo_frame_tag :appointment_details do %>
+            <% @appointments = params[:appointments]%>
+            <% if !@appointments.empty? %>
+              <% @appointments.each do |appointment|%>
+                <div>
+                  <%= render "appointment_details", appointment: appointment, professional: @professional%>
+                </div>
+              <% end%>
+            <%end%>
+          <% end %>
+        <% else %>
+          <p class="my-5">Veuillez sélectionner un créneau de rendez-vous pour afficher le détail. </p>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

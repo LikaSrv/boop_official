@@ -10,8 +10,6 @@
         <%# get all the appointments for this professional %>
         <%= date %>
         <% @appointments = Appointment.where(professional: professional, date: Time.parse(date))%>
-
-        <%# get all the appointment times for this professional %>
         <% @appointment_times = [] %>
         <% @appointments.each do |appointment| %>
           <% @appointment_times << appointment.start_time.strftime("%H:%M") %>
@@ -19,10 +17,13 @@
       </a>
 
       <%# show all available slot for appointment %>
-      <div class="d-none d-flex justify-content-center mx-2" data-appointment-selected-target="times" style="display: flex; flex-wrap: wrap;">
+      <div  class="d-none d-flex justify-content-center mx-2"
+            data-appointment-selected-target="times"
+            style="display: flex; flex-wrap: wrap;">
         <% ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"].each do |time| %>
           <a href="<%=new_professional_appointment_path(professional)%>"
-              class="btn btn-outline-primary m-1 <%= 'd-none' if @appointment_times.include?(time) || (Date.parse(date) == Date.today && time < Time.now.strftime('%H:%M')) %>"
+              class="btn btn-outline-primary m-1
+                    <%= 'd-none' if (@appointment_times.include?(time) && @appointments.count==professional.capacity) || (Date.parse(date) == Date.today && time < Time.now.strftime('%H:%M')) %>"
               style="width: 22%;"
               data-time="<%= time %>"
               data-action="click->appointment-selected#confirm">

@@ -63,22 +63,22 @@ marie.save!
 puts "create professionals"
 
 vet_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg").open
-professional1 = Professional.new(name: "Jean MEDECIN", address: "21 avenue Thiers 06000 Nice", phone: "0123456789", email: "jean.medecin@test.fr", specialty: "Vétérinaire", description: "Vétérinaire depuis 10ans. J'ai soigné tous les animaux.", rating: 5, user_id: user1.id)
+professional1 = Professional.new(name: "Jean MEDECIN", address: "21 avenue Thiers 06000 Nice", phone: "0123456789", email: "jean.medecin@test.fr", specialty: "Vétérinaire", description: "Vétérinaire depuis 10ans. J'ai soigné tous les animaux.", rating: 5, user_id: user1.id, capacity: 1)
 professional1.photo.attach(io: vet_file, filename: 'vet.jpg', content_type: 'image/jpg')
 professional1.save!
 
 groomer_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/reba-spike-PEQIIwnIGdo-unsplash_yfvjlt.jpg").open
-professional2 = Professional.new(name: "Michel DUPONT", address: "25 Rue des Renaudes 75017 Paris", phone: "0123456789", email: "jean.dupont@test.fr", specialty: "Toiletteur", description: "Toiletteur depuis 10ans. J'ai nettoyé tous les animaux", rating: 4, user_id: user2.id)
+professional2 = Professional.new(name: "Michel DUPONT", address: "25 Rue des Renaudes 75017 Paris", phone: "0123456789", email: "jean.dupont@test.fr", specialty: "Toiletteur", description: "Toiletteur depuis 10ans. J'ai nettoyé tous les animaux", rating: 4, user_id: user2.id, capacity: 1)
 professional2.photo.attach(io: groomer_file, filename: 'groomer.jpg', content_type: 'image/jpg')
 professional2.save!
 
 walker_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/matt-nelson-aI3EBLvcyu4-unsplash_drfsex.jpg").open
-professional3 = Professional.new(name: "Thibault DURAND", address: "25 Rue du Premier Film, 69008 Lyon", phone: "0123456789", email: "jean.durant@test.fr", specialty: "Promeneur", description: "Promeneur depuis 10ans. J'ai promené tous les animaux", rating: 3, user_id: user2.id)
+professional3 = Professional.new(name: "Thibault DURAND", address: "25 Rue du Premier Film, 69008 Lyon", phone: "0123456789", email: "jean.durant@test.fr", specialty: "Promeneur", description: "Promeneur depuis 10ans. J'ai promené tous les animaux", rating: 3, user_id: user2.id, capacity: 1)
 professional3.photo.attach(io: walker_file, filename: 'walker.jpg', content_type: 'image/jpg')
 professional3.save!
 
 toiletteur_file = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734622835/slider-formation-toiletteur_tlg2lq.jpg").open
-toiletteur = Professional.new(name: "Lika Le Wagon", address: "21 avenue thiers 06000 Nice", phone: "0123456789", email: "lika_nice@toiletteuse.fr", specialty: "Toiletteur", description: "Toiletteuse depuis 2ans. J'ai nettoyé tous les animaux", rating: 5, user_id: lika.id)
+toiletteur = Professional.new(name: "Lika Le Wagon", address: "21 avenue thiers 06000 Nice", phone: "0123456789", email: "lika_nice@toiletteuse.fr", specialty: "Toiletteur", description: "Toiletteuse depuis 2ans. J'ai nettoyé tous les animaux", rating: 5, user_id: lika.id, capacity: 1)
 toiletteur.photo.attach(io: toiletteur_file, filename: 'toiletteur.jpg', content_type: 'image/jpg')
 toiletteur.save!
 

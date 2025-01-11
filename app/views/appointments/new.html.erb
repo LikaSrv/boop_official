@@ -78,7 +78,15 @@
                           required: true
                   %>
                 </h5>
-                <p class="text-end" style="font-size: 12px; ">Vous n'avez pas encore enregistrer vos compagnons ? <a href="<%=new_user_pet_path(current_user)%>">Enregistrer un animal</a></p>
+                <p class="text-end" style="font-size: 12px; ">
+                  Vous n'avez pas encore enregistrer vos compagnons ?
+                  <a href="<%=new_user_pet_path(current_user)%>"
+                      data-controller="alert"
+                      data-action="click->alert#addPet"
+                      data-alert-user-id="<%=current_user.id%>">
+                    Enregistrer un animal
+                  </a>
+                </p>
               </div>
             </div>
             <!-- Motif de la visite -->

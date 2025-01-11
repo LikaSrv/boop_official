@@ -1,7 +1,7 @@
 <div class="simple-calendar" >
   <div class="calendar-heading d-flex justify-content-between align-items-end">
     <%= link_to t('simple_calendar.previous', default: 'Précédente'), calendar.url_for_previous_view, class: "m-2" %>
-    <h5 class="m-2"> Les rendez-vous de la semaine </h5>
+    <h5 class="m-2"> Les rendez-vous </h5>
     <%= link_to t('simple_calendar.next', default: 'Suivante'), calendar.url_for_next_view, class: "m-2" %>
   </div>
   <table class="table table-striped">
@@ -18,9 +18,9 @@
       <% date_range.each_slice(7) do |week| %>
         <tr>
           <% week.each do |day| %>
-            <%= content_tag :td, class: "#{calendar.td_classes_for(day)} " do %>
+            <%= content_tag :td, class: calendar.td_classes_for(day) do %>
               <%= link_to pro_show_user_path(current_user, @professional, date: day.strftime("%Y-%m-%d"), start_date: day.beginning_of_week),
-                            class: "full-cell-link" do %>
+                            class: "full-cell-link #{'active-day' if params[:date] == day.strftime('%Y-%m-%d')}" do %>
                 <% if defined?(Haml) && respond_to?(:block_is_haml?) && block_is_haml?(passed_block) %>
                   <% capture_haml(day, sorted_events.fetch(day, []), &passed_block) %>
                 <% else %>

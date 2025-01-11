@@ -1,10 +1,10 @@
 <%= turbo_frame_tag :all_slot do %>
 
   <%# all appointment slot %>
-  <div>
-    <% start_hour = 8 # Heure de début
-        end_hour = 17  # Heure de fin
-        interval = 60  # Durée entre les créneaux en minutes
+  <div class="mx-5">
+    <% start_hour = @professional.start_hour # Heure de début
+        end_hour = @professional.end_hour  # Heure de fin
+        interval = @professional.interval  # Durée entre les créneaux en minutes
       %>
     <% current_time = Time.parse("#{start_hour}:00") %>
     <% end_time = Time.parse("#{end_hour}:00") %>

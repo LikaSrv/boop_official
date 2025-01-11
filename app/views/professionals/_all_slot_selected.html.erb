@@ -1,8 +1,8 @@
 <%= turbo_frame_tag :all_slot do %>
-  <div>
-    <% start_hour = 8 # Heure de début
-        end_hour = 17  # Heure de fin
-        interval = 60  # Durée entre les créneaux en minutes
+  <div class="mx-5">
+    <% start_hour = @professional.start_hour # Heure de début
+        end_hour = @professional.end_hour  # Heure de fin
+        interval = @professional.interval  # Durée entre les créneaux en minutes
       %>
     <% current_time = Time.parse("#{selected_date} #{start_hour}:00") %>
     <% end_time = Time.parse("#{selected_date} #{end_hour}:00") %>
@@ -14,7 +14,7 @@
               class:"btn btn-outline-primary m-2",
               data: {time: current_time.strftime("%H:%M")}%>
         <% else %>
-          <%= link_to current_time.strftime("%H:%M"), pro_show_user_path(current_user, professional,date: @selected_date, appointments: @appointments.map { |appointment| appointment.id }),  
+          <%= link_to current_time.strftime("%H:%M"), pro_show_user_path(current_user, professional,date: @selected_date, appointments: @appointments.map { |appointment| appointment.id }),
               class:"btn btn-outline-primary m-2 btn-info text-dark",
               data: {time: current_time.strftime("%H:%M"),
                     turbo: false}%>

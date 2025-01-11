@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'terms', to: 'pages#terms', as: 'terms'
   post 'professionals/duplicate', to: 'professionals#duplicate', as: 'duplicate_professional'
+  get 'professionals/:id/edit_slots', to: 'professionals#edit_slots', as: 'professional_edit_slots'
+  get 'professionals/:id/update_slots', to: 'professionals#update_slots', as: 'professional_update_slots'
 
     # autres routes...
 

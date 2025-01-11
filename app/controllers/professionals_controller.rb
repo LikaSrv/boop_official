@@ -66,7 +66,6 @@ class ProfessionalsController < ApplicationController
   end
 
 
-
   def show
     @professional = Professional.find(params[:id])
     @reviews = Review.where(professional: @professional)
@@ -113,6 +112,14 @@ class ProfessionalsController < ApplicationController
   end
 
   def search
+  end
+
+  def edit_slots
+    @professional = Professional.find(params[:id])
+  end
+
+  def update_slots
+
   end
 
   private

@@ -1,16 +1,19 @@
-<div class="d-flex flex-column shadow position-relative"  style="width: 350px; height: 85vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px">
+<div class="d-flex flex-column shadow position-relative"
+      style="width: 300px; height: 85vh; background-color:rgba(236, 230, 230, 0.31); padding: 20px"
+      >
   <div class="text-start my-2">
     <a href="<%=pro_index_user_path(current_user)%>"
       style="text-decoration: underline; color: black;">
-        <p class="text-dark"> Voir le planning de l'organisme </p>
+      <p class="text-dark"> Voir le planning de l'organisme </p>
     </a>
   </div>
   <h3 class="my-4">Mes professionnels</h3>
+  <%# list of all professionals %>
   <div class="overflow-auto custom-scroll d-flex flex-column justify-content-center" style="white-space: nowrap; max-height: 100%;">
     <% @professionals.each do |professional| %>
       <a href="<%= pro_show_user_path(current_user, professional) %>"
-          class="btn btn-outline-info m-1 text-black rounded rounded-4 <%= 'btn-primary' if professional == selected_professional %>"
-          style="display: inline-block; width: 90%;">
+              class="btn btn-outline-info m-1 text-black rounded rounded-4 <%= 'btn-primary' if professional == selected_professional %>"
+              style="display: inline-block; width: 90%;">
         <%= professional.name %>
       </a>
     <% end %>
@@ -18,7 +21,7 @@
   <a href="<%=new_professional_path%>"
               class="btn btn-primary rounded shadow align-items-center position-absolute bottom-0 end-0 m-4"
                >
-              Ajouter un professionnel
-              <%# <i class="fa-solid fa-plus"></i> %>
-            </a>
+    Ajouter un professionnel
+    <%# <i class="fa-solid fa-plus"></i> %>
+  </a>
 </div>

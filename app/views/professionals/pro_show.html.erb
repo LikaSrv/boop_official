@@ -15,17 +15,20 @@
     </div>
     <div class="custom-scroll" style="height: calc(85vh - 100px); overflow-y: auto">
       <%# calendar %>
-
         <% if @date %>
           <%= render "calendar", start_date: @date.beginning_of_week%>
         <%else%>
           <%= render "calendar", start_date: Date.today.beginning_of_week%>
         <%end%>
-
       <%@selected_date = params[:date]%>
       <%# slots %>
       <div>
-        <p class="text-start mx-4">Les horaires du rendez-vous : </p>
+        <div class="d-flex flex-row justify-content-between">
+          <p class="text-start mx-4">Les horaires du rendez-vous : </p>
+          <a href="<%=professional_edit_slots_path(@professional)%>" class="btn btn-secondary me-4">
+            gérer mes créneaux
+          </a>
+        </div>
         <% if @selected_date.nil? %>
           <%= turbo_frame_tag :all_slot_not_selected do %>
             <%= render "all_slot_not_selected", professional: @professional %>

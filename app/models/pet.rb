@@ -3,7 +3,7 @@ class Pet < ApplicationRecord
 
   belongs_to :user
 
-  has_many :appointments, dependent: :destroy
+  has_many :appointments
   has_many :vaccinations, dependent: :destroy
   accepts_nested_attributes_for :vaccinations, reject_if: :all_blank, allow_destroy: true
   has_many :weight_histories, dependent: :destroy

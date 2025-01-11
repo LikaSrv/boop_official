@@ -7,7 +7,7 @@
   <div class="text-center" style="width: 100%;">
     <%# title + button edit %>
     <div class="position-relative py-4">
-      <h4> <strong> Bienvenue sur votre tableau de bord </strong></h4>
+      <h4> <strong> Bienvenue sur le planning de <%=@professional.name%> </strong></h4>
       <%# edit profil pro button %>
       <div class="text-end position-absolute top-0 end-0 me-4 mt-4">
         <a href="<%=edit_professional_path(@professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
@@ -15,11 +15,13 @@
     </div>
     <div class="custom-scroll" style="height: calc(85vh - 100px); overflow-y: auto">
       <%# calendar %>
-      <% if @date %>
-        <%= render "calendar", start_date: @date.beginning_of_week%>
-      <%else%>
-        <%= render "calendar", start_date: Date.today.beginning_of_week%>
-      <%end%>
+
+        <% if @date %>
+          <%= render "calendar", start_date: @date.beginning_of_week%>
+        <%else%>
+          <%= render "calendar", start_date: Date.today.beginning_of_week%>
+        <%end%>
+
       <%@selected_date = params[:date]%>
       <%# slots %>
       <div>

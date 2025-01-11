@@ -1,12 +1,9 @@
 <div class="m-2">
   <h4>Prochains rendez-vous disponibles</h4>
   <% 7.times do |i| %>
-
     <% date = (DateTime.current.to_date + i).strftime('%d-%m-%Y')%>
-
     <div class="nav-item dropdown" data-controller="appointment-selected", data-appointment-selected-api-key-value=<%=professional.id%>>
       <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
-
         <%# get all the appointments for this professional %>
         <%= date %>
         <% @appointments = Appointment.where(professional: professional, date: Time.parse(date))%>
@@ -15,12 +12,23 @@
           <% @appointment_times << appointment.start_time.strftime("%H:%M") %>
         <% end%>
       </a>
-
       <%# show all available slot for appointment %>
+      <% slots = [] %>
+      <% start_hour = professional.start_hour # Heure de début
+          end_hour = professional.end_hour  # Heure de fin
+          interval = professional.interval  # Durée entre les créneaux en minutes
+      %>
+      <% current_time = Time.parse("#{start_hour}:00") %>
+      <% end_time = Time.parse("#{end_hour}:00") %>
+      <% while current_time <= end_time do %>
+        <% slots << current_time.strftime("%H:%M") %>
+            <% current_time += interval.minutes %>
+      <% end %>
+
       <div  class="d-none d-flex justify-content-center mx-2"
             data-appointment-selected-target="times"
             style="display: flex; flex-wrap: wrap;">
-        <% ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"].each do |time| %>
+        <% slots.each do |time| %>
           <a href="<%=new_professional_appointment_path(professional)%>"
               class="btn btn-outline-primary m-1
                     <%= 'd-none' if (@appointment_times.include?(time) && @appointments.count==professional.capacity) || (Date.parse(date) == Date.today && time < Time.now.strftime('%H:%M')) %>"

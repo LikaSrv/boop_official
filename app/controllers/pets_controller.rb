@@ -18,10 +18,18 @@ class PetsController < ApplicationController
     @pet.weight_histories.reject { |wh| wh.weight.blank? }
 
     if @pet.save!
-      redirect_to pet_path(@pet), notice: "Votre animal a bien été créé"
+      respond_to do |format|
+        format.json { render json: { success: true, message: "Votre animal a été ajouté avec succès"
+        }, status: :created }
+        format.html { redirect_to user_pet_path(current_user, @pet), notice: "Avis ajouté avec succès." }
+      end
     else
-      render new, alert: "Erreur lors de la création de votre animal"
+      respond_to do |format|
+        format.json { render json: { success: false, errors: @pet.errors.full_messages }, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
+
   end
 
   def show
@@ -91,10 +99,6 @@ class PetsController < ApplicationController
                             end
                           end
                         end
-  end
-
-  def vaccination_params
-    params.require(:vaccination).permit(:name, :administation_date, :next_booster_date, :vet_name, :vet_phone, :pet_id)
   end
 
 end

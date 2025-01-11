@@ -516,6 +516,85 @@ export default class extends Controller {
     });
   }
 
+   //Add Pet
+  addPet(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      title: "Ajouter un animal de compagnie",
+      html: `
+          <div class="d-flex flex-column justify-content-between my-4">
+            <div class="mb-3 text-start">
+              <label for="name" class="form-label ">Nom : </label>
+              <input type="text" id="name" class="form-control" placeholder="Saisir son nom">
+            </div>
+            <div class="mb-3 text-start">
+              <label for="species" class="form-label ">Espèce : </label>
+              <input type="text" id="species" class="form-control"  placeholder="Chien, Chat, etc.">
+            </div>
+          </div>
+        `,
+      focusConfirm: false,
+      confirmButtonText: "Enregistrer",
+      cancelButtonText: "Annuler",
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-body-color",
+      },
+      preConfirm: () => {
+        const name = document.getElementById("name").value;
+        const species = document.getElementById("species").value;
+
+        if (!name || !species) {
+          Swal.showValidationMessage("Tous les champs sont obligatoires !");
+          return false;
+        }
+
+        return { name, species };
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const userId = this.element.dataset.alertUserId;
+
+        // Envoi des données au serveur Rails via Fetch POST
+        fetch(`/users/${userId}/pets`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            pet: {
+              name: result.value.name,
+              species: result.value.species,
+            },
+          }),
+        })
+        .then((response) => {
+          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+          return response.json();
+        })
+        .then((data) => {
+          Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "L'animal a bien été créé !",
+            confirmButtonText: "OK",
+          }).then(() => {
+            // Si c'est via SweetAlert, on recharge la page
+            window.location.reload();
+          });
+        })
+        .catch((error) => {
+          Swal.fire("Erreur", "Impossible d'envoyer votre avis.", "error");
+          console.error("Erreur :", error);
+        });
+      }
+    });
+  }
+
   // Delete pet
   deletePet(event) {
     event.preventDefault();
@@ -665,5 +744,4 @@ export default class extends Controller {
       Swal.fire(`Indiquez le nombre de profil à dupliquer: ${capacity}`);
     }
   }
-
 }

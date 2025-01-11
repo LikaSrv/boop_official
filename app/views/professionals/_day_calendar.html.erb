@@ -1,12 +1,9 @@
 <div class="m-4">
   <%= calendar(events: @appointments, professional: @professional) do |date, events| %>
     <div>
-      <p data-appointment-target="date">
-        <%= date.strftime("%d-%m-%Y") %>
+      <p class="mb-4" data-appointment-target="date">
+        <strong><%= date.strftime("%d-%m-%Y") %></strong>
       </p>
-      <div>
-        <p class="my-3" >Les rendez-vous de la journée</p>
-      </div>
       <div>
         <% start_hour = 8 # Heure de début
         end_hour = 17  # Heure de fin

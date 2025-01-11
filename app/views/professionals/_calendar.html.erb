@@ -4,9 +4,11 @@
       <p data-appointment-target="date">
         <%= date.strftime("%d-%m-%Y") %>
       </p>
-      <% events.each do |event| %>
-        <p><%= event.user.first_name%> <%= event.user.last_name%></p>
-      <% end %>
+      <% if !events.empty?%>
+        <% events.each do |event| %>
+          <p><%= event.user.first_name%> <%= event.user.last_name%></p>
+        <% end %>
+      <% end%>
     </div>
   <% end %>
 </div>

@@ -118,6 +118,19 @@ class ProfessionalsController < ApplicationController
   private
 
   def professional_params
-    params.require(:professional).permit(:name, :address, :phone, :email, :specialty, :description, :rating, :latitude, :longitude, :photo, :capacity)
+    params.require(:professional).permit( :name,
+                                          :address,
+                                          :phone,
+                                          :email,
+                                          :specialty,
+                                          :description,
+                                          :rating,
+                                          :latitude,
+                                          :longitude,
+                                          :photo,
+                                          :capacity,
+                                          :start_hour,
+                                          :end_hour,
+                                          :interval)
   end
 end

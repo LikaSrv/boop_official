@@ -74,7 +74,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_075348) do
     t.integer "day_of_week"
     t.time "open_time"
     t.time "close_time"
-    t.boolean "opened"
+    t.boolean "closed"
     t.bigint "professional_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -132,8 +132,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_075348) do
     t.float "latitude"
     t.float "longitude"
     t.integer "capacity"
-    t.integer "start_hour"
-    t.integer "end_hour"
     t.integer "interval"
     t.index ["user_id"], name: "index_professionals_on_user_id"
   end

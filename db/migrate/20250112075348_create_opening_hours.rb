@@ -4,7 +4,7 @@ class CreateOpeningHours < ActiveRecord::Migration[7.1]
       t.integer :day_of_week
       t.time :open_time
       t.time :close_time
-      t.boolean :opened
+      t.boolean :closed
       t.references :professional, null: false, foreign_key: true
 
       t.timestamps

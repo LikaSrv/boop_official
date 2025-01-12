@@ -2,19 +2,13 @@
 
   <%# all appointment slot %>
   <div class="mx-5">
-    <% start_hour = @professional.start_hour # Heure de début
-        end_hour = @professional.end_hour  # Heure de fin
-        interval = @professional.interval  # Durée entre les créneaux en minutes
-      %>
-    <% current_time = Time.parse("#{start_hour}:00") %>
-    <% end_time = Time.parse("#{end_hour}:00") %>
-    <div data-appointment-target="times">
-      <% while current_time <= end_time do %>
-        <a href="#" class="btn btn-outline-primary m-2" data-time="<%= current_time.strftime("%H:%M") %>" data-action="click->appointment#select">
-          <%= current_time.strftime("%H:%M") %>
+    <% @slots.each do |slot| %>
+      <a href="#" class="btn btn-outline-primary m-2" data-time="<%= slot.strftime("%H:%M") %>" data-action="click->appointment#select">
+          <%= slot.strftime("%H:%M") %>
         </a>
-        <% current_time += interval.minutes %>
-      <% end %>
-    </div>
+    <% end %>
+
+
+    
   </div>
 <% end %>

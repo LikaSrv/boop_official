@@ -92,6 +92,9 @@ class ProfessionalsController < ApplicationController
 
     start_date = params.fetch(:start_date, Date.today).to_date
     @appointments = Appointment.where(professional: @professional, date: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
+
+    @slots = generate_slots(@professional.opening_hours, @professional.interval)
+
   end
 
   def edit
@@ -117,6 +120,23 @@ class ProfessionalsController < ApplicationController
   def search
   end
 
+  # generate slots for a professional
+  def generate_slots(opening_hours, interval)
+    slots = []
+    opening_hours.each do |opening_hour|
+      next if opening_hour.closed
+
+      start_time = opening_hour.open_time
+      end_time = opening_hour.close_time
+
+      while start_time < end_time
+        slots << [opening_hour.day_of_week, start_time]
+        start_time += interval.minutes
+      end
+    end
+    slots
+  end
+
   def edit_slots
     @professional = Professional.find(params[:id])
   end
@@ -139,8 +159,7 @@ class ProfessionalsController < ApplicationController
                                           :longitude,
                                           :photo,
                                           :capacity,
-                                          :start_hour,
-                                          :end_hour,
-                                          :interval)
+                                          :interval,
+                                          :opening_hours_attributes => [:id, :day_of_week, :open_time, :close_time, :closed, :_destroy])
   end
 end

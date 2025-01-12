@@ -33,6 +33,9 @@ class ProfessionalsController < ApplicationController
   def new
     @professional = Professional.new
     @professional.capacity = 1
+    (0..6).each do |day|
+      @professional.opening_hours.build(day_of_week: day)
+    end
   end
 
   def create

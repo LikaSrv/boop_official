@@ -56,8 +56,6 @@
           <%= p.input :photo, label: false, value: @professional.photo %>
         </div>
       </div>
-    </div>
-    <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <%# capacity %>
       <div class="d-flex align-items-start justify-content-between">
         <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0" %>
@@ -65,26 +63,7 @@
           <%= p.input :capacity, label: false%>
         </div>
       </div>
-      <%# slots definition %>
-      <% times = [] %>
-      <% 24.times do |i| %>
-        <% times << "#{i}:00" %>
-        <% times << "#{i}:30" %>
-      <% end %>
-      <%# start_hour %>
-      <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :start_hour, "Horaire d'ouverture :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
-          <%= p.input :start_hour, label: false, collection: times%>
-        </div>
-      </div>
-      <%# end_hour %>
-      <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :end_hour, "Horaire de fermeture :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
-          <%= p.input :end_hour, label: false, collection: times%>
-        </div>
-      </div>
+
       <%# interval definition %>
       <% intervals = [[30, '30 (0.5 heure)']] %>
       <% 1.upto(8) do |i| %>
@@ -106,6 +85,36 @@
           <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
         </div>
       </div>
+    </div>
+    <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+      <h5 class="text-center my-3">Les horaires d'ouvertures</h5>
+      <%# opening hours %>
+      <%= p.fields_for :opening_hours do |h|%>
+          <div class="nested-fields">
+            <%# day %>
+            <div class="d-flex align-items-center justify-content-between">
+              <%= h.label :day_of_week, "Jour :", class: "me-2 mb-0" %>
+              <div style="width: 65%;">
+                <%= h.input :day_of_week, label: false, I18n.t('date.abbr_day_names').each_with_index.map { |day, index| [day, index] } %>
+              </div>
+            </div>
+            <%# opening time %>
+            <div class="d-flex align-items-center justify-content-between">
+              <%= h.label :open_time, "Heure d'ouverture :", class: "me-2 mb-0" %>
+              <div style="width: 65%;">
+                <%= h.input :open_time, label: false, as: :string, input_html: { data: { controller: "timepicker" } } %>
+              </div>
+            </div>
+            <%# closing time %>
+            <div class="d-flex align-items-center justify-content-between">
+              <%= h.label :clos_time, "Heure de fermeture :", class: "me-2 mb-0" %>
+              <div style="width: 65%;">
+                <%= h.input :close_time, label: false, as: :string, input_html: { data: { controller: "timepicker" } } %>
+              </div>
+            </div>
+          </div>
+      <% end %>
+
       <%# submit button %>
       <div class="text-center my-4">
         <%= p.button :submit, "Enregistrer", class: "btn btn-primary" %>

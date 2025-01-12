@@ -1,4 +1,10 @@
 <div class="d-flex flex-row justify-content-between" style="height: 85vh;" data-controller="appointment">
+  <%@selected_date%>
+  <% if params[:date].nil?%>
+    <%@selected_date = Date.current.strftime("%Y-%m-%d")%>
+  <% else %>
+    <%@selected_date = params[:date]%>
+  <% end %>
   <%# sidebar all my service %>
   <div>
     <%= render "all_service", selected_professional: @professional %>
@@ -15,12 +21,11 @@
     </div>
     <div class="custom-scroll" style="height: calc(85vh - 100px); overflow-y: auto">
       <%# calendar %>
-        <% if @date %>
-          <%= render "calendar", start_date: @date.beginning_of_week%>
-        <%else%>
-          <%= render "calendar", start_date: Date.today.beginning_of_week%>
-        <%end%>
-      <%@selected_date = params[:date]%>
+      <% if @date %>
+        <%= render "calendar", start_date: @date.beginning_of_week%>
+      <%else%>
+        <%= render "calendar", start_date: Date.today.beginning_of_week%>
+      <%end%>
       <%# slots %>
       <div>
         <div class="d-flex flex-row justify-content-between">
@@ -29,15 +34,9 @@
             gérer mes créneaux
           </a>
         </div>
-        <% if @selected_date.nil? %>
-          <%= turbo_frame_tag :all_slot_not_selected do %>
-            <%= render "all_slot_not_selected", professional: @professional %>
-          <% end %>
-        <%else%>
-          <%= turbo_frame_tag :all_slot do %>
-            <% render "all_slot_selected", professional: @professional, selected_date: @selected_date %>
-          <% end %>
-        <%end%>
+        <%= turbo_frame_tag :all_slot do %>
+          <%= render "all_slot", professional: @professional, selected_date: @selected_date %>
+        <% end %>
       </div>
       <%# appointment details %>
       <div class="mx-4 mb-4">

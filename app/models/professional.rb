@@ -15,6 +15,7 @@ class Professional < ApplicationRecord
   belongs_to :user
   has_many :opening_hours, dependent: :destroy
   accepts_nested_attributes_for :opening_hours, reject_if: :all_blank, allow_destroy: true
+  has_many :availabilities, dependent: :destroy
 
   # geocoding
   geocoded_by :address

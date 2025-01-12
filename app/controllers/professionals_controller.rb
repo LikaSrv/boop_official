@@ -45,6 +45,9 @@ class ProfessionalsController < ApplicationController
     @professional.rating = 0
     @professional.capacity = 1
     if @professional.save!
+      (0..31).each do |i|
+        generate_availabilities(@professional.opening_hours, @professional.interval, Date.current + i)
+      end
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
@@ -93,7 +96,10 @@ class ProfessionalsController < ApplicationController
     start_date = params.fetch(:start_date, Date.today).to_date
     @appointments = Appointment.where(professional: @professional, date: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
 
-    @slots = generate_slots(@professional.opening_hours, @professional.interval)
+    opening_hours = OpeningHour.where(professional: @professional)
+    @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
+
+    @availabilities = Availability.where(professional: @professional)
 
   end
 
@@ -120,22 +126,46 @@ class ProfessionalsController < ApplicationController
   def search
   end
 
-  # generate slots for a professional
-  def generate_slots(opening_hours, interval)
-    slots = []
-    opening_hours.each do |opening_hour|
-      next if opening_hour.closed
+  # # generate slots for a professional
+  # def generate_all_slots(opening_hours, interval)
+  #   slots = []
+  #   opening_hours.each do |opening_hour|
+  #     next if opening_hour.closed
 
-      start_time = opening_hour.open_time
-      end_time = opening_hour.close_time
+  #     start_time = opening_hour.open_time
+  #     end_time = opening_hour.close_time
+
+  #     while start_time < end_time
+  #       slots << [opening_hour.day_of_week, start_time]
+  #       start_time += interval.minutes
+  #     end
+  #   end
+  #   slots
+  # end
+
+  def generate_availabilities(opening_hours, interval, date)
+
+    closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
+    if !closed_days.include?(date.wday)
+      opening_hour = opening_hours.find_by(day_of_week: date.wday)
+
+      start_time = DateTime.parse("#{date} #{opening_hour.open_time}")
+      end_time = DateTime.parse("#{date} #{opening_hour.close_time}")
 
       while start_time < end_time
-        slots << [opening_hour.day_of_week, start_time]
+        availability = Availability.new(
+          professional: @professional,
+          start_time: start_time,
+          status: 1
+        )
+        availability.save!
+
+        # Incrémenter start_time de l'intervalle
         start_time += interval.minutes
       end
     end
-    slots
   end
+
 
   def edit_slots
     @professional = Professional.find(params[:id])

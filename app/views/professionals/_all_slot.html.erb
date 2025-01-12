@@ -1,20 +1,20 @@
 <%= turbo_frame_tag :all_slot do %>
   <div class="mx-5">
-    <% selected_date_slots = @slots.select { |slot| slot[0] == Date.parse(@selected_date).wday }%>
+    <% selected_date_availabilities = Availability.where("DATE(start_time) = ? AND professional_id = ?", Date.parse(@selected_date), @professional.id)%>
     <div data-appointment-target="times">
-      <% if !(@slots.map { |slot| slot[0] }).include?(Date.parse(@selected_date).wday) %>
+      <% if !@open_days.include?(Date.parse(@selected_date).wday) %>
         <p class="m-2">Jour fermé </p>
       <% else %>
-        <% selected_date_slots.each do |slot| %>
-          <%@appointments = Appointment.where(start_time: slot[1], professional: professional)%>
+        <% selected_date_availabilities.each do |availability| %>
+          <%@appointments = Appointment.where(start_time: availability.start_time, professional: professional)%>
           <% if (@appointments.empty?) %>
-            <%= link_to slot[1].strftime('%H:%M'), pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),
+            <%= link_to availability.start_time.strftime('%H:%M'), pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),
               class:"btn btn-outline-primary m-2",
-              data: {time: slot[1].strftime('%H:%M')}%>
+              data: {time: availability.start_time.strftime('%H:%M')}%>
           <% else %>
-            <%= link_to slot[1].strftime('%H:%M'), pro_show_user_path(current_user, professional,date: @selected_date, appointments: @appointments.map { |appointment| appointment.id }),
+            <%= link_to availability.start_time.strftime('%H:%M'), pro_show_user_path(current_user, professional,date: @selected_date, appointments: @appointments.map { |appointment| appointment.id }),
               class:"btn btn-outline-primary m-2 btn-info text-dark",
-              data: {time: slot[1].strftime('%H:%M'),
+              data: {time: availability.start_time.strftime('%H:%M'),
                     turbo: false}%>
           <% end %>
         <% end %>

@@ -21,7 +21,7 @@
       <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
         <%= p.label :specialty, "Spécialité :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
-          <%= p.input :specialty, label: false, collection: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Pension", "Promeneur", "Nutritionniste", "Petsitter"] %>
+          <%= p.input :specialty, label: false, input_html: {value: current_user.orders.first.pricing.specialty}, readonly: true %>
         </div>
       </div>
       <%# phone number %>

@@ -43,7 +43,7 @@ class PagesController < ApplicationController
       @available_specialty << professional.specialty
     end
   end
-  
+
   def about
     # Vous pouvez ajouter de la logique ici si nécessaire
   end

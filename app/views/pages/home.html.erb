@@ -77,6 +77,31 @@
 
   </div>
 
+    <%# animals autoscroll %>
+  <h3 class="mt-5">Ils attendent une maison...</h3>
+  <div class="d-flex flex-row custom-scroll" style="overflow-x: scroll; white-space: nowrap; margin: 0px !important;" data-controller="autoscroll" data-autoscroll-target="autoscrollContainer">
+    <% @animals.each do |animal| %>
+      <a  href="<%=animal_path(animal)%>"
+          style="text-decoration: none; color: black; margin: 20px">
+        <div class="col">
+          <div  class="card_pro p-0 d-flex flex-column"
+                style="width: 300px; aspect-ratio: 1/1; overflow: hidden; margin: 0px !important;"
+                data-animal-index-target="animal"
+                data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
+            <!-- En-tête -->
+            <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
+              <%=animal.name %>
+            </div>
+            <!-- Image qui prend le reste de la place -->
+            <div class="flex-grow-1" style="overflow: hidden;">
+              <%= image_tag animal.photo, style: "width: 100%; height: 100%; object-fit: cover;" %>
+            </div>
+          </div>
+        </div>
+      </a>
+    <% end %>
+  </div>
+
   <%# appointments to come %>
   <h3 class="mt-5 mb-4">Vos futurs rendez-vous</h3>
   <% if user_signed_in? %>
@@ -89,11 +114,11 @@
                 <div class="d-flex justify-content-around fw-bold">
                   <div class="d-flex align-items-center">
                     <i class="fa-regular fa-calendar-days"></i>
-                    <%# <p class="ms-3"><%= appointment.availability.start_time.strftime("%d/%m/%Y") %></p> %>
+                    <p class="ms-3"><%= appointment.start_time.strftime("%d/%m/%Y") %></p>
                   </div>
                   <div class="d-flex align-items-center">
                     <i class="fa-regular fa-clock ms-5"></i>
-                    <%# <p class="ms-3"><%= appointment.availability.start_time.strftime("%H:%M") %></p> %>
+                    <p class="ms-3"><%= appointment.start_time.strftime("%H:%M") %></p>
                   </div>
                 </div>
               </div>

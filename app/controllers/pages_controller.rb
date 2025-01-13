@@ -42,6 +42,8 @@ class PagesController < ApplicationController
     @professionals.each do |professional|
       @available_specialty << professional.specialty
     end
+
+    @animals = Animal.all
   end
 
   def about

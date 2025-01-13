@@ -6,7 +6,7 @@
     <div class="d-flex flex-column justify-content-center">
       <% @professionals.each do |professional|%>
         <div class="card_pro_index">
-          <div class="card_pro grid-index align-items-center">
+          <div class="card_pro grid-index align-items-start">
             <div>
               <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
                 <%= cl_image_tag professional.photo.key, class:"rounded-3 d-block mx-auto img-fluid", crop: :fill, style:"max-height: 200px" %>

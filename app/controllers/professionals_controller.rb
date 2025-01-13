@@ -3,7 +3,7 @@ class ProfessionalsController < ApplicationController
 
   def index
     # search
-    @professionals = Professional.search_by_specialty_address_and_name(params[:query])
+    # @professionals = Professional.search_by_specialty_address_and_name(params[:query])
 
     if params[:query].present?
       @professionals = Professional.search_by_specialty_address_and_name(params[:query])
@@ -28,6 +28,11 @@ class ProfessionalsController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {professional: professional})
       }
     end
+  end
+
+  def pro_index
+    @professionals = Professional.where(user: current_user)
+    @appointments = Appointment.where(professional: @professionals)
   end
 
   def new
@@ -74,6 +79,9 @@ class ProfessionalsController < ApplicationController
 
   def show
     @professional = Professional.find(params[:id])
+    @availabilities = Availability.where(professional: @professional, status: 1)
+    available_days = @availabilities.where(status: 1).pluck(:start_time).map { |date| date.to_date }.uniq
+    @available_months = available_days.map { |date| Date::MONTHNAMES[date.month]}.uniq
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
     if @reviews.empty?
@@ -84,10 +92,7 @@ class ProfessionalsController < ApplicationController
     @professional.update(rating: @average_rating)
   end
 
-  def pro_index
-    @professionals = Professional.where(user: current_user)
-    @appointments = Appointment.where(professional: @professionals)
-  end
+
 
   def pro_show
     @professionals = Professional.where(user: current_user)
@@ -126,23 +131,7 @@ class ProfessionalsController < ApplicationController
   def search
   end
 
-  # # generate slots for a professional
-  # def generate_all_slots(opening_hours, interval)
-  #   slots = []
-  #   opening_hours.each do |opening_hour|
-  #     next if opening_hour.closed
-
-  #     start_time = opening_hour.open_time
-  #     end_time = opening_hour.close_time
-
-  #     while start_time < end_time
-  #       slots << [opening_hour.day_of_week, start_time]
-  #       start_time += interval.minutes
-  #     end
-  #   end
-  #   slots
-  # end
-
+  # generate all availabilities for a professional
   def generate_availabilities(opening_hours, interval, date)
 
     closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
@@ -164,15 +153,6 @@ class ProfessionalsController < ApplicationController
         start_time += interval.minutes
       end
     end
-  end
-
-
-  def edit_slots
-    @professional = Professional.find(params[:id])
-  end
-
-  def update_slots
-
   end
 
   private

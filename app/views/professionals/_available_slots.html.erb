@@ -5,14 +5,14 @@
   <% while count < 8 do  %>
     <% date = (DateTime.current.to_date + i).strftime('%d-%m-%Y')%>
     <% professional_closed_day = professional.opening_hours.where(closed: true).pluck(:day_of_week)%>
-    <% availabilities = Availability.where("DATE(start_time) = ? AND professional_id = ?", Date.parse(date), professional.id)%>
+    <% availabilities = Availability.where("DATE(start_time) = ? AND professional_id = ? AND status = ?", Date.parse(date), professional.id, true)%>
     <% if (!professional_closed_day.include?( Date.parse(date).wday)) && (!availabilities.empty? && availabilities.last.start_time > Time.now) %>
       <div class="nav-item dropdown" data-controller="appointment-selected", data-appointment-selected-api-key-value="<%=professional.id%>">
         <%# date button %>
         <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
           <%# get all the appointments for this professional %>
           <%= date %>
-          <% @appointments = Appointment.where(professional: professional, date: Time.parse(date))%>
+          <% @appointments = Appointment.where(professional: professional, start_time: Time.parse(date))%>
           <% @appointment_times = [] %>
           <% @appointments.each do |appointment| %>
             <% @appointment_times << appointment.start_time.strftime("%H:%M") %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_12_105011) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_13_141209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,13 +58,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_105011) do
   create_table "appointments", force: :cascade do |t|
     t.bigint "professional_id", null: false
     t.bigint "user_id", null: false
-    t.datetime "date", precision: nil
     t.datetime "start_time", precision: nil
-    t.datetime "end_time", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "reason"
     t.bigint "pet_id", null: false
+    t.bigint "availability_id", null: false
+    t.index ["availability_id"], name: "index_appointments_on_availability_id"
     t.index ["pet_id"], name: "index_appointments_on_pet_id"
     t.index ["professional_id"], name: "index_appointments_on_professional_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
@@ -193,6 +193,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_12_105011) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "appointments", "availabilities"
   add_foreign_key "appointments", "pets"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"

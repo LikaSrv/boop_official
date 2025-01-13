@@ -79,9 +79,10 @@ class ProfessionalsController < ApplicationController
 
   def show
     @professional = Professional.find(params[:id])
-    @availabilities = Availability.where(professional: @professional, status: 1)
-    available_days = @availabilities.where(status: 1).pluck(:start_time).map { |date| date.to_date }.uniq
-    @available_months = available_days.map { |date| Date::MONTHNAMES[date.month]}.uniq
+
+    @availabilities = Availability.where(professional: @professional, status: true).select { |availability| availability.start_time > DateTime.now }
+    @available_months = @availabilities.pluck(:start_time).map { |date| date.month }.uniq
+    
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
     if @reviews.empty?
@@ -92,14 +93,12 @@ class ProfessionalsController < ApplicationController
     @professional.update(rating: @average_rating)
   end
 
-
-
   def pro_show
     @professionals = Professional.where(user: current_user)
     @professional = Professional.find(params[:professional_id])
 
     start_date = params.fetch(:start_date, Date.today).to_date
-    @appointments = Appointment.where(professional: @professional, date: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
+    @appointments = Appointment.where(professional: @professional, start_time: (start_date.beginning_of_week.beginning_of_day..start_date.end_of_week.end_of_day))
 
     opening_hours = OpeningHour.where(professional: @professional)
     @open_days = opening_hours.where(closed: false).pluck(:day_of_week)

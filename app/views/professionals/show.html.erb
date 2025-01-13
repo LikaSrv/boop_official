@@ -1,6 +1,10 @@
-<div>
-  <%= render "shared/back"%>
+<%# back button %>
+<div class="d-flex flex-row align-items-center">
+  <%= link_to professionals_path(specialty: @professional.specialty), class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
 </div>
+<%# body %>
 <div class="container-all">
   <div>
     <div class="text-center m-4">
@@ -75,7 +79,7 @@
       </div>
     </div>
     <div id="available-pro", style="position: sticky; top: 100px;">
-      <%= render "shared/available_slots", professional: @professional %>
+      <%= render "all_available_slots", professional: @professional%>
     </div>
   </div>
 </div>

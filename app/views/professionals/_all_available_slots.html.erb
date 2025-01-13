@@ -1,0 +1,32 @@
+<div class="m-2">
+  <h4>Prochains rendez-vous disponibles</h4>
+  <% @available_months.each do |month| %>
+    <div class="nav-item dropdown" data-controller="all-available-slots" data-all-available-slots-api-key-value="<%= professional.id %>">
+      <a href="#" class="btn btn-outline-primary w-100 m-1" data-action="click->all-available-slots#toggleMonth">
+        <%= I18n.t('date.month_names', locale: :fr)[Date::MONTHNAMES.index(month)] %>
+      </a>
+      <% available_days_of_month = @availabilities.select { |a| Date::MONTHNAMES[a.start_time.month] == month }.map { |a| a.start_time.to_date }.uniq %>
+      <div class="d-none d-flex flex-column justify-content-center mx-2 all-dates" data-all-available-slots-target="monthDates">
+        <% available_days_of_month.each do |day| %>
+          <div class="nav-item dropdown">
+            <a href="#" class="btn btn-outline-primary w-100 m-1" data-action="click->all-available-slots#toggleDate">
+              <%= day.strftime('%d-%m-%Y') %>
+            </a>
+            <% availabilities = @availabilities.select { |a| a.start_time.to_date == day } %>
+            <div class="d-none d-flex flex-wrap justify-content-center mx-2 times"          data-all-available-slots-target="dayTimes">
+              <% availabilities.each do |availability| %>
+                <a href="<%= new_professional_appointment_path(professional) %>"
+                  class="btn btn-outline-primary m-1"
+                  style="width: 22%;"
+                  data-time="<%= availability.start_time.to_time %>"
+                  data-action="click->all-available-slots#confirm">
+                  <%= availability.start_time.strftime("%H:%M") %>
+                </a>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

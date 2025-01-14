@@ -102,7 +102,7 @@
       <div class="text-center">
         <h3>Pet Alert !</h3>
       </div>
-      <div class="row d-flex align-items-center justify-content-around">
+      <div class="row d-flex align-items-center justify-content-around" >
         <%# alert image %>
         <div class="d-flex flex-column justify-content-center align-items-center col-lg-3 col-md-3 col-sm-7 p-3">
           <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736871775/caution-sign_ob9hnk.png"
@@ -112,13 +112,16 @@
         </div>
         <%# carousel %>
         <div class="col-lg-7 col-md-7 col-sm-10">
+          <% if @pet_alerts.empty?%>
+          <p>Pas d'annonces en cours 🤗</p>
+          <% else %>
           <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <% @pet_alerts.each_with_index do |a, index| %>
                 <a href="<%=pet_alerts_path%>" style="text-decoration: none; color: white;">
                   <div class="carousel-item <%= 'active' if index == 0 %>" data-bs-interval="5000">
                     <div class="carousel-image-container">
-                      <%= image_tag cl_image_path(a.photo.key), class: "d-block w-100", style: "border-radius: 12px;" %>
+                      <%= image_tag cl_image_path(a.photo.key), class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;" %>
                       <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.61);">
                         <div class="d-flex flex-row justify-content-center align-items-center">
                           <h5><strong><%=a.title%></strong></h5>
@@ -146,6 +149,8 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
+          <% end %>
+
         </div>
       </div>
       <div class="text-end mt-4">

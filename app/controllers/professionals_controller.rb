@@ -82,7 +82,7 @@ class ProfessionalsController < ApplicationController
 
     @availabilities = Availability.where(professional: @professional, status: true).select { |availability| availability.start_time > DateTime.now }
     @available_months = @availabilities.pluck(:start_time).map { |date| date.month }.uniq
-    
+
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
     if @reviews.empty?
@@ -115,6 +115,14 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.find(params[:id])
 
     if @professional.update!(professional_params)
+      availabilities = Availability.where(professional: @professional)
+      availabilities.each do |availability|
+        if availability.appointments.count < @professional.capacity
+          availability.update(status: true)
+        else
+          availability.update(status: false)
+        end
+      end
       redirect_to edit_professional_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
     else
       render :edit, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être mis à jour car tous les champs n\'ont pas été remplis'

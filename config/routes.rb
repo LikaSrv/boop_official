@@ -50,4 +50,6 @@ Rails.application.routes.draw do
     resources :weight_histories, only: [:new, :create, :destroy, :update]
   end
 
+  resources :pet_alerts
+
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_13_141209) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_14_144422) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -100,6 +100,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_13_141209) do
     t.datetime "updated_at", null: false
     t.index ["pricing_id"], name: "index_orders_on_pricing_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "pet_alerts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title"
+    t.string "description"
+    t.string "location"
+    t.datetime "date"
+    t.string "contact"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "status"
+    t.index ["user_id"], name: "index_pet_alerts_on_user_id"
   end
 
   create_table "pets", force: :cascade do |t|
@@ -201,6 +214,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_13_141209) do
   add_foreign_key "opening_hours", "professionals"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"
+  add_foreign_key "pet_alerts", "users"
   add_foreign_key "pets", "users"
   add_foreign_key "professionals", "users"
   add_foreign_key "reviews", "professionals"

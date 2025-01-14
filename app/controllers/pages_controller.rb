@@ -44,6 +44,7 @@ class PagesController < ApplicationController
     end
 
     @animals = Animal.all
+    @pet_alerts = PetAlert.where(status: "false")
   end
 
   def about

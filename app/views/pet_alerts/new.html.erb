@@ -1,0 +1,25 @@
+<%# back %>
+<div>
+  <%= render "shared/back"%>
+</div>
+<%# title %>
+<div class=" text-center mb-4 d-flex flex-row justify-content-center">
+  <h1>Créer une annonce</h1>
+  <i class="fa-solid fa-paw float-end text-primary"></i>
+</div>
+<%# body %>
+<div class="row d-flex justify-content-center m-2">
+  <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+    <%= simple_form_for @pet_alert do |p|%>
+      <%= p.input :title, label: "Titre"%>
+      <%= p.input :description, label: "Description", as: :text, input_html: {rows: 5}%>
+      <%= p.input :location, label: "Lieu constaté"%>
+      <%= p.input :date, label: "Date constatée", as: :string, input_html: { data: { controller: "datepicker" } } %>
+      <%= p.input :contact, label: "Point de contact"%>
+      <%= p.input :photo, label: "Photo", as: :file%>
+      <div class="text-center my-4">
+        <%= p.button :submit, "Créer l'annonce", class: "btn btn-primary rounded rounded-4"%>
+      </div>
+    <% end %>
+  </div>
+</div>

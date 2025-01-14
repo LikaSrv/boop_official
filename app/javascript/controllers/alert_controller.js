@@ -516,7 +516,7 @@ export default class extends Controller {
     });
   }
 
-   //Add Pet
+  //Add Pet
   addPet(event) {
     event.preventDefault();
 
@@ -572,25 +572,25 @@ export default class extends Controller {
             },
           }),
         })
-        .then((response) => {
-          if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
-          return response.json();
-        })
-        .then((data) => {
-          Swal.fire({
-            icon: "success",
-            title: "Succès",
-            text: "L'animal a bien été créé !",
-            confirmButtonText: "OK",
-          }).then(() => {
-            // Si c'est via SweetAlert, on recharge la page
-            window.location.reload();
+          .then((response) => {
+            if (!response.ok) throw new Error("Erreur lors de l'envoi des données.");
+            return response.json();
+          })
+          .then((data) => {
+            Swal.fire({
+              icon: "success",
+              title: "Succès",
+              text: "L'animal a bien été créé !",
+              confirmButtonText: "OK",
+            }).then(() => {
+              // Si c'est via SweetAlert, on recharge la page
+              window.location.reload();
+            });
+          })
+          .catch((error) => {
+            Swal.fire("Erreur", "Impossible d'envoyer votre avis.", "error");
+            console.error("Erreur :", error);
           });
-        })
-        .catch((error) => {
-          Swal.fire("Erreur", "Impossible d'envoyer votre avis.", "error");
-          console.error("Erreur :", error);
-        });
       }
     });
   }
@@ -716,7 +716,7 @@ export default class extends Controller {
                 'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
               },
               body: JSON.stringify({
-                professional_id:professionalId, // ID du profil à dupliquer
+                professional_id: professionalId, // ID du profil à dupliquer
               }),
             });
           }
@@ -744,4 +744,93 @@ export default class extends Controller {
       Swal.fire(`Indiquez le nombre de profil à dupliquer: ${capacity}`);
     }
   }
+
+  // Pet alert when the problem is solved
+  petAlertSolved(event) {
+    event.preventDefault();
+
+    const pet_alert_id = this.element.dataset.petAlertId;
+    const current_status = event.currentTarget.dataset.status === "true";
+    console.log("Current status:", current_status);
+
+    if (!current_status) {
+
+      Swal.fire({
+        title: "Le problème de cette annonce est résolu !",
+        icon: "success",
+        confirmButtonColor: '#EFA690'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Envoi des données au serveur Rails via Fetch POST
+          fetch(`/pet_alerts/${pet_alert_id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              pet_alert: {
+                status: true,
+              },
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de l'envoi des données.");
+              }
+              return response.text(); // Récupère la réponse en tant que texte brut
+            })
+            .then((text) => {
+              const data = text ? JSON.parse(text) : {}; // Parse uniquement si du contenu existe
+              console.log("Réponse JSON :", data);
+              window.location.reload();
+            })
+            .catch((error) => {
+              Swal.fire("Erreur", "Impossible de modifier le statut de l'annonce", "error");
+              console.error("Erreur :", error);
+            });
+        }
+      });
+    } else {
+      Swal.fire({
+        title: "Le problème de cette annonce n'est pas résolu...",
+        icon: "warning",
+        confirmButtonColor: '#FFC65A'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Envoi des données au serveur Rails via Fetch POST
+          fetch(`/pet_alerts/${pet_alert_id}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+              Accept: "application/json",
+            },
+            body: JSON.stringify({
+              pet_alert: {
+                status: false,
+              },
+            }),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de l'envoi des données.");
+              }
+              return response.text(); // Récupère la réponse en tant que texte brut
+            })
+            .then((text) => {
+              const data = text ? JSON.parse(text) : {}; // Parse uniquement si du contenu existe
+              console.log("Réponse JSON :", data);
+              window.location.reload();
+            })
+            .catch((error) => {
+              Swal.fire("Erreur", "Impossible de modifier le statut de l'annonce", "error");
+              console.error("Erreur :", error);
+            });
+        }
+      });
+    }
+  }
+
 }

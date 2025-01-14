@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :pets, dependent: :destroy
   has_many :orders
+  has_many :pet_alerts, dependent: :destroy
 
   validates :first_name, :last_name, :photo, presence: true
   has_one_attached :photo

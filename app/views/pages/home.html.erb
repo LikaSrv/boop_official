@@ -22,7 +22,6 @@
       </div>
     </div>
   <% end %>
-
   <%# Service categories %>
   <h3 class="mt-5">Nos services</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
@@ -52,7 +51,6 @@
       <% end %>
     <% end %>
   </div>
-
   <%# Add a service %>
   <h3 class="mt-5 text-center">Vous aussi, vous souhaitez proposer un service ?</h3>
   <div class="row d-flex justify-content-center align-items-center mt-4">
@@ -65,19 +63,15 @@
       <h5>Que vous soyez vétérinaire, comportementaliste, nutritionniste ou pet-sitter, Boop est fait pour vous ! </h5>
       <br>
       <h5>Rejoignez notre communauté et proposez vos services à des propriétaires d'animaux qui cherchent des solutions fiables et de confiance.</h5>
-
       <h5>C’est simple, rapide, et vous pouvez faire une vraie différence dans la vie des animaux tout en développant votre activité. Inscrivez-vous maintenant et commencez à aider nos compagnons à quatre pattes !
       </h5>
       <div class="text-center">
         <%= link_to "Proposer un service", pricings_path,
               class: "hoveredbutton btn btn-primary text-white mt-4 rounded-pill"%>
       </div>
-
     </div>
-
   </div>
-
-    <%# animals autoscroll %>
+  <%# animals autoscroll %>
   <h3 class="mt-5">Ils attendent une maison...</h3>
   <div class="d-flex flex-row custom-scroll" style="overflow-x: scroll; white-space: nowrap; margin: 0px !important;" data-controller="autoscroll" data-autoscroll-target="autoscrollContainer">
     <% @animals.each do |animal| %>
@@ -100,6 +94,64 @@
         </div>
       </a>
     <% end %>
+  </div>
+
+  <%# pet alert %>
+  <div class="row d-flex justify-content-center align-items-center m-2">
+    <div class="card_pro p-4 col-lg-10 col-md-10 col-sm-10">
+      <div class="text-center">
+        <h3>Pet Alert !</h3>
+      </div>
+      <div class="row d-flex align-items-center justify-content-around">
+        <%# alert image %>
+        <div class="d-flex flex-column justify-content-center align-items-center col-lg-3 col-md-3 col-sm-7 p-3">
+          <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736871775/caution-sign_ob9hnk.png"
+            alt="alert"
+            class="alert_image m-4">
+          <a href="<%=new_pet_alert_path%>" class="btn btn-primary rounded rounded-4 my-4"> Publier une annonce </a>
+        </div>
+        <%# carousel %>
+        <div class="col-lg-7 col-md-7 col-sm-10">
+          <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <% @pet_alerts.each_with_index do |a, index| %>
+                <a href="<%=pet_alerts_path%>" style="text-decoration: none; color: white;">
+                  <div class="carousel-item <%= 'active' if index == 0 %>" data-bs-interval="5000">
+                    <div class="carousel-image-container">
+                      <%= image_tag cl_image_path(a.photo.key), class: "d-block w-100", style: "border-radius: 12px;" %>
+                      <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.61);">
+                        <div class="d-flex flex-row justify-content-center align-items-center">
+                          <h5><strong><%=a.title%></strong></h5>
+                          <% if a.status == false %>
+                            <i class="fa-solid fa-circle-exclamation text-warning mx-4 " style="font-size: 32px"></i>
+                          <% else %>
+                            <i class="fa-solid fa-circle-check text-success mx-4 " style="font-size: 32px"></i>
+                          <% end %>
+                        </div>
+                        <p class="m-2"><%=a.description%></p>
+                        <a href="<%=pet_alert_path(a)%>" class="btn btn-info rounded rounded-4">En savoir plus</a>
+                      </div>
+                      <div class="carousel-caption-overlay"></div>
+                    </div>
+                  </div>
+                </a>
+              <% end %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="text-end mt-4">
+        <a href="<%=pet_alerts_path%>" class="text-dark" style="font-size: 20px; text-decoration: underline">Voir toutes les annonces <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
   </div>
 
   <%# appointments to come %>

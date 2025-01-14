@@ -28,6 +28,8 @@ Animal.destroy_all
 puts "destroy all pricing"
 Pricing.destroy_all
 
+puts "destroy all pet alerts"
+PetAlert.destroy_all
 
 
 puts "create payment plans"
@@ -127,6 +129,15 @@ repos["results"].each do |animal|
   animal.save!
 end
 
+# puts "create pet alerts"
+
+# pet1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1736191512/production/wquihotb97xu5zqanvow2vmexq1d.jpg").open
+# pet1 = PetAlert.new(title: "Chat perdu", description: "Mon chat est blanc avec des taches noires. Il s'appelle Félix et il a disparu depuis hier soir. Si vous l'avez vu, merci de me contacter au 06 12 34 56 78", date: "13-01-2025", location: "Centre ville de Nice", contact: "06 12 34 56 78")
+# pet1.photo.attach(io: pet1_photo, filename: 'pet1.jpg', content_type: 'image/jpg')
+# pet1.save!
+
+# pet2_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1734685816/7C3E2014-E245-4DCE-A02C-5725EE5E81C3_1_105_c_a86eei.jpg").open
+# pet2 = PetAlert.new(title: "Chien trouvé", description: "J'ai trouvé un chien errant dans le parc de la colline du château. Il est très gentil et bien éduqué. Si vous le reconnaissez, merci de me contacter au 06 12 34 56 78", date: "13-01-2025", location: "Parc de la colline du château", contact: "06 12 34 56 78")
 
 
 puts "seed done"

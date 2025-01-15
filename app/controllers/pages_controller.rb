@@ -3,7 +3,7 @@ class PagesController < ApplicationController
 
   def home
     if user_signed_in?
-      @appointments = current_user.appointments.upcoming_and_today.order(date: :asc)(0..3)
+      @appointments = current_user.appointments.upcoming_and_today(0..3)
     end
 
     @all_specialty = [

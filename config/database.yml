@@ -80,5 +80,3 @@ test:
 production:
   <<: *default
   database: boop_production
-  username: boop
-  password: <%= ENV["BOOP_DATABASE_PASSWORD"] %>

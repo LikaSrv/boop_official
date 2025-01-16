@@ -1,7 +1,7 @@
 <%# back %>
 <div>
   <%= link_to pet_alerts_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
-  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
 </div>
 <%# title %>
@@ -18,9 +18,9 @@
   <div class="row d-flex justify-content-center">
     <div class="col-lg-5 col-sm-10 card_pro">
       <% if @pet_alert.photo.present? %>
-        <%= image_tag @pet_alert.photo, class: "card-img-top w-100 h-100 object-fit-cover rounded"%>
+        <%= image_tag(@pet_alert.photo_url, alt: "photo of pet alert", class: "card-img-top w-100 h-100 object-fit-cover rounded") %>
       <% else %>
-        <img  src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736071797/production/l36dmns98zvw0qbpvjtduy102ebz.jpg"
+        <img  src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Design%20sans%20titre%20(1).jpg"
               alt="photo_pet_default"
               class= "card-img-top w-100 h-100 object-fit-cover rounded">
       <% end %>
@@ -36,9 +36,9 @@
         <p>Contact: <%= @pet_alert.contact.present? ? @pet_alert.contact : "Non renseigné"%> </p>
       </div>
       <div class="d-flex flex-row justify-content-end align-items-center mt-5">
-      <div data-controller="alert">
-        <% if @pet_alert.status == false %>
-          <%= link_to "Problème est résolu ?",
+        <div data-controller="alert">
+          <% if @pet_alert.status == false %>
+            <%= link_to "Problème est résolu ?",
                       "#",
                       class: "solved mx-2 text-warning",
                       style: "text-decoration: underline",
@@ -46,7 +46,7 @@
                             action: "click->alert#petAlertSolved",
                             status: @pet_alert.status,
                             pet_alert_id: @pet_alert.id } %>
-        <% else %>
+          <% else %>
             <%= link_to "Le problème n'est pas résolu ? ",
                       "#",
                       class: "solved mx-2 text-warning",
@@ -55,9 +55,8 @@
                             action: "click->alert#petAlertSolved",
                             status: @pet_alert.status,
                             pet_alert_id: @pet_alert.id } %>
-
-        <% end %>
-      </div>
+          <% end %>
+        </div>
         <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
       </div>
     </div>

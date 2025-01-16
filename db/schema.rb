@@ -10,9 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_14_144422) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_16_211117) do
+  create_schema "auth"
+  create_schema "extensions"
+  create_schema "graphql"
+  create_schema "graphql_public"
+  create_schema "pgbouncer"
+  create_schema "pgsodium"
+  create_schema "pgsodium_masks"
+  create_schema "realtime"
+  create_schema "storage"
+  create_schema "vault"
+
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_graphql"
+  enable_extension "pg_stat_statements"
+  enable_extension "pgcrypto"
+  enable_extension "pgjwt"
+  enable_extension "pgsodium"
   enable_extension "plpgsql"
+  enable_extension "supabase_vault"
+  enable_extension "uuid-ossp"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -112,6 +130,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_14_144422) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "status"
+    t.string "photo_url"
     t.index ["user_id"], name: "index_pet_alerts_on_user_id"
   end
 
@@ -130,6 +149,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_14_144422) do
     t.string "identification"
     t.string "spayed_neutered"
     t.string "medical_background"
+    t.string "photo_url"
     t.index ["user_id"], name: "index_pets_on_user_id"
   end
 
@@ -155,6 +175,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_14_144422) do
     t.float "longitude"
     t.integer "capacity"
     t.integer "interval"
+    t.string "photo_url"
     t.index ["user_id"], name: "index_professionals_on_user_id"
   end
 

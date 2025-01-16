@@ -50,6 +50,8 @@ class ProfessionalsController < ApplicationController
     @professional.rating = 0
     @professional.capacity = 1
     if @professional.save!
+      photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
+      @professional.update!(photo_url: photo_url)
       (0..31).each do |i|
         generate_availabilities(@professional.opening_hours, @professional.interval, Date.current + i)
       end

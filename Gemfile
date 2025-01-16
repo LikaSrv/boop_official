@@ -12,7 +12,7 @@ gem "rails", "~> 7.1.5"
 gem "sprockets-rails"
 
 # Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
+gem "pg", "~> 1.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -60,6 +60,8 @@ gem "simple_calendar", "~> 2.4" #added for calendar
 gem 'money-rails' #added for money
 gem 'stripe' #added for paiment Stripe
 gem 'stripe_event' #added for paiment Stripe
+gem 'supabase', '~> 0.1.0'
+gem 'aws-sdk-s3', '~> 1.96'
 
 group :development, :test do
   gem "dotenv-rails"

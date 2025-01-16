@@ -5,7 +5,7 @@
         <%# my profil %>
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <h2> <strong> Mon Profil </strong> </h2>
-          <%= cl_image_tag @user.photo.key, width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
+          <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
           <p>Nom : <strong> <%=@user.first_name%> </strong></p>
           <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
           <p>Email : <strong> <%=@user.email%> </strong></p>
@@ -29,7 +29,7 @@
               <% @pets.each do |pet| %>
                 <a href="<%= user_pet_path(current_user, pet) %>" class="text-decoration-none mx-2 hoveredCircleButton" style="display: inline-block;">
                   <% if pet.photo.present? %>
-                    <%= cl_image_tag pet.photo.key, width: 200, style: "border-radius: 50%; aspect-ratio: 1;", class: "shadow object-fit-cover" %>
+                    <%= image_tag pet.photo_url, width: 200, style: "border-radius: 50%; aspect-ratio: 1;", class: "shadow object-fit-cover" %>
                   <% else %>
                     <img  src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736071797/production/l36dmns98zvw0qbpvjtduy102ebz.jpg"
                           alt="photo_pet_default"
@@ -49,7 +49,7 @@
       <% if @appointments.empty? %>
         <div class="text-center">
           <p >Vous n'avez pas de rendez-vous</p>
-          <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1733845850/owner-playing-with-pet-dog_vfnehl.png" alt="pas de rdv" style="width: 200px;" >
+          <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/owner-playing-with-pet-dog.png" alt="pas de rdv" style="width: 200px;" >
         </div>
       <% else %>
         <% @appointments.each do |a| %>

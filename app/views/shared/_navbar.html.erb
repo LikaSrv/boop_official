@@ -23,7 +23,7 @@
           </li>
           <li class="nav-item dropdown d-flex align-items-end flex-column">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= cl_image_tag current_user.photo.key, class: "avatar", alt: "dropdown menu", style: "object-fit: cover" %>
+              <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{current_user.photo.key}", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
             </a>
             <div class="dropdown-menu dropdown-menu-end" style="width: fit-content;" aria-labelledby="navbarDropdown">
               <% if !current_user.orders.empty? %>

@@ -1,3 +1,7 @@
+require 'net/http'
+require 'uri'
+require 'json'
+
 class PetAlertsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :new, :create, :show, :edit, :update, :destroy]
 
@@ -14,7 +18,14 @@ class PetAlertsController < ApplicationController
     @pet_alert.status = false
     @pet_alert.user = current_user if current_user.present?
 
+    # Attache la photo si elle est présente dans les paramètres
+    if params[:pet_alert][:photo].present?
+      @pet_alert.photo.attach(params[:pet_alert][:photo])
+    end
+
     if @pet_alert.save
+      photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@pet_alert.photo.key}"
+      @pet_alert.update!(photo_url: photo_url)
       redirect_to pet_alert_path(@pet_alert), notice: "Alerte créée avec succès"
     else
       flash.now[:alert] = @pet_alert.errors.full_messages.join(", ")

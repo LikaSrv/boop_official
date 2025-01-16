@@ -18,6 +18,8 @@ class PetsController < ApplicationController
     @pet.weight_histories.reject { |wh| wh.weight.blank? }
 
     if @pet.save!
+      photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@pet.photo.key}"
+      @pet.update!(photo_url: photo_url)
       respond_to do |format|
         format.json { render json: { success: true, message: "Votre animal a été ajouté avec succès"
         }, status: :created }

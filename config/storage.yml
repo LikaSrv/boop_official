@@ -6,9 +6,18 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-cloudinary:
-  service: Cloudinary
-  folder: <%= Rails.env %> 
+# cloudinary:
+#   service: Cloudinary
+#   folder: <%= Rails.env %>
+
+supabase:
+  service: S3
+  access_key_id: <%= ENV['SUPABASE_ACCESS_KEY'] %>
+  secret_access_key: <%= ENV['SUPABASE_SECRET_ACCESS_KEY'] %>
+  region: "eu-central-1"
+  endpoint: <%= ENV['SUPABASE_END_POINT'] %>
+  bucket: "uploaded_photos"
+  public: true
 
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:

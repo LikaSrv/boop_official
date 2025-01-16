@@ -21,7 +21,7 @@
 <%= simple_form_for @professional do |p|%>
   <div class="row justify-content-center">
     <div class="card_pro col-lg-5 col-md-5 col-sm-10">
-      <%= image_tag @professional.photo, class: "card-img-top object-fit-cover"%>
+      <%= image_tag(@professional.photo_url, class: "card-img-top object-fit-cover")%>
       <div class="text-center" style="margin-top: 50px;">
         <h5>Profession : <strong><%=@professional.specialty%></strong></h5>
       </div>

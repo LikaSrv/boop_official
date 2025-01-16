@@ -16,7 +16,7 @@
       <%= p.input :location, label: "Lieu constaté"%>
       <%= p.input :date, label: "Date constatée", as: :string, input_html: { data: { controller: "datepicker" } } %>
       <%= p.input :contact, label: "Point de contact"%>
-      <%= p.input :photo, label: "Photo", as: :file%>
+      <%= p.file_field :photo, label: "Photo"%>
       <div class="text-center my-4">
         <%= p.button :submit, "Créer l'annonce", class: "btn btn-primary rounded rounded-4"%>
       </div>

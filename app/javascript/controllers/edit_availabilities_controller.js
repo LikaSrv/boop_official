@@ -35,7 +35,7 @@ export default class extends Controller {
     })
   }
 
-  toggleDay(event) {
+  showTimes(event) {
     event.preventDefault();
     const day = event.target.nextElementSibling;
 
@@ -61,16 +61,13 @@ export default class extends Controller {
       icon: "warning",
       showCancelButton: true,
       cancelButtonColor: "#0E0000",
+      cancelButtonText: "Annuler",
       confirmButtonText: "Oui",
       confirmButtonColor: '#EFA690'
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: "La disponibilité a bien été modifiée",
-          icon: "success"
-        });
+
         // Envoi des données au serveur Rails via Fetch POST
-        /professionals/:professional_id/update_availibilities/:availability_id
         fetch(`/professionals/${professionalId}/update_availibilities/${availabilityId}`, {
           method: "PATCH",
           headers: {
@@ -90,10 +87,23 @@ export default class extends Controller {
             }
             return response.text(); // Récupère la réponse en tant que texte brut
           })
-          .then((text) => {
-            const data = text ? JSON.parse(text) : {}; // Parse uniquement si du contenu existe
+          .then((data) => {
             console.log("Réponse JSON :", data);
-            // window.location.reload();
+
+            // Mettez à jour dynamiquement le DOM ici
+            const statusElement = document.querySelector(`[data-availability-id="${availabilityId}"]`);
+            console.log("Status Element:", statusElement);
+
+            if (statusElement) {
+              statusElement.classList.toggle("btn-outline-dark");
+              statusElement.classList.toggle("btn-outline-primary");
+            }
+
+            Swal.fire({
+              title: "La disponibilité a bien été modifiée",
+              icon: "success",
+              confirmButtonColor: '#EFA690'
+            });
           })
           .catch((error) => {
             Swal.fire("Erreur", "Impossible de modifier le statut de l'annonce", "error");
@@ -102,4 +112,5 @@ export default class extends Controller {
       }
     });
   }
+
 }

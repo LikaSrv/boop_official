@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   post 'professionals/duplicate', to: 'professionals#duplicate', as: 'duplicate_professional'
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   patch 'professionals/:professional_id/update_availibilities/:availability_id', to: 'professionals#update_availibilities', as: 'professional_update_availibilities'
-
+  get 'pets/:id/show_for_pro', to: 'pets#show_for_pro', as: 'pet_show_for_pro'
     # autres routes...
 
   # Defines the root path route ("/")
@@ -51,7 +51,5 @@ Rails.application.routes.draw do
   end
 
   resources :pet_alerts
-
-
 
 end

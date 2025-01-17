@@ -164,6 +164,18 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  def edit_availibilities
+    @professional = Professional.find(params[:id])
+    @futur_availibilities = Availability.where("start_time >= ? AND professional_id = ? ", Time.now, @professional.id)
+    @available_months = @futur_availibilities.pluck(:start_time).map { |date| date.month }.uniq
+  end
+
+  def update_availibilities
+    availability = Availability.find(params[:availability_id])
+    availability.save!
+    raise
+  end
+
   private
 
   def professional_params

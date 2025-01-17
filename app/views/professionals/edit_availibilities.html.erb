@@ -9,6 +9,12 @@
   <h1>Modifier mes créneaux de disponibilités</h1>
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
+<div class="d-flex flex-row justify-content-center align-items-center mb-4">
+  <p class="mx-4">Légendes : </p>
+  <div class="bg-info btn disabled border-0"> Rdv de prévus </div>
+  <div class="border border-1 border-primary px-2 py-1 text-primary mx-2"> Créneaux disponibles </div>
+  <div class="border border-1 border-dark px-2 py-1 text-dark"> Créneaux bloqués </div>
+</div>
 <%# body %>
 <div class="row d-flex flex-wrap justify-content-center">
   <% @available_months.each do |month| %>
@@ -19,18 +25,18 @@
       <% available_days_of_month = @futur_availibilities.select { |a| a.start_time.month == month }.map { |a| a.start_time.to_date }.uniq %>
       <div class="d-flex flex-column mx-3 all-dates" data-edit-availabilities-target="monthDates">
         <% available_days_of_month.each do |day| %>
-          <div class="nav-item dropdown">
-            <a href="#" class="btn btn-outline-primary w-100 m-1" data-action="click->edit-availabilities#toggleDay" data-edit-availabilities-target="day">
+          <div class="nav-item dropdown w-100">
+            <a href="#" class="btn btn-outline-primary m-1 w-100" data-action="click->edit-availabilities#showTimes" data-edit-availabilities-target="day">
               <%= day.strftime('%d-%m-%Y') %>
             </a>
-            <% availabilities = @futur_availibilities.select { |a| a.start_time.to_date == day } %>
+            <% availabilities = @futur_availibilities.select { |a| a.start_time.to_date == day }.sort_by { |a| a.start_time.to_time } %>
             <div class="d-none d-flex flex-wrap justify-content-center mx-2 times"
                   data-edit-availabilities-target="time">
               <% availabilities.each do |availability| %>
                 <% if availability.status == false %>
                   <% if availability.appointments.empty? %>
                     <a href="#"
-                      class="btn btn-outline-primary m-1"
+                      class="btn btn-outline-dark m-1 text-body-color"
                       style="width: 22%;"
                       data-controller="edit-availabilities"
                       data-availability-id="<%= availability.id %>"
@@ -41,13 +47,13 @@
                     </a>
                   <% else %>
                     <a href="#"
-                      class="btn btn-secondary m-1 disabled"
+                      class="btn btn-info m-1 disabled"
                       style="width: 22%;">
                       <%= availability.start_time.strftime("%H:%M") %>
                     </a>
                   <% end %>
                 <% else %>
-                <a href="#"
+                  <a href="#"
                       class="btn btn-outline-primary m-1"
                       style="width: 22%;"
                       data-controller="edit-availabilities"
@@ -55,8 +61,8 @@
                       data-professional-id="<%= @professional.id %>"
                       data-status="<%=availability.status%>"
                       data-action="click->edit-availabilities#toggleTime">
-                      <%= availability.start_time.strftime("%H:%M") %>
-                    </a>
+                    <%= availability.start_time.strftime("%H:%M") %>
+                  </a>
                 <% end %>
               <% end %>
             </div>

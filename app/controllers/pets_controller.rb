@@ -48,6 +48,19 @@ class PetsController < ApplicationController
     # raise
   end
 
+  def show_for_pro
+    @pet = Pet.find(params[:id])
+    @vaccinations = @pet.vaccinations.sort_by { |v| [v.name.downcase, v.next_booster_date] }
+    @weight_histories = @pet.weight_histories
+    @weight_histories_data = []
+    @weight_histories.each do |w|
+      @weight_histories_data << w.weight
+    end
+    @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
+    @weight_histories_ids = @weight_histories.map { |w| w.id }
+    @appointments = @pet.appointments
+  end
+
   def edit
     @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations

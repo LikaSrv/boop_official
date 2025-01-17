@@ -172,8 +172,7 @@ class ProfessionalsController < ApplicationController
 
   def update_availibilities
     availability = Availability.find(params[:availability_id])
-    availability.save!
-    raise
+    availability.update!(status: !availability.status)
   end
 
   private

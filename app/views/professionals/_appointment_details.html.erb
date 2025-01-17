@@ -27,12 +27,12 @@
       <% if Pet.find(@appointment.pet_id).photo.present? %>
         <%= cl_image_tag Pet.find(@appointment.pet_id).photo.key,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;" %>
       <% else %>
-        <img  src="https://res.cloudinary.com/dsbteudoz/image/upload/v1736071797/production/l36dmns98zvw0qbpvjtduy102ebz.jpg"
+        <img  src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Design%20sans%20titre%20(1).jpg"
               alt="photo_pet_default"
               style="width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;">
       <% end %>
       <% if @professional.specialty=="Vétérinaire"%>
-        <a href="<%=user_pet_path(@appointment.user_id, @appointment.pet_id)%>" target="_blank">Voir le carnet de santé</a>
+        <a href="<%=pet_show_for_pro_path(@appointment.pet_id)%>" target="_blank">Voir le carnet de santé</a>
       <%end%>
     </div>
   </div>

@@ -9,7 +9,7 @@
     <div class="col-lg-5 col-sm-10 card_pro  text-center d-flex flex-column align-items-center justify-content-around">
       <h1>Service de <%=@order.pricing.specialty%></h1>
       <h3>Prix : <strong><%= humanized_money_with_symbol @order.amount %></strong>   /mois</h3>
-      <button id="pay" class="btn btn-primary px-5 py-3 rounded-pill">
+      <button id="pay" class="btn_custom">
         <h5 class="text-light">Payer</h5>
       </button>
       <%# Commented for the lecture, remove comments. %>

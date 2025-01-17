@@ -8,7 +8,7 @@
   <h1>Mon profil pro</h1>
   <i class="fa-solid fa-paw float-end text-primary"></i>
   <a  href="#"
-      class="position-absolute top-0 end-0 mb-4 me-4 btn btn-primary"
+      class="position-absolute top-0 end-0 mb-4 me-4 btn_custom"
       data-controller="alert"
       data-alert-professional-id="<%=@professional.id%>"
       data-alert-user-id="<%= current_user.id %>"
@@ -82,7 +82,7 @@
       </div>
       <%# submit button %>
       <div class="text-center my-4">
-        <%= p.button :submit, "Enregistrer", class: "btn btn-primary" %>
+        <%= p.button :submit, "Enregistrer", class: "btn_custom" %>
       </div>
       <div class="text-end " style="margin-top: 50px;">
         <a href="<%=pro_index_user_path(current_user)%>" methode="DELETE" class="text-danger" >Je souhaite supprimer mon compte pro</a>

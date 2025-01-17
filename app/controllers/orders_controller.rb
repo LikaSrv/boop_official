@@ -19,8 +19,8 @@ class OrdersController < ApplicationController
         quantity: 1
       }],
       mode: 'payment',
-      success_url: order_url(order),
-      cancel_url: order_url(order)
+      success_url: order_url(order)
+      # cancel_url: new_order_payment_path(order)
     )
 
     order.update(checkout_session_id: session.id)

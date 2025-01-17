@@ -178,7 +178,7 @@ export default class extends Controller {
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
       customClass: {
-        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       preConfirm: () => {
@@ -372,7 +372,7 @@ export default class extends Controller {
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
       customClass: {
-        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       didOpen: () => {
@@ -465,7 +465,7 @@ export default class extends Controller {
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
       customClass: {
-        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       preConfirm: () => {
@@ -539,7 +539,7 @@ export default class extends Controller {
       cancelButtonText: "Annuler",
       showCancelButton: true,
       customClass: {
-        confirmButton: "btn btn-primary",
+        confirmButton: "btn_custom",
         cancelButton: "btn btn-body-color",
       },
       preConfirm: () => {
@@ -684,7 +684,7 @@ export default class extends Controller {
       inputPlaceholder: "Nombre de profil",
       confirmButtonText: "Enregistrer",
       customClass: {
-        confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
     }).then(async (result) => {
@@ -831,6 +831,29 @@ export default class extends Controller {
         }
       });
     }
+  }
+
+  loading(event) {
+    // Empêche la soumission immédiate pour afficher le loader
+    event.preventDefault();
+
+    // Affiche la SweetAlert de chargement
+    Swal.fire({
+      title: "Chargement...",
+      text: "Veuillez patienter pendant que nous enregistrons vos données.",
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      allowOutsideClick: false, // Empêche de fermer en cliquant à l'extérieur
+      allowEscapeKey: false,   // Empêche de fermer avec la touche Échap
+      allowEnterKey: false,    // Empêche de fermer avec la touche Entrée
+    });
+
+    // Optionnel : Laisse le formulaire se soumettre après un délai
+    // ou déclenche une action AJAX ici si tu l'utilises
+    setTimeout(() => {
+      event.target.closest("form").submit();
+    }, 1000); // Ajuste le délai en fonction de ton besoin
   }
 
 }

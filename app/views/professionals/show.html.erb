@@ -5,14 +5,12 @@
   <% end %>
 </div>
 <%# body %>
-<div class="container-all">
-  <div>
-    <div class="text-center m-4">
-      <h1><%= @professional.name %></h1>
-      <h3><%= @professional.specialty%></h3>
-    </div>
+<div class="text-center m-4">
+    <h1><%= @professional.name %></h1>
+    <h3><%= @professional.specialty%></h3>
   </div>
-  <div class="grid">
+
+  <div class="grid w-100">
     <div id="info-pro">
       <div style="margin: 8px;" class="text-center">
         <%= image_tag(@professional.photo_url, crop: :fill, class:"rounded-4 mb-2", style:"width: 60%;")%>
@@ -26,7 +24,7 @@
         </div>
         <div class="card_pro">
           <h4>Description : </h4>
-          <p><%=@professional.description%></p>
+          <p style="word-wrap: break-word; word-break: break-word; white-space: normal;"><%=@professional.description%></p>
         </div>
         <div class="card_pro" data-controller="alert">
           <div class="d-flex flex-row justify-content-between">
@@ -64,14 +62,12 @@
             <% if user_signed_in? %>
               <%= link_to "Ajouter un avis",
                           "#",
-                          class: "btn btn-primary text-white mt-3 active",
-                          style: "width: 80%;",
+                          class: "btn_custom mt-3 active text-center",
                           data: { controller: "alert", action: "click->alert#reviewSweetalert", professional_id: @professional.id } %>
             <% else %>
               <%= link_to "Ajouter un avis",
                           new_user_session_path,
-                          class: "btn btn-secondary text-white mt-3",
-                          style: "width: 80%;",
+                          class: "btn_custom mt-3",
                           data: { controller: "alert", action: "click->alert#notConnectedSweetalert"}%>
             <% end %>
           </div>
@@ -82,4 +78,3 @@
       <%= render "all_available_slots", professional: @professional%>
     </div>
   </div>
-</div>

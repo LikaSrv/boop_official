@@ -8,7 +8,7 @@
 <div class=" text-center mb-4 d-flex flex-row justify-content-center align-items-center" data-controller="alert">
   <h1><%= @pet_alert.title %></h1>
   <% if @pet_alert.status == false %>
-    <i class="fa-solid fa-circle-exclamation text-warning mx-4 " style="font-size: 32px"></i>
+    <i class="fa-solid fa-circle-exclamation mx-4 " style="font-size: 32px; color: #FF0035;"></i>
   <% else %>
     <i class="fa-solid fa-circle-check text-success mx-4 " style="font-size: 32px"></i>
   <% end %>

@@ -17,7 +17,7 @@
               placeholder: "Rechercher un service..."
           %>
         <div>
-          <%= submit_tag "Rechercher", class: "btn btn-primary text-white search-bar p-3" %>
+          <%= submit_tag "Rechercher", class: "btn_custom search-bar" %>
         </div>
       </div>
     </div>
@@ -65,9 +65,9 @@
       <h5>Rejoignez notre communauté et proposez vos services à des propriétaires d'animaux qui cherchent des solutions fiables et de confiance.</h5>
       <h5>C’est simple, rapide, et vous pouvez faire une vraie différence dans la vie des animaux tout en développant votre activité. Inscrivez-vous maintenant et commencez à aider nos compagnons à quatre pattes !
       </h5>
-      <div class="text-center">
+      <div class="text-center mt-4 ">
         <%= link_to "Proposer un service", pricings_path,
-              class: "hoveredbutton btn btn-primary text-white mt-4 rounded-pill"%>
+              class: "hoveredbutton btn_custom"%>
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@
           <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/caution-sign.png"
             alt="alert"
             class="alert_image m-4">
-          <a href="<%=new_pet_alert_path%>" class="btn btn-primary rounded rounded-4 my-4"> Publier une annonce </a>
+          <a href="<%=new_pet_alert_path%>" class="btn_custom"> Publier une annonce </a>
         </div>
         <%# carousel %>
         <div class="col-lg-7 col-md-7 col-sm-10">
@@ -130,16 +130,16 @@
                                 class= "d-block w-100"
                                 style= "border-radius: 12px; height: 300px; object-fit: contain;">
                         <% end %>
-                        <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.61);">
+                        <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.76);">
                           <div class="d-flex flex-row justify-content-center align-items-center">
                             <h5><strong><%=a.title%></strong></h5>
                             <% if a.status == false %>
-                              <i class="fa-solid fa-circle-exclamation text-warning mx-4 " style="font-size: 32px"></i>
+                              <i class="fa-solid fa-circle-exclamation mx-4 " style="font-size: 32px; color: #FF0035;"></i>
                             <% else %>
                               <i class="fa-solid fa-circle-check text-success mx-4 " style="font-size: 32px"></i>
                             <% end %>
                           </div>
-                          <p class="m-2"><%=a.description%></p>
+                          <p class="m-2"><%=a.description.slice(0, 100)%>...</p>
                           <a href="<%=pet_alert_path(a)%>" class="btn btn-info rounded rounded-4">En savoir plus</a>
                         </div>
                         <div class="carousel-caption-overlay"></div>
@@ -214,7 +214,7 @@
     <div class="d-flex justify-content-center align-items-center">
       <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
         <p class="text-center">Veuillez vous connecter pour voir vos rendez-vous.</p>
-        <%= link_to "Se connecter", new_user_session_path, class: "text-center btn btn-primary text-white"%>
+        <%= link_to "Se connecter", new_user_session_path, class: "text-center btn_custom"%>
         <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/business-solution-removebg-preview.png">
       </div>
     </div>

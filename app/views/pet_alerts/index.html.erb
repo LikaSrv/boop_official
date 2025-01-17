@@ -30,7 +30,7 @@
             </div>
             <!-- Image qui prend le reste de la place -->
             <div class="flex-grow-1" style="overflow: hidden;">
-              <%= image_tag animal.photo, style: "width: 100%; height: 100%; object-fit: cover;" %>
+              <%= image_tag(animal.photo_url, style: "width: 100%; height: 100%; object-fit: cover;") %>
             </div>
           </div>
         </div>

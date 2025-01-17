@@ -5,8 +5,8 @@ export default class extends Controller {
   static targets = ["autoscrollContainer"];
 
   connect() {
-    console.log("hi");
-    console.log(this.autoscrollContainerTarget);
+    // console.log("hi");
+    // console.log(this.autoscrollContainerTarget);
 
     // Démarrer l'autoscroll une fois que le DOM est prêt
     this.startAutoScroll();

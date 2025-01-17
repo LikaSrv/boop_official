@@ -295,7 +295,7 @@ export default class extends Controller {
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      cancelButtonColor: "#0E0000",
       confirmButtonText: "Oui supprimer!",
       cancelButtonText: "Annuler",
     }).then((result) => {

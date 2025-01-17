@@ -125,7 +125,7 @@ export default class extends Controller {
               showCancelButton: true,
               footer: `<a href="#" id="delete-weight-history" class="text-danger">Supprimer</a>`,
               customClass: {
-                confirmButton: "btn btn-primary", // Classe Bootstrap ou CSS personnalisée
+                confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
                 cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
               },
               didOpen: () => {

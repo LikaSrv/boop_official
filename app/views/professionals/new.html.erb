@@ -117,7 +117,7 @@
     </div>
     <%# submit button %>
     <div class="text-center my-4">
-      <%= p.button :submit, "Enregistrer", class: "btn btn-primary" %>
+      <%= p.button :submit, "Enregistrer", class: "btn_custom", data: {controller: "alert", action: "click->alert#loading" } %>
     </div>
   </div>
 </div>

@@ -122,7 +122,14 @@
                   <a href="<%=pet_alerts_path%>" style="text-decoration: none; color: white;">
                     <div class="carousel-item <%= 'active' if index == 0 %>" data-bs-interval="5000">
                       <div class="carousel-image-container">
-                        <%= image_tag(url_for(a.photo), alt: "photo of pet alert", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;") %>
+                        <% if a.photo.present?%>
+                          <%= image_tag(a.photo_url, alt: "photo of pet alert", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;") %>
+                        <% else %>
+                          <img  src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question.png"
+                                alt="pet alert default"
+                                class= "d-block w-100"
+                                style= "border-radius: 12px; height: 300px; object-fit: contain;">
+                        <% end %>
                         <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.61);">
                           <div class="d-flex flex-row justify-content-center align-items-center">
                             <h5><strong><%=a.title%></strong></h5>

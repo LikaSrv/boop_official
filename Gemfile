@@ -62,6 +62,7 @@ gem 'stripe' #added for paiment Stripe
 gem 'stripe_event' #added for paiment Stripe
 gem 'supabase', '~> 0.1.0'
 gem 'aws-sdk-s3', '~> 1.96'
+gem 'icalendar'
 
 group :development, :test do
   gem "dotenv-rails"

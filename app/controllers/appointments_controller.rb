@@ -22,6 +22,8 @@ class AppointmentsController < ApplicationController
         available_slot.status = false
         available_slot.save!
       end
+      AppointmentMailer.user_confirmation(@appointment).deliver_now
+      AppointmentMailer.professional_confirmation(@appointment).deliver_now
       redirect_to professional_appointment_path(@appointment.professional, @appointment)
     else
       render :new, alert: "Erreur lors de la création de votre rendez-vous"

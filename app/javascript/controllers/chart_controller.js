@@ -13,7 +13,7 @@ export default class extends Controller {
     console.log("ChartController connecté !");
 
     if (this.hasChartTarget) {
-      console.log("Chart target trouvé :", this.chartTarget);
+      // console.log("Chart target trouvé :", this.chartTarget);
       this.initializeChart();
     } else {
       console.error("Chart target introuvable !");

@@ -285,9 +285,9 @@ export default class extends Controller {
   deleteVaccination(event) {
     event.preventDefault();
 
-    console.log("Current target:", event.currentTarget);
+    // console.log("Current target:", event.currentTarget);
     const vaccinId = event.currentTarget.dataset.vaccinId;
-    console.log("vaccinId:", vaccinId);
+    // console.log("vaccinId:", vaccinId);
 
     Swal.fire({
       title: "Êtes-vous sûr de vouloir supprimer?",
@@ -342,12 +342,12 @@ export default class extends Controller {
     const vaccinName = event.currentTarget.dataset.vaccinName;
     const administrationDate = event.currentTarget.dataset.administrationdate.replace(/"/g, '');
     const nextBoosterDate = event.currentTarget.dataset.nextboosterdate.replace(/"/g, '');
-    console.log("Current target:", event.currentTarget);
+    // console.log("Current target:", event.currentTarget);
 
-    console.log("vaccinId:", vaccinId);
-    console.log("vaccinName:", vaccinName);
-    console.log("administrationDate:", administrationDate);
-    console.log("nextBoosterDate:", nextBoosterDate);
+    // console.log("vaccinId:", vaccinId);
+    // console.log("vaccinName:", vaccinName);
+    // console.log("administrationDate:", administrationDate);
+    // console.log("nextBoosterDate:", nextBoosterDate);
 
 
 
@@ -432,7 +432,7 @@ export default class extends Controller {
   updateVaccinationInPage(vaccin) {
     // Sélectionne l'élément correspondant à la vaccination modifiée
     const vaccinElement = document.querySelector('.vaccination-item');
-    console.log("vaccinElement:", vaccinElement);
+    // console.log("vaccinElement:", vaccinElement);
 
 
     // Mettre à jour le nom, la date d'administration et la date de la prochaine injection
@@ -600,8 +600,8 @@ export default class extends Controller {
     event.preventDefault();
 
     const userId = event.currentTarget.dataset.userId;
-    console.log("user id:", userId);
-    console.log("pet id:", this.element.dataset.petId);
+    // console.log("user id:", userId);
+    // console.log("pet id:", this.element.dataset.petId);
 
     Swal.fire({
       title: "Êtes-vous sûr de vouloir supprimer?",
@@ -704,9 +704,9 @@ export default class extends Controller {
           // Appelle le backend pour chaque duplication
           const professionalId = this.element.dataset.alertProfessionalId;
           const userId = this.element.dataset.alertUserId;
-          console.log("Professional ID:", professionalId);
-          console.log(this.element.dataset.alertUserId);
-          console.log("User ID:", userId);
+          // console.log("Professional ID:", professionalId);
+          // console.log(this.element.dataset.alertUserId);
+          // console.log("User ID:", userId);
 
           for (let i = 0; i < capacity; i++) {
             await fetch('/professionals/duplicate', {
@@ -751,7 +751,7 @@ export default class extends Controller {
 
     const pet_alert_id = this.element.dataset.petAlertId;
     const current_status = event.currentTarget.dataset.status === "true";
-    console.log("Current status:", current_status);
+    // console.log("Current status:", current_status);
 
     if (!current_status) {
 

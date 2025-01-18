@@ -20,9 +20,7 @@
       <% if @pet_alert.photo.present? %>
         <%= image_tag(@pet_alert.photo_url, alt: "photo of pet alert", class: "card-img-top w-100 h-100 object-fit-cover rounded") %>
       <% else %>
-        <img  src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question.png"
-              alt="photo_pet_default"
-              class= "card-img-top w-100 h-100 object-fit-cover rounded">
+        <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png", alt:"photo_pet_default",class: "card-img-top w-100 h-100 object-fit-cover rounded")%>
       <% end %>
     </div>
     <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">

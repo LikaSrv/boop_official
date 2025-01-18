@@ -26,7 +26,7 @@
   <h3 class="mt-5">Nos services</h3>
   <div class="d-flex justify-content-start custom-scroll mt-2", style="white-space: nowrap; overflow-x: auto;">
     <a href="<%=professionals_path%>"  style="text-decoration:none; color: white;">
-      <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/vitaly-gariev-HURf5iUtSQg-unsplash.jpg);">
+      <div class="card-category p-5" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%="#{ENV['SUPABASE_URL']}"%>/storage/v1/object/public/general_images/vitaly-gariev-HURf5iUtSQg-unsplash.jpg);">
         <h4>Tous nos services</h4>
       </div>
     </a>
@@ -55,7 +55,7 @@
   <h3 class="mt-5 text-center">Vous aussi, vous souhaitez proposer un service ?</h3>
   <div class="row d-flex justify-content-center align-items-center mt-4">
     <div class="col-12 col-lg-5 text-center pe-5">
-      <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/guy-walking-with-dog-in-the-park.png" alt="Proposer un service">
+      <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/guy-walking-with-dog-in-the-park.png",alt:"Proposer un service" )%>
     </div>
     <div class="col-12 col-lg-5" style="word-wrap: break-word; word-break: break-word; white-space: normal; text-align: justify;">
       <h5>Vous adorez les animaux et vous avez des compétences à partager ?</h5>
@@ -104,9 +104,7 @@
       <div class="row d-flex align-items-center justify-content-around" >
         <%# alert image %>
         <div class="d-flex flex-column justify-content-center align-items-center col-lg-3 col-md-3 col-sm-7 p-3">
-          <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/caution-sign.png"
-            alt="alert"
-            class="alert_image m-4">
+          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/caution-sign.png", alt:"alert", class:"alert_image m-4")%>
           <a href="<%=new_pet_alert_path%>" class="btn_custom"> Publier une annonce </a>
         </div>
         <%# carousel %>
@@ -125,10 +123,7 @@
                         <% if a.photo.present?%>
                           <%= image_tag(a.photo_url, alt: "photo of pet alert", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;") %>
                         <% else %>
-                          <img  src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question.png"
-                                alt="pet alert default"
-                                class= "d-block w-100"
-                                style= "border-radius: 12px; height: 300px; object-fit: contain;">
+                          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
                         <% end %>
                         <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.76);">
                           <div class="d-flex flex-row justify-content-center align-items-center">
@@ -206,7 +201,7 @@
       <div class="d-flex justify-content-center align-items-center">
         <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
           <p class="text-center">Vous n'avez pas de rendez-vous à venir.</p>
-          <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/owner-playing-with-pet-dog.png">
+          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/owner-playing-with-pet-dog.png")%>
         </div>
       </div>
     <% end %>
@@ -215,7 +210,7 @@
       <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
         <p class="text-center">Veuillez vous connecter pour voir vos rendez-vous.</p>
         <%= link_to "Se connecter", new_user_session_path, class: "text-center btn_custom"%>
-        <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/business-solution-removebg-preview.png">
+        <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/business-solution-removebg-preview.png")%>
       </div>
     </div>
   <% end %>

@@ -33,7 +33,7 @@
               <% if animal.photo.present?%>
                 <%= image_tag(animal.photo_url, style: "width: 100%; height: 100%; object-fit: cover;") %>
               <% else %>
-                <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question.png" alt="alert photo default" style= "width: 100%; height: 100%; object-fit: cover;">
+                <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png",alt:"alert photo default", style: "width: 100%; height: 100%; object-fit: cover;" )%>
               <% end %>
             </div>
           </div>

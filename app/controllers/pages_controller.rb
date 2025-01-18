@@ -9,31 +9,31 @@ class PagesController < ApplicationController
     @all_specialty = [
       {
         specialty: "Vétérinaire",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/judy-beth-morris-5Bi6MWlWMbw-unsplash.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/judy-beth-morris-5Bi6MWlWMbw-unsplash.jpg"
       },
       {
         specialty: "Toiletteur",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/toiletteur.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/toiletteur.jpg"
       },
       {
         specialty: "Comportementaliste",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/comportementalist.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/comportementalist.jpg"
       },
       {
         specialty: "Pension",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/pension.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/pension.jpg"
       },
       {
         specialty: "Promeneur",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/promeneur.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/promeneur.jpg"
       },
       {
         specialty: "Nutritionniste",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/nutritionniste.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/nutritionniste.jpg"
       },
       {
         specialty: "Petsitter",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/petsitteur.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/petsitteur.jpg"
       }
     ]
 

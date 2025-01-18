@@ -1,0 +1,18 @@
+<h1>Rendez-vous confirmé</h1>
+<p>
+  Bonjour <%= @appointment.user.first_name %>,
+</p>
+<p>
+  Nous vous confirmons votre rendez-vous avec <%= @appointment.professional.name %> le <%= @appointment.start_time.strftime("%d/%m/%Y") %> à <%= @appointment.start_time.strftime("%H:%M") %>.
+</p>
+<p>
+  Vous pouvez consulter les détails de votre rendez-vous sur votre espace personnel sur le site
+  <BR><a href="http://myboop.fr">myboop.fr</a>
+
+</p>
+<p>
+  Merci pour votre confiance.
+  <BR>A bientôt !
+</p>
+
+<%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20RVB.png", alt: "logo", style:"width: 100px"%>

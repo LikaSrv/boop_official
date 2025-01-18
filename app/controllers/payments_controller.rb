@@ -7,31 +7,31 @@ class PaymentsController < ApplicationController
     @all_specialty = [
       {
         specialty: "Vétérinaire",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/judy-beth-morris-5Bi6MWlWMbw-unsplash_funbpk.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/judy-beth-morris-5Bi6MWlWMbw-unsplash.jpg"
       },
       {
         specialty: "Toiletteur",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824916/reba-spike-PEQIIwnIGdo-unsplash_yfvjlt.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/toiletteur.jpg"
       },
       {
         specialty: "Comportementaliste",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1734359896/comportementalist_wthrkt.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/comportementalist.jpg"
       },
       {
         specialty: "Pension",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1734359894/pension_ujblqm.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/pension.jpg"
       },
       {
         specialty: "Promeneur",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824978/development/m4vlzbcsqfd656mz4bfevhz4gybu.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/promeneur.jpg"
       },
       {
         specialty: "Nutritionniste",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1734359894/nutritionniste_jyqrm8.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/nutritionniste.jpg"
       },
       {
         specialty: "Petsitter",
-        photo: "https://res.cloudinary.com/dsbteudoz/image/upload/v1734359894/petsitter_fskzo9.jpg"
+        photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/petsitteur.jpg"
       }
     ]
 

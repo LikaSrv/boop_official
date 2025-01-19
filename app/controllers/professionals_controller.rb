@@ -14,6 +14,7 @@ class ProfessionalsController < ApplicationController
     end
 
     @reviews = Review.where(professional: @professionals)
+    @availabilities = Availability.where(professional: @professionals, status: true).select { |availability| availability.start_time > DateTime.now }
 
     # @reviews = []
     # @appointments.each do |appointment|
@@ -137,8 +138,6 @@ class ProfessionalsController < ApplicationController
     redirect_to pro_index_user_path(current_user), notice: 'Votre profil professionnel a bien été supprimé'
   end
 
-  def search
-  end
 
   # generate all availabilities for a professional
   def generate_availabilities(opening_hours, interval, date)
@@ -147,20 +146,36 @@ class ProfessionalsController < ApplicationController
     if !closed_days.include?(date.wday)
       opening_hour = opening_hours.find_by(day_of_week: date.wday)
 
-      start_time = DateTime.parse("#{date} #{opening_hour.open_time}")
-      end_time = DateTime.parse("#{date} #{opening_hour.close_time}")
+      start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
+      end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
 
-      while start_time < end_time
+      while start_time_morning < end_time_morning
         availability = Availability.new(
           professional: @professional,
-          start_time: start_time,
+          start_time: start_time_morning,
           status: 1
         )
         availability.save!
 
         # Incrémenter start_time de l'intervalle
-        start_time += interval.minutes
+        start_time_morning += interval.minutes
       end
+
+      start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
+      end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+
+      while start_time_afternoon < end_time_afternoon
+        availability = Availability.new(
+          professional: @professional,
+          start_time: start_time_afternoon,
+          status: 1
+        )
+        availability.save!
+
+        # Incrémenter start_time de l'intervalle
+        start_time_afternoon += interval.minutes
+      end
+
     end
   end
 
@@ -190,6 +205,6 @@ class ProfessionalsController < ApplicationController
                                           :photo,
                                           :capacity,
                                           :interval,
-                                          :opening_hours_attributes => [:id, :day_of_week, :open_time, :close_time, :closed, :_destroy])
+                                          :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])
   end
 end

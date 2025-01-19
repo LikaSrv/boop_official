@@ -1,5 +1,7 @@
 <div>
-  <%= render "shared/back"%>
+  <%= link_to root_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
 </div>
 <div class="container-all">
   <div class="grid-map">
@@ -18,7 +20,7 @@
                   <p class="text-start mx-2 mt-2" style="word-wrap: break-word; word-break: break-word; white-space: normal;"><%= professional.description.slice(0,200) %>...</p>
               </a>
             </div>
-            <%= render "available_slots", professional: professional%>
+            <%= render "available_slots", professional: professional %>
           </div>
         </div>
       <%end%>

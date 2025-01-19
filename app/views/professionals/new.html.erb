@@ -86,34 +86,44 @@
       </div>
     </div>
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
-      <h5 class="text-center mb-5" style="text-decoration: underline">Les horaires d'ouvertures</h5>
-      <%# opening hours %>
-      <%= p.fields_for :opening_hours do |h|%>
-        <div class="nested-fields d-flex flex-row justify-content-between my-2">
-          <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
-          <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
-          <div class="d-flex flex-row">
-          <%# opening time %>
-          <div class="d-flex flex-column align-items-center justify-content-between">
-            <%= h.label :open_time, "Heure d'ouverture :", class: "me-2 mb-0" %>
-            <div style="width: 65%;">
-              <%= h.input :open_time, label: false, as: :string, input_html: { data: { controller: "timepicker" } } %>
-            </div>
-          </div>
-          <%# closing time %>
-          <div class="d-flex flex-column align-items-center justify-content-between">
-            <%= h.label :clos_time, "Heure de fermeture :", class: "me-2 mb-0" %>
-            <div style="width: 65%;">
-              <%= h.input :close_time, label: false, as: :string, input_html: { data: { controller: "timepicker" } } %>
-            </div>
-          </div>
-          <%# closed %>
-          <div class="d-flex flex-column justify-content-center">
-            <%= h.check_box :closed %> Fermé
-          </div>
-          </div>
-        </div>
-      <% end %>
+      <h5 class="text-center mb-4" style="text-decoration: underline">Les horaires d'ouvertures</h5>
+      <table class="table table-bordered custom-white-table">
+        <thead class="table-secondary">
+          <tr>
+            <th scope="col" class="text-center">Jour</th>
+            <th scope="col" class="text-center">Heures du matin</th>
+            <th scope="col" class="text-center">Heures de l'après-midi</th>
+            <th scope="col" class="text-center">Fermé</th>
+          </tr>
+        </thead>
+        <%# opening hours %>
+        <%= p.fields_for :opening_hours do |h|%>
+          <tbody class="nested-fields">
+            <tr>
+              <td>
+                <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
+                <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" } } %>
+                  <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" } } %>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" } } %>
+                  <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" } } %>
+                </div>
+              </td>
+              <td class="text-center align-middle">
+                <%= h.check_box :closed %>
+                <%= h.label :closed, "Fermé", class: "ms-2" %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
     </div>
     <%# submit button %>
     <div class="text-center my-4">

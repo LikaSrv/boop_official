@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_16_211117) do
+ActiveRecord::Schema[7.1].define(version: 2025_01_19_182759) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -99,12 +99,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_16_211117) do
 
   create_table "opening_hours", force: :cascade do |t|
     t.integer "day_of_week"
-    t.time "open_time"
-    t.time "close_time"
+    t.time "open_time_morning"
+    t.time "close_time_morning"
     t.boolean "closed"
     t.bigint "professional_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.time "open_time_afternoon"
+    t.time "close_time_afternoon"
     t.index ["professional_id"], name: "index_opening_hours_on_professional_id"
   end
 

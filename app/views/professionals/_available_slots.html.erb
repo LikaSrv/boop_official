@@ -2,7 +2,9 @@
   <h4>Prochains rendez-vous disponibles</h4>
   <% count = 0 %>
     <% i = 0 %>
-  <% while count < 8 do  %>
+    <% dates_count = @availabilities.pluck(:start_time).map { |date| date.to_date }.uniq.count %>
+    <% number_show_dates = dates_count > 8 ? 8 : dates_count %>
+  <% while count < number_show_dates do  %>
     <% date = (DateTime.current.to_date + i).strftime('%d-%m-%Y')%>
     <% professional_closed_day = professional.opening_hours.where(closed: true).pluck(:day_of_week)%>
     <% availabilities = Availability.where("DATE(start_time) = ? AND professional_id = ? AND status = ?", Date.parse(date), professional.id, true)%>

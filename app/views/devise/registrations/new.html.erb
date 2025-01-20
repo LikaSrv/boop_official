@@ -9,17 +9,15 @@
           <%= f.error_notification %>
 
           <div class="form-inputs">
-            <%= f.input :first_name,
-                        label: "Nom",
-                        required: true,
-                        autofocus: true %>
+
             <%= f.input :last_name,
                         label: "Prénom",
                         required: true,
                         autofocus: true %>
-            <%= f.input :photo,
-                as: :file,
-                label: "Photo" %>
+            <%= f.input :first_name,
+                        label: "Nom",
+                        required: true,
+                        autofocus: true %>
             <%= f.input :email,
                         required: true,
                         autofocus: true,
@@ -33,9 +31,10 @@
                         label: "Confirmez votre mot de passe",
                         required: true,
                         input_html: { autocomplete: "new-password" } %>
+            <h6 style="color:rgb(54, 55, 56)">En vous inscrivant, vous acceptez les conditions générales d'utilisations de l'application BOOP.</h6>
           </div>
 
-          <div class="form-actions">
+          <div class="form-actions mt-4">
             <%= f.button :submit, "S'inscrire", class: "btn btn-primary" %>
           </div>
         <% end %>

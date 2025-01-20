@@ -47,8 +47,15 @@
           </div>
         <% end %>
 
-        <p class="mt-4">Supprimer mon compte</p>
-        <div><%= button_to "Supprimer mon compte", registration_path(resource_name), class: "btn btn-danger", data: { confirm: "Etes vous sûr?", turbo_confirm: "Etes vous sûr?" }, method: :delete %></div>
+        <p class="mt-4">Je souhaite supprimer mon compte</p>
+        <div class="text-center">
+          <%= link_to "Supprimer mon compte",
+                            registration_path(resource_name),
+                            class: "text-danger",
+                            data: { controller: "alert",
+                                    user_id: current_user.id,
+                                    action: "click->alert#deleteuser" } %>
+        </div>
       </div>
     </div>
   </div>

@@ -10,6 +10,10 @@ export default class extends Controller {
     confirmButtonColor: String,
   }
 
+  connect() {
+    console.log("Hello from alert controller");
+  }
+
   initSweetalert(event) {
     event.preventDefault(); // Prevent the form to be submited after the submit button has been clicked
 
@@ -854,6 +858,77 @@ export default class extends Controller {
     setTimeout(() => {
       event.target.closest("form").submit();
     }, 1000); // Ajuste le délai en fonction de ton besoin
+  }
+
+  // delete User
+  deleteuser(event) {
+
+    event.preventDefault();
+    // console.log(this.element.dataset);
+    // console.log(this.element.dataset.userId);
+
+
+    const userId = this.element.dataset.userId;
+    console.log(userId);
+
+    Swal.fire({
+      title: "Êtes-vous sûr de vouloir supprimer votre compte?",
+      text: "Un message sera envoyé à l'administrateur pour traiter votre demande de suppression. Vous serez informé par e-mail une fois la suppression effectuée.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#EFA690",
+      cancelButtonColor: "#0E0000",
+      confirmButtonText: "Oui supprimer!",
+      cancelButtonText: "Annuler",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`/users/sign_out`, {
+            method: "DELETE",
+            headers: {
+              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+            },
+          })
+        .then(response => response.text())
+        .then(() => {
+          // Si la déconnexion s'est bien passée, redirigez
+          window.location.href = '/';
+      })
+        // // Envoi de la requête DELETE
+        // fetch(`/users/${userId}`, {
+        //   method: "DELETE",
+        //   headers: {
+        //     "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        //   },
+        // })
+        // .then((response) => {
+        //   // Vérifiez si la réponse est OK (et a un corps si besoin)
+        //   if (response.ok) {
+        //     if (response.status === 204) {
+        //       Swal.fire({
+        //         title: "Supprimé !",
+        //         text: "Votre compte a bien été supprimé.",
+        //         icon: "success",
+        //       }).then(() => {
+        //         window.location.href = `/`;  // Redirige
+        //       });
+        //     } else {
+        //       return response.json(); // Convertir la réponse en JSON si elle n'est pas vide
+        //     }
+        //   } else {
+        //     throw new Error("Erreur lors de la suppression.");
+        //   }
+        // })
+        // .catch((error) => {
+        //   console.error("Erreur :", error);
+        //   Swal.fire({
+        //     title: "Erreur",
+        //     text: "Une erreur est survenue lors de la suppression.",
+        //     icon: "error",
+        //   });
+        // });
+      }
+    });
+
   }
 
 }

@@ -11,13 +11,9 @@ export default class extends Controller {
 
   connect() {
     console.log("ChartController connecté !");
+    console.log(this.chartTarget);
 
-    if (this.hasChartTarget) {
-      // console.log("Chart target trouvé :", this.chartTarget);
-      this.initializeChart();
-    } else {
-      console.error("Chart target introuvable !");
-    }
+    this.initializeChart();
   }
 
   initializeChart() {
@@ -229,10 +225,12 @@ export default class extends Controller {
     });
   }
 
-  addWeight(weight, date) {
+  addWeight(weight, date, id) {
+
     // Ajoute les nouvelles données au graphique existant
-    this.chart.data.labels.push(date);
+    this.chart.data.labels.push(this.formatDateToDDMMYYYY(date));
     this.chart.data.datasets[0].data.push(weight);
+    this.chart.data.datasets[0].meta.push(id);
 
     // Met à jour le graphique
     this.chart.update();
@@ -280,4 +278,25 @@ export default class extends Controller {
 
     return formattedDate;
   }
+
+  // Fonction pour reformater la date au format "yyyy-MM-dd" en "dd-MM-yyyy"
+  formatDateToDDMMYYYY(inputDate) {
+    // Créer un objet Date à partir de la chaîne d'entrée (format "yyyy-MM-dd")
+    const date = new Date(inputDate);
+
+    // Vérifier si la date est valide
+    if (isNaN(date)) {
+      console.error("Date invalide:", inputDate);
+      return inputDate; // Retourner l'input si la date est invalide
+    }
+
+    // Extraire le jour, mois et année
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    // Retourner la date au format "dd-MM-yyyy"
+    return `${day}-${month}-${year}`;
+  }
+
 }

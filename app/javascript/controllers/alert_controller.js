@@ -504,7 +504,7 @@ export default class extends Controller {
             // Appelle le contrôleur Chart pour ajouter le poids localement
             this.application
               .getControllerForElementAndIdentifier(document.querySelector('[data-controller="chart"]'), "chart")
-              .addWeight(data.weight_history.weight, data.weight_history.date);
+              .addWeight(data.weight_history.weight, data.weight_history.date, data.weight_history.id);
 
             Swal.fire("Poids ajouté !", "", "success");
           })

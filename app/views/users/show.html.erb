@@ -5,7 +5,11 @@
         <%# my profil %>
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <h2> <strong> Mon Profil </strong> </h2>
-          <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
+          <% if @user.photo.key?%>
+            <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
+          <% else %>
+            <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/profil-default.jpg", alt:"photo_profil_default", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover"%>
+          <% end %>
           <p>Nom : <strong> <%=@user.first_name%> </strong></p>
           <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
           <p>Email : <strong> <%=@user.email%> </strong></p>

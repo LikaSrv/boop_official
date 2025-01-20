@@ -11,6 +11,6 @@ class User < ApplicationRecord
   has_many :orders
   has_many :pet_alerts, dependent: :destroy
 
-  validates :first_name, :last_name, :photo, presence: true
+  validates :first_name, :last_name, presence: true
   has_one_attached :photo
 end

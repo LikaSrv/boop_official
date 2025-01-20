@@ -10,25 +10,6 @@ class UsersController < ApplicationController
     @user = current_user
   end
 
-  def update
-    @user = current_user
-    @user.first_name = user_params[:first_name]
-    @user.last_name = user_params[:last_name]
-    @user.photo.attach(user_params[:photo])
-    if @user.update!
-      redirect_to user_path(@user)
-    else
-      render new, alert: "Erreur lors de la modification de votre profil"
-    end
-
-  end
-
-  def destroy
-    @user = current_user
-    @user.destroy
-    redirect_to root_path
-  end
-
   private
 
   def user_params

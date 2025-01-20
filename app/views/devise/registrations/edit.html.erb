@@ -1,62 +1,67 @@
 <div>
   <i class="fa-solid fa-chevron-left text-primary m-4"></i><%= link_to 'Retour', :back, class:"text-decoration-none" %>
 </div>
-
-<div class="container mt-1 bg-custom">
-  <div class="row justify-content-center">
-    <div class="col-11 col-md-6 col-lg-5 col-xl-4">
-      <div class="form-devise">
+<div class="container mt-1">
+  <div class="row justify-content-center mx-2" style="width: 100%;">
+    <%# my profil %>
+    <div class="col-sm-11 col-md-11 col-lg-5 card_pro p-4 m-2 text-center d-flex flex-column justify-content-between">
+      <div>
+        <h2> <strong> Mon Profil </strong> </h2>
+        <% if @user.photo.key?%>
+          <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
+        <% else %>
+          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/profil-default.jpg", alt:"photo_profil_default", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover"%>
+        <% end %>
+        <p>Nom : <strong> <%=@user.first_name%> </strong></p>
+        <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
+        <p>Email : <strong> <%=@user.email%> </strong></p>
+        <p>("Vous ne pouvez pas changer votre email")</p>
+      </div>
+      <div class="text-end mt-5">
+        <%= link_to "Je souhaite supprimer mon compte",
+                              registration_path(resource_name),
+                              class: "text-danger text-center",
+                              data: { controller: "alert",
+                                      user_id: current_user.id,
+                                      action: "click->alert#deleteuser" } %>
+      </div>
+    </div>
+    <%# modify the profile %>
+    <div class="col-sm-11 col-md-11 col-lg-5 card_pro p-4 m-2">
+      <div class="mb-4 text-center">
         <i class="fa-solid fa-paw float-end text-primary"></i>
-        <h2>Mettre à jour mon profil </h2>
-
-        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-          <%= f.error_notification %>
-
-          <div class="form-inputs">
+        <h2>Modifier les informations</h2>
+      </div>
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put}) do |f| %>
+        <%= f.error_notification %>
+        <div class="form-inputs">
+          <div class="d-flex flex-row justify-content-between">
             <%= f.input :first_name, label: "Prénom" %>
             <%= f.input :last_name, label: "Nom" %>
-            <%= f.input :photo, as: :file, label: "Photo" %>
-            <%= f.input :email,
-                        required: true,
-                        autofocus: true,
-                        readonly: true,
-                        hint: "Vous ne pouvez pas changer votre email" %>
-
-            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-              <p>Actuellement en attente pour: <%= resource.unconfirmed_email %></p>
-            <% end %>
-
-            <%= f.input :password,
+          </div>
+          <%= f.input :photo, as: :file, label: "Photo" %>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <p>Actuellement en attente pour: <%= resource.unconfirmed_email %></p>
+          <% end %>
+          <%= f.input :password,
                         label: "Mot de passe",
                         hint: "Ne mettez rien si vous ne voulez pas changer",
                         required: false,
                         input_html: { autocomplete: "new-password" } %>
-            <%= f.input :password_confirmation,
+          <%= f.input :password_confirmation,
                         label: "Confirmation du mot de passe",
                         required: false,
                         input_html: { autocomplete: "new-password" } %>
-            <%= f.input :current_password,
+          <%= f.input :current_password,
                         label: "Mot de passe actuel",
                         hint: "Saisissez votre mot de passe actuel pour valider les changements",
                         required: true,
                         input_html: { autocomplete: "current-password" } %>
-          </div>
-
-          <div class="form-actions">
-            <%= f.button :submit, "Valider les changements",  class: "btn btn-primary" %>
-          </div>
-        <% end %>
-
-        <p class="mt-4">Je souhaite supprimer mon compte</p>
-        <div class="text-center">
-          <%= link_to "Supprimer mon compte",
-                            registration_path(resource_name),
-                            class: "text-danger",
-                            data: { controller: "alert",
-                                    user_id: current_user.id,
-                                    action: "click->alert#deleteuser" } %>
         </div>
-      </div>
+        <div class="form-actions text-center mt-4">
+          <%= f.button :submit, "Valider les changements",  class: "btn btn-primary" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

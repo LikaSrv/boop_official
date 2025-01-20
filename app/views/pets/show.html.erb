@@ -12,7 +12,7 @@
 </div>
 <div class="container">
   <%# General information %>
-  <div class="row d-flex justify-content-center">
+  <div class="row d-flex justify-content-center mx-2">
     <div class="col-lg-5 col-md-5 col-sm-10 card_pro" style="height: 400px;">
       <% if @pet.photo.present? %>
         <%= image_tag @pet.photo_url, class: "card-img-top w-100 h-100 object-fit-cover rounded"%>
@@ -151,18 +151,14 @@
   <div class="card_pro d-flex flex-column justify-content-between position-relative">
     <div data-controller="chart alert">
       <h3 class="text-center m-3">Le suivi de poids</h3>
-      <% if @weight_histories.empty?%>
-        <p class="text-center">Vous n'avez pas encore commencé le suivi de poids de <%=@pet.name%></p>
-      <% else %>
-        <div data-controller="chart" class="p-4">
-          <canvas id="myLine" data-chart-target="chart"
-                              data-label="<%= @weight_histories_labels.to_json %>"
-                              data-values="<%= @weight_histories_data.to_json %>"
-                              data-ids="<%= @weight_histories_ids.to_json %>"
-                              data-petId="<%= @pet.id %>">
-          </canvas>
-        </div>
-      <% end %>
+      <div data-controller="chart" class="p-4">
+        <canvas id="myLine" data-chart-target="chart"
+                  data-label="<%= @weight_histories_labels.to_json %>"
+                  data-values="<%= @weight_histories_data.to_json %>"
+                  data-ids="<%= @weight_histories_ids.to_json %>"
+                  data-petId="<%= @pet.id %>">
+        </canvas>
+      </div>
     </div>
     <div class="text-end m-3 position-absolute top-0 end-0" data-controller="alert">
       <%= link_to raw("<i class='fa-solid fa-weight-scale float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),

@@ -1,7 +1,11 @@
+<%# back %>
 <div>
-  <%= render "shared/back"%>
+  <%= link_to root_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
 </div>
 <div class="container">
+  <%# carousel %>
   <div id="carouselExampleSlidesOnly" class="carousel slide rounded-5" data-bs-ride="carousel" style="width: 100%; max-height: 71vh; overflow: hidden;">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -27,7 +31,9 @@
       </div>
     </div>
   </div>
+  <%# title %>
   <h1 class="text-center my-4">🐾 Ils cherchent une nouvelle famille 🏠</h1>
+  <%# search bar %>
   <div class="row justify-content-center">
     <div class="col-sm-8 my-3">
       <%= form_with url: animals_path, method: :get, class: "d-flex" do %>
@@ -40,6 +46,7 @@
       <% end %>
     </div>
   </div>
+  <%# all animals %>
   <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
     <% @animals.each do |animal| %>
       <a  href="<%=animal_path(animal)%>"

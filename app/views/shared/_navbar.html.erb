@@ -8,13 +8,13 @@
     </button>
     <div class="collapse navbar-collapse text-end" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto d-flex align-items-center">
-        <% if user_signed_in? %>
           <li class="nav-item active">
             <%= link_to "Accueil", root_path, class: "nav-link text-white", style:"font-size: 20px" %>
           </li>
           <li class="nav-item active">
             <%= link_to "Proposer un service", pricings_path, class: "nav-link text-white mx-4", style:"font-size: 20px" %>
           </li>
+
            <li class="nav-item active">
             <%= link_to "Adopter", animals_path, class: "nav-link text-white", style:"font-size: 20px" %>
           </li>
@@ -27,6 +27,7 @@
           <li class="nav-item active">
             <%= link_to "A propos", about_path, class: "nav-link text-white mx-4", style:"font-size: 20px" %>
           </li>
+           <% if user_signed_in? %>
           <li class="nav-item dropdown d-flex align-items-end flex-column">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if current_user.photo.key?%>

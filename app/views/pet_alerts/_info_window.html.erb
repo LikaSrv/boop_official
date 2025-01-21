@@ -1,0 +1,14 @@
+<a href="<%=pet_alerts_path(pet_alert)%>" class="text-decoration-none text-black">
+  <div>
+    <% if pet_alert.photo.present?%>
+      <%= image_tag pet_alert.photo_url, crop: :cover, width: 100%>
+    <% else %>
+      <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png",
+                    alt:"alert photo default",
+                    crop: :fill,
+                    width: 100)%>
+    <% end %>
+    <h4><%= pet_alert.title %></h4>
+    <p class="m-0 p-0"><%= pet_alert.location %></p>
+  </div>
+</a>

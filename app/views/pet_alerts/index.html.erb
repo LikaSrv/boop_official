@@ -1,7 +1,7 @@
 <%# back %>
 <div>
   <%= link_to root_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
-  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
 </div>
 <%# title %>
@@ -10,12 +10,13 @@
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
 <%# body  %>
-<div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
+<div class="grid-map">
+  <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
     <% @pet_alerts.each do |animal| %>
       <a  href="<%=pet_alert_path(animal)%>"
           style="text-decoration: none; color: black; margin: 20px">
         <div class="col">
-          <div  class="m-2 card_pro p-0 d-flex flex-column"
+          <div  class="card_pro p-0 d-flex flex-column"
                 style="width: 300px; aspect-ratio: 1/1; overflow: hidden;"
                 data-animal-index-target="animal"
                 data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
@@ -23,10 +24,10 @@
             <div class="p-3 text-center d-flex flex-row justify-content-center align-items-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
               <%=animal.title %>
               <% if animal.status == false %>
-                        <i class="fa-solid fa-circle-exclamation ms-1" style="font-size: 32px; color: #FF0035;"></i>
-                      <% else %>
-                        <i class="fa-solid fa-circle-check text-success ms-1" style="font-size: 32px"></i>
-                      <% end %>
+                <i class="fa-solid fa-circle-exclamation ms-1" style="font-size: 32px; color: #FF0035;"></i>
+              <% else %>
+                <i class="fa-solid fa-circle-check text-success ms-1" style="font-size: 32px"></i>
+              <% end %>
             </div>
             <!-- Image qui prend le reste de la place -->
             <div class="flex-grow-1" style="overflow: hidden;">
@@ -41,3 +42,10 @@
       </a>
     <% end %>
   </div>
+  <div class="map"
+        style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
+</div>

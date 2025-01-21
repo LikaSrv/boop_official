@@ -5,7 +5,7 @@ class Professional < ApplicationRecord
   validates :phone, numericality: { only_integer: true }, presence: true
   validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
 
-  # photo with cloudinary
+  # photo
   has_one_attached :photo
 
   # associations

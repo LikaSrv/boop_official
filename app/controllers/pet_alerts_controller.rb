@@ -7,6 +7,15 @@ class PetAlertsController < ApplicationController
 
   def index
     @pet_alerts = PetAlert.all.order(date: :desc)
+
+    @markers = @pet_alerts.geocoded.map do |pet_alert|
+      {
+        lat: pet_alert.latitude,
+        lng: pet_alert.longitude,
+        info_window_html: render_to_string(partial: "info_window", locals: {pet_alert: pet_alert})
+      }
+    end
+
   end
 
   def new
@@ -58,7 +67,7 @@ class PetAlertsController < ApplicationController
   private
 
   def pet_alert_params
-    params.require(:pet_alert).permit(:title, :description, :date, :location, :photo, :user_id, :contact, :status)
+    params.require(:pet_alert).permit(:title, :description, :date, :location, :photo, :user_id, :contact, :status, :latitude, :longitude)
   end
 
 end

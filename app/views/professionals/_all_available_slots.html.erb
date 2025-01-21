@@ -18,7 +18,7 @@
               <% availabilities.each do |availability| %>
                 <a href="<%= new_professional_appointment_path(professional) %>"
                   class="btn btn-outline-primary m-1"
-                  style="width: 22%;"
+                  style="width: 80px;"
                   data-time="<%= availability.start_time.to_time %>"
                   data-action="click->all-available-slots#confirm">
                   <%= availability.start_time.strftime("%H:%M") %>

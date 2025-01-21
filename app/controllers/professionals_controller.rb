@@ -94,6 +94,11 @@ class ProfessionalsController < ApplicationController
       @average_rating = @reviews.average(:rating).round.to_i
     end
     @professional.update(rating: @average_rating)
+    @opening_hours = OpeningHour.where(professional: @professional)
+    @marker = [{
+      lat: @professional.latitude,
+      lng: @professional.longitude
+    }]
   end
 
   def pro_show

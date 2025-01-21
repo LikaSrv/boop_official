@@ -110,8 +110,8 @@
         <%# carousel %>
         <div class="col-lg-7 col-md-7 col-sm-10">
           <% if @pet_alerts.empty?%>
-            <div class="text-center card_pro py-5">
-              <p>Pas d'annonces en cours 🤗</p>
+            <div class="bg-secondary p-4" style="border-radius: 12px; height: 300px; object-fit: contain;">
+              <p>Pas d'annonces en cours 🤗 </p>
             </div>
           <% else %>
             <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -123,7 +123,9 @@
                         <% if a.photo.present?%>
                           <%= image_tag(a.photo_url, alt: "photo of pet alert", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;") %>
                         <% else %>
-                          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
+                          <div class="bg-secondary p-4" style="border-radius: 12px; height: 300px; object-fit: contain;">
+                            <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
+                          </div>
                         <% end %>
                         <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.76);">
                           <div class="d-flex flex-row justify-content-center align-items-center">

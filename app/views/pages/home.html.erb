@@ -124,7 +124,7 @@
                           <%= image_tag(a.photo_url, alt: "photo of pet alert", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: cover;") %>
                         <% else %>
                           <div class="bg-secondary p-4" style="border-radius: 12px; height: 300px; object-fit: contain;">
-                            <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
+                            <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question%20(3).png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
                           </div>
                         <% end %>
                         <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.76);">

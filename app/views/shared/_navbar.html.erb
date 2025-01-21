@@ -1,33 +1,34 @@
-<div class="navbar navbar-expand-sm navbar-light navbar-lewagon">
+<div class="navbar navbar-expand-md navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand mx-4" do %>
-      <%= image_tag "https://res.cloudinary.com/dsbteudoz/image/upload/v1733824548/Boop_-_LOGO_FINAL_BLANC_qgyjvj.png" %>
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20BLANC.png" %>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse text-end" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto d-flex align-items-center">
-          <li class="nav-item active">
-            <%= link_to "Accueil", root_path, class: "nav-link text-white", style:"font-size: 20px" %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to "Proposer un service", pricings_path, class: "nav-link text-white mx-4", style:"font-size: 20px" %>
-          </li>
-
-           <li class="nav-item active">
-            <%= link_to "Adopter", animals_path, class: "nav-link text-white", style:"font-size: 20px" %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link text-white mx-4", style:"font-size: 20px" %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to "Contact", terms_path, class: "nav-link text-white ", style:"font-size: 20px" %>
-          </li>
-          <li class="nav-item active">
-            <%= link_to "A propos", about_path, class: "nav-link text-white mx-4", style:"font-size: 20px" %>
-          </li>
-           <% if user_signed_in? %>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Accueil", root_path, class: "nav-link text-white" %>
+          </h5>
+        </li>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Proposer un service", pricings_path, class: "nav-link text-white mx-3" %>
+          </h5>
+        </li>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Adopter", animals_path, class: "nav-link text-white" %>
+          </h5>
+        </li>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link text-white mx-3" %>
+          </h5>
+        </li>
+        <% if user_signed_in? %>
           <li class="nav-item dropdown d-flex align-items-end flex-column">
             <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <% if current_user.photo.key?%>

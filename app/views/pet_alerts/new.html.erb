@@ -13,10 +13,17 @@
     <%= simple_form_for @pet_alert do |p|%>
       <%= p.input :title, label: "Titre"%>
       <%= p.input :description, label: "Description", as: :text, input_html: {rows: 5}%>
-      <%= p.input :location, label: "Lieu constaté"%>
+      <%= p.input :location,
+                    label: "Lieu constaté",
+                    input_html: {value: @pet_alert.location, data: {address_autocomplete_target: "address"}, class: "d-none"},
+                    wrapper_html: {data: {controller: "address-autocomplete", address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+                  %>
       <%= p.input :date, label: "Date constatée", as: :string, input_html: { data: { controller: "datepicker" } } %>
       <%= p.input :contact, label: "Point de contact"%>
-      <%= p.file_field :photo, label: "Photo"%>
+      <div class="d-flex flex-column">
+        <%= p.label :photo, label: "Photo"%>
+        <%= p.file_field :photo, label: "Photo"%>
+      </div>
       <div class="text-center my-4">
         <%= p.button :submit, "Créer l'annonce", class: "btn btn-primary rounded rounded-4"%>
       </div>

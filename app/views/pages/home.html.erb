@@ -169,9 +169,9 @@
   <% if user_signed_in? %>
     <% if !@appointments.empty? %>
       <% @appointments.each do |appointment| %>
-        <a href="<%=professional_appointment_path(appointment.professional, appointment)%>" style="color: black; text-decoration: none;">
           <div class="d-flex justify-content-center">
-            <div class="card mt-1 mb-4 shadow card-appointment" >
+        <a href="<%=professional_appointment_path(appointment.professional, appointment)%>" style="color: black; text-decoration: none;">
+            <div class="card mt-1 mb-4 shadow card-appointment w-100" >
               <div class="card-header bg-primary rounded-bottom shadow-sm">
                 <div class="d-flex justify-content-around fw-bold">
                   <div class="d-flex align-items-center">
@@ -185,7 +185,7 @@
                 </div>
               </div>
               <div class="card-body d-flex justify-content-center align-items-center">
-                <%= image_tag url_for(appointment.professional.photo), alt:"Photo du professionnel", class:"small-rounded-circle"%>
+                <%= image_tag(appointment.professional.photo_url, alt:"Photo du professionnel", class:"small-rounded-circle", style: "object-fit: cover")%>
                 <div class="d-flex flex-column ms-4">
                   <p>
                     Rendez-vous avec : <%= appointment.professional.name%>
@@ -196,8 +196,8 @@
                 </div>
               </div>
             </div>
-          </div>
         </a>
+          </div>
       <% end %>
     <% else %>
       <div class="d-flex justify-content-center align-items-center">

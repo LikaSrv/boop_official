@@ -10,4 +10,5 @@ class AvailabilitiesController < ApplicationController
   def availability_params
     params.require(:availability).permit(:start_time, :status, :professional_id)
   end
+
 end

@@ -1,10 +1,11 @@
 class Professional < ApplicationRecord
 
   # validation
-  validates :name, :address, :email, :specialty, :description, :photo, :capacity, :interval, presence: true
+  validates :name, :address, :email, :specialty, :description, :capacity, :interval, presence: true
   validates :phone, numericality: { only_integer: true }, presence: true
   validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
-
+  validate :photo_presence, on: :create
+  
   # photo
   has_one_attached :photo
 
@@ -29,6 +30,12 @@ class Professional < ApplicationRecord
       tsearch: { prefix: true }
     }
 
+  private
+
+  def photo_presence
+    errors.add(:photo, "doit être ajoutée") unless photo.attached?
+  end
+
   # generate all availabilities for a professional
   def generate_availabilities(opening_hours, interval, date)
 
@@ -39,7 +46,7 @@ class Professional < ApplicationRecord
       start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
       end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
 
-      while start_time_morning < end_time_morning
+      while start_time_morning + interval.minutes < end_time_morning
         availability = Availability.new(
           professional: opening_hour.professional,
           start_time: start_time_morning,
@@ -54,7 +61,7 @@ class Professional < ApplicationRecord
       start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
       end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
 
-      while start_time_afternoon < end_time_afternoon
+      while start_time_afternoon + interval.minutes < end_time_afternoon
         availability = Availability.new(
           professional: opening_hour.professional,
           start_time: start_time_afternoon,

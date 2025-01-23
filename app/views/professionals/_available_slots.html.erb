@@ -1,9 +1,10 @@
 <div class="m-2">
-  <h4>Prochains rendez-vous disponibles</h4>
+  <div class="text-center"><h4>Prochains rendez-vous disponibles</h4></div>
   <% count = 0 %>
-    <% i = 0 %>
-    <% dates_count = @availabilities.pluck(:start_time).map { |date| date.to_date }.uniq.count %>
-    <% number_show_dates = dates_count > 8 ? 8 : dates_count %>
+  <% i = 0 %>
+  <% dates_count = @availabilities.pluck(:start_time).map { |date| date.to_date }.uniq.count %>
+  <% available_slots = [] %>
+  <% number_show_dates = dates_count > 8 ? 8 : dates_count %>
   <% while count < number_show_dates do  %>
     <% date = (DateTime.current.to_date + i).strftime('%d-%m-%Y')%>
     <% professional_closed_day = professional.opening_hours.where(closed: true).pluck(:day_of_week)%>
@@ -25,6 +26,7 @@
             data-appointment-selected-target="times"
             style="display: flex; flex-wrap: wrap;">
           <% availabilities.each do |availability| %>
+            <% available_slots << availability%>
             <a href="<%=new_professional_appointment_path(professional)%>"
               class="btn btn-outline-primary m-1
                     <%= 'd-none' if (@appointment_times.include?(availability.start_time.to_time) && @appointments.count==professional.capacity) || (Date.parse(date) == Date.today && availability.start_time.to_time < Time.now.strftime('%H:%M')) %>"
@@ -39,5 +41,8 @@
       <% count += 1%>
     <% end %>
     <% i += 1 %>
+  <% end %>
+   <% if available_slots.empty? %>
+      <p class="my-2" style="font-style: oblique; font-size: 12px;">Pas de créneaux disponibles pour ce professionnel dans les prochains 7 jours ouvrés.</p>
   <% end %>
 </div>

@@ -8,10 +8,11 @@ export default class extends Controller {
 
     flatpickr(this.element, {
 
-    enableTime: true,
-    noCalendar: true,
-    dateFormat: "H:i",
-    time_24hr: true
+      enableTime: true,
+      noCalendar: true,
+      dateFormat: "H:i",
+      time_24hr: true
+      
     })
 
   }

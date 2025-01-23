@@ -11,7 +11,7 @@
           <div class="card_pro grid-index align-items-start">
             <div>
               <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
-                <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", crop: :fill, style:"max-height: 200px" %>
+                <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 100%; aspect-ratio: 1.5; object-fit: cover" %>
                 <h2 class="text-center my-3"><%= professional.name %> </h2>
                 <div class="ms-2">
                   <p>Specialité : <%= professional.specialty %></p>

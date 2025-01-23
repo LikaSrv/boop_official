@@ -7,50 +7,36 @@
 <div class=" text-center mb-4 d-flex flex-row justify-content-center position-relative">
   <h1>Mon profil pro</h1>
   <i class="fa-solid fa-paw float-end text-primary"></i>
-  <a  href="#"
-      class="position-absolute top-0 end-0 mb-4 me-4 btn_custom"
-      data-controller="alert"
-      data-alert-professional-id="<%=@professional.id%>"
-      data-alert-user-id="<%= current_user.id %>"
-      data-action="click->alert#duplicateProfil"
-      >
-    Dupliquer mon profil
-  </a>
 </div>
 <%# form %>
 <%= simple_form_for @professional do |p|%>
   <div class="row justify-content-center">
-    <div class="card_pro col-lg-5 col-md-5 col-sm-10">
-      <%= image_tag(@professional.photo_url, class: "card-img-top object-fit-cover")%>
-      <div class="text-center" style="margin-top: 50px;">
-        <h5>Profession : <strong><%=@professional.specialty%></strong></h5>
-      </div>
-    </div>
-    <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+    <div class="card_pro col-lg-5 col-md-5 col-sm-10 text-center">
+      <h5 class="my-4">Profession : <strong><%=@professional.specialty%></strong></h5>
       <%# name %>
-      <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
-        <%= p.label :name, "Nom du professionnel :", class: "me-2 mb-0" %>
+      <div class="d-flex align-items-start justify-content-between" style="width: 100%;">
+        <%= p.label :name, "Nom du professionnel :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :name, label: false%>
         </div>
       </div>
       <%# phone %>
-      <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :phone, "Numéro de téléphone", class: "me-2 mb-0" %>
+      <div class="d-flex align-items-start justify-content-between">
+        <%= p.label :phone, "Numéro de téléphone", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :phone, label: false, class: "form-control" %>
         </div>
       </div>
       <%# email %>
-      <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :email, "Adresse email :", class: "me-2 mb-0" %>
+      <div class="d-flex align-items-start justify-content-between">
+        <%= p.label :email, "Adresse email :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :email, label: false, class: "form-control" %>
         </div>
       </div>
       <%# address %>
-      <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :address, "Adresse :", class: "me-2 mb-0" %>
+      <div class="d-flex align-items-start justify-content-between">
+        <%= p.label :address, "Adresse :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :address,
                     label: false,
@@ -61,29 +47,94 @@
       </div>
       <%# capacity %>
       <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0" %>
+        <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :capacity, label: false %>
         </div>
       </div>
+      <%# interval definition %>
+      <% intervals = [[30, '30 (0.5 heure)']] %>
+      <% 1.upto(8) do |i| %>
+        <% minutes = intervals.last[0] + 30 %>
+        <% hours = (minutes / 60.0).to_s + " heure#{'s' if minutes >= 60}" %>
+        <% intervals << [minutes, "#{minutes} (#{hours})"] %>
+      <% end %>
+      <%# interval %>
+      <div class="d-flex align-items-start justify-content-between">
+        <%= p.label :interval, "Durée d'un créneau de rendez-vous estimée (en minutes):", class: "me-2 mb-0 text-start" %>
+        <div style="width: 70%;">
+          <%= p.input :interval, label: false, collection: intervals.map { |minutes, display| [display, minutes] } %>
+        </div>
+      </div>
       <%# description %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :description, "Description :", class: "me-2 mb-0" %>
+        <%= p.label :description, "Description :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
           <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
         </div>
       </div>
       <%# photo %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :photo, "Photo :", class: "me-2 mb-0" %>
+        <%= p.label :photo, "Photo :", class: "me-2 mb-0 " %>
         <div style="width: 70%;">
-          <%= p.input :photo, label: false, value: @professional.photo %>
+          <% if !@professional.photo_url.nil? %>
+            <!-- Afficher une prévisualisation de la photo actuelle -->
+            <div class="mb-2">
+              <%= image_tag @professional.photo_url, alt: "Photo actuelle", class: "img-thumbnail", style: "max-width: 100%; aspect-ratio: 2; object-fit: cover" %>
+            </div>
+            <!-- Option pour changer la photo -->
+            <%= p.input :photo, label: "Changer la photo :", as: :file, input_html: { class: "form-control" } %>
+          <% else %>
+            <!-- Si aucune photo n'est associée -->
+            <%= p.input :photo, label: "Ajouter une photo :", as: :file, input_html: { class: "form-control" } %>
+          <% end %>
         </div>
       </div>
-      <%# submit button %>
-      <div class="text-center my-4">
-        <%= p.button :submit, "Enregistrer", class: "btn_custom" %>
-      </div>
     </div>
+    <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+      <h5 class="text-center" style="text-decoration: underline">Les horaires d'ouvertures</h5>
+      <p class="mb-4 text-center"style="font-size: 10px">S'il y a une fermeture d'une demie-journée, veuillez laisser le champs des heures vides.</p>
+      <table class="table table-bordered custom-white-table">
+        <thead class="table-secondary">
+          <tr>
+            <th scope="col" class="text-center">Jour</th>
+            <th scope="col" class="text-center">Heures du matin</th>
+            <th scope="col" class="text-center">Heures de l'après-midi</th>
+            <th scope="col" class="text-center">Fermé</th>
+          </tr>
+        </thead>
+        <%# opening hours %>
+        <%= p.fields_for :opening_hours, @professional.opening_hours.sort_by(&:day_of_week) do |h|%>
+          <tbody class="nested-fields">
+            <tr>
+              <td>
+                <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
+                <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_morning&.strftime('%H:%M') } %>
+                  <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_morning&.strftime('%H:%M') } %>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_afternoon&.strftime('%H:%M') } %>
+                  <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_afternoon&.strftime('%H:%M') } %>
+                </div>
+              </td>
+              <td class="text-center align-middle">
+                <%= h.check_box :closed %>
+                <%= h.label :closed, "Fermé", class: "ms-2" %>
+              </td>
+            </tr>
+          </tbody>
+        <% end %>
+      </table>
+    </div>
+  </div>
+  <%# submit button %>
+  <div class="text-center my-4">
+    <%= p.button :submit, "Enregistrer", class: "btn_custom", data: {controller: "alert", action: "click->alert#loading" } %>
   </div>
 <% end %>

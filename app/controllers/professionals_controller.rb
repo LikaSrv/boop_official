@@ -21,7 +21,7 @@ class ProfessionalsController < ApplicationController
     #   @reviews << Review.find_by(appointment: appointment.review)
     # end
 
-  # The `geocoded` scope filters only flats with coordinates
+    # The `geocoded` scope filters only flats with coordinates
     @markers = @professionals.geocoded.map do |professional|
       {
         lat: professional.latitude,
@@ -123,6 +123,60 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.find(params[:id])
 
     if @professional.update!(professional_params)
+      # Mettre à jour photo_url
+      if @professional.photo.attached?
+        photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
+        @professional.update!(photo_url: photo_url)
+      end
+
+      # Mettre à jour les coordonnées si l'adresse a changé
+      if @professional.saved_change_to_address?
+        @marker = [{
+          lat: @professional.latitude,
+          lng: @professional.longitude
+        }]
+      end
+
+      # Mettre à jour les créneaux de disponibilités
+      @professional.opening_hours.each do |opening_hour|
+        if opening_hour.previous_changes.present?
+
+          day_of_week = opening_hour.day_of_week
+
+          # search all availabilities for that day of the week without any appointments
+          availabilities = Availability.select do |availability|
+            availability.professional == @professional &&
+            availability.start_time.to_date.wday == day_of_week &&
+            availability.appointments.count == 0
+          end
+
+          # destroy all availabilities for the day
+          availabilities.each {|availability| availability.destroy}
+
+          if opening_hour.closed === false
+            # create new availabilities
+            today = Date.current
+            date =  today + (day_of_week - today.wday) % 7
+
+            while date <= today + 31
+              generate_availabilities_for_one_opening_hour(opening_hour, @professional.interval,  date )
+              date += 7
+            end
+
+            # looking for duplicate availabilities and delete the ones without appointments
+            duplicate_availabilities = Availability.where(professional: @professional)
+                                          .group_by(&:start_time)
+                                          .select { |_, availabilities| availabilities.size > 1 }
+            duplicate_availabilities.each do |_, availabilities|
+              availabilities.each do |availability|
+                availability.destroy if availability.appointments.count == 0
+              end
+          end
+        end
+      end
+
+
+       # Mettre à jour le statut des disponibilités
       availabilities = Availability.where(professional: @professional)
       availabilities.each do |availability|
         if availability.appointments.count < @professional.capacity
@@ -131,6 +185,8 @@ class ProfessionalsController < ApplicationController
           availability.update(status: false)
         end
       end
+    end
+
       redirect_to edit_professional_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
     else
       render :edit, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être mis à jour car tous les champs n\'ont pas été remplis'
@@ -143,7 +199,6 @@ class ProfessionalsController < ApplicationController
     redirect_to pro_index_user_path(current_user), notice: 'Votre profil professionnel a bien été supprimé'
   end
 
-
   # generate all availabilities for a professional
   def generate_availabilities(opening_hours, interval, date)
 
@@ -154,7 +209,7 @@ class ProfessionalsController < ApplicationController
       start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
       end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
 
-      while start_time_morning < end_time_morning
+      while start_time_morning + interval.minutes <= end_time_morning
         availability = Availability.new(
           professional: @professional,
           start_time: start_time_morning,
@@ -169,7 +224,7 @@ class ProfessionalsController < ApplicationController
       start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
       end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
 
-      while start_time_afternoon < end_time_afternoon
+      while start_time_afternoon + interval.minutes <= end_time_afternoon
         availability = Availability.new(
           professional: @professional,
           start_time: start_time_afternoon,
@@ -184,10 +239,47 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  # generate availabilities after editing opening hours
+  def generate_availabilities_for_one_opening_hour(opening_hour, interval, date)
+
+    start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
+    end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+
+    while start_time_morning + interval.minutes <= end_time_morning
+      availability = Availability.new(
+        professional: @professional,
+        start_time: start_time_morning,
+        status: 1
+      )
+      availability.save!
+
+      # Incrémenter start_time de l'intervalle
+      start_time_morning += interval.minutes
+    end
+
+    start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
+    end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+
+    while start_time_afternoon + interval.minutes <= end_time_afternoon
+      availability = Availability.new(
+        professional: @professional,
+        start_time: start_time_afternoon,
+        status: 1
+      )
+      availability.save!
+
+      # Incrémenter start_time de l'intervalle
+      start_time_afternoon += interval.minutes
+    end
+
+  end
+
   def edit_availibilities
     @professional = Professional.find(params[:id])
     @futur_availibilities = Availability.where("start_time >= ? AND professional_id = ? ", Time.now, @professional.id)
     @available_months = @futur_availibilities.pluck(:start_time).map { |date| date.month }.uniq
+    @opening_hours = OpeningHour.where(professional: @professional)
+
   end
 
   def update_availibilities
@@ -212,4 +304,14 @@ class ProfessionalsController < ApplicationController
                                           :interval,
                                           :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])
   end
+
+    # Méthode pour vérifier si une disponibilité est dans les horaires d'ouverture
+    def within_opening_hour?(opening_hour)
+      opening_hour.any? do |hour|
+        # Vérifie si l'heure de début de la disponibilité se trouve dans les heures d'ouverture du professionnel
+        (start_time >= hour.open_time_morning && start_time <= hour.close_time_morning) ||
+        (start_time >= hour.open_time_afternoon && start_time <= hour.close_time_afternoon)
+      end
+    end
+
 end

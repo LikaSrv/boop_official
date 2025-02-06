@@ -3,24 +3,24 @@
     <div class="p-4 text-center">
       <div class="row">
         <%# my profil %>
-        <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
-          <h2> <strong> Mon Profil </strong> </h2>
+        <div class="col card_pro p-4 m-2 text-center" style="width: 47%; ">
+          <h2> Mon profil </h2>
           <% if @user.photo.key?%>
             <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
           <% else %>
             <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/profil-default.jpg", alt:"photo_profil_default", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover"%>
           <% end %>
-          <p>Nom : <strong> <%=@user.first_name%> </strong></p>
-          <p>Prénom : <strong> <%=@user.last_name%> </strong></p>
-          <p>Email : <strong> <%=@user.email%> </strong></p>
+          <p> <strong> Nom : </strong><%=@user.first_name%> </p>
+          <p><strong>  Prénom : </strong> <%=@user.last_name%> </p>
+          <p><strong> Email : </strong> <%=@user.email%> </p>
           <div>
-            <%= link_to "Modifier mon profil", edit_user_registration_path(current_user), class: "btn btn-primary my-4" %>
+            <%= link_to "Modifier mon profil", edit_user_registration_path(current_user), class: "btn btn-primary rounded-3 my-4" %>
           </div>
         </div>
         <%# my pets %>
         <div class="col card_pro p-4 m-2 text-center" style="width: 47%;">
           <div class="d-flex flex-row justify-content-center">
-            <h2 class="mx-3"> <strong> Mes animaux </strong> </h2>
+            <h2 class="mx-3"> Mes animaux </h2>
             <a href="<%=new_user_pet_path(current_user)%>" class="btn btn-primary rounded-circle shadow object-fit-cover" >
               <i class="fa-solid fa-plus"></i>
             </a>
@@ -48,7 +48,7 @@
     </div>
     <%# my appointments %>
     <div class="row card_pro p-4 mx-3 text-center">
-      <h2 class="mb-3"> <strong> Mes rendez-vous </strong> </h2>
+      <h2 class="mb-3"> Mes rendez-vous </h2>
       <% if @appointments.empty? %>
         <div class="text-center">
           <p >Vous n'avez pas de rendez-vous</p>
@@ -58,7 +58,7 @@
         <% @appointments.each do |a| %>
           <div class="col-lg-4 col-md-12 col-12">
             <a href="<%=professional_appointment_path(a.professional, a)%>" style="text-decoration: none; color: black;">
-              <div class="card_pro p-4 m-1 text-start" style="background-color: #f7e6d4;">
+              <div class="card_pro p-4 m-1 text-start" style="background-color: white;">
                 <div class="text-end">
                   <div >
                     <p><%= a.start_time.strftime("%d/%m/%Y")%></p>

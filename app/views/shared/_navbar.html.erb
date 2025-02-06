@@ -1,7 +1,7 @@
 <div class="navbar navbar-expand-md navbar-light navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "/", class: "navbar-brand mx-4" do %>
-      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20BLANC.png" %>
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20RVB.png" %>
     <% end %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,22 +10,22 @@
       <ul class="navbar-nav me-auto d-flex align-items-center">
         <li class="nav-item active">
           <h5>
-            <%= link_to "Accueil", root_path, class: "nav-link text-white" %>
+            <%= link_to "Accueil", root_path, class: "nav-link text-white" , style: "color: #292F36 !important" %>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Proposer un service", pricings_path, class: "nav-link text-white mx-3" %>
+            <%= link_to "Proposer un service", pricings_path, class: "nav-link mx-3", style: "color: #292F36" %>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Adopter", animals_path, class: "nav-link text-white" %>
+            <%= link_to "Adopter", animals_path, class: "nav-link", style: "color: #292F36" %>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link text-white mx-3" %>
+            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link mx-3", style: "color: #292F36" %>
           </h5>
         </li>
         <% if user_signed_in? %>
@@ -46,8 +46,8 @@
             </div>
           </li>
         <% else %>
-          <li class="nav-item btn btn-light rounded rounded-4">
-            <%= link_to "Se connecter", new_user_session_path, class: "nav-link text-dark" %>
+          <li class="nav-item">
+            <%= link_to "Se connecter", new_user_session_path, class: "btn btn-primary rounded rounded-4 text-dark" %>
           </li>
         <% end %>
       </ul>

@@ -1,11 +1,24 @@
 <div class="container-all">
   <div class="banner">
-    <div class="container text-end">
-      <h1>Adopter avec amour,</h1>
-      <h1>Accompagner avec soin.</h1>
-      <%= link_to animals_path, class: "hoveredbutton btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
-        <span class="icon-custom">🐾</span> Je veux adopter !
-      <%end%>
+    <div class="row">
+      <div class="container text-end col">
+        <h1>Adopter avec amour,</h1>
+        <h1>Accompagner avec soin.</h1>
+        <%= link_to animals_path, class: "hoveredbutton btn btn-primary btn-spa text-white p-3 mt-4 text-end shadow", style:"border-radius: 32px;" do%>
+          <span class="icon-custom">🐾</span> Je veux adopter !
+        <%end%>
+      </div>
+      <div class="col">
+        <div class="d-flex flex-row">
+          <div class="card_banner" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXOgdBLNYmiz98W3mohcIny2sOyvKC_Pgfkw&s); background-size: cover;">
+          </div>
+          <div class="card_banner m-4" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXOgdBLNYmiz98W3mohcIny2sOyvKC_Pgfkw&s); background-size: cover;">
+          </div>
+          <div class="card_banner" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXOgdBLNYmiz98W3mohcIny2sOyvKC_Pgfkw&s); background-size: cover;">
+          </div>
+
+        </div>
+      </div>
     </div>
   </div>
   <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
@@ -72,8 +85,8 @@
     </div>
   </div>
   <%# animals autoscroll %>
-  <h3 class="mt-5">Ils attendent une maison...</h3>
-  <div class="d-flex flex-row custom-scroll" style="overflow-x: scroll; white-space: nowrap; margin: 0px !important;" data-controller="autoscroll" data-autoscroll-target="autoscrollContainer">
+  <div class="d-flex flex-row custom-scroll bg-primary" style="overflow-x: scroll; white-space: nowrap; margin: 0px !important;" data-controller="autoscroll" data-autoscroll-target="autoscrollContainer">
+    <h3 class="mt-5">Ils attendent un foyer...</h3>
     <% @animals.each do |animal| %>
       <a  href="<%=animal_path(animal)%>"
           style="text-decoration: none; color: black; margin: 20px">
@@ -83,7 +96,7 @@
                 data-animal-index-target="animal"
                 data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
             <!-- En-tête -->
-            <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
+            <div class="p-3 text-center" style="border-radius: 8px 8px 0 0; background-color: #55868C;">
               <%=animal.name %>
             </div>
             <!-- Image qui prend le reste de la place -->
@@ -104,7 +117,7 @@
       <div class="row d-flex align-items-center justify-content-around" >
         <%# alert image %>
         <div class="d-flex flex-column justify-content-center align-items-center col-lg-3 col-md-3 col-sm-7 p-3">
-          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/caution-sign.png", alt:"alert", class:"alert_image m-4")%>
+          <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//pet_alert.jpg", alt:"alert", class:"alert_image m-4")%>
           <a href="<%=new_pet_alert_path%>" class="btn_custom"> Publier une annonce </a>
         </div>
         <%# carousel %>
@@ -127,7 +140,7 @@
                             <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question%20(3).png", alt:"pet alert default", class: "d-block w-100", style: "border-radius: 12px; height: 300px; object-fit: contain;")%>
                           </div>
                         <% end %>
-                        <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(105, 103, 103, 0.76);">
+                        <div class="carousel-caption d-none d-md-block card text-light" style="border-radius: 20px;background: rgba(73, 54, 87, 0.55);">
                           <div class="d-flex flex-row justify-content-center align-items-center">
                             <h5><strong><%=a.title%></strong></h5>
                             <% if a.status == false %>
@@ -164,56 +177,4 @@
       </div>
     </div>
   </div>
-  <%# appointments to come %>
-  <h3 class="mt-5 mb-4">Vos futurs rendez-vous</h3>
-  <% if user_signed_in? %>
-    <% if !@appointments.empty? %>
-      <% @appointments.each do |appointment| %>
-          <div class="d-flex justify-content-center">
-        <a href="<%=professional_appointment_path(appointment.professional, appointment)%>" style="color: black; text-decoration: none;">
-            <div class="card mt-1 mb-4 shadow card-appointment w-100" >
-              <div class="card-header bg-primary rounded-bottom shadow-sm">
-                <div class="d-flex justify-content-around fw-bold">
-                  <div class="d-flex align-items-center">
-                    <i class="fa-regular fa-calendar-days"></i>
-                    <p class="ms-3"><%= appointment.start_time.strftime("%d/%m/%Y") %></p>
-                  </div>
-                  <div class="d-flex align-items-center">
-                    <i class="fa-regular fa-clock ms-5"></i>
-                    <p class="ms-3"><%= appointment.start_time.strftime("%H:%M") %></p>
-                  </div>
-                </div>
-              </div>
-              <div class="card-body d-flex justify-content-center align-items-center">
-                <%= image_tag(appointment.professional.photo_url, alt:"Photo du professionnel", class:"small-rounded-circle", style: "object-fit: cover")%>
-                <div class="d-flex flex-column ms-4">
-                  <p>
-                    Rendez-vous avec : <%= appointment.professional.name%>
-                  </p>
-                  <p>
-                    Lieu : <%= appointment.professional.address%>
-                  </p>
-                </div>
-              </div>
-            </div>
-        </a>
-          </div>
-      <% end %>
-    <% else %>
-      <div class="d-flex justify-content-center align-items-center">
-        <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
-          <p class="text-center">Vous n'avez pas de rendez-vous à venir.</p>
-          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/owner-playing-with-pet-dog.png")%>
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <div class="d-flex justify-content-center align-items-center">
-      <div class="d-flex flex-column justify-content-center align-items-center", style="width: 50%;">
-        <p class="text-center">Veuillez vous connecter pour voir vos rendez-vous.</p>
-        <%= link_to "Se connecter", new_user_session_path, class: "text-center btn_custom"%>
-        <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/business-solution-removebg-preview.png")%>
-      </div>
-    </div>
-  <% end %>
 </div>

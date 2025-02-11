@@ -1,0 +1,24 @@
+.card_animal_container {
+  overflow-x: hidden;
+  white-space: nowrap;
+  width: 65%;
+  margin: 0px !important
+}
+
+.card_animal_home_page {
+  border: 1px solid rgb(213, 204, 204);
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px;
+  box-shadow: 4px 4px 2px rgb(239, 166, 144);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+  aspect-ratio: 2/3;
+  width: 250px;
+
+}
+
+.card_animal_home_page:hover {
+  transform: translateY(-5px);
+  box-shadow: 6px 6px 4px rgb(239, 166, 144);
+}

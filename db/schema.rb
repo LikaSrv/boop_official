@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_21_102022) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_11_183552) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -95,6 +95,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_21_102022) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["professional_id"], name: "index_availabilities_on_professional_id"
+  end
+
+  create_table "blogs", force: :cascade do |t|
+    t.string "title"
+    t.string "meta_title"
+    t.string "text1"
+    t.string "photo1"
+    t.string "text2"
+    t.string "photo2"
+    t.string "text3"
+    t.string "photo3"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "opening_hours", force: :cascade do |t|

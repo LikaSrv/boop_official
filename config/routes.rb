@@ -52,4 +52,6 @@ Rails.application.routes.draw do
 
   resources :pet_alerts
 
+  resources :blogs, only: [:index, :show]
+
 end

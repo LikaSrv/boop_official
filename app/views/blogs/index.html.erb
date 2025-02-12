@@ -1,0 +1,36 @@
+<div class="blog_banner d-flex justify-content-end" >
+  <div class="" style="width: fit-content">
+    <h1 class= "text-center m-4">Blogs</h1>
+    <h1 class= "text-center m-4">Animaux et compagnies</h1>
+  </div>
+</div>
+<div class="row my-5 w-75 mx-auto d-flex flex-column flex-md-row justify-content-center align-items-center">
+  <div class="col-lg-6 col-md-6 col-sm-8">
+    <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//photo_blog.png"
+       alt="chien blog"
+       style="object-fit: cover; width: 100%;"
+       >
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-8 text-center">
+    <h3 class="my-4">Monde Animal : Adoption, Santé et Bien-être</h3>
+    <p class="my-2">Découvrez Monde Animal, votre guide complet pour l'adoption, la santé et les rendez-vous médicaux de vos compagnons à quatre pattes. Conseils d'experts, témoignages et actualités pour des animaux heureux et en bonne santé.</p>
+  </div>
+</div>
+<div class="px-4 row justify-content-center align-items-center" style="overflow-x: hidden;  white-space: nowrap;">
+  <% if @blogs.empty?%>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//business-solution-removebg-preview.png" alt="not found" >
+      <p>Nous n'avons pas encore de blogs.</p>
+    </div>
+  <% else %>
+    <% @blogs.each do |blog|%>
+      <a href="<%=blog_path(blog)%>" style="decoration: none; underline: none; color: black; width: fit-content;">
+        <div class="card_blog p-4 d-flex flex-column justify-content-start align-items-center">
+          <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg", alt:"chat", style:"width: 50%")%>
+          <h5 class="my-4" style="text-wrap: wrap;"><%=blog.title%></h5>
+          <p style="text-wrap: wrap;" ><%= truncate(blog.intro, length: 150, separator: ' ', omission: '...') %></p>
+        </div>
+      </a>
+    <% end %>
+  <% end %>
+</div>

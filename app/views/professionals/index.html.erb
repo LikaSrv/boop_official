@@ -4,25 +4,27 @@
     <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
   <%# search zone %>
-  <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-    <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
-      <div class="d-flex align-items-center search-form-control form-group w-form">
-        <%= text_field_tag :query,
+  <div class="my-5">
+    <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
+      <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
+        <div class="d-flex align-items-center search-form-control form-group w-form">
+          <%= text_field_tag :query,
               params[:query],
               class: "form-control search-bar bg-secondary ps-5 w-75",
               placeholder: "Rechercher un service..."
           %>
-        <%= text_field_tag :query,
+          <%= text_field_tag :query,
               params[:query],
               class: "form-control search-bar bg-secondary ps-5 w-25",
               placeholder: "Ville..."
           %>
-        <div>
-          <%= submit_tag "Rechercher", class: "btn_custom search-bar" %>
+          <div>
+            <%= submit_tag "Rechercher", class: "btn_custom search-bar" %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 <%# body %>
 <div class="container-all">

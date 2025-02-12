@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_11_183552) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -108,6 +108,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_11_183552) do
     t.string "photo3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "intro"
+    t.string "conclusion"
+    t.string "metaPhoto"
   end
 
   create_table "opening_hours", force: :cascade do |t|

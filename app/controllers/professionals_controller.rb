@@ -1,10 +1,9 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
+  helper_method :isOpened?, :availabilitiesOfTheDay
 
   def index
     # search
-    # @professionals = Professional.search_by_specialty_address_and_name(params[:query])
-
     if params[:query].present?
       @professionals = Professional.search_by_specialty_address_and_name(params[:query])
     elsif params[:specialty].present?
@@ -14,12 +13,6 @@ class ProfessionalsController < ApplicationController
     end
 
     @reviews = Review.where(professional: @professionals)
-    @availabilities = Availability.where(professional: @professionals, status: true).select { |availability| availability.start_time > DateTime.now }
-
-    # @reviews = []
-    # @appointments.each do |appointment|
-    #   @reviews << Review.find_by(appointment: appointment.review)
-    # end
 
     # The `geocoded` scope filters only flats with coordinates
     @markers = @professionals.geocoded.map do |professional|
@@ -29,6 +22,7 @@ class ProfessionalsController < ApplicationController
         info_window_html: render_to_string(partial: "info_window", locals: {professional: professional})
       }
     end
+
   end
 
   def pro_index
@@ -53,9 +47,6 @@ class ProfessionalsController < ApplicationController
     if @professional.save!
       photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
       @professional.update!(photo_url: photo_url)
-      (0..31).each do |i|
-        generate_availabilities(@professional.opening_hours, @professional.interval, Date.current + i)
-      end
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
@@ -83,8 +74,8 @@ class ProfessionalsController < ApplicationController
   def show
     @professional = Professional.find(params[:id])
 
-    @availabilities = Availability.where(professional: @professional, status: true).select { |availability| availability.start_time > DateTime.now }
-    @available_months = @availabilities.pluck(:start_time).map { |date| date.month }.uniq
+    # @availabilities = Availability.where(professional: @professional, status: true).select { |availability| availability.start_time > DateTime.now }
+    # @available_months = @availabilities.pluck(:start_time).map { |date| date.month }.uniq
 
     @reviews = Review.where(professional: @professional)
     @appointment = Appointment.new
@@ -198,6 +189,59 @@ class ProfessionalsController < ApplicationController
     @professional.destroy
     redirect_to pro_index_user_path(current_user), notice: 'Votre profil professionnel a bien été supprimé'
   end
+
+  # if a professional is closed on a specific day
+  def isOpened? (professional, date)
+    opening_hour = OpeningHour.where(professional: professional, day_of_week: date.wday, closed: false)
+    if opening_hour.empty?
+      return false
+    else
+      return true
+    end
+  end
+
+  # if a professional is available at a specific time
+  def isAvailable? (professional, date, start_time)
+    appointment = Appointment.where(professional: professional, start_time: start_time)
+    if appointment.empty?
+      return true
+    else
+      return false
+    end
+  end
+
+  # return all availabilities of a professional for a specific day
+  def availabilitiesOfTheDay (professional, date)
+    opening_time_slots = []
+    if isOpened?(professional, date)
+      opening_hour = OpeningHour.find_by(professional: professional, day_of_week: date.wday)
+
+      start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
+      end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+
+      while start_time_morning + professional.interval.minutes <= end_time_morning
+        if isAvailable?(professional, date, start_time_morning)
+          opening_time_slots << start_time_morning
+          # Incrémenter start_time de l'intervalle
+        end
+        start_time_morning += professional.interval.minutes
+      end
+
+      start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
+      end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+
+      while start_time_afternoon + professional.interval.minutes <= end_time_afternoon
+        if isAvailable?(professional, date, start_time_afternoon)
+        opening_time_slots << start_time_afternoon
+        end
+        # Incrémenter start_time de l'intervalle
+        start_time_afternoon += professional.interval.minutes
+      end
+    end
+    return opening_time_slots
+  end
+
+
 
   # generate all availabilities for a professional
   def generate_availabilities(opening_hours, interval, date)

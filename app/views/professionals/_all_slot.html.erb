@@ -3,11 +3,10 @@
     <% selected_date_availabilities = Availability.where("DATE(start_time) = ? AND professional_id = ?", Date.parse(@selected_date), @professional.id)%>
     <div data-appointment-target="times">
       <% if !@open_days.include?(Date.parse(@selected_date).wday) %>
-          <p class="m-2">Jour fermé </p>
-        <% end %>
+        <p class="m-2">Jour fermé </p>
+      <% end %>
       <% selected_date_availabilities.each do |availability| %>
-
-          <%@appointments = Appointment.where(start_time: availability.start_time, professional: professional)%>
+        <%@appointments = Appointment.where(start_time: availability.start_time, professional: professional)%>
         <% if (@appointments.empty?) %>
           <%= link_to availability.start_time.strftime('%H:%M'),
                         pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),

@@ -81,20 +81,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
     t.datetime "updated_at", null: false
     t.string "reason"
     t.bigint "pet_id", null: false
-    t.bigint "availability_id", null: false
-    t.index ["availability_id"], name: "index_appointments_on_availability_id"
     t.index ["pet_id"], name: "index_appointments_on_pet_id"
     t.index ["professional_id"], name: "index_appointments_on_professional_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
-  end
-
-  create_table "availabilities", force: :cascade do |t|
-    t.bigint "professional_id", null: false
-    t.datetime "start_time"
-    t.boolean "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["professional_id"], name: "index_availabilities_on_professional_id"
   end
 
   create_table "blogs", force: :cascade do |t|
@@ -247,11 +236,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "appointments", "availabilities"
   add_foreign_key "appointments", "pets"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
-  add_foreign_key "availabilities", "professionals"
   add_foreign_key "opening_hours", "professionals"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"

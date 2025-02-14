@@ -1,0 +1,34 @@
+  <%# back button %>
+<div>
+  <%= link_to blogs_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
+</div>
+<h1 class="text-center my-4"><%=@blog.title%></h1>
+<p class="mx-5 text-center"><%=@blog.intro%></p>
+<img src="<%=@blog.metaPhoto%>" alt="meta photo chat" class="img-fluid mx-auto d-block my-4" style="width: 80%; height: 60vh; object-fit: cover; border-radius: 20px;">
+<div class="row w-100 d-flex justify-content-center align-items-center">
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <p class="mx-5"><%=@blog.text1%></p>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <img src="<%=@blog.photo1%>" alt="photo blog" class="img-fluid mx-auto d-block my-4" style="width: 70%; height: auto; border-radius: 20px;">
+  </div>
+</div>
+<div class="row w-100 d-flex justify-content-center align-items-center">
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <img src="<%=@blog.photo2%>" alt="photo blog" class="img-fluid mx-auto d-block my-4" style="width: 70%; height: auto; border-radius: 20px;">
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <p class="mx-5"><%=@blog.text2%></p>
+  </div>
+</div>
+<div class="row w-100 d-flex justify-content-center align-items-center">
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <p class="mx-5"><%=@blog.text3%></p>
+  </div>
+  <div class="col-lg-6 col-md-6 col-sm-12">
+    <img src="<%=@blog.photo3%>" alt="photo blog" class="img-fluid mx-auto d-block my-4" style="width: 70%; height: auto; border-radius: 20px;">
+  </div>
+</div>
+<p class="mx-5"><%=@blog.conclusion%></p>

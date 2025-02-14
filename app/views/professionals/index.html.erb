@@ -1,34 +1,65 @@
 <div>
+  <%# back button %>
   <%= link_to root_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
-  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
-</div>
-<div class="container-all">
-  <div class="grid-map">
-    <div class="d-flex flex-column justify-content-center">
-      <% @professionals.each do |professional|%>
-        <div class="card_pro_index">
-          <div class="card_pro grid-index align-items-start">
-            <div>
-              <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
-                <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 100%; aspect-ratio: 1.5; object-fit: cover" %>
-                <h2 class="text-center my-3"><%= professional.name %> </h2>
-                <div class="ms-2">
-                  <p>Specialité : <%= professional.specialty %></p>
-                  <p>Adresse : <%= professional.address %></p>
-                </div>
-                  <p class="text-start mx-2 mt-2" style="word-wrap: break-word; word-break: break-word; white-space: normal;"><%= professional.description.slice(0,200) %>...</p>
-              </a>
-            </div>
-            <%= render "available_slots", professional: professional %>
+  <%# search zone %>
+  <div class="my-5">
+    <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
+      <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
+        <div class="d-flex align-items-center search-form-control form-group w-form">
+          <%= text_field_tag :query,
+              params[:query],
+              class: "form-control search-bar bg-secondary ps-5 w-75",
+              placeholder: "Rechercher un service..."
+          %>
+          <%= text_field_tag :query,
+              params[:query],
+              class: "form-control search-bar bg-secondary ps-5 w-25",
+              placeholder: "Ville..."
+          %>
+          <div>
+            <%= submit_tag "Rechercher", class: "btn_custom search-bar" %>
           </div>
         </div>
-      <%end%>
+      </div>
+    <% end %>
+  </div>
+</div>
+<%# body %>
+<div class="container-all">
+  <% if @professionals.empty?%>
+    <div class="d-flex flex-column justify-content-center align-items-center">
+      <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//business-solution-removebg-preview.png" alt="not found" >
+      <p>Nous n'avons pas encore de professionnels qui correspondent à vos recherches.</p>
     </div>
-    <div class="map" style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
+  <% else %>
+    <div class="grid-map">
+      <div class="d-flex flex-column justify-content-center">
+        <% @professionals.each do |professional|%>
+          <div class="card_pro_index">
+            <div class="card_pro grid-index align-items-start">
+              <div>
+                <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
+                  <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 100%; aspect-ratio: 1.5; object-fit: cover" %>
+                  <h2 class="text-center my-3"><%= professional.name %> </h2>
+                  <div class="ms-2">
+                    <p>Specialité : <%= professional.specialty %></p>
+                    <p>Adresse : <%= professional.address %></p>
+                  </div>
+                  <p class="text-start mx-2 mt-2" style="word-wrap: break-word; word-break: break-word; white-space: normal;"><%= professional.description.slice(0,200) %>...</p>
+                </a>
+              </div>
+              <%= render "index_slots", professional: professional %>
+            </div>
+          </div>
+        <%end%>
+      </div>
+      <div class="map" style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
         data-controller="map"
         data-map-markers-value="<%= @markers.to_json %>"
         data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>

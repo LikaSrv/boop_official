@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_21_102022) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -81,20 +81,25 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_21_102022) do
     t.datetime "updated_at", null: false
     t.string "reason"
     t.bigint "pet_id", null: false
-    t.bigint "availability_id", null: false
-    t.index ["availability_id"], name: "index_appointments_on_availability_id"
     t.index ["pet_id"], name: "index_appointments_on_pet_id"
     t.index ["professional_id"], name: "index_appointments_on_professional_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
-  create_table "availabilities", force: :cascade do |t|
-    t.bigint "professional_id", null: false
-    t.datetime "start_time"
-    t.boolean "status"
+  create_table "blogs", force: :cascade do |t|
+    t.string "title"
+    t.string "meta_title"
+    t.string "text1"
+    t.string "photo1"
+    t.string "text2"
+    t.string "photo2"
+    t.string "text3"
+    t.string "photo3"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["professional_id"], name: "index_availabilities_on_professional_id"
+    t.string "intro"
+    t.string "conclusion"
+    t.string "metaPhoto"
   end
 
   create_table "opening_hours", force: :cascade do |t|
@@ -231,11 +236,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_21_102022) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "appointments", "availabilities"
   add_foreign_key "appointments", "pets"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
-  add_foreign_key "availabilities", "professionals"
   add_foreign_key "opening_hours", "professionals"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"

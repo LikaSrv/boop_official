@@ -1,0 +1,32 @@
+<div class="m-2">
+  <div class="text-center">
+    <h4>Prochains rendez-vous disponibles</h4>
+  </div>
+  <% i = 0 %>
+  <% days_displayed = 0 %> <!-- Variable pour compter les jours affichés -->
+  <% while days_displayed < 7 %>
+    <% date = DateTime.current.to_date + i %>
+    <% if isOpened?(professional, date) %>
+      <div class="nav-item dropdown" data-controller="appointment-selected" data-appointment-selected-api-key-value="<%= professional.id %>">
+        <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
+          <%= date.strftime('%d-%m-%Y') %>
+        </a>
+        <div class="d-none d-flex justify-content-center mx-2"
+             data-appointment-selected-target="times"
+             style="display: flex; flex-wrap: wrap;">
+          <% availabilitiesOfTheDay(professional, date).each do |a| %>
+            <a href="<%= new_professional_appointment_path(professional) %>"
+               class="btn btn-outline-primary m-1"
+               style="width: 22%;"
+               data-time="<%= a.to_time %>"
+               data-action="click->appointment-selected#confirm">
+              <%= a.strftime("%H:%M") %>
+            </a>
+          <% end %>
+        </div> <!-- Fermeture du div times -->
+      </div> <!-- Fermeture du div nav-item dropdown -->
+      <% days_displayed += 1 %> <!-- Incrémentation du nombre de jours affichés -->
+    <% end %>
+    <% i += 1 %> <!-- On continue d'incrémenter i pour passer au jour suivant -->
+  <% end %>
+</div> <!-- Fermeture du div principal m-2 -->

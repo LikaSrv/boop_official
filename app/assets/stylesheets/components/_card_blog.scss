@@ -1,0 +1,43 @@
+.card_blog {
+  border: 1px solid rgb(213, 204, 204);
+  border-radius: 8px;
+  background-color: white;
+  margin: 8px;
+  box-shadow: 4px 4px 2px rgb(239, 166, 144);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  max-width: 300px; /* Ajuste selon la taille souhaitée */
+  min-height: 400px; /* Pour uniformiser la hauteur */
+}
+
+.card_blog h5 {
+  max-width: 100%;
+  word-wrap: break-word;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.card_blog p {
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Limite à 4 lignes */
+  line-clamp: 4; /* Limite à 4 lignes */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  text-align: justify;
+  line-height: 1.4em;
+}
+
+.card_blog:hover {
+  transform: translateY(-5px);
+  box-shadow: 6px 6px 4px rgb(239, 166, 144);
+}

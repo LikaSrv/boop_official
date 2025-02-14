@@ -26,7 +26,7 @@
 }
 
 .alert_image {
-  width: 90%;
+  width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
   animation: zoomInOut 4s ease-in-out infinite; /* Définir l'animation */
@@ -35,12 +35,12 @@
 /* Définir l'animation zoom */
 @keyframes zoomInOut {
   0% {
-    transform: scale(1); /* À l'état normal */
+    transform: scale(0.9); /* À l'état normal */
   }
   50% {
-    transform: scale(1.5); /* Zoom in */
+    transform: scale(1); /* Zoom in */
   }
   100% {
-    transform: scale(1); /* Zoom out */
+    transform: scale(0.9); /* Zoom out */
   }
 }

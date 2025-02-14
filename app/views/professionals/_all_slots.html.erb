@@ -1,0 +1,26 @@
+<%= turbo_frame_tag :all_slots do %>
+  <div class="mx-5">
+    <div data-appointment-target="times">
+      <% if !@open_days.include?(Date.parse(@selected_date).wday) %>
+        <p class="m-2">Jour fermé </p>
+      <% end %>
+      <% allTimeSlotsOfTheDay(professional, @selected_date.to_date).each do |slot| %>
+        <%@appointments = Appointment.where(start_time: slot, professional: professional)%>
+        <% if (@appointments.empty?) %>
+          <%= link_to slot.strftime('%H:%M'),
+                        pro_show_user_path(current_user, professional,date: @selected_date, appointment: nil),
+                        class:"btn btn-outline-primary m-2",
+                        data: {time: slot.strftime('%H:%M')}%>
+        <% else %>
+          <%= link_to slot.strftime('%H:%M'),
+                        pro_show_user_path(current_user, professional,date: @selected_date, appointments: @appointments.map { |appointment| appointment.id }),
+                        class:"btn btn-outline-primary m-2 btn-info text-dark",
+                        data: {time: slot.strftime('%H:%M'),
+                              turbo: false}%>
+        <% end %>
+      <% end %>
+    </div>
+
+
+  </div>
+<% end %>

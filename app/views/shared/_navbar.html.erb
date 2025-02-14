@@ -10,22 +10,32 @@
       <ul class="navbar-nav me-auto d-flex align-items-center">
         <li class="nav-item active">
           <h5>
-            <%= link_to "Accueil", root_path, class: "nav-link text-white" , style: "color: #292F36 !important" %>
+            <%= link_to "Accueil", root_path, class: "nav-link"%>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Proposer un service", pricings_path, class: "nav-link mx-3", style: "color: #292F36" %>
+            <%= link_to "Prendre un rendez-vous", professionals_path, class: "nav-link mx-3"%>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Adopter", animals_path, class: "nav-link", style: "color: #292F36" %>
+            <%= link_to "Proposer un service", pricings_path, class: "nav-link" %>
           </h5>
         </li>
         <li class="nav-item active">
           <h5>
-            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link mx-3", style: "color: #292F36" %>
+            <%= link_to "Adopter", animals_path, class: "nav-link mx-3" %>
+          </h5>
+        </li>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link" %>
+          </h5>
+        </li>
+        <li class="nav-item active">
+          <h5>
+            <%= link_to "Blogs", blogs_path, class: "nav-link mx-3" %>
           </h5>
         </li>
         <% if user_signed_in? %>

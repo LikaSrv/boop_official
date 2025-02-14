@@ -15,13 +15,7 @@ class AppointmentsController < ApplicationController
     @appointment.user = current_user
     start_time = Time.zone.parse("#{params[:appointment][:date]} #{params[:appointment][:start_time]}")
     @appointment.start_time = start_time
-    available_slot = Availability.find_by(professional_id: params[:professional_id], start_time: start_time)
-    @appointment.availability = available_slot
     if @appointment.save!
-      if available_slot.appointments.count === Professional.find(params[:professional_id]).capacity
-        available_slot.status = false
-        available_slot.save!
-      end
       AppointmentMailer.user_confirmation(@appointment).deliver_now
       AppointmentMailer.professional_confirmation(@appointment).deliver_now
       redirect_to professional_appointment_path(@appointment.professional, @appointment)

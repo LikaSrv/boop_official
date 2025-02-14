@@ -13,6 +13,7 @@ export default class extends Controller {
       this.selectedDateTarget.classList.toggle("bg-primary");
       this.selectedDateTarget.classList.toggle("text-black");
     });
+
   }
 
   confirm(event) {

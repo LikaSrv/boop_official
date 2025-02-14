@@ -1,0 +1,19 @@
+<%= turbo_frame_tag :show_slots do %>
+  <div class="mx-5">
+    <div 
+        data-appointment-selected-show-target="times">
+      <% if !@open_days.include?(selected_date.wday) %>
+        <p class="m-2">Jour fermé </p>
+      <% end %>
+      <% availabilitiesOfTheDay(professional, selected_date).each do |a| %>
+            <a href="<%= new_professional_appointment_path(professional) %>"
+               class="btn btn-outline-primary m-1"
+               style="width: 22%;"
+               data-time="<%= a.to_time %>"
+               data-action="click->appointment-selected-show#confirm">
+              <%= a.strftime("%H:%M") %>
+            </a>
+          <% end %>
+    </div>
+  </div>
+<% end %>

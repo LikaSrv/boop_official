@@ -54,4 +54,8 @@ Rails.application.routes.draw do
 
   resources :blogs, only: [:index, :show]
 
+  resources :professionals do
+    get "update_slots", to: "update_slots"
+  end
+
 end

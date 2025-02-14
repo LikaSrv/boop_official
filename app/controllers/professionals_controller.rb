@@ -1,6 +1,6 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
-  helper_method :isOpened?, :availabilitiesOfTheDay
+  helper_method :isOpened?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay
 
   def index
     # search
@@ -74,11 +74,14 @@ class ProfessionalsController < ApplicationController
   def show
     @professional = Professional.find(params[:id])
 
-    # @availabilities = Availability.where(professional: @professional, status: true).select { |availability| availability.start_time > DateTime.now }
-    # @available_months = @availabilities.pluck(:start_time).map { |date| date.month }.uniq
+    @appointment = Appointment.new
+    @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today
 
     @reviews = Review.where(professional: @professional)
-    @appointment = Appointment.new
+    opening_hours = OpeningHour.where(professional: @professional)
+    @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
+
+
     if @reviews.empty?
       @average_rating = 0
     else
@@ -102,7 +105,7 @@ class ProfessionalsController < ApplicationController
     opening_hours = OpeningHour.where(professional: @professional)
     @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
 
-    @availabilities = Availability.where(professional: @professional)
+    # @availabilities = Availability.where(professional: @professional)
 
   end
 
@@ -241,81 +244,35 @@ class ProfessionalsController < ApplicationController
     return opening_time_slots
   end
 
-
-
-  # generate all availabilities for a professional
-  def generate_availabilities(opening_hours, interval, date)
-
-    closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
-    if !closed_days.include?(date.wday)
-      opening_hour = opening_hours.find_by(day_of_week: date.wday)
+  # return all timeslots of a professional for a specific day
+  def allTimeSlotsOfTheDay (professional, date)
+    opening_time_slots = []
+    if isOpened?(professional, date)
+      opening_hour = OpeningHour.find_by(professional: professional, day_of_week: date.wday)
 
       start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
       end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
 
-      while start_time_morning + interval.minutes <= end_time_morning
-        availability = Availability.new(
-          professional: @professional,
-          start_time: start_time_morning,
-          status: 1
-        )
-        availability.save!
+      while start_time_morning + professional.interval.minutes <= end_time_morning
 
-        # Incrémenter start_time de l'intervalle
-        start_time_morning += interval.minutes
+          opening_time_slots << start_time_morning
+          # Incrémenter start_time de l'intervalle
+
+        start_time_morning += professional.interval.minutes
       end
 
       start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
       end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
 
-      while start_time_afternoon + interval.minutes <= end_time_afternoon
-        availability = Availability.new(
-          professional: @professional,
-          start_time: start_time_afternoon,
-          status: 1
-        )
-        availability.save!
+      while start_time_afternoon + professional.interval.minutes <= end_time_afternoon
+
+        opening_time_slots << start_time_afternoon
 
         # Incrémenter start_time de l'intervalle
-        start_time_afternoon += interval.minutes
+        start_time_afternoon += professional.interval.minutes
       end
-
     end
-  end
-
-  # generate availabilities after editing opening hours
-  def generate_availabilities_for_one_opening_hour(opening_hour, interval, date)
-
-    start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
-    end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
-
-    while start_time_morning + interval.minutes <= end_time_morning
-      availability = Availability.new(
-        professional: @professional,
-        start_time: start_time_morning,
-        status: 1
-      )
-      availability.save!
-
-      # Incrémenter start_time de l'intervalle
-      start_time_morning += interval.minutes
-    end
-
-    start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
-    end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
-
-    while start_time_afternoon + interval.minutes <= end_time_afternoon
-      availability = Availability.new(
-        professional: @professional,
-        start_time: start_time_afternoon,
-        status: 1
-      )
-      availability.save!
-
-      # Incrémenter start_time de l'intervalle
-      start_time_afternoon += interval.minutes
-    end
-
+    return opening_time_slots
   end
 
   def edit_availibilities
@@ -326,9 +283,14 @@ class ProfessionalsController < ApplicationController
 
   end
 
-  def update_availibilities
-    availability = Availability.find(params[:availability_id])
-    availability.update!(status: !availability.status)
+  def update_slots
+    @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today# Récupérer la nouvelle date
+    @professional = Professional.find(params[:professional_id]) # Exemple de récupération de professionnel
+    opening_hours = OpeningHour.where(professional: @professional)
+    @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
+    # Logique pour récupérer les créneaux disponibles pour cette date
+
+    render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
   end
 
   private

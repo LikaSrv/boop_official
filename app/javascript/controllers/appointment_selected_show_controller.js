@@ -4,15 +4,40 @@ import flatpickr from "flatpickr"; // Vous devez importer flatpickr pour l'utili
 // Connecte au data-controller="appointment-selected-show"
 export default class extends Controller {
   static targets = ["selectedDate", "times"];
-  static values = { apiKey: String };
+  static values = { apiKey: String, closed_days: Array };
 
   connect() {
+    const closedDaysFromData = this.element.dataset.appointmentSelectedShowClosedDaysValue;
+    // console.log(closedDaysFromData);
+
+    // Si `closedDaysFromData` est une chaîne, on doit la convertir en tableau
+    const closedDays = JSON.parse(closedDaysFromData);
+    console.log(closedDays);
+
+    // Fonction pour trouver la prochaine date ouverte
+    const findNextOpenDate = () => {
+      let currentDate = new Date();  // Date actuelle
+      // Si la date actuelle est fermée, on passe au jour suivant
+      while (closedDays.includes(currentDate.getDay())) {
+        currentDate.setDate(currentDate.getDate() + 1); // On avance d'un jour
+      }
+      return currentDate;
+    };
+
+    const nextOpenDate = findNextOpenDate();
+    console.log("Prochaine date ouverte :", nextOpenDate);
+
+
     // Initialisation de flatpickr sur l'élément sélectionné
     this.picker = flatpickr(this.selectedDateTarget, {
       altInput: true,
       altFormat: "j F Y",
       dateFormat: "d-m-Y",
-      defaultDate: Date.now(),
+      minDate: nextOpenDate,
+      defaultDate: nextOpenDate,  // Définir la prochaine date ouverte
+      disable: [
+        (date) => closedDays.includes(date.getDay()) // Désactive les jours fermés
+      ],
       locale: {
         firstDayOfWeek: 1,
         weekdays: {
@@ -24,6 +49,7 @@ export default class extends Controller {
           longhand: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
         },
       },
+
       onChange: (selectedDates, dateStr, instance) => {
         // Mise à jour du champ caché (selected_date) avec la date choisie
         this.selectedDateTarget.value = dateStr;  // Mets à jour le target avec la date choisie

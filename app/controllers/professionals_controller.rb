@@ -75,12 +75,13 @@ class ProfessionalsController < ApplicationController
     @professional = Professional.find(params[:id])
 
     @appointment = Appointment.new
-    @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today
 
     @reviews = Review.where(professional: @professional)
     opening_hours = OpeningHour.where(professional: @professional)
     @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
+    @closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
 
+    @selected_date = find_next_open_date(@closed_days)
 
     if @reviews.empty?
       @average_rating = 0
@@ -292,6 +293,16 @@ class ProfessionalsController < ApplicationController
 
     render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
   end
+
+  # Fonction pour trouver la prochaine date ouverte
+def find_next_open_date(closed_days)
+  current_date = Date.today  # Date actuelle
+  # Tant que le jour de la semaine actuel est fermé, on passe au jour suivant
+  while closed_days.include?(current_date.wday)  # wday donne le jour de la semaine (0=dimanche, 1=lundi, ...)
+    current_date += 1 # On avance d'un jour
+  end
+  current_date
+end
 
   private
 

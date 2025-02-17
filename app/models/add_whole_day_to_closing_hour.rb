@@ -1,0 +1,2 @@
+class AddWholeDayToClosingHour < ApplicationRecord
+end

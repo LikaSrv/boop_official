@@ -1,0 +1,43 @@
+<%= turbo_frame_tag :edit_slots do %>
+  <div class="mx-5"
+        data-controller="edit-availabilities "
+        data-edit-availabilities-api-key-value="<%= @professional.id %>">
+    <% allTimeSlotsOfTheDay(professional, selected_date).each do |slot| %>
+      <%@appointments = Appointment.where(start_time: slot, professional: @professional)%>
+      <% if (@appointments.empty?) %>
+        <% if isClosed?(@professional, slot)%>
+          <a href="#"
+                      id="slot-<%= slot.strftime('%H%M') %>"
+                      class="btn btn-outline-dark m-1 text-body-color"
+                      style="width: 22%;"
+                      data-professional-id="<%= @professional.id %>"
+                      data-professional-interval="<%= @professional.interval %>"
+                      data-date="<%=selected_date%>"
+                      data-time="<%= slot.strftime('%H:%M') %>"
+                      data-action="click->edit-availabilities#showOptions">
+            <%= slot.strftime("%H:%M") %>
+          </a>
+        <% else %>
+          <a href="#"
+                      id="slot-<%= slot.strftime('%H%M') %>"
+                      class="btn btn-outline-primary m-1"
+                      style="width: 22%;"
+                      data-professional-id="<%= @professional.id %>"
+                      data-professional-interval="<%= @professional.interval %>"
+                      data-date="<%=selected_date%>"
+                      data-time="<%= slot.strftime('%H:%M') %>"
+                      data-action="click->edit-availabilities#showOptions">
+            <%= slot.strftime("%H:%M") %>
+          </a>
+        <% end %>
+      <% else %>
+        <a href="#"
+                      class="btn btn-info m-1 disabled"
+                      data-time="<%= slot.strftime('%H:%M') %>"
+                      style="width: 22%;">
+          <%= slot.strftime("%H:%M") %>
+        </a>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

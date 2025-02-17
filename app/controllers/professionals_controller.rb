@@ -1,6 +1,6 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
-  helper_method :isOpened?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay
+  helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay
 
   def index
     # search
@@ -204,6 +204,16 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  # if a professional is closed on a specific day
+  def isClosed? (professional, datetime)
+    closing_hour = ClosingHour.where(professional: professional, start_time: datetime)
+    if closing_hour.empty?
+      return false
+    else
+      return true
+    end
+  end
+
   # if a professional is available at a specific time
   def isAvailable? (professional, date, start_time)
     appointment = Appointment.where(professional: professional, start_time: start_time)
@@ -276,12 +286,14 @@ class ProfessionalsController < ApplicationController
     return opening_time_slots
   end
 
-  def edit_availibilities
-    @professional = Professional.find(params[:id])
-    @futur_availibilities = Availability.where("start_time >= ? AND professional_id = ? ", Time.now, @professional.id)
-    @available_months = @futur_availibilities.pluck(:start_time).map { |date| date.month }.uniq
-    @opening_hours = OpeningHour.where(professional: @professional)
-
+  # Fonction pour trouver la prochaine date ouverte
+  def find_next_open_date(closed_days)
+    current_date = Date.today  # Date actuelle
+    # Tant que le jour de la semaine actuel est fermé, on passe au jour suivant
+    while closed_days.include?(current_date.wday)  # wday donne le jour de la semaine (0=dimanche, 1=lundi, ...)
+      current_date += 1 # On avance d'un jour
+    end
+    current_date
   end
 
   def update_slots
@@ -294,15 +306,30 @@ class ProfessionalsController < ApplicationController
     render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
   end
 
-  # Fonction pour trouver la prochaine date ouverte
-def find_next_open_date(closed_days)
-  current_date = Date.today  # Date actuelle
-  # Tant que le jour de la semaine actuel est fermé, on passe au jour suivant
-  while closed_days.include?(current_date.wday)  # wday donne le jour de la semaine (0=dimanche, 1=lundi, ...)
-    current_date += 1 # On avance d'un jour
+
+  def edit_availibilities
+    @professional = Professional.find(params[:id])
+    @opening_hours = OpeningHour.where(professional: @professional)
+
+    # Récupérer les jours de la semaine ouverts (0 = Dimanche, 1 = Lundi, ..., 6 = Samedi)
+    open_days_of_week = @opening_hours.where(closed: false).pluck(:day_of_week)
+
+    # Créer un hash pour stocker les dates ouvertes pour chaque mois
+    @open_dates_per_month = {}
+
+    # Boucle sur les 6 prochains mois pour trouver les dates ouvertes
+    (0..5).each do |i|
+      month_date = Date.today >> i # Déplace la date vers le mois correspondant
+      first_day = month_date.beginning_of_month
+      last_day = month_date.end_of_month
+
+      # Filtrer les dates correspondant aux jours ouverts
+      open_dates = (first_day..last_day).select { |date| open_days_of_week.include?(date.wday) }
+
+      @open_dates_per_month[month_date.month] = open_dates
+    end
   end
-  current_date
-end
+
 
   private
 

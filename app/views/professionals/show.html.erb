@@ -15,6 +15,7 @@
       <%= image_tag(@professional.photo_url, class:"rounded-4 mb-2", style:"width: 80%; aspect-ratio: 2; object-fit: cover")%>
     </div>
     <div class="d-flex flex-column justify-content-center" style="width: 100%;">
+      <%# info %>
       <div class="card_pro">
         <div class="row">
           <div class="col-lg-5 col-md-12 col-sm-8">
@@ -129,8 +130,7 @@
       </div>
       <!-- Affichage des créneaux horaires -->
       <%= turbo_frame_tag :show_slots, data: { appointment_selected_show_target: @selected_date } do %>
-        <%= render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
-%>
+        <%= render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }%>
       <% end %>
     </div>
   </div>

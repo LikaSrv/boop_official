@@ -27,6 +27,11 @@ export default class extends Controller {
     const nextOpenDate = findNextOpenDate();
     console.log("Prochaine date ouverte :", nextOpenDate);
 
+    // Fonction pour définir la date maximale (3 mois à partir d'aujourd'hui)
+    const maxDate = new Date();
+    maxDate.setMonth(maxDate.getMonth() + 6);  // 3 mois à partir de maintenant
+
+
 
     // Initialisation de flatpickr sur l'élément sélectionné
     this.picker = flatpickr(this.selectedDateTarget, {
@@ -34,6 +39,7 @@ export default class extends Controller {
       altFormat: "j F Y",
       dateFormat: "d-m-Y",
       minDate: nextOpenDate,
+      maxDate:maxDate,
       defaultDate: nextOpenDate,  // Définir la prochaine date ouverte
       disable: [
         (date) => closedDays.includes(date.getDay()) // Désactive les jours fermés

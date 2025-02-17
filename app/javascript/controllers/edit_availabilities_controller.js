@@ -11,6 +11,7 @@ export default class extends Controller {
     confirmButtonText: String,
     confirmButtonColor: String,
   };
+  selectedDate = null;
 
   initSweetalert(event) {
     event.preventDefault(); // Prevent the form to be submited after the submit button has been clicked
@@ -39,21 +40,45 @@ export default class extends Controller {
     event.preventDefault();
     const day = event.target.nextElementSibling;
 
+    this.selectedDate = event.currentTarget.innerText;
+    // console.log("Date sélectionnée : ", this.selectedDate);
+
     event.currentTarget.classList.toggle("bg-primary");
     event.currentTarget.classList.toggle("text-black");
 
     day.classList.toggle("d-none");
   }
 
-  toggleTime(event) {
+  showOptions(event) {
     event.preventDefault();
 
-    const professionalId = this.element.dataset.professionalId;
-    console.log("Professional ID:", professionalId);
-    const availabilityId = this.element.dataset.availabilityId;
-    console.log("Availability ID:", availabilityId);
-    const current_status = event.currentTarget.dataset.status;
-    console.log("Current status:", current_status);
+    // console.log(event.target.dataset);
+    const selectedTime = event.target.dataset.time;
+    const professionalId = event.target.dataset.professionalId;
+    const interval = event.target.dataset.professionalInterval;
+
+    // Fusionner la date et l'heure en une chaîne sous le format "YYYY-MM-DD HH:MM"
+    const dateTimeString = `${this.selectedDate.split('-').reverse().join('-')} ${selectedTime}`;
+
+    // Créer un objet Date à partir de cette chaîne
+    const start_time = new Date(dateTimeString);
+    // console.log("Objet Date : ", start_time);
+
+
+    // Calculer end_time en ajoutant l'intervalle à start_time
+    const end_time = new Date(start_time);  // Copie de startTime pour ne pas modifier l'original
+    end_time.setMinutes(start_time.getMinutes() + interval);
+    // console.log(end_time);
+
+    // Vérifier si la closing hour existe déjà
+    const params = new URLSearchParams({
+      professional_id: professionalId,
+      start_time: start_time.toISOString(),  // Convertir en ISO string
+      end_time: end_time.toISOString(),  // Convertir en ISO string
+    });
+
+    const slot = event.target;
+    console.log(slot);
 
     Swal.fire({
       title: "Changer ma disponibilité",
@@ -66,51 +91,106 @@ export default class extends Controller {
       confirmButtonColor: '#EFA690'
     }).then((result) => {
       if (result.isConfirmed) {
-
-        // Envoi des données au serveur Rails via Fetch POST
-        fetch(`/professionals/${professionalId}/update_availibilities/${availabilityId}`, {
-          method: "PATCH",
+        console.log("bloquer/débloquer un créneau");
+        fetch(`/closing_hours/check?${params.toString()}`, {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
             Accept: "application/json",
-          },
-          body: JSON.stringify({
-            availability: {
-              status: !current_status,
-            },
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Erreur lors de l'envoi des données.");
-            }
-            return response.text(); // Récupère la réponse en tant que texte brut
-          })
-          .then((data) => {
-            console.log("Réponse JSON :", data);
+          }
+        }).then((response) => {
+          console.log(response);
 
-            // Mettez à jour dynamiquement le DOM ici
-            const statusElement = document.querySelector(`[data-availability-id="${availabilityId}"]`);
-            console.log("Status Element:", statusElement);
+          if (!response.ok) {
+            throw new Error("Erreur lors de l'envoi des données.");
+          }
+          return response.json(); // Récupère la réponse en tant que texte brut
+        }).then(data => {
+          // console.log(data);
+          // console.log(data.exists);
 
-            if (statusElement) {
-              statusElement.classList.toggle("btn-outline-dark");
-              statusElement.classList.toggle("btn-outline-primary");
-            }
+          if (data.exists) {
+            // console.log('data exists');
 
-            Swal.fire({
-              title: "La disponibilité a bien été modifiée",
-              icon: "success",
-              confirmButtonColor: '#EFA690'
-            });
-          })
-          .catch((error) => {
-            Swal.fire("Erreur", "Impossible de modifier le statut de l'annonce", "error");
-            console.error("Erreur :", error);
-          });
+            // Supprimer la closing hour existante
+            fetch(`/closing_hours/${data.id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+                Accept: "application/json",
+              },
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Erreur lors de la suppression de la closing hour.");
+                }
+                return response.text();  // Récupère la réponse en tant que texte brut
+              })
+              .then(() => {
+                //get the slot dom
+
+
+                slot.classList.remove("btn-outline-dark");
+                slot.classList.add("btn-outline-primary");
+
+
+                Swal.fire({
+                  title: "La disponibilité a bien été supprimée",
+                  icon: "success",
+                  confirmButtonColor: '#EFA690'
+                });
+              })
+              .catch((error) => {
+                Swal.fire("Erreur", "Impossible de supprimer la closing hour", "error");
+                console.error("Erreur :", error);
+              });
+
+          } else {
+            fetch("/closing_hours", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                closing_hour: {
+                  professional_id: professionalId,
+                  start_time: start_time,
+                  end_time: end_time,
+                },
+              }),
+            }).then((response) => {
+              if (!response.ok) {
+                throw new Error("Erreur lors de l'envoi des données.");
+              }
+              return response.text(); // Récupère la réponse en tant que texte brut
+            })
+              .then((data) => {
+                console.log("Réponse JSON :", data);
+
+                slot.classList.add("btn-outline-dark");
+                slot.classList.remove("btn-outline-primary");
+
+                console.log(slot);
+
+                Swal.fire({
+                  title: "La disponibilité a bien été modifiée",
+                  icon: "success",
+                  confirmButtonColor: '#EFA690'
+                });
+              })
+              .catch((error) => {
+                Swal.fire("Erreur", "Impossible de modifier le statut de l'annonce", "error");
+                console.error("Erreur :", error);
+              });
+          }
+        });
       }
-    });
-  }
 
+    });
+
+  }
 }

@@ -10,6 +10,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-image: linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXOgdBLNYmiz98W3mohcIny2sOyvKC_Pgfkw&s');
+  background-size: cover;
+
 }
 
 .card_banner:hover {

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   patch 'professionals/:professional_id/update_availibilities/:availability_id', to: 'professionals#update_availibilities', as: 'professional_update_availibilities'
   get 'pets/:id/show_for_pro', to: 'pets#show_for_pro', as: 'pet_show_for_pro'
+  get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
     # autres routes...
 
   # Defines the root path route ("/")
@@ -26,7 +27,11 @@ Rails.application.routes.draw do
   resources :professionals do
     resources :appointments, only: [:new, :create, :show]
     resources :reviews, only: [:new, :create]
+    get "update_slots", to: "update_slots"
   end
+
+  resources :closing_hours, only: [:new, :create, :destroy]
+
 
   resources :users do
     member do
@@ -54,8 +59,5 @@ Rails.application.routes.draw do
 
   resources :blogs, only: [:index, :show]
 
-  resources :professionals do
-    get "update_slots", to: "update_slots"
-  end
 
 end

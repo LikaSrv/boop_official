@@ -5,8 +5,11 @@
   <% end %>
 </div>
 <h1 class="text-center my-4"><%=@blog.title%></h1>
-<p class="mx-5 text-center"><%=@blog.intro%></p>
-<img src="<%=@blog.metaPhoto%>" alt="meta photo chat" class="img-fluid mx-auto d-block my-4" style="width: 80%; height: 60vh; object-fit: cover; border-radius: 20px;">
+<div class="d-flex justify-content-center align-items-center">
+  <p class="mx-5 text-center" style="width: 80%"><%=@blog.intro%></p>
+</div>
+<p class="d-none"><%=@blog.meta_title%></p>
+<img src="<%=@blog.introPhoto%>" alt="meta photo chat" class="img-fluid mx-auto d-block my-4" style="width: 80%; height: 60vh; object-fit: cover; border-radius: 20px;">
 <div class="row w-100 d-flex justify-content-center align-items-center">
   <div class="col-lg-6 col-md-6 col-sm-12">
     <p class="mx-5"><%=@blog.text1%></p>

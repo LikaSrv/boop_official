@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_17_092557) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -99,7 +99,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
     t.datetime "updated_at", null: false
     t.string "intro"
     t.string "conclusion"
-    t.string "metaPhoto"
+    t.string "introPhoto"
+  end
+
+  create_table "closing_hours", force: :cascade do |t|
+    t.bigint "professional_id", null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["professional_id"], name: "index_closing_hours_on_professional_id"
   end
 
   create_table "opening_hours", force: :cascade do |t|
@@ -239,6 +248,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_12_113854) do
   add_foreign_key "appointments", "pets"
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
+  add_foreign_key "closing_hours", "professionals"
   add_foreign_key "opening_hours", "professionals"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"

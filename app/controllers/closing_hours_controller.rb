@@ -21,11 +21,29 @@ class ClosingHoursController < ApplicationController
     end
   end
 
-
   def create
-    closing_hour = ClosingHour.new(closing_hour_params)
-    closing_hour.save!
+    @closing_hour = ClosingHour.new(closing_hour_params)
+    @opening_hours = OpeningHour.where(professional: @professional)
+
+    @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
+    @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
+
+    @exceptionnal_closed_days = ClosingHour.where(professional: @professional, whole_day: true)
+      .pluck(:start_time)
+      .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
+
+    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
+
+    @all_closed_days = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
+
+    if @closing_hour.save
+      # Utilise `render` avec les variables d'instance
+      render partial: "professionals/all_closed_days_list", locals: { professional: @closing_hour.professional, all_closed_days: @all_closed_days, exceptionnal_closed_days: @exceptionnal_closed_days }
+    else
+      render :new
+    end
   end
+
 
   def destroy
     closing_hour = ClosingHour.find(params[:id])

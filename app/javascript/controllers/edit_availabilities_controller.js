@@ -124,26 +124,6 @@ export default class extends Controller {
     })
   }
 
-  showDays(event) {
-    event.preventDefault();
-    const month = event.target.nextElementSibling;
-
-    event.currentTarget.classList.toggle("bg-primary");
-    event.currentTarget.classList.toggle("text-black");
-
-    month.classList.toggle("d-none");
-  }
-
-  showTimes(event) {
-    event.preventDefault();
-    const day = event.target.nextElementSibling;
-
-    event.currentTarget.classList.toggle("bg-primary");
-    event.currentTarget.classList.toggle("text-black");
-
-    day.classList.toggle("d-none");
-  }
-
   showOptions(event) {
     event.preventDefault();
 
@@ -290,5 +270,51 @@ export default class extends Controller {
 
     });
 
+  }
+
+  deleteClosedDay(event) {
+    event.preventDefault();
+    // console.log(event.target.dataset);
+    const closedDayId = event.target.dataset.editAvailabilitiesClosedDayId;
+
+    swal.fire({
+      title: "Supprimer la date de fermeture",
+      text: "Vous êtes sûr de point de modifier la date de fermeture.",
+      icon: "question",
+      showCancelButton: true,
+      cancelButtonColor: "#0E0000",
+      cancelButtonText: "Annuler",
+      confirmButtonText: "Oui",
+      confirmButtonColor: '#EFA690'
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+
+        fetch(`/closing_hours/${closedDayId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+            Accept: "application/json",
+          },
+        }).then((response) => {
+          if (!response.ok) {
+            throw new Error("Erreur lors de la suppression de la date de fermeture.");
+          }
+          return response.text();  // Récupère la réponse en tant que texte brut
+        }).then(() => {
+          // Supprimer la date de fermeture de la liste
+          event.target.parentElement.remove();
+          Swal.fire({
+            title: "La date de fermeture a bien été modifiée.",
+            icon: "success",
+            confirmButtonColor: '#EFA690'
+          });
+        }).catch((error) => {
+          Swal.fire("Erreur", "Impossible de supprimer la date de fermeture.", "error");
+          console.error("Erreur :", error);
+        });
+      }
+    });
   }
 }

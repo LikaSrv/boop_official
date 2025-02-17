@@ -8,6 +8,7 @@ export default class extends Controller {
       altInput: true,
       altFormat: "j F Y",
       dateFormat: "d-m-Y",
+      minDate: Date.now(),
 
       locale: {
         firstDayOfWeek: 1,

@@ -274,13 +274,13 @@ class ProfessionalsController < ApplicationController
     @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
     @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
 
-    exceptionnal_closed_days = ClosingHour.where(professional: @professional, whole_day: true)
+    @exceptionnal_closed_days = ClosingHour.where(professional: @professional, whole_day: true)
     .pluck(:start_time)
     .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
 
-    national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
+    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
 
-    @all_closed_days = (exceptionnal_closed_days + national_days_offs).uniq.sort_by { |day| day[:date] }
+    @all_closed_days = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
 
     @selected_date = find_next_open_date(@closed_days)
 

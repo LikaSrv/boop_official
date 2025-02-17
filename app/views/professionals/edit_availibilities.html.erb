@@ -16,61 +16,89 @@
   <div class="border border-1 border-dark px-2 py-1 text-dark" style="font-size: 12px;"> Créneaux bloqués </div>
 </div>
 <%# body %>
-<div class="row d-flex flex-wrap justify-content-center" data-controller="edit-availabilities" >
-  <% @open_dates_per_month.keys.each do |month| %>
-    <div class="col-lg-5 col-md-12 col-sm-12 mx-4 card_pro p-4" data-edit-availabilities-api-key-value="<%= @professional.id %>" >
-      <div class="w-100 text-center p-2">
-        <h5><strong><%= I18n.t('date.month_names', locale: :fr)[month] %></strong></h5>
-      </div>
-      <div class="d-flex flex-column mx-3 all-dates">
-        <% @open_dates_per_month[month].each do |day| %>
-          <div class="nav-item dropdown w-100">
-            <a href="#" class="btn btn-outline-primary m-1 w-100"
-                data-action="click->edit-availabilities#showTimes"
-                data-edit-availabilities-target="day"
-                data-date="<%= day.strftime('%d-%m-%Y') %>">
-              <%= day.strftime('%d-%m-%Y') %>
-            </a>
-            <div class="d-none d-flex flex-wrap justify-content-center mx-2 times">
-              <% allTimeSlotsOfTheDay(@professional, day).each do |slot| %>
-                <%@appointments = Appointment.where(start_time: slot, professional: @professional)%>
-                <% if (@appointments.empty?) %>
-                  <% if isClosed?(@professional, slot)%>
-                    <a href="#"
-                      id="slot-<%= slot.strftime('%H%M') %>"
-                      class="btn btn-outline-dark m-1 text-body-color"
-                      style="width: 22%;"
-                      data-professional-id="<%= @professional.id %>"
-                      data-professional-interval="<%= @professional.interval %>"
-                      data-time="<%= slot.strftime('%H:%M') %>"
-                      data-action="click->edit-availabilities#showOptions">
-                    <%= slot.strftime("%H:%M") %>
-                  </a>
-                  <% else %>
-                  <a href="#"
-                      id="slot-<%= slot.strftime('%H%M') %>"
-                      class="btn btn-outline-primary m-1"
-                      style="width: 22%;"
-                      data-professional-id="<%= @professional.id %>"
-                      data-professional-interval="<%= @professional.interval %>"
-                      data-time="<%= slot.strftime('%H:%M') %>"
-                      data-action="click->edit-availabilities#showOptions">
-                    <%= slot.strftime("%H:%M") %>
-                  </a>
-                  <% end %>
-                <% else %>
-                  <a href="#"
-                      class="btn btn-info m-1 disabled"
-                      data-time="<%= slot.strftime('%H:%M') %>"
-                      style="width: 22%;">
-                    <%= slot.strftime("%H:%M") %>
-                  </a>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
+<div class="row d-flex justify-content-center">
+  <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+    <%= simple_form_for @professional do |p|%>
+      <h3 class="text-center" style="text-decoration: underline">Les horaires d'ouvertures</h3>
+      <p class="mb-4 text-center"style="font-size: 10px">S'il y a une fermeture d'une demie-journée, veuillez laisser le champs des heures vides.</p>
+      <table class="table table-bordered custom-white-table">
+        <thead class="table-secondary">
+          <tr>
+            <th scope="col" class="text-center">Jour</th>
+            <th scope="col" class="text-center">Heures du matin</th>
+            <th scope="col" class="text-center">Heures de l'après-midi</th>
+            <th scope="col" class="text-center">Fermé</th>
+          </tr>
+        </thead>
+        <%# opening hours %>
+        <%= p.fields_for :opening_hours, @professional.opening_hours.sort_by(&:day_of_week) do |h|%>
+          <tbody class="nested-fields">
+            <tr>
+              <td>
+                <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
+                <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_morning&.strftime('%H:%M') } %>
+                  <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_morning&.strftime('%H:%M') } %>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex flex-column">
+                  <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_afternoon&.strftime('%H:%M') } %>
+                  <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_afternoon&.strftime('%H:%M') } %>
+                </div>
+              </td>
+              <td class="text-center align-middle">
+                <%= h.check_box :closed %>
+                <%= h.label :closed, "Fermé", class: "ms-2" %>
+              </td>
+            </tr>
+          </tbody>
         <% end %>
+      </table>
+      <%# submit button %>
+      <div class="text-center my-4">
+        <%= p.button :submit, "Enregistrer", class: "btn_custom", data: {controller: "alert", action: "click->alert#loading" } %>
+      </div>
+    <%end%>
+  </div>
+  <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
+    <div id="available-pro"  data-controller="edit-availabilities" data-edit-availabilities-api-key-value="<%= @professional.id %>" data-edit-availabilities-closed-days-value="<%=@closed_days.to_json.html_safe%>">
+      <h3 class="text-center my-3" style="text-decoration: underline">Modifier la disponibilité d'un créneau</h3>
+      <!-- Sélection de la date (rendu cliquable) -->
+      <div class="d-flex flex-row justify-content-center align-items-center">
+        <div>
+          Date :
+        </div>
+        <div class="date-picker-container" style="width: 90%" data-action="click->edit-availabilities#openPicker">
+          <input type="text" data-edit-availabilities-target="selectedDate" >
+        </div>
+      </div>
+      <!-- Affichage des créneaux horaires -->
+      <%= turbo_frame_tag :edit_slots, data: { appointment_selected_show_target: @selected_date } do %>
+        <%= render partial: "edit_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }%>
+      <% end %>
+    </div>
+    <%# Liste des jours de fermetures %>
+    <div class="mt-5">
+      <h3 class="text-center my-3" style="text-decoration: underline">Liste des jours de fermetures</h3>
+      <div class="d-flex flex-row justify-content-center align-items-center">
+        <div>
+          Date :
+        </div>
+        <div class="date-picker-container" style="width: 90%" data-action="click->edit-availabilities#openPicker">
+          <input type="text" data-edit-availabilities-target="selectedDate" >
+        </div>
+      </div>
+      <div>
+        <ul>
+          <% @exceptionnal_closed_days.each do |day| %>
+            <li><%= day.strftime("%d/%m/%Y") %></li>
+          <% end %>
+        </ul>
       </div>
     </div>
-  <% end %>
+  </div>
 </div>

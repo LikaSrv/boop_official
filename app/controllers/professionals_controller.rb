@@ -132,57 +132,7 @@ class ProfessionalsController < ApplicationController
         }]
       end
 
-      # Mettre à jour les créneaux de disponibilités
-      @professional.opening_hours.each do |opening_hour|
-        if opening_hour.previous_changes.present?
-
-          day_of_week = opening_hour.day_of_week
-
-          # search all availabilities for that day of the week without any appointments
-          availabilities = Availability.select do |availability|
-            availability.professional == @professional &&
-            availability.start_time.to_date.wday == day_of_week &&
-            availability.appointments.count == 0
-          end
-
-          # destroy all availabilities for the day
-          availabilities.each {|availability| availability.destroy}
-
-          if opening_hour.closed === false
-            # create new availabilities
-            today = Date.current
-            date =  today + (day_of_week - today.wday) % 7
-
-            while date <= today + 31
-              generate_availabilities_for_one_opening_hour(opening_hour, @professional.interval,  date )
-              date += 7
-            end
-
-            # looking for duplicate availabilities and delete the ones without appointments
-            duplicate_availabilities = Availability.where(professional: @professional)
-                                          .group_by(&:start_time)
-                                          .select { |_, availabilities| availabilities.size > 1 }
-            duplicate_availabilities.each do |_, availabilities|
-              availabilities.each do |availability|
-                availability.destroy if availability.appointments.count == 0
-              end
-          end
-        end
-      end
-
-
-       # Mettre à jour le statut des disponibilités
-      availabilities = Availability.where(professional: @professional)
-      availabilities.each do |availability|
-        if availability.appointments.count < @professional.capacity
-          availability.update(status: true)
-        else
-          availability.update(status: false)
-        end
-      end
-    end
-
-      redirect_to edit_professional_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
+      redirect_to professional_edit_availibilities_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
     else
       render :edit, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être mis à jour car tous les champs n\'ont pas été remplis'
     end
@@ -306,10 +256,27 @@ class ProfessionalsController < ApplicationController
     render partial: "show_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
   end
 
+  def update_edit_slots
+    @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today# Récupérer la nouvelle date
+    @professional = Professional.find(params[:professional_id]) # Exemple de récupération de professionnel
+    @opening_hours = OpeningHour.where(professional: @professional)
+    @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
+    # Logique pour récupérer les créneaux disponibles pour cette date
+
+    render partial: "edit_slots", locals: { professional: @professional, selected_date: @selected_date.to_date }
+  end
+
 
   def edit_availibilities
     @professional = Professional.find(params[:id])
     @opening_hours = OpeningHour.where(professional: @professional)
+
+    @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
+    @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
+
+    @exceptionnal_closed_days = ClosingHour.where(professional: @professional, whole_day: true).pluck(:start_time).map { |date| date.to_date }
+
+    @selected_date = find_next_open_date(@closed_days)
 
     # Récupérer les jours de la semaine ouverts (0 = Dimanche, 1 = Lundi, ..., 6 = Samedi)
     open_days_of_week = @opening_hours.where(closed: false).pluck(:day_of_week)

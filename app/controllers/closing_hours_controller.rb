@@ -10,15 +10,11 @@ class ClosingHoursController < ApplicationController
     end_time = DateTime.parse(params[:end_time])
 
     # Vérification si une closing_hour existe déjà pour cette période
-    existing_closing_hour = ClosingHour.where(professional_id: professional.id)
-                                        .where("start_time = ? AND end_time = ?", start_time, end_time)
-                                        .exists?
+    existing_closing_hour = ClosingHour.where(professional_id: professional.id, start_time: start_time).exists?
 
     if existing_closing_hour
       # Si l'horaire existe déjà, renvoyer l'ID de l'existant
-      existing_record = ClosingHour.where(professional_id: professional.id)
-                                   .where("start_time = ? AND end_time = ?", start_time, end_time)
-                                   .first
+      existing_record = ClosingHour.where(professional_id: professional.id, start_time: start_time).exists?
       render json: { exists: true, id: existing_record.id }
     else
       render json: { exists: false }

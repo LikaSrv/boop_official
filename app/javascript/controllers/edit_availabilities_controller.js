@@ -16,14 +16,14 @@ export default class extends Controller {
   selectedDate = null;
 
   connect() {
-    console.log(this.element.dataset);
+    // console.log(this.element.dataset);
 
     const closedDaysFromData = this.element.dataset.editAvailabilitiesClosedDaysValue;
-    console.log(closedDaysFromData);
+    // console.log(closedDaysFromData);
 
     // Si `closedDaysFromData` est une chaîne, on doit la convertir en tableau
     const closedDays = JSON.parse(closedDaysFromData);
-    console.log(closedDays);
+    // console.log(closedDays);
 
     // Fonction pour trouver la prochaine date ouverte
     const findNextOpenDate = () => {
@@ -36,7 +36,7 @@ export default class extends Controller {
     };
 
     const nextOpenDate = findNextOpenDate();
-    console.log("Prochaine date ouverte :", nextOpenDate);
+    // console.log("Prochaine date ouverte :", nextOpenDate);
 
     // Fonction pour définir la date maximale (3 mois à partir d'aujourd'hui)
     const maxDate = new Date();

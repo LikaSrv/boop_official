@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_17_144038) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_17_163905) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -110,6 +110,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_17_144038) do
     t.datetime "updated_at", null: false
     t.boolean "whole_day", default: false
     t.index ["professional_id"], name: "index_closing_hours_on_professional_id"
+  end
+
+  create_table "national_days_offs", force: :cascade do |t|
+    t.string "name"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "opening_hours", force: :cascade do |t|

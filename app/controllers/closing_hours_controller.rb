@@ -35,6 +35,6 @@ class ClosingHoursController < ApplicationController
   private
 
   def closing_hour_params
-    params.require(:closing_hour).permit(:start_time, :end_time, :professional_id)
+    params.require(:closing_hour).permit(:start_time, :end_time, :professional_id, :whole_day)
   end
 end

@@ -41,8 +41,8 @@
               class: "form-control search-bar bg-secondary ps-5 w-75",
               placeholder: "Rechercher un service..."
           %>
-        <%= text_field_tag :query,
-              params[:query],
+        <%= text_field_tag :query_address,
+              params[:query_address],
               class: "form-control search-bar bg-secondary ps-5 w-25",
               placeholder: "Ville..."
           %>
@@ -103,8 +103,8 @@
   </div>
   <%# animals autoscroll %>
   <div class="d-flex flex-column justify-content-center align-items-center py-4 px-5 w-100 my-5" style="background: linear-gradient(#EFA690, #fdfcfa)" >
-    <h3 class="mt-3 text-center">Ils attendent un foyer...</h3>
-    <h5 class="m-2 mb-4 text-center">Offrez-leur une seconde chance, adoptez un ami pour la vie.</h5>
+    <h3 class="mt-5 text-center">Ils attendent un foyer...</h3>
+    <h5 class="m-2 mb-5 text-center">Offrez-leur une seconde chance, adoptez un ami pour la vie.</h5>
     <div class="d-flex flex-row card_animal_container" data-controller="autoscroll" data-autoscroll-target="autoscrollContainer">
       <% @animals.each do |animal| %>
         <a  href="<%=animal_path(animal)%>"

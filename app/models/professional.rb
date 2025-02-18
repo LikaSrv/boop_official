@@ -25,11 +25,16 @@ class Professional < ApplicationRecord
 
   # search bar
   include PgSearch::Model
-  pg_search_scope :search_by_specialty_address_and_name,
-    against: [ :specialty, :address, :name ],
+  pg_search_scope :search_by_specialty_and_name,
+    against: [ :specialty, :name ],
     using: {
       tsearch: { prefix: true }
     }
+  pg_search_scope :search_by_adresse,
+  against: [ :address ],
+  using: {
+    tsearch: { prefix: true }
+  }
 
   def photo_presence
     errors.add(:photo, "doit être ajoutée") unless photo.attached?

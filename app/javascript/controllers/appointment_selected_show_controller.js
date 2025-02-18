@@ -8,11 +8,16 @@ export default class extends Controller {
 
   connect() {
     const closedDaysFromData = this.element.dataset.appointmentSelectedShowClosedDaysValue;
-    // console.log(closedDaysFromData);
+    console.log(closedDaysFromData);
 
-    // Si `closedDaysFromData` est une chaîne, on doit la convertir en tableau
-    const closedDays = JSON.parse(closedDaysFromData);
+    const allClosedDaysFromData = this.element.dataset.appointmentSelectedShowAllClosedDaysValue;
+    console.log(allClosedDaysFromData);
+
+    const closedDays = JSON.parse(closedDaysFromData); // Formatage des dates
     console.log(closedDays);
+
+    const allClosedDays = JSON.parse(allClosedDaysFromData).map(day => new Date(day.date).toDateString()); // Formatage des dates
+    console.log(allClosedDays);
 
     // Fonction pour trouver la prochaine date ouverte
     const findNextOpenDate = () => {
@@ -42,7 +47,8 @@ export default class extends Controller {
       maxDate:maxDate,
       defaultDate: nextOpenDate,  // Définir la prochaine date ouverte
       disable: [
-        (date) => closedDays.includes(date.getDay()) // Désactive les jours fermés
+        (date) => allClosedDays.includes(date.toDateString()), // Désactive les dates spécifiques
+        (date) => closedDays.includes(date.getDay()) // Désactive les jours de la semaine
       ],
       locale: {
         firstDayOfWeek: 1,

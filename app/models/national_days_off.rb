@@ -1,0 +1,2 @@
+class NationalDaysOff < ApplicationRecord
+end

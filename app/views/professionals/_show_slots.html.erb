@@ -1,6 +1,6 @@
 <%= turbo_frame_tag :show_slots do %>
   <div class="mx-5">
-    <div 
+    <div
         data-appointment-selected-show-target="times">
       <% if !@open_days.include?(selected_date.wday) %>
         <p class="m-2">Jour fermé </p>

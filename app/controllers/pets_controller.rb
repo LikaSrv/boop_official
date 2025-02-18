@@ -44,7 +44,7 @@ class PetsController < ApplicationController
     end
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
     @weight_histories_ids = @weight_histories.map { |w| w.id }
-    @appointments = @pet.appointments
+    @appointments = @pet.appointments.sort { |a, b| b.start_time <=> a.start_time }
     # raise
   end
 
@@ -58,7 +58,7 @@ class PetsController < ApplicationController
     end
     @weight_histories_labels = @weight_histories.map { |w| w.date.strftime("%Y-%m-%d") }
     @weight_histories_ids = @weight_histories.map { |w| w.id }
-    @appointments = @pet.appointments
+    @appointments = @pet.appointments.sort { |a, b| b.start_time <=> a.start_time }
   end
 
   def edit

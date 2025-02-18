@@ -30,8 +30,9 @@ Rails.application.routes.draw do
     get "update_edit_slots", to: "update_edit_slots"
   end
 
-  resources :closing_hours, only: [:new, :create, :destroy]
+  resources :appointments, only: [:update]
 
+  resources :closing_hours, only: [:new, :create, :destroy]
 
   resources :users do
     member do

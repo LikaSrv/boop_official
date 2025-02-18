@@ -29,9 +29,15 @@ class AppointmentsController < ApplicationController
     @professional = @appointment.professional
   end
 
+  def update
+    @appointment = Appointment.find(params[:id])
+    @appointment.update(appointment_params)
+  end
+
+
   private
 
   def appointment_params
-    params.require(:appointment).permit(:start_time, :professional_id, :user_id, :address, :reason, :pet_id, :availability_id)
+    params.require(:appointment).permit(:start_time, :professional_id, :user_id, :address, :reason, :pet_id, :comment)
   end
 end

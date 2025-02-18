@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_17_163905) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_18_125132) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -68,8 +68,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_17_163905) do
     t.string "sex"
     t.string "species"
     t.string "shelter"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.string "races_label"
   end
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_17_163905) do
     t.datetime "updated_at", null: false
     t.string "reason"
     t.bigint "pet_id", null: false
+    t.string "comment"
     t.index ["pet_id"], name: "index_appointments_on_pet_id"
     t.index ["professional_id"], name: "index_appointments_on_professional_id"
     t.index ["user_id"], name: "index_appointments_on_user_id"
@@ -95,8 +96,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_17_163905) do
     t.string "photo2"
     t.string "text3"
     t.string "photo3"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", default: -> { "now()" }, null: false
+    t.datetime "updated_at", default: -> { "now()" }, null: false
     t.string "intro"
     t.string "conclusion"
     t.string "introPhoto"

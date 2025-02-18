@@ -4,8 +4,13 @@ class ProfessionalsController < ApplicationController
 
   def index
     # search
-    if params[:query].present?
-      @professionals = Professional.search_by_specialty_address_and_name(params[:query])
+    if params[:query].present? && !params[:query_address].present?
+      @professionals = Professional.search_by_specialty_and_name(params[:query])
+    elsif params[:query_address].present? && !params[:query].present?
+      @professionals = Professional.search_by_adresse(params[:query_address])
+    elsif params[:query].present? && params[:query_address].present?
+      @professionals = Professional.search_by_specialty_and_name(params[:query])
+      .where("address ILIKE ?", "%#{params[:query_address]}%")
     elsif params[:specialty].present?
       @professionals = Professional.where(specialty: params[:specialty])
     else
@@ -232,6 +237,13 @@ class ProfessionalsController < ApplicationController
 
         # Incrémenter start_time de l'intervalle
         start_time_afternoon += professional.interval.minutes
+      end
+    end
+
+    appointments = Appointment.where(professional: professional, start_time: date.beginning_of_day..date.end_of_day)
+    appointments.each do |appointment|
+      if !opening_time_slots.include?(appointment.start_time)
+        opening_time_slots << appointment.start_time
       end
     end
     return opening_time_slots

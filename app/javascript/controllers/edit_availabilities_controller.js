@@ -3,7 +3,7 @@ import flatpickr from "flatpickr"; // Vous devez importer flatpickr pour l'utili
 
 // Connects to data-controller="edit-availabilities"
 export default class extends Controller {
-  static targets = ["day", "time", "selectedDate", "times"];
+  static targets = ["day", "time", "selectedDate", "times", "closedDaysList"];
   static values = {
     apiKey: String,
     icon: String,
@@ -21,9 +21,15 @@ export default class extends Controller {
     const closedDaysFromData = this.element.dataset.editAvailabilitiesClosedDaysValue;
     // console.log(closedDaysFromData);
 
+    const allClosedDaysFromData = this.element.dataset.editAvailabilitiesAllClosedDaysValue;
+    // console.log(allClosedDaysFromData);
+
     // Si `closedDaysFromData` est une chaîne, on doit la convertir en tableau
     const closedDays = JSON.parse(closedDaysFromData);
     // console.log(closedDays);
+
+    const allClosedDays = JSON.parse(allClosedDaysFromData).map(day => new Date(day.date).toDateString());
+    // console.log(allClosedDays);
 
     // Fonction pour trouver la prochaine date ouverte
     const findNextOpenDate = () => {
@@ -53,7 +59,8 @@ export default class extends Controller {
       maxDate: maxDate,
       defaultDate: nextOpenDate,  // Définir la prochaine date ouverte
       disable: [
-        (date) => closedDays.includes(date.getDay()) // Désactive les jours fermés
+        (date) => allClosedDays.includes(date.toDateString()), // Désactive les dates spécifiques
+        (date) => closedDays.includes(date.getDay()) // Désactive les jours de la semaine
       ],
       locale: {
         firstDayOfWeek: 1,
@@ -272,7 +279,84 @@ export default class extends Controller {
 
   }
 
+  createClosedDay(event) {
+    event.preventDefault();
+
+    // console.log(event.target.dataset);
+
+    const professionalId = event.target.dataset.dataEditAvailabilitiesApiKeyValue;
+    // console.log(professionalId);
+
+    const closedDaySelectedDate = document.querySelector("#closedDaySelectedDate").value;
+    // console.log(closedDaySelectedDate);
+
+    fetch(`/closing_hours`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        closing_hour: {
+          professional_id: professionalId,
+          start_time: closedDaySelectedDate,
+          whole_day: true,
+        },
+      }),
+    }).then((response) => {
+      const allClosedDaysList = document.querySelector("#all_closed_days_list");
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'envoi des données.");
+      }
+
+      return response.json(); // Récupère la réponse en tant que JSON
+    }).then((data) => {
+      if (data.success) {
+        // Analyser le JSON de `data.html`
+        const parsedData = JSON.parse(data.html); // Convertir la chaîne JSON en objet
+        console.log(parsedData);
+
+
+        if (parsedData.all_closed_days) {
+          const allClosedDaysList = document.querySelector("#all_closed_days_list");
+
+          // Réinitialiser la liste avant de l'ajouter
+          allClosedDaysList.innerHTML = '';
+
+          // Ajouter chaque jour fermé à la liste
+          parsedData.all_closed_days.forEach(day => {
+            const listItem = document.createElement("li");
+
+            if (day.name === "Fermeture exceptionnelle") {
+              // Si c'est une fermeture exceptionnelle, ajouter un lien
+              listItem.innerHTML = `
+                <a href="#"
+                   data-controller="edit-availabilities"
+                   data-action="click->edit-availabilities#deleteClosedDay"
+                   data-edit-availabilities-closed-day-id="${day.id}">
+                   ${day.name} : ${day.date}
+                </a>
+              `;
+            } else {
+              // Si ce n'est pas une fermeture exceptionnelle, afficher simplement
+              listItem.innerHTML = `${day.name} : ${day.date}`;
+            }
+
+            // Ajouter l'élément à la liste
+            allClosedDaysList.appendChild(listItem);
+          });
+        }
+      } else {
+        console.error('Erreur:', data.errors);
+      }
+    })
+
+  }
+
   deleteClosedDay(event) {
+
     event.preventDefault();
     // console.log(event.target.dataset);
     const closedDayId = event.target.dataset.editAvailabilitiesClosedDayId;

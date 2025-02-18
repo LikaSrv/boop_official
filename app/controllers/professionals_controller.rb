@@ -80,6 +80,7 @@ class ProfessionalsController < ApplicationController
     opening_hours = OpeningHour.where(professional: @professional)
     @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
     @closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
+    @all_closed_days = get_all_closed_days(@professional)
 
     @selected_date = find_next_open_date(@closed_days)
 
@@ -146,15 +147,15 @@ class ProfessionalsController < ApplicationController
 
   # if a professional is closed on a specific day
   def isOpened? (professional, date)
-    opening_hour = OpeningHour.where(professional: professional, day_of_week: date.wday, closed: false)
-    if opening_hour.empty?
+    all_closed_days = get_all_closed_days(professional).map { |day| day[:date] }
+    if all_closed_days.include?(date)
       return false
     else
       return true
     end
   end
 
-  # if a professional is closed on a specific day
+  # if a professional is closed on a specific day time
   def isClosed? (professional, datetime)
     closing_hour = ClosingHour.where(professional: professional, start_time: datetime)
     if closing_hour.empty?
@@ -246,6 +247,22 @@ class ProfessionalsController < ApplicationController
     current_date
   end
 
+  # fonction to get all closed day (exceptionnal + national days offs) of each professional
+  def get_all_closed_days(professional)
+    @opening_hours = OpeningHour.where(professional: professional)
+    @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
+
+    @exceptionnal_closed_days = ClosingHour.where(professional: professional, whole_day: true)
+    .pluck(:start_time)
+    .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
+
+    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
+
+    @all_closed_days = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
+
+    return @all_closed_days
+  end
+
   def update_slots
     @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today# Récupérer la nouvelle date
     @professional = Professional.find(params[:professional_id]) # Exemple de récupération de professionnel
@@ -272,15 +289,9 @@ class ProfessionalsController < ApplicationController
     @opening_hours = OpeningHour.where(professional: @professional)
 
     @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
+
     @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
-
-    @exceptionnal_closed_days = ClosingHour.where(professional: @professional, whole_day: true)
-    .pluck(:start_time)
-    .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
-
-    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
-
-    @all_closed_days = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
+    @all_closed_days = get_all_closed_days(@professional)
 
     @selected_date = find_next_open_date(@closed_days)
 
@@ -322,13 +333,13 @@ class ProfessionalsController < ApplicationController
                                           :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])
   end
 
-    # Méthode pour vérifier si une disponibilité est dans les horaires d'ouverture
-    def within_opening_hour?(opening_hour)
-      opening_hour.any? do |hour|
-        # Vérifie si l'heure de début de la disponibilité se trouve dans les heures d'ouverture du professionnel
-        (start_time >= hour.open_time_morning && start_time <= hour.close_time_morning) ||
-        (start_time >= hour.open_time_afternoon && start_time <= hour.close_time_afternoon)
-      end
+  # Méthode pour vérifier si une disponibilité est dans les horaires d'ouverture
+  def within_opening_hour?(opening_hour)
+    opening_hour.any? do |hour|
+      # Vérifie si l'heure de début de la disponibilité se trouve dans les heures d'ouverture du professionnel
+      (start_time >= hour.open_time_morning && start_time <= hour.close_time_morning) ||
+      (start_time >= hour.open_time_afternoon && start_time <= hour.close_time_afternoon)
     end
+  end
 
 end

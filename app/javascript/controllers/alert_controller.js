@@ -56,8 +56,13 @@ export default class extends Controller {
         </div>
         <textarea id="review-text" placeholder="Écrivez votre commentaire ici..." rows="4" style="width: 100%;"></textarea>
       `,
-      showCancelButton: true,
       confirmButtonText: "Envoyer",
+      cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
       preConfirm: () => {
         const reviewText = document.getElementById("review-text").value;
         if (starRating === 0 || !reviewText) {
@@ -234,7 +239,7 @@ export default class extends Controller {
   // Add vaccination to the page without actulisating the page
   addVaccinToPage(vaccin) {
     const vaccinsContainer = document.getElementById("vaccins-container");
-    // console.log("hi");
+    console.log(vaccinsContainer);
 
     // console.log(Array.from(vaccinsContainer.children).length + 1);
     if (vaccinsContainer) {
@@ -245,43 +250,75 @@ export default class extends Controller {
 
       // Reconstruire le contenu HTML de la vaccination
       vaccinElement.innerHTML = `
-    <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" style="background-color: #f7e6d4;">
-      <div class="mx-2">
-        <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
-        <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
-        <div class="d-flex flex-row">
-          <p>Prochaine date d'injection : </p>
-          <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
-            ${vaccin.next_booster_date}
-          </p>
-        </div>
+        <div class="card_pro m-1 text-start d-flex flex-row vaccination-item">
+          <div class="mx-2">
+            <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
+            <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
+            <div class="d-flex flex-row">
+              <p>Prochaine date d'injection : </p>
+              <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
+                ${vaccin.next_booster_date}
+              </p>
+            </div>
+          </div>
+          <div class="d-flex flex-column justify-content-around">
+            <a href="#" style="font-size: 12px;"
+              data-controller="alert"
+              data-action="click->alert#editVaccination"
+              data-pet-id="${vaccin.pet_id}"
+              data-vaccin-id="${vaccin.id}"
+              data-vaccin-name="${vaccin.name}"
+              data-administration-date="${vaccin.administration_date}"
+              data-next-booster-date="${vaccin.next_booster_date}">
+              <i class="fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+            </a>
+            <a href="#" class="hoveredCircleButton my-2" style="font-size: 12px;"
+              data-controller="alert"
+              data-action="click->alert#deleteVaccination"
+              data-pet-id="${vaccin.pet_id}"
+              data-vaccin-id="${vaccin.id}">
+              <i class="fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+            </a>
+          </div>
       </div>
-      <div class="d-flex flex-column justify-content-around">
-        <a href="#" style="font-size: 12px;"
-          data-controller="alert"
-          data-action="click->alert#editVaccination"
-          data-pet-id="${vaccin.pet_id}"
-          data-vaccin-id="${vaccin.id}"
-          data-vaccin-name="${vaccin.name}"
-          data-administration-date="${vaccin.administration_date}"
-          data-next-booster-date="${vaccin.next_booster_date}">
-          <i class="fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
-        </a>
-        <a href="#" class="hoveredCircleButton my-2" style="font-size: 12px;"
-          data-controller="alert"
-          data-action="click->alert#deleteVaccination"
-          data-pet-id="${vaccin.pet_id}"
-          data-vaccin-id="${vaccin.id}">
-          <i class="fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
-        </a>
-      </div>
-  </div>
-  `;
+      `;
 
       // Ajoute la nouvelle vaccination au conteneur
       vaccinsContainer.appendChild(vaccinElement);
     } else {
-      console.error("L'élément #vaccins-container est introuvable dans le DOM.");
+      vaccinElement.innerHTML = `
+        <div class="card_pro m-1 text-start d-flex flex-row vaccination-item">
+          <div class="mx-2">
+            <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
+            <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
+            <div class="d-flex flex-row">
+              <p>Prochaine date d'injection : </p>
+              <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
+                ${vaccin.next_booster_date}
+              </p>
+            </div>
+          </div>
+          <div class="d-flex flex-column justify-content-around">
+            <a href="#" style="font-size: 12px;"
+              data-controller="alert"
+              data-action="click->alert#editVaccination"
+              data-pet-id="${vaccin.pet_id}"
+              data-vaccin-id="${vaccin.id}"
+              data-vaccin-name="${vaccin.name}"
+              data-administration-date="${vaccin.administration_date}"
+              data-next-booster-date="${vaccin.next_booster_date}">
+              <i class="fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+            </a>
+            <a href="#" class="hoveredCircleButton my-2" style="font-size: 12px;"
+              data-controller="alert"
+              data-action="click->alert#deleteVaccination"
+              data-pet-id="${vaccin.pet_id}"
+              data-vaccin-id="${vaccin.id}">
+              <i class="fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
+            </a>
+          </div>
+      </div>
+      `;
     }
   }
 
@@ -298,10 +335,13 @@ export default class extends Controller {
       text: "Vous ne pourrez pas revenir en arrière!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#0E0000",
-      confirmButtonText: "Oui supprimer!",
-      cancelButtonText: "Annuler",
+      confirmButtonText: "Oui, supprimer!",
+      cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
+      showCancelButton: true,
+      customClass: {
+        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         // Envoi de la requête DELETE
@@ -883,16 +923,16 @@ export default class extends Controller {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(`/users/sign_out`, {
-            method: "DELETE",
-            headers: {
-              "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-            },
+          method: "DELETE",
+          headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+          },
+        })
+          .then(response => response.text())
+          .then(() => {
+            // Si la déconnexion s'est bien passée, redirigez
+            window.location.href = '/';
           })
-        .then(response => response.text())
-        .then(() => {
-          // Si la déconnexion s'est bien passée, redirigez
-          window.location.href = '/';
-      })
         // // Envoi de la requête DELETE
         // fetch(`/users/${userId}`, {
         //   method: "DELETE",
@@ -929,6 +969,17 @@ export default class extends Controller {
       }
     });
 
+  }
+
+  commentSave(event) {
+    event.preventDefault();
+
+    Swal.fire({
+      position: "bottom-end",
+      text: "Le commentaire est bien enregistré.",
+      showConfirmButton: false,
+      timer: 1500
+    });
   }
 
 }

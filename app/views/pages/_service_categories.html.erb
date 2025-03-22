@@ -37,25 +37,63 @@
     </div>
 
     <script>
-      function scrollCategories(direction) {
-        const container = document.getElementById('categoryContainer');
-        const categoryItem = container.querySelector('.category-item');
-        // Get the full width of a category item including gap
-        const itemWidth = categoryItem.offsetWidth;
-        const gap = parseInt(window.getComputedStyle(container).columnGap);
-        const scrollAmount = itemWidth + gap;
+      let isScrolling = false;
 
+      function scrollCategories(direction) {
+        if (isScrolling) return;
+
+        const container = document.getElementById('categoryContainer');
+        const items = container.querySelectorAll('.category-item');
+        const currentScroll = container.scrollLeft;
+        const containerWidth = container.clientWidth;
+        const itemWidth = items[0].offsetWidth;
+        const gap = parseInt(window.getComputedStyle(container).columnGap);
+        const itemTotalWidth = itemWidth + gap;
+
+        let targetScroll;
         if (direction === 'left') {
-          container.scrollBy({
-            left: -scrollAmount,
-            behavior: 'smooth'
-          });
+          // Calculate the current item index and move back one item
+          const currentIndex = Math.round(currentScroll / itemTotalWidth);
+          targetScroll = Math.max(0, (currentIndex - 1) * itemTotalWidth);
         } else {
-          container.scrollBy({
-            left: scrollAmount,
-            behavior: 'smooth'
-          });
+          // Calculate the current item index and move forward one item
+          const currentIndex = Math.round(currentScroll / itemTotalWidth);
+          targetScroll = Math.min(
+            container.scrollWidth - containerWidth,
+            (currentIndex + 1) * itemTotalWidth
+          );
         }
+
+        isScrolling = true;
+
+        // Smooth scroll with custom easing
+        const startTime = performance.now();
+        const startScroll = container.scrollLeft;
+        const distance = targetScroll - startScroll;
+        const duration = 500; // ms
+
+        function easeInOutCubic(t) {
+          return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function animate(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          const eased = easeInOutCubic(progress);
+          container.scrollLeft = startScroll + (distance * eased);
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            isScrolling = false;
+            updateScrollButtons();
+          }
+        }
+
+        requestAnimationFrame(animate);
       }
 
       // Show/hide scroll buttons based on scroll position
@@ -65,16 +103,43 @@
         const rightButton = container.parentElement.querySelector('.scroll-right');
 
         function updateScrollButtons() {
-          const canScrollLeft = container.scrollLeft > 0;
-          const canScrollRight = container.scrollLeft < (container.scrollWidth - container.clientWidth);
+          const threshold = 5;
+          const canScrollLeft = container.scrollLeft > threshold;
+          const canScrollRight = Math.ceil(container.scrollLeft) < (container.scrollWidth - container.clientWidth - threshold);
 
           leftButton.style.display = canScrollLeft ? 'block' : 'none';
           rightButton.style.display = canScrollRight ? 'block' : 'none';
         }
 
-        // Update on scroll and resize
         container.addEventListener('scroll', updateScrollButtons);
         window.addEventListener('resize', updateScrollButtons);
-        updateScrollButtons(); // Initial check
+
+        // Handle touch events
+        let touchStartX = 0;
+        let touchStartScroll = 0;
+
+        container.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+          touchStartScroll = container.scrollLeft;
+          container.style.scrollBehavior = 'auto';
+        });
+
+        container.addEventListener('touchend', () => {
+          container.style.scrollBehavior = 'smooth';
+          const itemWidth = container.querySelector('.category-item').offsetWidth;
+          const gap = parseInt(window.getComputedStyle(container).columnGap);
+          const itemTotalWidth = itemWidth + gap;
+
+          // Snap to nearest item
+          const currentIndex = Math.round(container.scrollLeft / itemTotalWidth);
+          const targetScroll = currentIndex * itemTotalWidth;
+
+          container.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+          });
+        });
+
+        updateScrollButtons();
       });
     </script>

@@ -1,0 +1,145 @@
+    <div class="service-categories">
+      <button class="scroll-button scroll-left" onclick="scrollCategories('left')">
+        <i></i>
+      </button>
+      <button class="scroll-button scroll-right" onclick="scrollCategories('right')">
+        <i></i>
+      </button>
+      <div class="category-circles" id="categoryContainer">
+        <a href="<%=professionals_path%>" class="category-item">
+          <div class="circle-image">
+            <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/vitaly-gariev-HURf5iUtSQg-unsplash.jpg", alt: "Tous nos services" %>
+          </div>
+          <span class="category-name">TOUS NOS SERVICES</span>
+        </a>
+
+        <% (0...@all_specialty.length).each do |i| %>
+          <% specialty = @all_specialty[i][:specialty]%>
+          <% photo = @all_specialty[i][:photo]%>
+          <% if @available_specialty.include?(specialty)%>
+            <a href="<%=professionals_path(specialty: specialty)%>" class="category-item">
+              <div class="circle-image">
+                <%= image_tag photo, alt: specialty %>
+              </div>
+              <span class="category-name"><%= specialty.upcase %></span>
+            </a>
+          <% else %>
+            <a href="#" class="category-item disabled">
+              <div class="circle-image">
+                <%= image_tag photo, alt: specialty %>
+              </div>
+              <span class="category-name"><%= specialty.upcase %></span>
+              <span class="coming-soon">Bientôt disponible</span>
+            </a>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <script>
+      let isScrolling = false;
+
+      function scrollCategories(direction) {
+        if (isScrolling) return;
+
+        const container = document.getElementById('categoryContainer');
+        const items = container.querySelectorAll('.category-item');
+        const currentScroll = container.scrollLeft;
+        const containerWidth = container.clientWidth;
+        const itemWidth = items[0].offsetWidth;
+        const gap = parseInt(window.getComputedStyle(container).columnGap);
+        const itemTotalWidth = itemWidth + gap;
+
+        let targetScroll;
+        if (direction === 'left') {
+          // Calculate the current item index and move back one item
+          const currentIndex = Math.round(currentScroll / itemTotalWidth);
+          targetScroll = Math.max(0, (currentIndex - 1) * itemTotalWidth);
+        } else {
+          // Calculate the current item index and move forward one item
+          const currentIndex = Math.round(currentScroll / itemTotalWidth);
+          targetScroll = Math.min(
+            container.scrollWidth - containerWidth,
+            (currentIndex + 1) * itemTotalWidth
+          );
+        }
+
+        isScrolling = true;
+
+        // Smooth scroll with custom easing
+        const startTime = performance.now();
+        const startScroll = container.scrollLeft;
+        const distance = targetScroll - startScroll;
+        const duration = 500; // ms
+
+        function easeInOutCubic(t) {
+          return t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        function animate(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          const eased = easeInOutCubic(progress);
+          container.scrollLeft = startScroll + (distance * eased);
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            isScrolling = false;
+            updateScrollButtons();
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // Show/hide scroll buttons based on scroll position
+      document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('categoryContainer');
+        const leftButton = container.parentElement.querySelector('.scroll-left');
+        const rightButton = container.parentElement.querySelector('.scroll-right');
+
+        function updateScrollButtons() {
+          const threshold = 5;
+          const canScrollLeft = container.scrollLeft > threshold;
+          const canScrollRight = Math.ceil(container.scrollLeft) < (container.scrollWidth - container.clientWidth - threshold);
+
+          leftButton.style.display = canScrollLeft ? 'block' : 'none';
+          rightButton.style.display = canScrollRight ? 'block' : 'none';
+        }
+
+        container.addEventListener('scroll', updateScrollButtons);
+        window.addEventListener('resize', updateScrollButtons);
+
+        // Handle touch events
+        let touchStartX = 0;
+        let touchStartScroll = 0;
+
+        container.addEventListener('touchstart', (e) => {
+          touchStartX = e.touches[0].clientX;
+          touchStartScroll = container.scrollLeft;
+          container.style.scrollBehavior = 'auto';
+        });
+
+        container.addEventListener('touchend', () => {
+          container.style.scrollBehavior = 'smooth';
+          const itemWidth = container.querySelector('.category-item').offsetWidth;
+          const gap = parseInt(window.getComputedStyle(container).columnGap);
+          const itemTotalWidth = itemWidth + gap;
+
+          // Snap to nearest item
+          const currentIndex = Math.round(container.scrollLeft / itemTotalWidth);
+          const targetScroll = currentIndex * itemTotalWidth;
+
+          container.scrollTo({
+            left: targetScroll,
+            behavior: 'smooth'
+          });
+        });
+
+        updateScrollButtons();
+      });
+    </script>

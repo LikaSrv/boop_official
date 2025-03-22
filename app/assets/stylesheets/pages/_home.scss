@@ -1,4 +1,8 @@
 // Specific CSS for your home-page
+body {
+  background-color: white;
+}
+
 .banner {
   background-image: linear-gradient(rgba(173, 161, 161, 0.33),rgba(0,0,0,0.1)), url('https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//lukasz-szmigiel-tWvkoNvOX20-unsplash.jpg');
   background-size: cover;

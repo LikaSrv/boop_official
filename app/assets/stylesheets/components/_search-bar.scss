@@ -3,6 +3,7 @@
   height:70px;
   margin-top: -32px;
   font-size: 20px;
+  border: 1px solid $secondary;
 
   @media (max-width: 768px) {
     height:60px;
@@ -16,7 +17,6 @@
     font-size: 12px;
   }
 }
-
 .w-form{
   width: 80%;
 
@@ -28,4 +28,3 @@
     width: 90% !important;
   }
 }
-

@@ -1,0 +1,64 @@
+    <div class="pet-alert">
+      <div class="info-section">
+        <div class="info-content">
+          <h2 class="text-warning">PET ALERT !</h2>
+          <p>Un regard rapide peut sauver une vie : animaux perdus et retrouvés.</p>
+          <a href="<%=pet_alerts_path%>" class="btn btn-outline-primary text-black">Publier une annonce</a>
+        </div>
+        <div class="carousel-section info-image">
+          <% if @pet_alerts.empty? %>
+            <div class="empty-state info-image">
+              <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//blog_banner.jpg", class: "info-image" %>
+              <div class="empty-state-content">
+                <p>Pas d'annonces en cours 🤗</p>
+                <p class="empty-state-subtitle">Tous nos amis ont en sécurité !</p>
+              </div>
+            </div>
+          <% else %>
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <% @pet_alerts.each_with_index do |alert, index| %>
+                  <div class="carousel-item <%= 'active' if index == 0 %>" data-bs-interval="5000">
+                    <div class="carousel-image-container">
+                      <% if alert.photo.present? %>
+                        <%= image_tag(alert.photo_url, alt: "photo of pet alert", class: "info-image") %>
+                      <% else %>
+                        <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/question%20(3).png", alt: "pet alert default", class: "info-image") %>
+                      <% end %>
+
+                      <div class="carousel-caption">
+                        <div class="alert-header">
+                          <h5><strong><%= alert.title %></strong></h5>
+                          <% if alert.status == false %>
+                            <i class="fa-solid fa-circle-exclamation text-danger"></i>
+                          <% else %>
+                            <i class="fa-solid fa-circle-check text-success"></i>
+                          <% end %>
+                        </div>
+                        <p><%= truncate(alert.description, length: 100) %></p>
+                        <%= link_to "En savoir plus", pet_alert_path(alert), class: "btn btn-info rounded-4" %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          <% end %>
+          <div class="text-end mt-3">
+            <%= link_to pet_alerts_path, class: "view-all-link " do %>
+              Voir toutes les annonces <i class="fa-solid fa-arrow-right"></i>
+            <% end %>
+          </div>
+        </div>
+
+      </div>
+    </div>

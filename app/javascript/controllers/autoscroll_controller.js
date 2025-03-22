@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="autoscroll"
 export default class extends Controller {
-  static targets = ["autoscrollContainer"];
+  static targets = ["container"];
 
   connect() {
     // console.log("hi");
@@ -12,21 +12,39 @@ export default class extends Controller {
     this.startAutoScroll();
   }
 
+  disconnect() {
+    this.stopAutoScroll();
+  }
+
   startAutoScroll() {
-    let scrollAmount = 1; // Définir la vitesse de défilement
+    this.interval = setInterval(() => {
+      const container = this.containerTarget;
 
-    setInterval(() => {
-      const container = this.autoscrollContainerTarget;
+      // Scroll by a smaller amount for smoother animation
+      const scrollStep = container.clientWidth / 20; // Adjust this value to control scroll speed
 
-      // Ajouter le défilement
-      container.scrollLeft += scrollAmount;
-
-      // Vérifier si on atteint la fin pour inverser le sens
       if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
-        scrollAmount = -1; // Revenir en arrière
-      } else if (container.scrollLeft <= 0) {
-        scrollAmount = 1; // Avancer
+        // If we're at the end, scroll back to start smoothly
+        container.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        // Smooth continuous scroll
+        container.scrollBy({ left: scrollStep, behavior: 'smooth' });
       }
-    }, 15);
+    }, 50); // Smaller interval for smoother animation
+  }
+
+  stopAutoScroll() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  // Pause autoscroll when user interacts with the container
+  mouseEnter() {
+    this.stopAutoScroll();
+  }
+
+  mouseLeave() {
+    this.startAutoScroll();
   }
 }

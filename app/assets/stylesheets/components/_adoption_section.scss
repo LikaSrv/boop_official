@@ -1,0 +1,113 @@
+.adoption-section {
+  padding: 4rem 0;
+  background-color: #fff;
+
+  .adoption-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .adoption-header {
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+
+  .pets-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 1rem 0;
+  }
+
+  .pets-grid {
+    display: flex;
+    gap: 2rem;
+    padding: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .pet-card {
+    flex: 0 0 calc((100% - 4rem) / 3);
+    min-width: 300px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+
+    @media (max-width: 992px) {
+      flex: 0 0 calc((100% - 2rem) / 2);
+    }
+
+    @media (max-width: 576px) {
+      flex: 0 0 100%;
+    }
+  }
+
+  .pet-image-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .pet-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .pet-info {
+    padding: 1.5rem;
+    white-space: normal;
+
+    h3 {
+      font-size: 1.25rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .pet-details {
+      display: flex;
+      gap: 1rem;
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 8px;
+    }
+  }
+
+}

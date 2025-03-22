@@ -1,0 +1,80 @@
+    <div class="service-categories">
+      <button class="scroll-button scroll-left" onclick="scrollCategories('left')">
+        <i></i>
+      </button>
+      <button class="scroll-button scroll-right" onclick="scrollCategories('right')">
+        <i></i>
+      </button>
+      <div class="category-circles" id="categoryContainer">
+        <a href="<%=professionals_path%>" class="category-item">
+          <div class="circle-image">
+            <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/vitaly-gariev-HURf5iUtSQg-unsplash.jpg", alt: "Tous nos services" %>
+          </div>
+          <span class="category-name">TOUS NOS SERVICES</span>
+        </a>
+
+        <% (0...@all_specialty.length).each do |i| %>
+          <% specialty = @all_specialty[i][:specialty]%>
+          <% photo = @all_specialty[i][:photo]%>
+          <% if @available_specialty.include?(specialty)%>
+            <a href="<%=professionals_path(specialty: specialty)%>" class="category-item">
+              <div class="circle-image">
+                <%= image_tag photo, alt: specialty %>
+              </div>
+              <span class="category-name"><%= specialty.upcase %></span>
+            </a>
+          <% else %>
+            <a href="#" class="category-item disabled">
+              <div class="circle-image">
+                <%= image_tag photo, alt: specialty %>
+              </div>
+              <span class="category-name"><%= specialty.upcase %></span>
+              <span class="coming-soon">Bientôt disponible</span>
+            </a>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <script>
+      function scrollCategories(direction) {
+        const container = document.getElementById('categoryContainer');
+        const categoryItem = container.querySelector('.category-item');
+        // Get the full width of a category item including gap
+        const itemWidth = categoryItem.offsetWidth;
+        const gap = parseInt(window.getComputedStyle(container).columnGap);
+        const scrollAmount = itemWidth + gap;
+
+        if (direction === 'left') {
+          container.scrollBy({
+            left: -scrollAmount,
+            behavior: 'smooth'
+          });
+        } else {
+          container.scrollBy({
+            left: scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      // Show/hide scroll buttons based on scroll position
+      document.addEventListener('DOMContentLoaded', function() {
+        const container = document.getElementById('categoryContainer');
+        const leftButton = container.parentElement.querySelector('.scroll-left');
+        const rightButton = container.parentElement.querySelector('.scroll-right');
+
+        function updateScrollButtons() {
+          const canScrollLeft = container.scrollLeft > 0;
+          const canScrollRight = container.scrollLeft < (container.scrollWidth - container.clientWidth);
+
+          leftButton.style.display = canScrollLeft ? 'block' : 'none';
+          rightButton.style.display = canScrollRight ? 'block' : 'none';
+        }
+
+        // Update on scroll and resize
+        container.addEventListener('scroll', updateScrollButtons);
+        window.addEventListener('resize', updateScrollButtons);
+        updateScrollButtons(); // Initial check
+      });
+    </script>

@@ -34,11 +34,9 @@ PetAlert.destroy_all
 
 puts "create payment plans"
 
-pricing1 = Pricing.create!(specialty: "Vétérinaire", price: 100)
-pricing2 = Pricing.create!(specialty: "Toiletteur", price: 50)
-pricing3 = Pricing.create!(specialty: "Promeneur", price: 30)
-pricing4 = Pricing.create!(specialty: "Pension", price: 100)
-pricing4 = Pricing.create!(specialty: "Petsitter", price: 40)
+pricing1 = Pricing.create!(title: "Boop 1", price: 19.90, description: "Un abonnement parfait pour les professionnels indépendants qui veulent gérer leur activité en toute simplicité.")
+pricing2 = Pricing.create!(title: "Boop 5", price: 59.90, description: "Un abonnement conçu pour les équipes jusqu’à 5 personnes, idéal pour développer votre activité ensemble et optimiser la gestion.")
+pricing3 = Pricing.create!(title: "Boop custom", price: 100, description: "Vous avez un besoin spécifique ou une équipe plus grande ? Créez une offre sur mesure adaptée à vos exigences et optimisez la gestion de votre activité. Contactez-nous !")
 
 # puts "create users"
 

@@ -1,0 +1,150 @@
+.description-home {
+  padding: 80px 0;
+  background-color: white;
+  overflow: hidden;
+
+  .description-content {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  .image-section {
+    position: relative;
+
+    .main-image {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .shine-effect {
+      position: absolute;
+      top: 0%;
+      left: 20%;
+      width: 40%;
+      height: 70%;
+      background-color: #FFE4D6;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .shine-effect2 {
+      position: absolute;
+      top: 20%;
+      left: 0%;
+      width: 40%;
+      height: 70%;
+      background-color: #FFE4D6;
+      border-radius: 50%;
+      z-index: 0;
+    }
+  }
+
+  .text-section {
+    position: relative;
+    padding: 20px;
+
+    .jumping-dog {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      width: 60px;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .promise {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 48px;
+      font-weight: 700;
+      color: #333;
+      line-height: 1.2;
+      margin-bottom: 30px;
+    }
+
+    .description-text {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+
+      p {
+        margin-bottom: 15px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .learn-more-link {
+      display: inline-block;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+      margin-top: 20px;
+
+      &:hover {
+        color: #FF7A3D;
+      }
+    }
+
+    .paw-decoration {
+      position: absolute;
+      bottom: -60px;
+      right: -20px;
+      width: 100px;
+      opacity: 0.8;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 40px 0;
+
+    .description-content {
+      padding: 0 20px;
+    }
+
+    .text-section {
+      .title {
+        font-size: 36px;
+      }
+
+      .jumping-dog {
+        width: 40px;
+        top: -30px;
+      }
+
+      .paw-decoration {
+        width: 80px;
+        bottom: -40px;
+      }
+    }
+  }
+}

@@ -12,15 +12,14 @@
     <%= favicon_link_tag 'https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//boop_logo.png' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   </head>
 
   <body>
     <div class="page-container">
       <%= render "shared/navbar" %>
-      <div class="content-wrap">
+      <div class="page-wrapper">
         <%= render "shared/flashes" %>
-        <div class="pb-4">
+        <div class="content-wrap">
           <%= yield %>
         </div>
       </div>
@@ -56,5 +55,4 @@
       });
     </script>
   </body>
-
 </html>

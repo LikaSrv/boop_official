@@ -1,5 +1,5 @@
 <div class="container-all">
-  <%= render 'banner' %>
+  <%= render "banner" %>
     <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
     <div class="search-form-control form-group mb-3">
       <div class="search-inputs-container w-form">
@@ -19,6 +19,9 @@
   <% end %>
 
   <%= render "service_categories" %>
+  <%= render "description_home" %>
   <%= render "adoption_section" %>
+  <div class="d-flex justify-content-center">
   <%= render "pet_alert" %>
+  </div>
 </div>

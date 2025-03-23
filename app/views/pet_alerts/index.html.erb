@@ -10,37 +10,47 @@
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
 <%# body  %>
+<% if @pet_alerts.empty?%>
+<div class="d-flex flex-column justify-content-center align-items-center">
+        <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg" alt="pet alert empty" style="width: 200px">
+        <p>Tous les animaux sont en sécurité.</p>
+      </div>
+       <% else %>
 <div class="grid-map">
   <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
-    <% @pet_alerts.each do |animal| %>
-      <a  href="<%=pet_alert_path(animal)%>"
-          style="text-decoration: none; color: black; margin: 20px">
-        <div class="col">
-          <div  class="card_pro p-0 d-flex flex-column"
-                style="width: 300px; aspect-ratio: 1/1; overflow: hidden;"
-                data-animal-index-target="animal"
-                data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
-            <!-- En-tête -->
-            <div class="p-3 text-center d-flex flex-row justify-content-center align-items-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
-              <%=animal.title %>
-              <% if animal.status == false %>
-                <i class="fa-solid fa-circle-exclamation ms-1" style="font-size: 32px; color: #FF0035;"></i>
-              <% else %>
-                <i class="fa-solid fa-circle-check text-success ms-1" style="font-size: 32px"></i>
-              <% end %>
-            </div>
-            <!-- Image qui prend le reste de la place -->
-            <div class="flex-grow-1" style="overflow: hidden;">
-              <% if animal.photo.present?%>
-                <%= image_tag(animal.photo_url, style: "width: 100%; height: 100%; object-fit: cover;") %>
-              <% else %>
-                <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png",alt:"alert photo default", style: "width: 100%; height: 100%; object-fit: cover;" )%>
-              <% end %>
+
+
+
+      <% @pet_alerts.each do |animal| %>
+        <a  href="<%=pet_alert_path(animal)%>"
+            style="text-decoration: none; color: black; margin: 20px">
+          <div class="col">
+            <div  class="card_pro p-0 d-flex flex-column"
+                  style="width: 300px; aspect-ratio: 1/1; overflow: hidden;"
+                  data-animal-index-target="animal"
+                  data-action="mouseover->animal-index#hover mouseout->animal-index#unhover">
+              <!-- En-tête -->
+              <div class="p-3 text-center d-flex flex-row justify-content-center align-items-center" style="border-radius: 8px 8px 0 0; background-color: #f7e6d4;">
+                <%=animal.title %>
+                <% if animal.status == false %>
+                  <i class="fa-solid fa-circle-exclamation ms-1" style="font-size: 32px; color: #FF0035;"></i>
+                <% else %>
+                  <i class="fa-solid fa-circle-check text-success ms-1" style="font-size: 32px"></i>
+                <% end %>
+              </div>
+              <!-- Image qui prend le reste de la place -->
+              <div class="flex-grow-1" style="overflow: hidden;">
+                <% if animal.photo.present?%>
+                  <%= image_tag(animal.photo_url, style: "width: 100%; height: 100%; object-fit: cover;") %>
+                <% else %>
+                  <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/question.png",alt:"alert photo default", style: "width: 100%; height: 100%; object-fit: cover;" )%>
+                <% end %>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    <% end %>
+        </a>
+      <% end %>
+
   </div>
   <div class="map"
         style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
@@ -48,4 +58,5 @@
         data-map-markers-value="<%= @markers.to_json %>"
         data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>
+  <% end %>
 </div>

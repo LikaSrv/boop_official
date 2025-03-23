@@ -16,14 +16,45 @@
   </head>
 
   <body>
-    <%= render "shared/flashes" %>
-    <div class="pb-4">
-      <%= yield %>
+    <div class="page-container">
+      <%= render "shared/navbar" %>
+      <div class="content-wrap">
+        <%= render "shared/flashes" %>
+        <div class="pb-4">
+          <%= yield %>
+        </div>
+      </div>
+      <footer class="footer">
+        <%= render "shared/footer" %>
+      </footer>
     </div>
 
-    <footer>
-     <%= render "shared/footer" %>
-    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar-lewagon');
+
+        // Check initial scroll position
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        }
+
+        // Add scroll event listener with throttling
+        let ticking = false;
+        document.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+              } else {
+                navbar.classList.remove('scrolled');
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+      });
+    </script>
   </body>
 
 </html>

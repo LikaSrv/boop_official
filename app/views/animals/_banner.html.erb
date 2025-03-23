@@ -1,0 +1,24 @@
+<%# Animals Banner %>
+<div class="animals-banner">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>
+          <span class="text-dark">OFFREZ-LEUR UN </span>
+          <span class="text-orange">FOYER</span>
+        </h1>
+        <p>
+          Des animaux adorables attendent un foyer chaleureux. Adoptez dès aujourd'hui et offrez-leur une nouvelle vie pleine d'amour !
+        </p>
+        <%= link_to "Rechercher", "#search-section", class: "cta-button", data: { turbo: false } %>
+      </div>
+
+      <div class="hero-image-wrapper">
+        <div class="hero-image">
+          <%= image_tag "https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?q=80&w=2574&auto=format&fit=crop",
+              alt: "Happy dog looking up" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

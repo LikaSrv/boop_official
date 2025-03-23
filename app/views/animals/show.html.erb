@@ -1,24 +1,49 @@
-<div>
-  <%= link_to animals_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
-  <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+<%# Back button %>
+<div class="mb-4">
+  <%= link_to animals_path, class: "text-decoration-none text-dark ms-4" do %>
+    <i class="fas fa-arrow-left me-2"></i>Retour
   <% end %>
 </div>
-<div class="container">
-  <div class="row d-flex justify-content-center">
-    <div class="col-lg-5 col-sm-10 card_pro">
-      <%= image_tag @animal.photo, class: "card-img-top w-100 h-100", style: "object-fit: cover" if @animal.photo.present? %>
+
+<div class="pet-profile-container">
+  <div class="speech-bubble">
+    <p class="text-white">Salut, je suis <%= @animal.name %>!</p>
+  </div>
+
+  <div class="profile-content">
+    <div class="pet-image">
+      <%= image_tag @animal.photo if @animal.photo.present? %>
     </div>
-    <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-between">
-      <div>
-        <h3 class="text-center m-3"><strong><%= @animal.name %></strong></h3>
-        <p class="my-2">Âge: <%= @animal.age %></p>
-        <p>Sexe: <%= @animal.sex %></p>
-        <p class="my-2">Race: <%= @animal.species %></p>
-        <p>Description: <%= @animal.description %></p>
-        <p class="my-2">Refuge: <%=@animal.shelter%></p>
+
+    <div class="pet-details">
+
+
+<div class="row">
+<div class="detail-item col">
+        <h3>TYPE</h3>
+        <p><%= @animal.species %></p>
       </div>
-      <div>
-        <p style="font-size: 36px"> <i class="fa-solid fa-paw float-end text-primary"></i></p>
+
+      <div class="detail-item col">
+        <h3>ÂGE</h3>
+        <p><%= @animal.age %></p>
+      </div>
+
+      <div class="detail-item col">
+        <h3>SEXE</h3>
+        <p><%= @animal.sex&.capitalize %></p>
+      </div>
+</div>
+
+
+      <div class="detail-item">
+        <h3>DESCRIPTION</h3>
+        <p><%=@animal.description%></p>
+      </div>
+
+      <div class="detail-item">
+        <h3>REFUGE</h3>
+        <p><%=@animal.shelter%></p>
       </div>
     </div>
   </div>

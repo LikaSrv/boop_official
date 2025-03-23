@@ -1,24 +1,25 @@
 .search-bar {
   border-radius: 32px;
-  height:70px;
-  margin-top: -32px;
+  height: 70px;
   font-size: 20px;
   border: 1px solid $secondary;
 
   @media (max-width: 768px) {
-    height:60px;
+    height: 60px;
     padding: 0 15px !important;
     font-size: 14px;
   }
 
   @media (max-width: 480px) {
-    height:50px;
+    height: 50px;
     padding: 0 10px !important;
     font-size: 12px;
   }
 }
-.w-form{
+
+.w-form {
   width: 80%;
+  margin: 0 auto;
 
   @media (max-width: 768px) {
     width: 95% !important;
@@ -26,5 +27,62 @@
 
   @media (max-width: 480px) {
     width: 90% !important;
+  }
+}
+
+.search-inputs-container {
+  display: flex;
+  align-items: center;
+
+  .form-control.search-bar {
+    flex: 1;
+    transition: all 0.3s ease;
+
+    &:first-child {
+      flex: 2;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 2px $secondary;
+      border-color: $secondary;
+    }
+  }
+
+  .btn_custom.search-bar {
+    margin: 0;
+    height: 70px;
+    min-width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+      height: 60px;
+      min-width: 120px;
+    }
+
+    @media (max-width: 480px) {
+      height: 50px;
+      min-width: 100px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+}
+
+.search-form-control {
+  position: relative;
+  margin: 2rem auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    margin: 1rem auto;
   }
 }

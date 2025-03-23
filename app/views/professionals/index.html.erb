@@ -3,23 +3,26 @@
   <%= link_to root_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
     <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
+
+  <h2 class="text-center mt-5">Tous nos professionnels</h2>
+  <p class="text-center">Trouvez le professionnel qui correspond à vos besoins</p>
   <%# search zone %>
-  <div class="my-5">
+  <div class="mb-5 d-flex justify-content-center w-75 mx-auto" >
     <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
     <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
       <div class="d-flex align-items-center search-form-control form-group w-form">
         <%= text_field_tag :query,
               params[:query],
-              class: "form-control search-bar bg-secondary ps-5 w-75",
+              class: "form-control search-bar bg-white ps-5 w-75",
               placeholder: "Rechercher un service..."
           %>
         <%= text_field_tag :query_address,
               params[:query_address],
-              class: "form-control search-bar bg-secondary ps-5 w-25",
+              class: "form-control search-bar bg-white ps-5 w-25",
               placeholder: "Ville..."
           %>
         <div>
-          <%= submit_tag "Rechercher", class: "btn_custom search-bar" %>
+          <%= submit_tag "Rechercher", class: "btn_custom search-bar ms-4" %>
         </div>
       </div>
     </div>

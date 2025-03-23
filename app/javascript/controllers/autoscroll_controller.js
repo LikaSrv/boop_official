@@ -8,7 +8,7 @@ export default class extends Controller {
     // console.log("hi");
     // console.log(this.autoscrollContainerTarget);
 
-    // Démarrer l'autoscroll une fois que le DOM est prêt
+    this.scrollDirection = 1; // 1 for forward, -1 for backward
     this.startAutoScroll();
   }
 
@@ -20,17 +20,24 @@ export default class extends Controller {
     this.interval = setInterval(() => {
       const container = this.containerTarget;
 
-      // Scroll by a smaller amount for smoother animation
-      const scrollStep = container.clientWidth / 20; // Adjust this value to control scroll speed
+      // Very small steps for smoother animation
+      const scrollStep = container.clientWidth / 400; // Tiny step size for ultra-smooth movement
+      const currentScroll = container.scrollLeft;
+      const maxScroll = container.scrollWidth - container.clientWidth;
 
-      if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
-        // If we're at the end, scroll back to start smoothly
-        container.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        // Smooth continuous scroll
-        container.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      // Check if we need to reverse direction
+      if (this.scrollDirection > 0 && currentScroll >= maxScroll) {
+        this.scrollDirection = -1; // Start scrolling backward
+      } else if (this.scrollDirection < 0 && currentScroll <= 0) {
+        this.scrollDirection = 1; // Start scrolling forward
       }
-    }, 50); // Smaller interval for smoother animation
+
+      // Apply scroll in current direction (removed 'smooth' behavior as we're already doing small steps)
+      container.scrollBy({
+        left: scrollStep * this.scrollDirection
+      });
+
+    }, 16); // 60fps for smooth animation
   }
 
   stopAutoScroll() {

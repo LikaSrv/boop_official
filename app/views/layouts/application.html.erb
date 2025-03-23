@@ -12,18 +12,47 @@
     <%= favicon_link_tag 'https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//boop_logo.png' %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   </head>
 
   <body>
-    <%= render "shared/flashes" %>
-    <div class="pb-4">
-      <%= yield %>
+    <div class="page-container">
+      <%= render "shared/navbar" %>
+      <div class="page-wrapper">
+        <%= render "shared/flashes" %>
+        <div class="content-wrap">
+          <%= yield %>
+        </div>
+      </div>
+      <footer class="footer">
+        <%= render "shared/footer" %>
+      </footer>
     </div>
 
-    <footer>
-     <%= render "shared/footer" %>
-    </footer>
-  </body>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const navbar = document.querySelector('.navbar-lewagon');
 
+        // Check initial scroll position
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        }
+
+        // Add scroll event listener with throttling
+        let ticking = false;
+        document.addEventListener('scroll', function() {
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+              } else {
+                navbar.classList.remove('scrolled');
+              }
+              ticking = false;
+            });
+            ticking = true;
+          }
+        });
+      });
+    </script>
+  </body>
 </html>

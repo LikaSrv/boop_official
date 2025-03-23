@@ -1,40 +1,53 @@
-<div>
-  <%= render "shared/back"%>
-</div>
 <section id="pricing" class="pricing-content section-padding">
   <div class="container">
     <div class="section-title text-center mb-3 mt-3">
-      <h3>Souscription</h3>
+      <h2>Souscription</h2>
       <p class="mb-3">Choisissez un service à proposer...</p>
     </div>
-    <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-2">
+
+    <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-5">
       <% @pricings.each do |pricing| %>
-        <div class="wow fadeInUp m-2" data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0" style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; width: 400px">
+        <div class="wow fadeInUp m-2 "
+             data-wow-duration="1s"
+             data-wow-delay="0.1s"
+             data-wow-offset="0"
+             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; width: 400px">
           <div class="pricing_design" style="width: auto">
-            <div class="single-pricing">
+            <div class="single-pricing" style="height: 420px">
               <div class="price-head">
-                <% index = @all_specialty.index { |item| item[:specialty] == pricing.specialty }%>
-                <% photo = @all_specialty[index][:photo]%>
-                <div class="fit-image text-center"
-                      style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(<%=photo%>); border-radius: 20px">
-                  <h4 class="text-light"><%= pricing.specialty %></h4>
+                <h3 class="text-warning">
+                  <%= pricing.title %>
+                </h3>
+                <%if !(pricing.title == "Boop custom")%>
+                <div class="price-display">
+                  <span class="amount"><%= humanized_money(pricing.price) %></span>
+                  <span class="period">/mois</span>
                 </div>
-                <h1><%= humanized_money_with_symbol(pricing.price) %> </h1>
-                <span>/Mois</span>
+                <%else%>
+                <div>
+                <span class="amount text-white">XXX
+
+                </span>
+                </div>
+
+                <%end%>
               </div>
-              <div class="pricing-price m-4">
+
+              <p>
+                <%= pricing.description %>
+              </p>
+
+              <div class="m-4" style="margin-top: auto">
                 <%= form_with url: orders_path do %>
                   <%= hidden_field_tag 'pricing_id', pricing.id %>
-                  <%= submit_tag 'Choisir', class: 'btn_custom' %>
+                  <%= submit_tag 'Choisir',
+                      class: 'btn btn-outline-primary rounded-pill text-black w-100' %>
                 <% end %>
               </div>
             </div>
           </div>
         </div>
-        <!--- END COL -->
       <% end %>
     </div>
-    <!--- END ROW -->
   </div>
-  <!--- END CONTAINER -->
 </section>

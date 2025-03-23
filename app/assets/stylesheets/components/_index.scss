@@ -3,6 +3,7 @@
 @import "avatar";
 @import "form_legend_clear";
 @import "navbar";
+@import "banner_blogs";
 @import "card_professional";
 @import "map";
 @import "appointment";
@@ -21,8 +22,14 @@
 @import "table";
 @import "card_animals_home_page";
 @import "card_banner";
-@import "blog_banner";
 @import "card_blog";
 @import "service_categories";
 @import "adoption_section";
 @import "pet_alert";
+@import "pet_card";
+@import "animals_banner";
+@import "animal_show";
+
+// Import component-specific CSS files here.
+@import "banner";
+@import "description_home";

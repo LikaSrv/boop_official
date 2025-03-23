@@ -1,0 +1,157 @@
+.banner-blogs {
+  background-color: #FFF5F1;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 76px); // Full viewport height minus navbar
+  overflow: hidden;
+
+  .banner-content {
+    max-width: 1500px;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    padding: 0 40px;
+  }
+
+  .banner-text {
+    flex: 1;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+
+    h2 {
+      font-size: 3.5rem;
+      font-weight: 600;
+      line-height: 1.2;
+      color: #333;
+      margin: 0;
+
+      span {
+        color: #FF7A3D;
+        display: inline-block;
+      }
+    }
+  }
+
+  .banner-image {
+    flex: 1;
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: bottom !important;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+    }
+  }
+
+  // Decorative elements
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #FF7A3D;
+    opacity: 0.3;
+    transform: rotate(45deg);
+  }
+
+  &::before {
+    top: 80vh;
+    left: 40px;
+  }
+
+  &::after {
+    top: 40px;
+    right: 40px;
+  }
+
+  @media (max-width: 991px) {
+    height: calc(100vh - 76px);
+
+    .banner-content {
+      padding: 0 30px;
+    }
+
+    .banner-text {
+      h2 {
+        font-size: 2.8rem;
+      }
+    }
+
+    .banner-image {
+      flex: 1;
+      padding-top: 30px;
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+
+    &::before,
+    &::after {
+      width: 30px;
+      height: 30px;
+      top: 80vh;
+    }
+
+    &::before {
+      left: 30px;
+    }
+
+    &::after {
+      right: 30px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    height: calc(100vh - 76px);
+
+    .banner-content {
+      padding: 0 20px;
+      flex-direction: column;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .banner-text {
+      text-align: center;
+
+      h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    .banner-image {
+      flex: 1;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    &::before{
+      width: 20px;
+      height: 20px;
+      top: 80vh;
+    }
+
+    &::after {
+      width: 20px;
+      height: 20px;
+      top: 20px;
+    }
+
+    &::before {
+      left: 20px;
+    }
+
+    &::after {
+      right: 20px;
+    }
+  }
+}

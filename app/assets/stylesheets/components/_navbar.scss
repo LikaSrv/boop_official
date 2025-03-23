@@ -1,22 +1,122 @@
-.navbar-lewagon {
-  justify-content: space-between;
-  background: transparent;
-  top: 00px;
+// Add padding to body to account for fixed navbar
+body {
+  padding-top: 0; // Remove padding from body
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1 0 auto;
+  padding-top: 76px; // Height of the navbar
   width: 100%;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.content-wrap {
+  width: 100%;
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 100px;
+.footer {
+  flex-shrink: 0;
 }
 
-.navbar-lewagon .nav-link {
-  color: black;
-}
+.navbar-lewagon {
+  height: 76px; // Explicitly set height
+  justify-content: space-between;
+  background-color: #FFF5F1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  transition: all 0.3s ease;
+  padding: 1rem 2rem;
+  width: 100%;
+  box-sizing: border-box;
 
-.navbar-lewagon .nav-link:hover {
-  color: #EFA690 !important;
+  .scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 8px rgba(255, 122, 61, 0.1);
+  }
+
+  .navbar-brand {
+    img {
+      width: 100px;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .navbar-collapse {
+    flex-grow: 0;
+  }
+
+  .nav-link {
+    color: #333;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      background-color: #FF7A3D;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    &:hover {
+      color: #FF7A3D !important;
+
+      &::after {
+        width: 80%;
+      }
+    }
+
+    &.active {
+      color: #FF7A3D !important;
+
+      &::after {
+        width: 80%;
+      }
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    padding: 0.5rem 1rem;
+    width: 100vw;
+    max-width: 100%;
+    overflow-x: hidden;
+
+    .navbar-collapse {
+      background-color: #FFF5F1;
+      padding: 1rem;
+      border-radius: 0 0 1rem 1rem;
+      box-shadow: 0 4px 6px rgba(255, 122, 61, 0.1);
+      margin: 0.5rem -1rem -0.5rem -1rem;
+      width: 100vw;
+    }
+
+    .navbar-nav {
+      align-items: center;
+      width: 100%;
+    }
+
+    .nav-link {
+      text-align: center;
+      width: 100%;
+      padding: 0.75rem 1rem;
+    }
+  }
 }

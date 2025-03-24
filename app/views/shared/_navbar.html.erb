@@ -36,8 +36,11 @@
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <% if !current_user.orders.empty? %>
+              <% if (current_user.orders.count == 1) && (current_user.orders.state == "paid")%>
                 <%= link_to "Mon organisme", pro_index_user_path(current_user), class: "dropdown-item" %>
+              <% elsif (current_user.orders.count > 1)%>
+                <%= link_to "Mon organisme", pro_index_user_path(current_user), class: "dropdown-item" %>
+              <% else%>
               <%end%>
               <%= link_to "Mon profil", user_path(current_user), class: "dropdown-item" %>
               <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>

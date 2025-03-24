@@ -365,7 +365,8 @@ class ProfessionalsController < ApplicationController
   end
 
   def numberOfProfessionals(user)
-    orders = user.orders
+    orders = user.orders.where(status: "paid")
+    raise
     total_capacity = 0
     orders.each do |order|
       total_capacity += order.pricing.capacity

@@ -4,12 +4,12 @@
     <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
 
-  <h2 class="text-center mt-5">Tous nos professionnels</h2>
+  <h2 class="text-center mt-2">Tous nos professionnels</h2>
   <p class="text-center">Trouvez le professionnel qui correspond à vos besoins</p>
   <%# search zone %>
-  <div class="mb-5 d-flex justify-content-center w-75 mx-auto" >
+  <div class="mb-2 d-flex justify-content-center mx-auto" >
     <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-    <div class="d-flex justify-content-center search-form-control form-group mb-3", style="width: 100%;" >
+    <div class="d-flex justify-content-center search-form-control form-group", style="width: 100%;" >
       <div class="d-flex align-items-center search-form-control form-group w-form">
         <%= text_field_tag :query,
               params[:query],

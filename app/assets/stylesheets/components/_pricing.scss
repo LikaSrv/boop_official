@@ -1,6 +1,7 @@
 .pricing-content{position:relative;}
 .pricing_design{
     position: relative;
+    width: auto;
 
 }
 .pricing_design .single-pricing{
@@ -132,4 +133,48 @@ text-decoration:none;
       margin-bottom: 1rem;
     }
   }
+}
+
+.pricing_design .pricing_description {
+  padding: 20px;
+  line-height: 1.6;
+
+  h2 {
+    color: $warning;
+    font-size: 1.8rem;
+    margin-bottom: 30px !important;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+
+    li {
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      text-align: left;
+      font-size: small;
+
+      &::before {
+        content: '\2713';
+        color: $success;
+        font-weight: bold;
+        margin-right: 8px;
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+.pricing_content {
+  max-width: 430px;
+  margin: 10px auto;
 }

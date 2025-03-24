@@ -35,7 +35,7 @@
                   <% if pet.photo.present? %>
                     <%= image_tag pet.photo_url, width: 200, style: "border-radius: 50%; aspect-ratio: 1;", class: "shadow object-fit-cover" %>
                   <% else %>
-                    <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/Design%20sans%20titre%20(1).jpg", alt:"photo_pet_default",
+                    <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//photo_pet_default.jpg", alt:"photo_pet_default",
                           class:"shadow object-fit-cover",
                           style:"border-radius: 50%; aspect-ratio: 1; width: 200px;")%>
                   <% end %>

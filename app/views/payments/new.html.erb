@@ -79,6 +79,18 @@ Boop Custom est votre solution, à votre façon. Contactez-nous pour une étude 
           });
         });
       </script>
+
+      <script async
+  src="https://js.stripe.com/v3/buy-button.js">
+</script>
+
+<stripe-buy-button
+  buy-button-id="buy_btn_1R66MoGaLMauVNXcpAhuvwaj"
+  publishable-key="pk_test_51R52PTGaLMauVNXcAkkchp5BbDUB9nykOACXCy4HesXXhpTTQEn7e8oPCUNc0ULKTxYgswPuZ0QFJYOSEDotNm3W009IJrEgig"
+>
+</stripe-buy-button>
+
+
       <% else %>
         <%= link_to "Contactez-nous", contact_path, class: "btn btn-primary rounded-pill text-black mb-5 w-25" %>
 

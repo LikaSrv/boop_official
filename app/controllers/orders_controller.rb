@@ -10,6 +10,7 @@ class OrdersController < ApplicationController
       line_items: [{
         price_data: {
           currency: 'eur',
+          mode: 'subscription',
           unit_amount: pricing.price_cents,
           product_data: {
             name: pricing.title,

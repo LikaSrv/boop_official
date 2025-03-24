@@ -18,10 +18,28 @@
       </a>
     <% end %>
   </div>
-  <a href="<%=new_professional_path%>"
-              class="btn_custom shadow align-items-center position-absolute bottom-0 end-0 m-4"
-               >
-    Ajouter un professionnel
-    <%# <i class="fa-solid fa-plus"></i> %>
-  </a>
+  <div class="d-flex flex-column align-items-center position-absolute bottom-0 end-0 m-4">
+  <%if hasAvailableCapacity?(current_user)%>
+    <a href="<%=new_professional_path%>"
+                class="btn_custom shadow "
+                >
+      Ajouter un professionnel
+      <%# <i class="fa-solid fa-plus"></i> %>
+    </a>
+  <%else%>
+    <a href="<%=pricings_path%>"
+                class="btn_custom shadow"
+                >
+      Ajouter une souscription
+      <%# <i class="fa-solid fa-plus"></i> %>
+    </a>
+  <%end %>
+  <a href="<%=contact_path%>"
+                class="mt-4"
+                >
+      Annuler une souscription
+      <%# <i class="fa-solid fa-plus"></i> %>
+    </a>
+  </div>
+
 </div>

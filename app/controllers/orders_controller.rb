@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
           currency: 'eur',
           unit_amount: pricing.price_cents,
           product_data: {
-            name: pricing.specialty,
+            name: pricing.title,
             # images: [pricing.image_url],
           },
         },
@@ -61,8 +61,6 @@ class OrdersController < ApplicationController
         photo: "#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/petsitteur.jpg"
       }
     ]
-    index = @all_specialty.index { |specialty| specialty[:specialty] == @order.pricing.specialty }
-    @photo = @all_specialty[index][:photo]
 
   end
 

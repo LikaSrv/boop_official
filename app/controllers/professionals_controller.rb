@@ -1,6 +1,6 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
-  helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay
+  helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay, :hasAvailableCapacity?
 
   def index
     # search
@@ -41,6 +41,7 @@ class ProfessionalsController < ApplicationController
     (0..6).each do |day|
       @professional.opening_hours.build(day_of_week: day)
     end
+    @all_specialty = ["Vétérinaire", "Toiletteur", "Comportementaliste", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]
   end
 
   def create
@@ -50,7 +51,7 @@ class ProfessionalsController < ApplicationController
     @professional.rating = 0
     @professional.capacity = 1
     if @professional.save!
-      photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
+      photo_url = "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
       @professional.update!(photo_url: photo_url)
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
@@ -326,6 +327,15 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  # fonction to know if there are still available capacity to create a professional account
+  def hasAvailableCapacity? (user)
+    if user.professionals.count < numberOfProfessionals(user)
+      return true
+    else
+      return false
+    end
+  end
+
 
   private
 
@@ -354,4 +364,12 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  def numberOfProfessionals(user)
+    orders = user.orders
+    total_capacity = 0
+    orders.each do |order|
+      total_capacity += order.pricing.capacity
+    end
+    return total_capacity
+  end
 end

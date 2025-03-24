@@ -2,15 +2,71 @@
   <%= render "shared/back"%>
 </div>
 <div class="container">
-  <div class="row py-4 d-flex justify-content-center">
-    <div class="col-lg-5 col-sm-10 card_pro ">
-      <%= image_tag(@photo, style: "width: 100%; height: auto; border-radius: 8px") %>
-    </div>
-    <div class="col-lg-5 col-sm-10 card_pro  text-center d-flex flex-column align-items-center justify-content-around">
-      <h1>Service de <%=@order.pricing.specialty%></h1>
-      <h3>Prix : <strong><%= humanized_money_with_symbol @order.amount %></strong>   /mois</h3>
-      <button id="pay" class="btn_custom">
-        <h5 class="text-light">Payer</h5>
+  <div class="card_payment py-4">
+    <div class="card_content text-center d-flex flex-column">
+
+      <%if @order.pricing.title == "Boop 1"%>
+        <div class="description">
+          <h2>Boop 1 : La solution idéale pour les professionnels indépendants</h2>
+          <p>
+            La formule Boop 1 est spécialement conçue pour les professionnels du monde animalier souhaitant proposer leurs services en toute simplicité.
+            Que vous soyez pet-sitter, éducateur canin, toiletteur, promeneur de chiens ou tout autre expert du bien-être animal, Boop 1 vous permet de
+            créer un compte professionnel et d'offrir vos prestations en toute autonomie.
+          </p>
+          <p>Avec Boop 1, vous bénéficiez d’un espace dédié où vous pouvez :</p>
+          <ul>
+            <li>Présenter vos services avec une fiche détaillée et personnalisée</li>
+            <li>Gérer vos réservations et optimiser votre emploi du temps</li>
+            <li>Indiquer votre capacité d'accueil, pour les métiers permettant la prise en charge de plusieurs animaux simultanément (ex. pension canine, dog-walking en groupe, etc.)</li>
+          </ul>
+          <p>Notre plateforme évolue constamment pour répondre aux besoins des professionnels. C'est pourquoi nous prévoyons de vous permettre de modifier votre capacité d’accueil ultérieurement, selon votre organisation et votre expérience.
+
+          Boop 1, c'est la liberté de travailler selon vos propres conditions, tout en bénéficiant d'un outil performant pour attirer plus de clients et développer votre activité.
+          </p>
+        </div>
+      <% elsif @order.pricing.title == "Boop 5"%>
+      <div class="description">
+          <h2>Boop 5 : La puissance d’un réseau multi-professionnels</h2>
+          <p>
+            Avec la formule Boop 5, nous allons encore plus loin en offrant une solution idéale pour les entreprises et équipes de professionnels du secteur animalier.
+            Boop 5 est destiné aux structures ayant plusieurs collaborateurs et souhaitant gérer plusieurs prestations en parallèle. Que vous dirigiez une pension, un centre de formation, une clinique vétérinaire ou une agence de pet-sitting, cette formule vous permet de coordonner votre équipe et d'optimiser votre activité.
+          </p>
+          <p>Avec Boop 5, vous profitez de :</p>
+          <ul>
+            <li>Un compte professionnel multi-utilisateurs pour permettre à plusieurs membres de votre équipe d’interagir avec les clients</li>
+            <li>Une gestion centralisée des services et des disponibilités pour offrir une expérience fluide et efficace</li>
+            <li>Un tableau de bord avancé pour suivre vos performances et ajuster votre offre en fonction de la demande</li>
+          </ul>
+          <p>Grâce à Boop 5, vous pouvez offrir un service de haute qualité, tout en simplifiant votre gestion quotidienne. Cette formule est idéale pour les professionnels souhaitant passer à l’échelle supérieure et optimiser leur croissance dans l’univers du pet-care.</p>
+        </div>
+      <% else%>
+        <div class="description">
+          <h2>Boop Custom : Une solution sur mesure pour répondre à vos besoins spécifiques</h2>
+          <p>
+            Parce que chaque professionnel du monde animalier a des besoins uniques, Boop Custom est conçu pour offrir une flexibilité totale et une personnalisation avancée. Cette formule s’adresse aux entreprises et indépendants qui souhaitent adapter la plateforme à leur modèle d’activité, avec des fonctionnalités sur mesure pour optimiser leur gestion et améliorer l’expérience client.
+          <p>Avec Boop Custom, vous bénéficiez d’une approche totalement personnalisée :</p>
+          <ul>
+            <li>Configuration avancée de votre compte pour refléter parfaitement votre activité (nombre illimité de professionnels, services spécifiques, options exclusives)</li>
+            <li>Fonctionnalités adaptées selon vos besoins (gestion multi-sites, intégration de systèmes tiers, reporting avancé, etc.)</li>
+            <li>Un support dédié pour vous accompagner dans la mise en place et l’optimisation de votre solution</li>
+            <li> Une évolutivité maximale, avec la possibilité d’ajouter de nouvelles options à mesure que votre activité grandit</li>
+          </ul>
+          <p> Que vous soyez un réseau de pensions, une plateforme de réservation spécialisée, un centre de formation, ou une entreprise innovante dans le domaine animalier, Boop Custom vous permet de créer une expérience 100% adaptée à vos besoins.
+
+Avec cette formule, vous avez le contrôle total sur votre activité, tout en bénéficiant de la puissance de notre plateforme pour attirer plus de clients et maximiser votre efficacité.
+
+Boop Custom est votre solution, à votre façon. Contactez-nous pour une étude personnalisée et une mise en place adaptée à votre projet ! 🚀</p>
+        </div>
+      <%end%>
+
+      <% if !(@order.pricing.title == "Boop custom")%>
+
+      <h3 class="my-5 w-100">
+        Prix : <strong class="text-warning"><span><%= humanized_money_with_symbol @order.amount %></span></strong> /mois
+      </h3>
+
+      <button id="pay" class="btn_payment">
+        <h5>Payer</h5>
       </button>
       <%# Commented for the lecture, remove comments. %>
       <script src="https://js.stripe.com/v3/"></script>
@@ -23,6 +79,10 @@
           });
         });
       </script>
+      <% else %>
+        <%= link_to "Contactez-nous", contact_path, class: "btn btn-primary rounded-pill text-black mb-5 w-25" %>
+
+      <% end %>
 
     </div>
   </div>

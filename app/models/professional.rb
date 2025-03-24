@@ -17,7 +17,6 @@ class Professional < ApplicationRecord
   has_many :opening_hours, dependent: :destroy
   has_many :closing_hours, dependent: :destroy
   accepts_nested_attributes_for :opening_hours, reject_if: :all_blank, allow_destroy: true
-  has_many :availabilities, dependent: :destroy
 
   # geocoding
   geocoded_by :address
@@ -39,40 +38,4 @@ class Professional < ApplicationRecord
   def photo_presence
     errors.add(:photo, "doit être ajoutée") unless photo.attached?
   end
-
-  # generate availabilities after editing opening hours
-  def generate_availabilities_for_one_opening_hour(opening_hour, interval, date)
-
-    start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
-    end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
-
-    while start_time_morning + interval.minutes <= end_time_morning
-      availability = Availability.new(
-        professional: opening_hour.professional,
-        start_time: start_time_morning,
-        status: 1
-      )
-      availability.save!
-
-      # Incrémenter start_time de l'intervalle
-      start_time_morning += interval.minutes
-    end
-
-    start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
-    end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
-
-    while start_time_afternoon + interval.minutes <= end_time_afternoon
-      availability = Availability.new(
-        professional: opening_hour.professional,
-        start_time: start_time_afternoon,
-        status: 1
-      )
-      availability.save!
-
-      # Incrémenter start_time de l'intervalle
-      start_time_afternoon += interval.minutes
-    end
-
-  end
-
 end

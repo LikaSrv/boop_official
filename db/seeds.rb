@@ -22,8 +22,8 @@ Order.destroy_all
 puts "destroy all users"
 User.destroy_all
 
-puts "destroy all animals"
-Animal.destroy_all
+#puts "destroy all animals"
+#Animal.destroy_all
 
 puts "destroy all pricing"
 Pricing.destroy_all
@@ -34,9 +34,21 @@ PetAlert.destroy_all
 
 puts "create payment plans"
 
-pricing1 = Pricing.create!(title: "Boop 1", price: 19.90, description: "Un abonnement parfait pour les professionnels indépendants qui veulent gérer leur activité en toute simplicité.")
-pricing2 = Pricing.create!(title: "Boop 5", price: 59.90, description: "Un abonnement conçu pour les équipes jusqu’à 5 personnes, idéal pour développer votre activité ensemble et optimiser la gestion.")
-pricing3 = Pricing.create!(title: "Boop custom", price: 100, description: "Vous avez un besoin spécifique ou une équipe plus grande ? Créez une offre sur mesure adaptée à vos exigences et optimisez la gestion de votre activité. Contactez-nous !")
+pricing1 = Pricing.create!(
+  title: "Boop 1",
+  price: 19.90,
+  description: "Un abonnement parfait pour les professionnels indépendants qui veulent gérer leur activité en toute simplicité.",
+  capacity: 1,)
+pricing2 = Pricing.create!(
+  title: "Boop 5",
+  price: 59.90,
+  description: "Un abonnement conçu pour les équipes jusqu’à 5 personnes, idéal pour développer votre activité ensemble et optimiser la gestion.",
+  capacity: 5,)
+pricing3 = Pricing.create!(
+  title: "Boop custom",
+  price: 100,
+  description: "Vous avez un besoin spécifique ou une équipe plus grande ? Créez une offre sur mesure adaptée à vos exigences et optimisez la gestion de votre activité. Contactez-nous !",
+  capacity: 10,)
 
 # puts "create users"
 
@@ -82,7 +94,7 @@ pricing3 = Pricing.create!(title: "Boop custom", price: 100, description: "Vous 
 # toiletteur.photo.attach(io: toiletteur_file, filename: 'toiletteur.jpg', content_type: 'image/jpg')
 # toiletteur.save!
 
-puts "create animals"
+=begin puts "create animals"
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
 repos = JSON.parse(response)
@@ -112,7 +124,7 @@ repos["results"].each do |animal|
                 shelter: animal["establishment"]["name"],
                 photo: animal["image"])
   animal.save!
-end
+end =end
 
 # # puts "create pet alerts"
 

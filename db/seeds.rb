@@ -96,35 +96,35 @@ pricing3 = Pricing.create!(
 
 #puts "create animals"
 
-#response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
-#repos = JSON.parse(response)
-#repos["results"].each do |animal|
-#  file = URI.parse(animal["image"]).open
-#  animal = Animal.new(name: animal["name"],
-#  species: animal["species_label"],
-#  races_label: animal["races_label"],
-#  description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
-#  age: animal["age_number"],
-#  sex: animal["sex_label"],
-#  shelter: animal["establishment"]["name"],
-#  photo: animal["image"])
-#  animal.save!
-#end
+response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"
+repos = JSON.parse(response)
+repos["results"].each do |animal|
+  file = URI.parse(animal["image"]).open
+  animal = Animal.new(name: animal["name"],
+  species: animal["species_label"],
+  races_label: animal["races_label"],
+  description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
+  age: animal["age_number"],
+  sex: animal["sex_label"],
+  shelter: animal["establishment"]["name"],
+  photo: animal["image"])
+  animal.save!
+end
 
-#response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=2"
-#repos = JSON.parse(response)
-#repos["results"].each do |animal|
-#  file = URI.parse(animal["image"]).open
-#  animal = Animal.new(name: animal["name"],
-#                species: animal["species_label"],
-#                races_label: animal["races_label"],
-#                description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
-#                age: animal["age_number"],
-#                sex: animal["sex_label"],
-#                shelter: animal["establishment"]["name"],
-#                photo: animal["image"])
-#  animal.save!
-#end
+response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=2"
+repos = JSON.parse(response)
+repos["results"].each do |animal|
+  file = URI.parse(animal["image"]).open
+  animal = Animal.new(name: animal["name"],
+                species: animal["species_label"],
+                races_label: animal["races_label"],
+                description: animal["description"]!=nil ? animal["description"].gsub(/<br\s*\/?>|\r\n/, ' ').gsub(/\s+/, ' ').strip : "Non renseigné",
+                age: animal["age_number"],
+                sex: animal["sex_label"],
+                shelter: animal["establishment"]["name"],
+                photo: animal["image"])
+  animal.save!
+end
 
 # # puts "create pet alerts"
 

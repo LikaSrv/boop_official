@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="create-order"
 export default class extends Controller {
-  static values = { userId: Number, pricingId: Number }
+  static values = { userId: Number, pricingId: Number, stripeKey: String }
 
   connect() {
     console.log("Hello, Stimulus!");
@@ -59,7 +59,7 @@ export default class extends Controller {
     if (!paymentButton) return;
 
     // Initialiser Stripe avec la clé publique
-    const stripe = Stripe('<%= ENV["STRIPE_PUBLISHABLE_KEY"] %>');
+    const stripe = Stripe(this.stripeKeyValue);
 
     // Passer l'identifiant du sessionId et clientReferenceId
     stripe.redirectToCheckout({

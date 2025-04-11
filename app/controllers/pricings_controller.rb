@@ -2,7 +2,7 @@ class PricingsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
-    @pricings = Pricing.all
+    @pricings = Pricing.all.order(:created_at)
     @all_specialty = [
       {
         specialty: "Vétérinaire",

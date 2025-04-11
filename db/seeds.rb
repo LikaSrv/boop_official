@@ -39,13 +39,13 @@ pricing1 = Pricing.create!(
   price: 19.90,
   description: "Un abonnement parfait pour les professionnels indépendants qui veulent gérer leur activité en toute simplicité.",
   capacity: 1,
-  stripe_price_id: "evt_1R66F9GaLMauVNXcHdQSQd7L")
+  stripe_price_id: "price_1R66F8GaLMauVNXcutkmkmJU")
 pricing2 = Pricing.create!(
   title: "Boop 5",
   price: 59.90,
   description: "Un abonnement conçu pour les équipes jusqu’à 5 personnes, idéal pour développer votre activité ensemble et optimiser la gestion.",
   capacity: 5,
-  stripe_price_id: "evt_1R66FlGaLMauVNXcLpwuSH04")
+  stripe_price_id: "price_1R66FkGaLMauVNXcToKWZvNP")
 pricing3 = Pricing.create!(
   title: "Boop custom",
   price: 100,

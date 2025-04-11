@@ -26,6 +26,9 @@ class OrdersController < ApplicationController
         quantity: 1
       }],
       mode: 'subscription',
+      subscription_data: {
+        trial_period_days: 90
+      },
       success_url: order_url(order),
       cancel_url: root_url # ou une page d'échec personnalisée
     )

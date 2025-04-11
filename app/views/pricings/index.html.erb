@@ -30,13 +30,20 @@
                 <li>Gestion de capacité d'accueil</li>
               </ul>
             </div>
-            <button id="pay"
-                    class="btn_payment"
-                    data-controller="create-order"
-                    data-create-order-user-id-value="<%= current_user.id %>"
-                    data-create-order-pricing-id-value="<%= @pricings[0].id %>">
+            <% if user_signed_in? %>
+              <button id="pay"
+                  class="btn text-white rounded-4 p-2 w-100"
+                  style="background-color: rgb(1, 116, 212)"
+                  data-controller="create-order"
+                  data-create-order-user-id-value="<%= current_user.id %>"
+                  data-create-order-pricing-id-value="<%= @pricings[0].id %>"
+                  data-create-order-stripe-key-value="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
+>
               <h5>Payer</h5>
-            </button>
+              </button>
+            <% else %>
+              <%= link_to "Démarrer l'essai", new_user_session_path, class: "btn text-white rounded-4 p-2 w-100", style:"background-color: rgb(1, 116, 212)" %>
+            <% end %>
           </div>
         </div>
       </div>

@@ -1,31 +1,37 @@
 class OrdersController < ApplicationController
 
   def create
-    pricing = Pricing.find(params[:pricing_id])
-    order  = Order.create!(pricing: pricing, amount: pricing.price, state: 'pending', user: current_user)
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY'] # Set the secret key
 
+    pricing = Pricing.find(params[:order][:pricing_id])
+    order = Order.create!(pricing: pricing, amount: pricing.price, state: 'pending', user: current_user)
 
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: [{
         price_data: {
           currency: 'eur',
-          mode: 'subscription',
           unit_amount: pricing.price_cents,
           product_data: {
             name: pricing.title,
             # images: [pricing.image_url],
           },
+          recurring: { interval: 'month' } # Specify the recurring interval (e.g., 'month' or 'year')
         },
         quantity: 1
       }],
-      mode: 'payment',
-      success_url: order_url(order)
-      # cancel_url: new_order_payment_path(order)
+      mode: 'subscription', # Ensure mode is set to 'subscription'
+      success_url: order_url(order),
+      #cancel_url: new_order_payment_path(order)
     )
 
     order.update(checkout_session_id: session.id)
-    redirect_to new_order_payment_path(order)
+
+    render json: { checkout_session_id: session.id }, status: :created
+rescue StandardError => e
+  render json: { error: e.message }, status: :unprocessable_entity
+
+    #redirect_to new_order_payment_path(order)
   end
 
   def show

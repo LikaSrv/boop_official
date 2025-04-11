@@ -5,6 +5,7 @@
       <p class="m-3">Trouvez le programme idéal et bénéficiez de <span class="text-warning" style="font-weight: bold; font-size: x-large"> 90 jours d'essai gratuit </span> pour en profiter pleinement ! 🚀</p>
     </div>
     <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-5" style="overflow-x: auto;">
+      <%#boop 1%>
       <div class="wow fadeInUp pricing_content"
              data-wow-duration="1s"
              data-wow-delay="0.1s"
@@ -29,15 +30,17 @@
                 <li>Gestion de capacité d'accueil</li>
               </ul>
             </div>
-            <script async
-              src="https://js.stripe.com/v3/buy-button.js"></script>
-            <stripe-buy-button
-              buy-button-id="buy_btn_1R66MoGaLMauVNXcpAhuvwaj"
-              publishable-key="pk_test_51R52PTGaLMauVNXcAkkchp5BbDUB9nykOACXCy4HesXXhpTTQEn7e8oPCUNc0ULKTxYgswPuZ0QFJYOSEDotNm3W009IJrEgig">
-            </stripe-buy-button>
+            <button id="pay"
+                    class="btn_payment"
+                    data-controller="create-order"
+                    data-create-order-user-id-value="<%= current_user.id %>"
+                    data-create-order-pricing-id-value="<%= @pricings[0].id %>">
+              <h5>Payer</h5>
+            </button>
           </div>
         </div>
       </div>
+      <%#boop 5%>
       <div class="wow fadeInUp pricing_content"
              data-wow-duration="1s"
              data-wow-delay="0.1s"
@@ -71,6 +74,7 @@
           </div>
         </div>
       </div>
+      <%# boop custom %>
       <div class="wow fadeInUp pricing_content"
              data-wow-duration="1s"
              data-wow-delay="0.1s"
@@ -84,7 +88,7 @@
               </h3>
             </div>
             <div class="pricing_description">
-            <p><%= @pricings[2].description %></p>
+              <p><%= @pricings[2].description %></p>
               <ul>
                 <li>Toutes les fonctionnalités de Boop 5</li>
                 <li>Configuration avancée de votre compte</li>

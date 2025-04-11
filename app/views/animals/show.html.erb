@@ -1,49 +1,40 @@
-<%# Back button %>
 <div class="mb-4">
-  <%= link_to animals_path, class: "text-decoration-none text-dark ms-4" do %>
-    <i class="fas fa-arrow-left me-2"></i>Retour
+  <%= link_to animals_path, class: "text-decoration-none ms-4 text-primary" do %>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
   <% end %>
 </div>
-
 <div class="pet-profile-container">
-
-
-
+  <div class="speech-bubble text-center">
+    <p>Salut, je m'appelle <%= @animal.name %>!</p>
+  </div>
   <div class="profile-content">
     <div class="pet-image">
       <%= image_tag @animal.photo if @animal.photo.present? %>
     </div>
-
-    <div class="pet-details">
-    <h2 class="text-warning mb-5">Salut, je m'appelle <%= @animal.name %>!</h2>
-
-
-<div class="row">
-<div class="detail-item col">
-        <h3>TYPE</h3>
-        <p><%= @animal.species %></p>
+    <div>
+      <div class="pet-details-row">
+        <div class="detail-item">
+          <h3>TYPE</h3>
+          <p><%= @animal.species %></p>
+        </div>
+        <div class="detail-item">
+          <h3>ÂGE</h3>
+          <p><%= @animal.age %></p>
+        </div>
+        <div class="detail-item">
+          <h3>SEXE</h3>
+          <p><%= @animal.sex&.capitalize %></p>
+        </div>
       </div>
-
-      <div class="detail-item col">
-        <h3>ÂGE</h3>
-        <p><%= @animal.age %></p>
-      </div>
-
-      <div class="detail-item col">
-        <h3>SEXE</h3>
-        <p><%= @animal.sex&.capitalize %></p>
-      </div>
-</div>
-
-
-      <div class="detail-item">
-        <h3>DESCRIPTION</h3>
-        <p><%=@animal.description%></p>
-      </div>
-
-      <div class="detail-item">
-        <h3>REFUGE</h3>
-        <p><%=@animal.shelter%></p>
+      <div class="d-flex flex-column">
+        <div class="detail-item mt-3">
+          <h3>DESCRIPTION</h3>
+          <p><%= @animal.description %></p>
+        </div>
+        <div class="detail-item mt-3">
+          <h3>REFUGE</h3>
+          <p><%= @animal.shelter %></p>
+        </div>
       </div>
     </div>
   </div>

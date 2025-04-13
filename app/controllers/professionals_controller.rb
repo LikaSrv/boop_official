@@ -345,6 +345,7 @@ class ProfessionalsController < ApplicationController
     end
   end
 
+  # fonction to validate the pro signup token
   def validate_pro_signup_token
     if params[:token].blank?
       redirect_to root_path, alert: "Lien manquant."
@@ -367,10 +368,28 @@ class ProfessionalsController < ApplicationController
 
     if already_created >= max_allowed
       redirect_to root_path, alert: "Le nombre maximal de comptes pro a déjà été atteint pour cette commande."
-  end
+    end
 
     @user = @order.user
   end
+
+  def last_valid_token_for_user(user)
+    orders = Order
+      .includes(:pricing)
+      .where(user: user, state: 'paid')
+      .where.not(pro_signup_token: nil)
+
+    orders.each do |order|
+      max_allowed = order.pricing.capacity
+      if order.pro_accounts_created.to_i < max_allowed
+        return order.pro_signup_token
+      end
+    end
+
+    nil
+  end
+
+
 
 
   private

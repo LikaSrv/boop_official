@@ -65,16 +65,8 @@ Deno.serve(async (req) => {
       });
     }
 
+    // ✅ Mise à jour de la commande avec le token + changement d’état
     const token = crypto.randomUUID();
-
-    if (tokenError) {
-      console.error("Failed to store pro_signup_token", tokenError);
-      return new Response(JSON.stringify({ error: 'Token update failed' }), {
-        status: 500,
-        headers: corsHeaders
-      });
-    }
-
     const { error: updateError } = await supabase
       .from('orders')
       .update({ state: 'paid', pro_signup_token: token })
@@ -82,12 +74,13 @@ Deno.serve(async (req) => {
 
     if (updateError) {
       console.error("Failed to update order", updateError);
-      return new Response(JSON.stringify({ error: 'Update failed' }), {
+      return new Response(JSON.stringify({ error: 'Token + state update failed' }), {
         status: 500,
         headers: corsHeaders
       });
     }
 
+    // ✅ Seulement si tout a marché → on envoie l’email
     const signupLink = `https://www.myboop.fr/professionals/new?token=${token}`;
 
     const emailResponse = await fetch("https://api.brevo.com/v3/smtp/email", {
@@ -124,11 +117,9 @@ Deno.serve(async (req) => {
       })
     });
 
-    const redirect_url = signupLink;
-
     return new Response(JSON.stringify({
       message: 'Order updated to paid and email sent.',
-      redirect_url,
+      redirect_url: signupLink,
       user_id: order.user_id
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' }

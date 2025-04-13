@@ -1,18 +1,20 @@
-<div>
-  <%= render "shared/back"%>
-</div>
 <div class="container ">
   <div class="row d-flex justify-content-center py-4">
     <div class="col-lg-5 col-sm-10 card_pro d-flex flex-column justify-content-around p-5">
-      <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg" alt="happy cat">
-      <h3 class="text-center">Votre demande est bien validée ! </h3>
-      <ul class="list-unstyled text-start my-5">
+      <div class="text-center">
+        <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg"
+         alt="happy cat"
+         style="width: 200px; height: 200px; margin-bottom: 20px;">
+      </div>
+      <h3 class="text-center">Votre demande a bien été prise en compte ! </h3>
+      <p class="my-2">Nous procédons à la validation du paiement. Lorsque le paiement est validé, vous recevrez un mail pour vous inviter à créer le compte professionnel. </p>
+      <ul class="list-unstyled text-start mb-5">
         <li style="font-size: 20px"><strong>Date : </strong> <%= @order.created_at.to_date %></li>
         <li style="font-size: 20px"><strong>Mensualité : </strong> <%= humanized_money_with_symbol @order.amount %>  /mois</li>
       </ul>
 
     <div class="text-center">
-      <%= link_to "Créer un service maintenant",new_professional_path, class:"btn_custom" %>
+      <%= link_to "Revenir à la page d'accueil",root_path, class:"btn_custom" %>
     </div>
     </div>
 </div>

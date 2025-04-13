@@ -1,6 +1,8 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
   helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay, :hasAvailableCapacity?
+  before_action :validate_pro_signup_token, only: [:new]
+
 
   def index
     # search
@@ -333,6 +335,18 @@ class ProfessionalsController < ApplicationController
       return true
     else
       return false
+    end
+  end
+
+  def validate_pro_signup_token
+    if params[:token].blank?
+      redirect_to root_path, alert: "Lien manquant."
+      return
+    end
+
+    @user = User.find_by(pro_signup_token: params[:token])
+    unless @user
+      redirect_to root_path, alert: "Lien invalide ou expiré."
     end
   end
 

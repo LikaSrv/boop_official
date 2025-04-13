@@ -19,24 +19,16 @@
     <% end %>
   </div>
   <div class="d-flex flex-column align-items-center position-absolute bottom-0 end-0 m-4">
-    <%if hasAvailableCapacity?(current_user)%>
-      <a href="<%=new_professional_path%>"
-                class="btn_custom shadow "
-                >
+    <% if (token = last_valid_token_for_user(current_user)) %>
+      <a href="<%= new_professional_path(token: token) %>" class="btn_custom shadow">
         Ajouter un professionnel
-        <%# <i class="fa-solid fa-plus"></i> %>
       </a>
-    <%else%>
-      <a href="<%=pricings_path%>"
-                class="btn_custom shadow"
-                >
+    <% else %>
+      <a href="<%= pricings_path %>" class="btn_custom shadow">
         Ajouter une souscription
-        <%# <i class="fa-solid fa-plus"></i> %>
       </a>
-    <%end %>
-    <a href="<%=contact_path%>"
-                class="mt-4"
-                >
+    <% end %>
+    <a href="<%=contact_path%>" class="mt-4" >
       Annuler une souscription
       <%# <i class="fa-solid fa-plus"></i> %>
     </a>

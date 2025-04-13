@@ -1,6 +1,6 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
-  helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay, :hasAvailableCapacity?
+  helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay, :hasAvailableCapacity?, :last_valid_token_for_user
   before_action :validate_pro_signup_token, only: [:new, :create]
 
 

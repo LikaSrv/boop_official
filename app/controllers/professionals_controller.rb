@@ -351,7 +351,7 @@ class ProfessionalsController < ApplicationController
       return
     end
 
-    @order = Order.find_by(pro_signup_token: params[:token])
+    @order = Order.find_by(pro_signup_token: params[:token], state: 'paid')
 
     if @order.pro_signup_token.nil?
       redirect_to root_path, alert: "Ce lien n’est plus valide."

@@ -65,29 +65,24 @@ Deno.serve(async (req) => {
       });
     }
 
-    const { error: updateError } = await supabase
-      .from('orders')
-      .update({ state: 'paid' })
-      .eq('id', order.id);
+    const token = crypto.randomUUID();
 
-    if (updateError) {
-      console.error("Failed to update order", updateError);
-      return new Response(JSON.stringify({ error: 'Update failed' }), {
+    if (tokenError) {
+      console.error("Failed to store pro_signup_token", tokenError);
+      return new Response(JSON.stringify({ error: 'Token update failed' }), {
         status: 500,
         headers: corsHeaders
       });
     }
 
-    const token = crypto.randomUUID();
+    const { error: updateError } = await supabase
+      .from('orders')
+      .update({ state: 'paid', pro_signup_token: token })
+      .eq('id', order.id);
 
-    const { error: tokenError } = await supabase
-      .from('users')
-      .update({ pro_signup_token: token })
-      .eq('id', order.user_id);
-
-    if (tokenError) {
-      console.error("Failed to store pro_signup_token", tokenError);
-      return new Response(JSON.stringify({ error: 'Token update failed' }), {
+    if (updateError) {
+      console.error("Failed to update order", updateError);
+      return new Response(JSON.stringify({ error: 'Update failed' }), {
         status: 500,
         headers: corsHeaders
       });

@@ -1,7 +1,7 @@
 class ProfessionalsController < ApplicationController
   skip_before_action :authenticate_user!, only: [ :index, :show ]
   helper_method :isOpened?, :isClosed?, :availabilitiesOfTheDay, :allTimeSlotsOfTheDay, :hasAvailableCapacity?
-  before_action :validate_pro_signup_token, only: [:new]
+  before_action :validate_pro_signup_token, only: [:new, :create]
 
 
   def index
@@ -55,6 +55,13 @@ class ProfessionalsController < ApplicationController
     if @professional.save!
       photo_url = "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
       @professional.update!(photo_url: photo_url)
+
+      @order.increment!(:pro_accounts_created)
+      # Invalide le token si quota atteint
+      if @order.pro_accounts_created >= (@order.pricing.max_pro_accounts || 1)
+        @order.update!(pro_signup_token: nil)
+      end
+
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
       render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
@@ -344,10 +351,25 @@ class ProfessionalsController < ApplicationController
       return
     end
 
-    @user = User.find_by(pro_signup_token: params[:token])
-    unless @user
-      redirect_to root_path, alert: "Lien invalide ou expiré."
+    @order = Order.find_by(pro_signup_token: params[:token])
+
+    if @order.pro_signup_token.nil?
+      redirect_to root_path, alert: "Ce lien n’est plus valide."
     end
+
+    unless @order
+      redirect_to root_path, alert: "Lien invalide ou expiré."
+      return
+    end
+
+    max_allowed = @order.pricing.capacity || 1
+    already_created = @order.pro_accounts_created || 0
+
+    if already_created >= max_allowed
+      redirect_to root_path, alert: "Le nombre maximal de comptes pro a déjà été atteint pour cette commande."
+  end
+
+    @user = @order.user
   end
 
 

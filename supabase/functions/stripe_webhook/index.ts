@@ -95,18 +95,18 @@ Deno.serve(async (req) => {
         to: [{ email: user.email }],
         subject: "Bienvenue sur Boop - Crée ton profil professionnel 🐶",
         htmlContent: `
-          <h2 style="font-family: Arial, sans-serif; color: #e68e2e;">
+          <h2 style="font-family: Arial, sans-serif; color: #EFA690;">
             👋 Bienvenue sur Boop, <br>le réseau des pros du monde animal 🐾
           </h2>
           <p style="font-family: Arial, sans-serif; color: #333; font-size: 16px;">
-            Merci pour ton inscription 🙌<br>
-            Tu es à deux clics de connecter ton expertise à des centaines de clients qui te cherchent déjà.
+            Merci pour votre inscription 🙌<br>
+            Vous êtes à deux clics de connecter votre expertise à des centaines de clients qui vous attendent.
           </p>
           <p style="font-family: Arial, sans-serif; color: #333; font-size: 16px;">
-            Pour activer ton espace professionnel, c’est par ici :
+            Pour activer votre espace professionnel, c’est par ici :
           </p>
           <a href="${signupLink}"
-            style="display: inline-block; padding: 14px 24px; background-color: #e68e2e; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
+            style="display: inline-block; padding: 14px 24px; background-color: #EFA690; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
             🚀 Créer mon compte pro
           </a>
           <p style="font-family: Arial, sans-serif; color: #777; font-size: 14px; margin-top: 30px;">

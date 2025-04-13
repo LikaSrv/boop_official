@@ -58,7 +58,7 @@ class ProfessionalsController < ApplicationController
 
       @order.increment!(:pro_accounts_created)
       # Invalide le token si quota atteint
-      if @order.pro_accounts_created >= (@order.pricing.max_pro_accounts || 1)
+      if @order.pro_accounts_created >= (@order.pricing.capacity || 1)
         @order.update!(pro_signup_token: nil)
       end
 

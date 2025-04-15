@@ -38,15 +38,14 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: "localhost:3000",
-    user_name: Rails.application.credentials.dig(:smtp, :user_name),
-    password: Rails.application.credentials.dig(:smtp, :password),
-    authentication: :plain,
-    enable_starttls_auto: true,
-    open_timeout:    5,
-    read_timeout:    5}
+    address:              "smtp-relay.brevo.com",  # Serveur SMTP de Brevo
+    port:                 587,                          # Port généralement recommandé
+    domain:               "www.myboop.fr",          # Votre domaine
+    user_name:            ENV["BREVO_SMTP_USER"],       # Utilisez les variables d’environnement pour votre identifiant
+    password:             ENV["BREVO_SMTP_API_KEY"],    # et votre clé API
+    authentication:       "login",
+    enable_starttls_auto: true
+  }
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 

@@ -1,28 +1,4 @@
 // Add padding to body to account for fixed navbar
-body {
-  padding-top: 0; // Remove padding from body
-}
-
-.page-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.page-wrapper {
-  flex: 1 0 auto;
-  padding-top: 76px; // Height of the navbar
-  width: 100%;
-}
-
-.content-wrap {
-  width: 100%;
-}
-
-.footer {
-  flex-shrink: 0;
-}
-
 .navbar-lewagon {
   height: 76px; // Explicitly set height
   justify-content: space-between;
@@ -31,16 +7,12 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1030;
+  z-index: 2000;
   transition: all 0.3s ease;
   padding: 1rem 2rem;
   width: 100%;
   box-sizing: border-box;
-
-  .scrolled {
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 2px 8px rgba(255, 122, 61, 0.1);
-  }
+  flex-grow: 0;
 
   .navbar-brand {
     img {
@@ -51,10 +23,6 @@ body {
         transform: scale(1.05);
       }
     }
-  }
-
-  .navbar-collapse {
-    flex-grow: 0;
   }
 
   .nav-link {
@@ -93,30 +61,34 @@ body {
     }
   }
 
-  @media (max-width: 991.98px) {
-    padding: 0.5rem 1rem;
-    width: 100vw;
-    max-width: 100%;
-    overflow-x: hidden;
+  @media (max-width: 992px){
+    height: 85px;
+  }
+}
 
-    .navbar-collapse {
-      background-color: #FFF5F1;
-      padding: 1rem;
-      border-radius: 0 0 1rem 1rem;
-      box-shadow: 0 4px 6px rgba(255, 122, 61, 0.1);
-      margin: 0.5rem -1rem -0.5rem -1rem;
-      width: 100vw;
-    }
+.navbar-collapse {
+  flex-grow: 0;
+  background-color: #FFF5F1;
 
-    .navbar-nav {
-      align-items: center;
-      width: 100%;
-    }
+  @media (max-width: 992px) {
+    position: absolute;
+    top: 76px; // Height of the navbar
+    width: fit-content;
+    right: 0;
+    left: auto;
+    background-color: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 
     .nav-link {
-      text-align: center;
-      width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      color: #333;
+
+      &::after {
+        display: none;
+      }
     }
   }
 }

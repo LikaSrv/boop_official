@@ -1,0 +1,24 @@
+body {
+  padding-top: 0; // Remove padding from body
+  background-color: white;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1 0 auto;
+  padding-top: 76px; // Height of the navbar
+  width: 100%;
+}
+
+.content-wrap {
+  width: 100%;
+}
+
+.footer {
+  flex-shrink: 0;
+}

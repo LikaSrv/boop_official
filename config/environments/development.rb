@@ -42,7 +42,7 @@ Rails.application.configure do
     port:                 587,                          # Port généralement recommandé
     domain:               "www.myboop.fr",          # Votre domaine
     user_name:            ENV["BREVO_SMTP_USER"],       # Utilisez les variables d’environnement pour votre identifiant
-    password:             ENV["BREVO_SMTP_API_KEY"],    # et votre clé API
+    password:             ENV["BREVO_SMTP_PASSWORD"],    # et votre clé API
     authentication:       "login",
     enable_starttls_auto: true
   }

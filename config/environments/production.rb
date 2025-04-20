@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
-  config.action_mailer.default_url_options = { host: "http://myboop.fr" }
+  config.action_mailer.default_url_options = { host: "http://www.myboop.fr" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              "smtp-relay.brevo.com",  # Serveur SMTP de Brevo

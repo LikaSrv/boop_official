@@ -91,7 +91,7 @@ Deno.serve(async (req) => {
         "content-type": "application/json"
       },
       body: JSON.stringify({
-        sender: { name: "Boop", email: "hello@boopfr.com" },
+        sender: { name: "Boop", email: "hello@myboop.fr" },
         to: [{ email: user.email }],
         subject: "Bienvenue sur Boop - Crée ton profil professionnel 🐶",
         htmlContent: `

@@ -17,16 +17,18 @@ export default class extends Controller {
 
   connect() {
     // console.log(this.element.dataset);
+    // console.log(document.getElementsByClassName("emptySelectDate"));
+
 
     const closedDaysFromData = this.element.dataset.editAvailabilitiesClosedDaysValue;
-    // console.log(closedDaysFromData);
+    // console.log("closedDaysFromData : ", closedDaysFromData);
 
     const allClosedDaysFromData = this.element.dataset.editAvailabilitiesAllClosedDaysValue;
     // console.log(allClosedDaysFromData);
 
     // Si `closedDaysFromData` est une chaîne, on doit la convertir en tableau
     const closedDays = JSON.parse(closedDaysFromData);
-    // console.log(closedDays);
+    // console.log("closedDays :", closedDays);
 
     const allClosedDays = JSON.parse(allClosedDaysFromData).map(day => new Date(day.date).toDateString());
     // console.log(allClosedDays);
@@ -74,6 +76,8 @@ export default class extends Controller {
         },
       },
 
+
+
       onChange: (selectedDates, dateStr, instance) => {
         // Mise à jour du champ caché (selected_date) avec la date choisie
         this.selectedDateTarget.value = dateStr;  // Mets à jour le target avec la date choisie
@@ -90,6 +94,17 @@ export default class extends Controller {
         this.updateSlots(dateStr);
       }
     });
+
+    // 💥 Force Flatpickr à déclencher comme si une date venait d’être sélectionnée
+    const defaultDate = nextOpenDate;
+    console.log(defaultDate);
+
+    const dateStr = this.picker.formatDate(defaultDate, "Y-m-d");
+
+    this.selectedDateTarget.value = dateStr;
+    this.picker.altInput.value = this.picker.formatDate(defaultDate, "j F Y");
+    this.updateSlots(dateStr);
+
   }
 
   openPicker() {
@@ -163,7 +178,7 @@ export default class extends Controller {
     });
 
     const slot = event.target;
-    console.log(slot);
+    // console.log(slot);
 
     Swal.fire({
       title: "Changer ma disponibilité",
@@ -173,10 +188,13 @@ export default class extends Controller {
       cancelButtonColor: "#0E0000",
       cancelButtonText: "Annuler",
       confirmButtonText: "Oui",
-      confirmButtonColor: '#EFA690'
+      confirmButtonColor: '#EFA690',
+      customClass: {
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("bloquer/débloquer un créneau");
+        // console.log("bloquer/débloquer un créneau");
         fetch(`/closing_hours/check?${params.toString()}`, {
           method: "GET",
           headers: {
@@ -254,12 +272,12 @@ export default class extends Controller {
               return response.text(); // Récupère la réponse en tant que texte brut
             })
               .then((data) => {
-                console.log("Réponse JSON :", data);
+                // console.log("Réponse JSON :", data);
 
                 slot.classList.add("btn-outline-dark");
                 slot.classList.remove("btn-outline-primary");
 
-                console.log(slot);
+                // console.log(slot);
 
                 Swal.fire({
                   title: "La disponibilité a bien été modifiée",
@@ -316,7 +334,7 @@ export default class extends Controller {
       if (data.success) {
         // Analyser le JSON de `data.html`
         const parsedData = JSON.parse(data.html); // Convertir la chaîne JSON en objet
-        console.log(parsedData);
+        // console.log(parsedData);
 
 
         if (parsedData.all_closed_days) {
@@ -363,13 +381,16 @@ export default class extends Controller {
 
     swal.fire({
       title: "Supprimer la date de fermeture",
-      text: "Vous êtes sûr de point de modifier la date de fermeture.",
+      text: "Vous êtes sûr de point de modifier la date de fermeture. Cette date sera de nouveau disponible pour les rendez-vous.",
       icon: "question",
       showCancelButton: true,
       cancelButtonColor: "#0E0000",
       cancelButtonText: "Annuler",
       confirmButtonText: "Oui",
-      confirmButtonColor: '#EFA690'
+      confirmButtonColor: '#EFA690',
+      customClass: {
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
     }).then((result) => {
       if (result.isConfirmed) {
 

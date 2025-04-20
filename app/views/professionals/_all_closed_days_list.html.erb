@@ -1,23 +1,23 @@
 <div controller= "edit-availabilities" id="all_closed_days_list">
-        <ul>
-          <% all_closed_days.each do |closed_day| %> <!-- Utilisation de la variable locale -->
-            <% if exceptionnal_closed_days.any? { |exceptional_day| exceptional_day[:date] == closed_day[:date] } %>
-              <% existing_closing_hour = ClosingHour.where(
+  <ul>
+    <% specific_dates.each do |closed_day| %> <!-- Utilisation de la variable locale -->
+      <% if exceptionnal_closed_days.any? { |exceptional_day| exceptional_day[:date] == closed_day[:date] } %>
+        <% existing_closing_hour = ClosingHour.where(
               professional_id: @professional.id,
               start_time: closed_day[:date].beginning_of_day..closed_day[:date].end_of_day,
               whole_day: true
             ).limit(1).pluck(:id).first %>
-              <li>
-                <a href="#"
+        <li class="my-2">
+          <a href="#"
              data-controller="edit-availabilities"
              data-action="click->edit-availabilities#deleteClosedDay"
-                  data-edit-availabilities-closed-day-id="<%= existing_closing_hour %>">
-                  <%= closed_day[:name] %> : <%= closed_day[:date].strftime("%d-%m-%Y") %>
-                </a>
-              </li>
-            <% else %>
-              <li><%= closed_day[:name] %> : <%= closed_day[:date].strftime("%d-%m-%Y") %></li>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
+            data-edit-availabilities-closed-day-id="<%= existing_closing_hour %>">
+            <%= closed_day[:name] %> : <%= closed_day[:date].strftime("%d-%m-%Y") %>
+          </a>
+        </li>
+      <% else %>
+        <li class="my-2"><%= closed_day[:name] %> : <%= closed_day[:date].strftime("%d-%m-%Y") %></li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>

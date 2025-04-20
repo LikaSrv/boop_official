@@ -95,9 +95,10 @@ class ProfessionalsController < ApplicationController
     opening_hours = OpeningHour.where(professional: @professional)
     @open_days = opening_hours.where(closed: false).pluck(:day_of_week)
     @closed_days = opening_hours.where(closed: true).pluck(:day_of_week)
-    @all_closed_days = get_all_closed_days(@professional)
+    @specific_closed_dates = get_all_closed_days(@professional)[:specific_dates]
 
     @selected_date = find_next_open_date(@closed_days)
+
 
     if @reviews.empty?
       @average_rating = 0
@@ -160,14 +161,37 @@ class ProfessionalsController < ApplicationController
     redirect_to pro_index_user_path(current_user), notice: 'Votre profil professionnel a bien été supprimé'
   end
 
+  #--Specific funtions--
+
+  # fonction to get all closed day (exceptionnal + national days offs) of each professional
+  def get_all_closed_days(professional)
+    opening_hours = OpeningHour.where(professional: professional)
+    recurring_days = opening_hours.where(closed: true).pluck(:day_of_week)
+
+    @exceptionnal_closed_days = ClosingHour.where(professional: professional, whole_day: true)
+    .pluck(:start_time)
+    .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
+
+    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
+
+    @specific_dates = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
+
+    all_closed_days = {
+      recurring_days: recurring_days,
+      specific_dates: @specific_dates
+    }
+
+    return all_closed_days
+  end
+
   # if a professional is closed on a specific day
   def isOpened? (professional, date)
-    all_closed_days = get_all_closed_days(professional).map { |day| day[:date] }
-    if all_closed_days.include?(date)
-      return false
-    else
-      return true
-    end
+    all_closed_days = get_all_closed_days(professional)
+
+    is_closed_recurring = all_closed_days[:recurring_days].include?(date.wday)
+    is_closed_specific = all_closed_days[:specific_dates].include?(date.to_date)
+
+    !(is_closed_recurring || is_closed_specific)
   end
 
   # if a professional is closed on a specific day time
@@ -269,21 +293,7 @@ class ProfessionalsController < ApplicationController
     current_date
   end
 
-  # fonction to get all closed day (exceptionnal + national days offs) of each professional
-  def get_all_closed_days(professional)
-    @opening_hours = OpeningHour.where(professional: professional)
-    @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
 
-    @exceptionnal_closed_days = ClosingHour.where(professional: professional, whole_day: true)
-    .pluck(:start_time)
-    .map { |date| { name: "Fermeture exceptionnelle", date: date.to_date } }
-
-    @national_days_offs = NationalDaysOff.pluck(:name, :date).map { |name, date| { name: name, date: date } }
-
-    @all_closed_days = (@exceptionnal_closed_days + @national_days_offs).uniq.sort_by { |day| day[:date] }
-
-    return @all_closed_days
-  end
 
   def update_slots
     @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today# Récupérer la nouvelle date
@@ -313,7 +323,7 @@ class ProfessionalsController < ApplicationController
     @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
 
     @closed_days = @opening_hours.where(closed: true).pluck(:day_of_week)
-    @all_closed_days = get_all_closed_days(@professional)
+    @specific_closed_dates = get_all_closed_days(@professional)[:specific_dates]
 
     @selected_date = find_next_open_date(@closed_days)
 

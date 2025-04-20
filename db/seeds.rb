@@ -52,12 +52,12 @@ pricing3 = Pricing.create!(
   description: "Vous avez un besoin spécifique ou une équipe plus grande ? Créez une offre sur mesure adaptée à vos exigences et optimisez la gestion de votre activité. Contactez-nous !",
   capacity: 10,)
 
-puts "create users"
+# puts "create users"
 
-ser1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
-user1 = User.new(email: "user1@test.fr", password: "123456", first_name: "Jean", last_name: "Dupont")
+# ser1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
+# user1 = User.new(email: "user1@test.fr", password: "123456", first_name: "Jean", last_name: "Dupont")
 # user1.photo.attach(io: user1_photo, filename: 'user1.jpg', content_type: 'image/jpg')
-user1.save!
+# user1.save!
 
 #puts "create animals"
 
@@ -97,6 +97,30 @@ end
 
 
 # PetAlert.create!(title: "Chien trouvé", description: "J'ai trouvé un chien errant dans le parc de la colline du château. Il est très gentil et bien éduqué. Si vous le reconnaissez, merci de me contacter au 06 12 34 56 78", date: "13-01-2025", location: "Parc de la colline du château", contact: "06 12 34 56 78", status: false, photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Design%20sans%20titre%20(6).jpg")
+
+puts "📆 Création des jours fériés 2025 pour la France..."
+
+national_days_2025 = [
+  { name: "Jour de l'An", date: Date.new(2025, 1, 1) },
+  { name: "Vendredi Saint (Alsace/Moselle)", date: Date.new(2025, 4, 18) },
+  { name: "Lundi de Pâques", date: Date.new(2025, 4, 21) },
+  { name: "Fête du Travail", date: Date.new(2025, 5, 1) },
+  { name: "Victoire 1945", date: Date.new(2025, 5, 8) },
+  { name: "Ascension", date: Date.new(2025, 5, 29) },
+  { name: "Lundi de Pentecôte", date: Date.new(2025, 6, 9) },
+  { name: "Fête Nationale", date: Date.new(2025, 7, 14) },
+  { name: "Assomption", date: Date.new(2025, 8, 15) },
+  { name: "Toussaint", date: Date.new(2025, 11, 1) },
+  { name: "Armistice", date: Date.new(2025, 11, 11) },
+  { name: "Noël", date: Date.new(2025, 12, 25) },
+  { name: "Saint Étienne (Alsace/Moselle)", date: Date.new(2025, 12, 26) }
+]
+
+national_days_2025.each do |day|
+  NationalDaysOff.find_or_create_by!(name: day[:name], date: day[:date])
+end
+
+puts "✅ #{national_days_2025.size} jours fériés créés pour 2025."
 
 
 puts "seed done"

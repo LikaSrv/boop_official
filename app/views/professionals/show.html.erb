@@ -119,7 +119,7 @@
     </div>
     <%# appointment %>
     <div id="available-pro" class="card_pro" data-controller="appointment-selected-show" data-appointment-selected-show-api-key-value="<%= @professional.id %>" data-appointment-selected-show-closed-days-value="<%=@closed_days.to_json%>"
-    data-appointment-selected-show-all-closed-days-value="<%=@all_closed_days.to_json%>">
+    data-appointment-selected-show-all-closed-days-value="<%=@specific_closed_dates.to_json%>">
       <h3 class="text-center my-3">Prendre un rendez-vous</h3>
       <!-- Sélection de la date (rendu cliquable) -->
       <div class="d-flex flex-row justify-content-center align-items-center">

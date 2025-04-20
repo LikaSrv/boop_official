@@ -7,6 +7,7 @@
   <% while days_displayed < 7 %>
     <% date = DateTime.current.to_date + i %>
     <% if isOpened?(professional, date) %>
+
       <div class="nav-item dropdown" data-controller="appointment-selected" data-appointment-selected-api-key-value="<%= professional.id %>">
         <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
           <%= date.strftime('%d-%m-%Y') %>

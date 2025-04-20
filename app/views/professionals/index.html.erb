@@ -7,8 +7,8 @@
   <p class="text-center">Trouvez le professionnel qui correspond à vos besoins</p>
   <%# search zone %>
   <div class="mb-2 d-flex justify-content-center mx-auto" >
-    <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-      <div class="d-flex justify-content-center search-form-control form-group", style="width: 100%;" >
+    <%= simple_form_for :search, url: professionals_path, method: :get, html: {class: "w-100", style: "max-width: 900px"} do |f| %>
+      <div class="d-flex justify-content-center search-form-control form-group" style="width: 100%;" >
         <div class="d-flex align-items-center search-form-control form-group w-form">
           <%= text_field_tag :query,
               params[:query],
@@ -21,7 +21,7 @@
               placeholder: "Ville..."
           %>
           <div>
-            <%= submit_tag "Rechercher", class: "btn_custom search-bar ms-4" %>
+            <%= submit_tag "Rechercher", class: "btn_custom search-bar ms-1" %>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@
             <div class="card_pro grid-index align-items-start">
               <div>
                 <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
-                  <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 100%; aspect-ratio: 1.5; object-fit: cover" %>
+                  <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 90%; aspect-ratio: 1.5; object-fit: cover" %>
                   <h2 class="text-center my-3"><%= professional.name %> </h2>
                   <div class="ms-2">
                     <p>Specialité : <%= professional.specialty %></p>

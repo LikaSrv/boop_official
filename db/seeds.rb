@@ -52,6 +52,13 @@ pricing3 = Pricing.create!(
   description: "Vous avez un besoin spécifique ou une équipe plus grande ? Créez une offre sur mesure adaptée à vos exigences et optimisez la gestion de votre activité. Contactez-nous !",
   capacity: 10,)
 
+puts "create users"
+
+ser1_photo = URI.parse("https://res.cloudinary.com/dsbteudoz/image/upload/v1732869233/samples/landscapes/girl-urban-view.jpg").open
+user1 = User.new(email: "user1@test.fr", password: "123456", first_name: "Jean", last_name: "Dupont")
+# user1.photo.attach(io: user1_photo, filename: 'user1.jpg', content_type: 'image/jpg')
+user1.save!
+
 #puts "create animals"
 
 response = RestClient.get "https://www.la-spa.fr/app/wp-json/spa/v1/animals/search/?api=1"

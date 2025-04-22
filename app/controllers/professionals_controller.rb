@@ -52,9 +52,21 @@ class ProfessionalsController < ApplicationController
     @user = current_user
     @professional.rating = 0
     @professional.capacity = 1
+
+    # Extraire les fichiers AVANT tout update
+    valid_photos = params[:professional][:photos]&.reject(&:blank?) || []
+
+    # Retirer les fichiers du hash pour ne pas qu’ils soient consommés
+    filtered_params = professional_params.except(:photos)
+
+    # Attacher les fichiers AVANT le update
+    @professional.photos.attach(valid_photos) if valid_photos.any?
+
     if @professional.save!
-      photo_url = "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
-      @professional.update!(photo_url: photo_url)
+      photo_urls = @professional.photos.map do |photo|
+        "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{photo.key}"
+      end
+      @professional.update_column(:photos_url, photo_urls)
 
       @order.increment!(:pro_accounts_created)
       # Invalide le token si quota atteint

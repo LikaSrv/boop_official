@@ -9,7 +9,7 @@
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
 <%# form %>
-<%= simple_form_for @professional do |p|%>
+<%= simple_form_for @professional, html: {multipart: true} do |p|%>
   <div class="row justify-content-center">
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 text-center">
       <h5 class="my-4">Profession : <strong><%=@professional.specialty%></strong></h5>
@@ -70,24 +70,39 @@
       <div class="d-flex align-items-center justify-content-between">
         <%= p.label :description, "Description :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
-          <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
+          <%= p.input :description, label: false, as: :text, input_html: { rows: 10 } %>
         </div>
       </div>
       <%# photo %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :photo, "Photo :", class: "me-2 mb-0 " %>
+        <%= p.label :photos, "Photos :", class: "me-2 mb-0 " %>
         <div style="width: 70%;">
-          <% if !@professional.photo_url.nil? %>
-            <!-- Afficher une prévisualisation de la photo actuelle -->
+          <% if @professional.photos_url.present? %>
+            <!-- Afficher les photos dans le carousel -->
             <div class="mb-2">
-              <%= image_tag @professional.photo_url, alt: "Photo actuelle", class: "img-thumbnail", style: "max-width: 100%; aspect-ratio: 2; object-fit: cover" %>
+              <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% @professional.photos_url.each_with_index do |photo_url, index| %>
+                    <div class="carousel-item <%= 'active' if index == 0 %>">
+                      <%= image_tag photo_url, alt: "Photo", class: "img-thumbnail", style: "max-width: 100%; aspect-ratio: 2; object-fit: cover" %>
+                    </div>
+                  <% end %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
             </div>
-            <!-- Option pour changer la photo -->
-            <%= p.input :photo, label: "Changer la photo :", as: :file, input_html: { class: "form-control" } %>
-          <% else %>
-            <!-- Si aucune photo n'est associée -->
-            <%= p.input :photo, label: "Ajouter une photo :", as: :file, input_html: { class: "form-control" } %>
           <% end %>
+          <!-- Champ pour ajouter ou changer les photos -->
+          <%= p.input :photos, label: (@professional.photos_url.present? ? "Changer les photos :" : "Ajouter des photos :"),
+           as: :file,
+           input_html: { class: "form-control", multiple: true, name: "professional[photos][]" } %>
         </div>
       </div>
     </div>

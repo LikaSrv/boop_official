@@ -134,26 +134,40 @@ class ProfessionalsController < ApplicationController
   def update
     @professional = Professional.find(params[:id])
 
-    if @professional.update!(professional_params)
-      # Mettre à jour photo_url
-      if @professional.photo.attached?
-        photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@professional.photo.key}"
-        @professional.update!(photo_url: photo_url)
-      end
+    # Extraire les fichiers AVANT tout update
+    valid_photos = params[:professional][:photos]&.reject(&:blank?) || []
 
-      # Mettre à jour les coordonnées si l'adresse a changé
-      if @professional.saved_change_to_address?
-        @marker = [{
-          lat: @professional.latitude,
-          lng: @professional.longitude
-        }]
-      end
+    # Retirer les fichiers du hash pour ne pas qu’ils soient consommés
+    filtered_params = professional_params.except(:photos)
 
-      redirect_to professional_edit_availibilities_path(@professional), notice: 'Votre profil professionnel a bien été mis à jour'
+
+    # nettoyage de la base de données photos
+    @professional.photos.each do |photo|
+      begin
+        photo.purge
+      rescue Aws::S3::Errors::NoSuchKey
+        photo.purge_later # nettoie la base si Supabase a déjà supprimé le fichier
+      end
+    end
+
+    # Attacher les fichiers AVANT le update
+    @professional.photos.attach(valid_photos) if valid_photos.any?
+
+    if @professional.update(filtered_params)
+      photo_urls = @professional.photos.map do |photo|
+        "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{photo.key}"
+      end
+      @professional.update_column(:photos_url, photo_urls)
+
+      redirect_to edit_professional_path(@professional), notice: 'Profil mis à jour'
     else
-      render :edit, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être mis à jour car tous les champs n\'ont pas été remplis'
+      render :edit, status: :unprocessable_entity, alert: 'Erreur de mise à jour'
     end
   end
+
+
+
+
 
   def destroy
     @professional = Professional.find(params[:id])
@@ -414,7 +428,7 @@ class ProfessionalsController < ApplicationController
                                           :rating,
                                           :latitude,
                                           :longitude,
-                                          :photo,
+                                          :photos,
                                           :capacity,
                                           :interval,
                                           :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])

@@ -51,9 +51,9 @@
       </div>
       <%# photo %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :photo, "Photo :", class: "me-2 mb-0" %>
+        <%= p.label :photos, "Photos :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
-          <%= p.input :photo, label: false, value: @professional.photo %>
+          <%= p.input :photos, label: false, as: :file, input_html: { multiple: true } %>
         </div>
       </div>
       <%# capacity %>

@@ -43,7 +43,23 @@
             <div class="card_pro grid-index align-items-start">
               <div>
                 <a href="<%=professional_path(professional)%>" class="text-decoration-none text-black mx-auto" style="width: 100%;">
-                  <%= image_tag professional.photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 90%; aspect-ratio: 1.5; object-fit: cover" %>
+                  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                      <% professional.photos_url.each_with_index do |photo_url, index| %>
+                        <div class="carousel-item <%= 'active' if index == 0 %>">
+                          <%= image_tag photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 90%; aspect-ratio: 1.5; object-fit: cover" %>
+                        </div>
+                      <% end %>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
                   <h2 class="text-center my-3"><%= professional.name %> </h2>
                   <div class="ms-2">
                     <p>Specialité : <%= professional.specialty %></p>

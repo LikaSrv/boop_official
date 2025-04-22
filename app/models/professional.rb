@@ -7,7 +7,7 @@ class Professional < ApplicationRecord
   validate :photo_presence, on: :create
 
   # photo
-  has_one_attached :photo
+  has_many_attached :photos
 
   # associations
   has_many :appointments, dependent: :destroy
@@ -36,6 +36,6 @@ class Professional < ApplicationRecord
   }
 
   def photo_presence
-    errors.add(:photo, "doit être ajoutée") unless photo.attached?
+    errors.add(:photos, "doit être ajoutée") unless photos.attached?
   end
 end

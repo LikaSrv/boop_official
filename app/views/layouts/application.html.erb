@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload"%>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload"%>
     <%= javascript_importmap_tags %>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -13,9 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <%= javascript_include_tag "https://js.stripe.com/v3/" %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   </head>
-
   <body>
     <div class="page-container">
       <%= render "shared/navbar" %>
@@ -29,7 +29,6 @@
         <%= render "shared/footer" %>
       </footer>
     </div>
-
     <script>
       document.addEventListener('DOMContentLoaded', function() {
         const navbar = document.querySelector('.navbar-lewagon');

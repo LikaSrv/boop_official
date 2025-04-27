@@ -13,7 +13,7 @@
           <p> Le vétérinaire :</p>
         </div>
         <div class="card-body d-flex justify-content-center align-items-center">
-          <%= image_tag @appointment.professional.photo_url, alt:"Photo du professionnel", class:"small-rounded-circle me-4", style:"object-fit: cover"%>
+          <%= image_tag @appointment.professional.photos_url[0], alt:"Photo du professionnel", class:"small-rounded-circle me-4", style:"object-fit: cover"%>
           <h6 class="card-title"><%=@professional.name%></h6>
         </div>
       </div>

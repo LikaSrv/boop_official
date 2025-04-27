@@ -60,7 +60,7 @@ export default class extends Controller {
     this.chart = new Chart(myLine, {
       type: "line",
       data: {
-        labels: formattedLabels,
+        labels: sortedLabels,
         datasets: [
           {
             label: "Suivi de poids",
@@ -71,12 +71,23 @@ export default class extends Controller {
             tension: 0.4,
           },
         ],
+
       },
       options: {
         responsive: true,
         plugins: {
           legend: { position: "top" },
           tooltip: { enabled: true },
+        },
+        scales: {
+          x: {
+            ticks: {
+              callback: function(value, index, ticks) {
+                const dateParts = this.getLabelForValue(value).split("-");
+                return `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+              }
+            }
+          }
         },
         onClick: (event, elements) => {
           // console.log(event);
@@ -91,13 +102,13 @@ export default class extends Controller {
 
 
             const value = this.chart.data.datasets[datasetIndex].data[pointIndex];
-            // console.log("value: ", value);
             const date = this.chart.data.labels[pointIndex];
-            // console.log("date: ", date);
-            const formattedDate = this.formatDate(date);
-            // console.log("formattedDate: ", formattedDate);
+            console.log('date:', date);
+
+            const formattedDate = this.formatDateToDDMMYYYY(date);
+            console.log("Formatted Date:", formattedDate);
+
             const weightHistoryId = this.chart.data.datasets[datasetIndex].meta[pointIndex];
-            // console.log("weightHistoryId: ", weightHistoryId); // Affiche l'ID de WeightHistory
 
             Swal.fire({
               title: "Modifier les informations",
@@ -125,7 +136,7 @@ export default class extends Controller {
               didOpen: () => {
                 // S'assurer que les dates sont bien pré-remplies avec les bonnes valeurs
                 document.getElementById("weight").value = value;
-                document.getElementById("date").value = formattedDate;
+                document.getElementById("date").value = date;
                 document.getElementById("delete-weight-history").addEventListener("click", (e) => {
                   e.preventDefault(); // Empêche le comportement par défaut du lien
                   Swal.close(); // Ferme la modal avant d'exécuter la suppression
@@ -167,19 +178,22 @@ export default class extends Controller {
                 const weight = document.getElementById("weight").value;
                 const date = document.getElementById("date").value;
 
-
-
                 if (!weight || !this.formatDate(date)) {
                   Swal.showValidationMessage("Tous les champs sont obligatoires !");
                   return false; // Empêche la fermeture si validation échoue
                 }
 
-                return { weight, formattedDate: this.formatDate(date) };
+                return { weight, formattedDate: date };
               },
             }).then((result) => {
               if (result.isConfirmed) {
                 const updatedWeight = result.value.weight;
+                console.log("result:", result);
+
                 const updatedDate = result.value.formattedDate;
+
+                console.log("Updated Date:", updatedDate);
+
 
                 // Mettre à jour les données dans le graphique avant d'appeler update()
                 const pointIndex = this.chart.data.datasets[0].meta.findIndex(item => item === weightHistoryId);

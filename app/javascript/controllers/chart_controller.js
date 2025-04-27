@@ -11,7 +11,7 @@ export default class extends Controller {
 
   connect() {
     console.log("ChartController connecté !");
-    console.log(this.chartTarget);
+    // console.log(this.chartTarget);
 
     this.initializeChart();
   }
@@ -99,8 +99,6 @@ export default class extends Controller {
             const weightHistoryId = this.chart.data.datasets[datasetIndex].meta[pointIndex];
             // console.log("weightHistoryId: ", weightHistoryId); // Affiche l'ID de WeightHistory
 
-
-
             Swal.fire({
               title: "Modifier les informations",
               // <label for="vaccineName" class="form-label">Nom du vaccin</label>
@@ -120,8 +118,8 @@ export default class extends Controller {
               cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
               showCancelButton: true,
               footer: `<a href="#" id="delete-weight-history" class="text-danger">Supprimer</a>`,
+              confirmButtonColor: '#EFA690',
               customClass: {
-                confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
                 cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
               },
               didOpen: () => {
@@ -143,7 +141,11 @@ export default class extends Controller {
                       return response.json();
                     })
                     .then(() => {
-                      Swal.fire("Supprimé !", "La pesée a été supprimée avec succès.", "success");
+                      Swal.fire({
+                        title: "Supprimé !",
+                        text: "La pesée a été supprimée avec succès.",
+                        icon: "success",
+                        confirmButtonColor: '#EFA690',});
                       // Supprime l'élément correspondant dans le graphique
                       const pointIndex = this.chart.data.datasets[0].meta.findIndex(
                         (item) => item === weightHistoryId
@@ -165,12 +167,14 @@ export default class extends Controller {
                 const weight = document.getElementById("weight").value;
                 const date = document.getElementById("date").value;
 
-                if (!weight || !formattedDate) {
+
+
+                if (!weight || !this.formatDate(date)) {
                   Swal.showValidationMessage("Tous les champs sont obligatoires !");
                   return false; // Empêche la fermeture si validation échoue
                 }
 
-                return { weight, formattedDate };
+                return { weight, formattedDate: this.formatDate(date) };
               },
             }).then((result) => {
               if (result.isConfirmed) {
@@ -208,7 +212,11 @@ export default class extends Controller {
                     return response.json();
                   })
                   .then((data) => {
-                    Swal.fire("Le poids a été modifié", "", "success");
+                    Swal.fire({
+                      title: "Le poids a été modifié",
+                      text: "",
+                      icon: "success",
+                      confirmButtonColor: '#EFA690'});
                     console.log("Réponse du serveur :", data);
                     // Mettre à jour l'élément dans le DOM
                     this.chart.update();

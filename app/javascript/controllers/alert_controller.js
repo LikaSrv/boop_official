@@ -59,8 +59,8 @@ export default class extends Controller {
       confirmButtonText: "Envoyer",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       preConfirm: () => {
@@ -186,8 +186,8 @@ export default class extends Controller {
       confirmButtonText: "Enregistrer",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       preConfirm: () => {
@@ -224,8 +224,13 @@ export default class extends Controller {
             return response.json();
           })
           .then((data) => {
-            Swal.fire("Le vaccin a été ajouté", "", "success");
-            console.log("Réponse du serveur :", data);
+            Swal.fire({
+              title: "Le vaccin a été ajouté",
+              text: "",
+              icon: "success",
+              confirmButtonColor: '#EFA690'
+            });
+            // console.log("Réponse du serveur :", data);
             this.addVaccinToPage(data.vaccination); // Appelle une fonction pour ajouter l'avis
           })
           .catch((error) => {
@@ -239,10 +244,14 @@ export default class extends Controller {
   // Add vaccination to the page without actulisating the page
   addVaccinToPage(vaccin) {
     const vaccinsContainer = document.getElementById("vaccins-container");
-    console.log(vaccinsContainer);
+    //console.log(vaccinsContainer);
 
     // console.log(Array.from(vaccinsContainer.children).length + 1);
     if (vaccinsContainer) {
+      const noVaccinElement = document.getElementById("no-vaccin");
+      if (noVaccinElement) {
+        noVaccinElement.classList.add("d-none");
+      }
       // Crée dynamiquement une nouvelle vaccination
       const vaccinElement = document.createElement("div");
       // Initialisation de la date d'aujourd'hui pour la comparaison
@@ -253,9 +262,9 @@ export default class extends Controller {
         <div class="card_pro m-1 text-start d-flex flex-row vaccination-item">
           <div class="mx-2">
             <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
-            <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
+            <p class="vaccin-administration-date">Date d'injection : ${vaccin.administration_date}</p>
             <div class="d-flex flex-row">
-              <p>Prochaine date d'injection : </p>
+              <p>Prochaine date : </p>
               <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
                 ${vaccin.next_booster_date}
               </p>
@@ -285,40 +294,6 @@ export default class extends Controller {
 
       // Ajoute la nouvelle vaccination au conteneur
       vaccinsContainer.appendChild(vaccinElement);
-    } else {
-      vaccinElement.innerHTML = `
-        <div class="card_pro m-1 text-start d-flex flex-row vaccination-item">
-          <div class="mx-2">
-            <p class="vaccin-name">Nom de vaccin : <strong>${vaccin.name}</strong></p>
-            <p class="vaccin-administration-date">Date d'administration : ${vaccin.administration_date}</p>
-            <div class="d-flex flex-row">
-              <p>Prochaine date d'injection : </p>
-              <p class="mx-2 ${new Date(vaccin.next_booster_date) > new Date() ? 'text-success' : 'text-danger'} vaccin-next-booster-date">
-                ${vaccin.next_booster_date}
-              </p>
-            </div>
-          </div>
-          <div class="d-flex flex-column justify-content-around">
-            <a href="#" style="font-size: 12px;"
-              data-controller="alert"
-              data-action="click->alert#editVaccination"
-              data-pet-id="${vaccin.pet_id}"
-              data-vaccin-id="${vaccin.id}"
-              data-vaccin-name="${vaccin.name}"
-              data-administration-date="${vaccin.administration_date}"
-              data-next-booster-date="${vaccin.next_booster_date}">
-              <i class="fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
-            </a>
-            <a href="#" class="hoveredCircleButton my-2" style="font-size: 12px;"
-              data-controller="alert"
-              data-action="click->alert#deleteVaccination"
-              data-pet-id="${vaccin.pet_id}"
-              data-vaccin-id="${vaccin.id}">
-              <i class="fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton"></i>
-            </a>
-          </div>
-      </div>
-      `;
     }
   }
 
@@ -338,8 +313,8 @@ export default class extends Controller {
       confirmButtonText: "Oui, supprimer!",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
     }).then((result) => {
@@ -360,6 +335,7 @@ export default class extends Controller {
               title: "Supprimé !",
               text: "Le vaccin a été enlevé du carnet de santé.",
               icon: "success",
+              confirmButtonColor: '#EFA690',
             });
 
             // Supprimer l'élément du DOM (optionnel)
@@ -381,11 +357,13 @@ export default class extends Controller {
   // Edit vaccination
   editVaccination(event) {
     event.preventDefault();
+    // console.log(event.currentTarget.dataset);
+
 
     const vaccinId = event.currentTarget.dataset.vaccinId;
     const vaccinName = event.currentTarget.dataset.vaccinName;
-    const administrationDate = event.currentTarget.dataset.administrationdate.replace(/"/g, '');
-    const nextBoosterDate = event.currentTarget.dataset.nextboosterdate.replace(/"/g, '');
+    const administrationDate = event.currentTarget.dataset.administrationDate.replace(/"/g, '');
+    const nextBoosterDate = event.currentTarget.dataset.nextBoosterDate.replace(/"/g, '');
     // console.log("Current target:", event.currentTarget);
 
     // console.log("vaccinId:", vaccinId);
@@ -415,8 +393,8 @@ export default class extends Controller {
       confirmButtonText: "Enregistrer",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       didOpen: () => {
@@ -458,8 +436,13 @@ export default class extends Controller {
             return response.json();
           })
           .then((data) => {
-            Swal.fire("Le vaccin a été modifié", "", "success");
-            console.log("Réponse du serveur :", data);
+            Swal.fire({
+              title: "Le vaccin a été modifié",
+              text: "",
+              icon: "success",
+              confirmButtonColor: '#EFA690',
+            });
+            // console.log("Réponse du serveur :", data);
             // Mettre à jour l'élément dans le DOM
             this.updateVaccinationInPage(data.vaccination);
           })
@@ -475,15 +458,36 @@ export default class extends Controller {
   // Fonction pour mettre à jour la vaccination dans le DOM sans recharger la page
   updateVaccinationInPage(vaccin) {
     // Sélectionne l'élément correspondant à la vaccination modifiée
-    const vaccinElement = document.querySelector('.vaccination-item');
-    // console.log("vaccinElement:", vaccinElement);
+    console.log(vaccin);
 
+    const vaccinElement = document.querySelector(`.vaccination-item[data-vaccin-id="${vaccin.id}"]`);
+    console.log("vaccinElement:", vaccinElement);
 
     // Mettre à jour le nom, la date d'administration et la date de la prochaine injection
+    vaccinElement.querySelector('.vaccin-name').innerHTML = `<strong>${vaccin.name}</strong>`;
+    // Convertir les dates string -> Date object
+    const administrationDate = new Date(vaccin.administration_date);
+    const nextBoosterDate = new Date(vaccin.next_booster_date);
 
-    vaccinElement.querySelector('.vaccin-name').innerText = vaccin.name;
-    vaccinElement.querySelector('.vaccin-administration-date').innerText = vaccin.administration_date.strftime("%d-%m-%Y");
-    vaccinElement.querySelector('.vaccin-next-booster-date').innerText = vaccin.next_booster_date.strftime("%d-%m-%Y");
+    // Fonction pour formater une date en "dd/mm/yyyy"
+    const formatDate = (date) => {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0'); // Janvier = 0
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    };
+
+    // Mettre à jour les dates dans le DOM
+    vaccinElement.querySelector('.vaccin-administration-date').innerText = formatDate(administrationDate);
+    vaccinElement.querySelector('.vaccin-next-booster-date').innerText = formatDate(nextBoosterDate);
+    // Après avoir mis à jour l'affichage
+    const editButton = vaccinElement.querySelector('a[data-action="click->alert#editVaccination"]');
+
+    if (editButton) {
+      editButton.dataset.vaccinName = vaccin.name;
+      editButton.dataset.administrationDate = vaccin.administration_date;
+      editButton.dataset.nextBoosterDate = vaccin.next_booster_date;
+    }
   }
 
   // add weight history
@@ -508,8 +512,8 @@ export default class extends Controller {
       confirmButtonText: "Enregistrer",
       cancelButtonText: "Annuler", // Personnalise le texte du bouton "Annuler"
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
       preConfirm: () => {
@@ -550,7 +554,12 @@ export default class extends Controller {
               .getControllerForElementAndIdentifier(document.querySelector('[data-controller="chart"]'), "chart")
               .addWeight(data.weight_history.weight, data.weight_history.date, data.weight_history.id);
 
-            Swal.fire("Poids ajouté !", "", "success");
+            Swal.fire({
+              title: "Poids ajouté !",
+              text: "",
+              icon: "success",
+              confirmButtonColor: '#EFA690'
+            });
           })
           .catch((error) => {
             Swal.fire("Erreur", "Impossible d'enregistrer les données.", "error");
@@ -582,8 +591,8 @@ export default class extends Controller {
       confirmButtonText: "Enregistrer",
       cancelButtonText: "Annuler",
       showCancelButton: true,
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom",
         cancelButton: "btn btn-body-color",
       },
       preConfirm: () => {
@@ -727,8 +736,8 @@ export default class extends Controller {
       inputLabel: "Indiquer le nombre de profils que vous souhaitez dupliquer",
       inputPlaceholder: "Nombre de profil",
       confirmButtonText: "Enregistrer",
+      confirmButtonColor: '#EFA690',
       customClass: {
-        confirmButton: "btn_custom", // Classe Bootstrap ou CSS personnalisée
         cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
       },
     }).then(async (result) => {

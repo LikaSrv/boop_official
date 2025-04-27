@@ -92,15 +92,16 @@
   <div class="card_pro d-flex flex-column justify-content-between p-4 position-relative" data-controller="alert" >
     <div>
       <h3 class="text-center m-3">Les vaccins</h3>
-      <%i=0%>
-      <% if @vaccinations.empty? %>
-        <p class="mt-3 text-center">Vous n'avez pas encore saisi les informations de vaccins.</p>
-      <% else %>
-        <div class="d-flex flex-wrap" id="vaccins-container" >
+      <div class="d-flex flex-wrap" id="vaccins-container" >
+        <%i=0%>
+        <% if @vaccinations.empty? %>
+          <div class="d-flex justify-content-center align-items-center w-100" id="no-vaccin">
+            <p class="text-center">Vous n'avez pas encore saisi les informations de vaccins.</p>
+          </div>
+        <% else %>
           <% @vaccinations.each do |vaccin| %>
             <% i = i+1 %>
-            <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" >
-              <p><%=i%>.</p>
+            <div class="card_pro m-1 text-start d-flex flex-row vaccination-item" data-vaccin-id="<%= vaccin.id %>" >
               <div class="mx-2">
                 <div class="d-flex flex-row">
                   <p>Nom de vaccin : </p>
@@ -126,8 +127,8 @@
                                     pet_id: @pet.id,
                                     vaccin_id: vaccin.id,
                                     vaccin_name: vaccin.name,
-                                    administrationDate:  vaccin.administration_date,
-                                    nextBoosterDate: vaccin.next_booster_date} %>
+                                    administration_date:  vaccin.administration_date,
+                                    next_booster_date: vaccin.next_booster_date} %>
                 <%= link_to raw("<i class='fa-solid fa-trash float-end text-danger bg-light shadow myCircleIcon p-3 hoveredCircleButton'></i>"),
                             "#",
                             class: "hoveredCircleButton my-2",
@@ -136,8 +137,8 @@
               </div>
             </div>
           <% end %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
     <div class="text-end m-3 position-absolute top-0 end-0" data-controller="alert">
       <%= link_to raw("<i class='fa-solid fa-syringe float-end text-primary shadow myCircleIcon p-3 hoveredCircleButton'></i>"),

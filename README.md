@@ -8,8 +8,9 @@ Boop est une application web développée avec Ruby on Rails qui facilite la mis
 - Dashboard professionnel personnalisé pour suivre les demandes, les rendez-vous et les dossiers clients
 
 🔧 Stack technique
-- Back-end : Ruby on Rails 7
-- Base de données : PostgreSQL
+- Framework : Ruby on Rails 7
+- Front-End : Stimulus, Turbo, Boostraps
+- Base de données : PostgreSQL (SUPABASE)
 - Paiements : Stripe Connect
 - Mailing : Brevo
 - Authentification : Devise
@@ -25,8 +26,9 @@ Boop is a web application developed with Ruby on Rails that facilitates the conn
 - Personalized professional dashboard to track requests, appointments, and client records
 
 🔧 Tech Stack
-- Back-end: Ruby on Rails 7
-- Database: PostgreSQL
+- Framework: Ruby on Rails 7
+- Front-End : Stimulus, Turbo, Boostraps
+- Database: PostgreSQL (SUPABASE)
 - Payments: Stripe Connect
 - Mailing: Brevo
 - Authentication: Devise

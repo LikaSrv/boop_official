@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_22_101319) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_30_142115) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -196,7 +196,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_101319) do
   create_table "professionals", force: :cascade do |t|
     t.string "name"
     t.string "address"
-    t.integer "phone"
+    t.bigint "phone"
     t.string "email"
     t.string "specialty"
     t.string "description"
@@ -221,6 +221,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_22_101319) do
     t.datetime "updated_at", null: false
     t.index ["professional_id"], name: "index_reviews_on_professional_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "shelters", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "address"
+    t.string "photo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email"
   end
 
   create_table "users", force: :cascade do |t|

@@ -10,9 +10,11 @@
         <p>
           Des animaux adorables attendent un foyer chaleureux. Adoptez dès aujourd'hui et offrez-leur une nouvelle vie pleine d'amour !
         </p>
-        <%= link_to "Rechercher", "#search-section", class: "cta-button", data: { turbo: false } %>
+        <div class="cta-buttons">
+          <%= link_to "Rechercher", "#search-section", class: "btn btn-primary", data: { turbo: false } %>
+          <a href="#" class="btn btn-outline-primary text-black">Je suis un refuge</a>
+        </div>
       </div>
-
       <div class="hero-image-wrapper">
         <div class="hero-image">
           <%= image_tag "https://images.unsplash.com/photo-1589883661923-6476cb0ae9f2?q=80&w=2574&auto=format&fit=crop",

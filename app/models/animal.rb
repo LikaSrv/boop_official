@@ -1,4 +1,5 @@
 class Animal < ApplicationRecord
+  belongs_to :shelter
 
   include PgSearch::Model
   pg_search_scope :search_by_city,

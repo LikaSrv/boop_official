@@ -1,6 +1,8 @@
 class PetsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_pet, only: [:show, :edit, :update]
+  before_action :authorize_professional_access, only: [:show_for_pro]
+
 
   def index
     @pets = Pet.all
@@ -50,7 +52,6 @@ class PetsController < ApplicationController
   end
 
   def show_for_pro
-    @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations.sort_by { |v| [v.name.downcase, v.next_booster_date] }
     @weight_histories = @pet.weight_histories
     @weight_histories_data = []
@@ -76,6 +77,10 @@ class PetsController < ApplicationController
   def update
     # Mise à jour de l'animal et de ses attributs principaux
     if @pet.update(pet_params)
+      if @pet.photo.attached?
+        photo_url = "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@pet.photo.key}"
+        @pet.update_column(:photo_url, photo_url)
+      end
       # Si la mise à jour réussit, on redirige avec un message de succès
       flash[:notice] = "L'animal a bien été mis à jour."
       redirect_to user_pet_path(current_user, @pet)
@@ -120,5 +125,18 @@ class PetsController < ApplicationController
     rescue ActiveRecord::RecordNotFound
       redirect_to root_path, alert: "Accès non autorisé ou animal introuvable."
   end
+
+  def authorize_professional_access
+    @pet = Pet.find(params[:id])
+    @professional = Professional.find_by(id: params[:professional_id])
+
+    # Vérifie que le pro a un rendez-vous à venir ou passé avec ce pet
+    has_appointment = Appointment.exists?(pet: @pet, professional: @professional)
+
+    unless has_appointment
+      redirect_to root_path, alert: "Accès non autorisé."
+    end
+  end
+
 
 end

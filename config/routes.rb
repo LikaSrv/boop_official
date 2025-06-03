@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get 'terms', to: 'pages#terms', as: 'terms'
   post 'professionals/duplicate', to: 'professionals#duplicate', as: 'duplicate_professional'
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
-  get 'pets/:id/show_for_pro', to: 'pets#show_for_pro', as: 'pet_show_for_pro'
   get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
     # autres routes...
 
@@ -28,6 +27,8 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
     get "update_slots", to: "update_slots"
     get "update_edit_slots", to: "update_edit_slots"
+    get 'pets/:id/show_for_pro', to: 'pets#show_for_pro', as: 'pet_show_for_pro'
+
   end
 
   resources :appointments, only: [:update]

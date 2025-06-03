@@ -5,6 +5,8 @@ class Professional < ApplicationRecord
   validates :phone, numericality: { only_integer: true }, presence: true
   validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
   validate :photo_presence, on: :create
+  validate :at_least_one_day_open
+
 
   # photo
   has_many_attached :photos
@@ -16,7 +18,7 @@ class Professional < ApplicationRecord
   belongs_to :user
   has_many :opening_hours, dependent: :destroy
   has_many :closing_hours, dependent: :destroy
-  accepts_nested_attributes_for :opening_hours, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :opening_hours, allow_destroy: true
 
   # geocoding
   geocoded_by :address
@@ -38,4 +40,23 @@ class Professional < ApplicationRecord
   def photo_presence
     errors.add(:photos, "doit être ajoutée") unless photos.attached?
   end
+
+  private
+
+  def at_least_one_day_open
+    valids = opening_hours.reject(&:marked_for_destruction?)
+    all_closed = valids.all? do |oh|
+      oh.closed || (
+        oh.open_time_morning.blank? &&
+        oh.close_time_morning.blank? &&
+        oh.open_time_afternoon.blank? &&
+        oh.close_time_afternoon.blank?
+      )
+    end
+
+    if all_closed
+      errors.add(:base, "Vous devez définir au moins un jour ouvert avec des horaires.")
+    end
+  end
+
 end

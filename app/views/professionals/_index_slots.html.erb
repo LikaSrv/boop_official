@@ -2,12 +2,23 @@
   <div class="text-center">
     <h4>Prochains rendez-vous disponibles</h4>
   </div>
-  <% i = 0 %>
-  <% days_displayed = 0 %> <!-- Variable pour compter les jours affichés -->
-  <% while days_displayed < 7 %>
-    <% date = DateTime.current.to_date + i %>
-    <% if isOpened?(professional, date) %>
 
+  <% i = 0 %>
+  <% days_displayed = 0 %>
+  <% max_days_to_check = 30 %>
+  <% opened_days = [] %>
+
+  <% while days_displayed < 7 && i < max_days_to_check %>
+    <% date = Date.current + i %>
+    <% if isOpened?(professional, date) %>
+      <% opened_days << date %>
+      <% days_displayed += 1 %>
+    <% end %>
+    <% i += 1 %>
+  <% end %>
+
+  <% if opened_days.any? %>
+    <% opened_days.each do |date| %>
       <div class="nav-item dropdown" data-controller="appointment-selected" data-appointment-selected-api-key-value="<%= professional.id %>">
         <a href="#" class="btn btn-outline-primary w-100 m-1" data-appointment-selected-target="selectedDate">
           <%= date.strftime('%d-%m-%Y') %>
@@ -24,10 +35,14 @@
               <%= a.strftime("%H:%M") %>
             </a>
           <% end %>
-        </div> <!-- Fermeture du div times -->
-      </div> <!-- Fermeture du div nav-item dropdown -->
-      <% days_displayed += 1 %> <!-- Incrémentation du nombre de jours affichés -->
+        </div>
+      </div>
     <% end %>
-    <% i += 1 %> <!-- On continue d'incrémenter i pour passer au jour suivant -->
+  <% else %>
+  <div class="d-flex justify-content-center align-items-center" style="min-height: 200px;">
+    <p class="text-muted text-center m-0">
+      Pas de rendez-vous disponibles dans les 30 prochains jours.
+    </p>
+  </div>
   <% end %>
-</div> <!-- Fermeture du div principal m-2 -->
+</div>

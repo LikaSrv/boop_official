@@ -239,35 +239,40 @@ class ProfessionalsController < ApplicationController
   end
 
   # return all availabilities of a professional for a specific day
-  def availabilitiesOfTheDay (professional, date)
-    opening_time_slots = []
-    if isOpened?(professional, date)
-      opening_hour = OpeningHour.find_by(professional: professional, day_of_week: date.wday)
+def availabilitiesOfTheDay(professional, date)
+  opening_time_slots = []
 
-      start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
-      end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+  return [] unless isOpened?(professional, date)
 
-      while start_time_morning + professional.interval.minutes <= end_time_morning
-        if isAvailable?(professional, date, start_time_morning)
-          opening_time_slots << start_time_morning
-          # Incrémenter start_time de l'intervalle
-        end
-        start_time_morning += professional.interval.minutes
-      end
+  opening_hour = OpeningHour.find_by(professional: professional, day_of_week: date.wday)
+  return [] if opening_hour.nil?
 
-      start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
-      end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+  interval = professional.interval.minutes
 
-      while start_time_afternoon + professional.interval.minutes <= end_time_afternoon
-        if isAvailable?(professional, date, start_time_afternoon)
-        opening_time_slots << start_time_afternoon
-        end
-        # Incrémenter start_time de l'intervalle
-        start_time_afternoon += professional.interval.minutes
-      end
+  # Créneaux matin
+  if opening_hour.open_time_morning.present? && opening_hour.close_time_morning.present?
+    start_time = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
+    end_time = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+
+    while start_time + interval <= end_time
+      opening_time_slots << start_time if isAvailable?(professional, date, start_time)
+      start_time += interval
     end
-    return opening_time_slots
   end
+
+  # Créneaux après-midi
+  if opening_hour.open_time_afternoon.present? && opening_hour.close_time_afternoon.present?
+    start_time = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
+    end_time = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+
+    while start_time + interval <= end_time
+      opening_time_slots << start_time if isAvailable?(professional, date, start_time)
+      start_time += interval
+    end
+  end
+
+  opening_time_slots
+end
 
   # return all timeslots of a professional for a specific day
   def allTimeSlotsOfTheDay (professional, date)
@@ -382,13 +387,21 @@ class ProfessionalsController < ApplicationController
   # fonction to validate the pro signup token
   def validate_pro_signup_token
     # Vérifie si le token est présent dans les paramètres
-    token = params[:token] || session[:pro_signup_token]
+    token = params[:token]
+
+    if token.present?
+      session[:pro_signup_token] = token
+    else
+      token = session[:pro_signup_token]
+    end
+
     if token.blank?
+      raise
       redirect_to root_path, alert: "Lien manquant."
       return
     end
 
-    @order = Order.find_by(pro_signup_token: params[:token], state: 'paid')
+    @order = Order.find_by(pro_signup_token: token, state: 'paid')
 
     if @order.pro_signup_token.nil?
       redirect_to root_path, alert: "Ce lien n’est plus valide."

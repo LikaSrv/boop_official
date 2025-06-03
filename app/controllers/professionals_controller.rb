@@ -62,7 +62,7 @@ class ProfessionalsController < ApplicationController
     # Attacher les fichiers AVANT le update
     @professional.photos.attach(valid_photos) if valid_photos.any?
 
-    if @professional.save!
+    if @professional.save
       photo_urls = @professional.photos.map do |photo|
         "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{photo.key}"
       end
@@ -76,7 +76,8 @@ class ProfessionalsController < ApplicationController
 
       redirect_to pro_index_user_path(@user), notice: 'Votre profil professionnel a bien été créé'
     else
-      render :new, status: :unprocessable_entity, notice: 'Votre profil professionnel n\'a pas pu être créé car tous les champs n\'ont pas été remplis'
+      flash.now[:alert] = "Votre profil professionnel n'a pas pu être créé car tous les champs n'ont pas été remplis"
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -176,9 +177,6 @@ class ProfessionalsController < ApplicationController
       render :edit, status: :unprocessable_entity, alert: 'Erreur de mise à jour'
     end
   end
-
-
-
 
 
   def destroy
@@ -383,7 +381,9 @@ class ProfessionalsController < ApplicationController
 
   # fonction to validate the pro signup token
   def validate_pro_signup_token
-    if params[:token].blank?
+    # Vérifie si le token est présent dans les paramètres
+    token = params[:token] || session[:pro_signup_token]
+    if token.blank?
       redirect_to root_path, alert: "Lien manquant."
       return
     end

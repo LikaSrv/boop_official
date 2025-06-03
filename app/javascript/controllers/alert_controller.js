@@ -888,7 +888,7 @@ export default class extends Controller {
 
   loading(event) {
     // Empêche la soumission immédiate pour afficher le loader
-    event.preventDefault();
+    // event.preventDefault();
 
     // Affiche la SweetAlert de chargement
     Swal.fire({

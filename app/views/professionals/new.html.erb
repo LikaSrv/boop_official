@@ -12,35 +12,35 @@
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <%# name %>
       <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
-        <%= p.label :name, "Nom du professionnel :", class: "me-2 mb-0" %>
+        <%= p.label :name, "Nom du professionnel* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :name, label: false%>
         </div>
       </div>
       <%# specialty %>
       <div class="d-flex align-items-center justify-content-between" style="width: 100%;">
-        <%= p.label :specialty, "Spécialité :", class: "me-2 mb-0" %>
+        <%= p.label :specialty, "Spécialité* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :specialty, label: false, collection: @all_specialty, prompt: "Sélectionnez une spécialité", input_html: { class: "form-select" } %>
         </div>
       </div>
       <%# phone number %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :phone, "Numéro de téléphone :", class: "me-2 mb-0" %>
+        <%= p.label :phone, "Numéro de téléphone* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :phone, label: false, class: "form-control" %>
         </div>
       </div>
       <%# email %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :email, "Adresse email :", class: "me-2 mb-0" %>
+        <%= p.label :email, "Adresse email* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :email, label: false, class: "form-control" %>
         </div>
       </div>
       <%# address %>
       <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :address, "Adresse :", class: "me-2 mb-0" %>
+        <%= p.label :address, "Adresse* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :address,
                     label: false,
@@ -58,7 +58,7 @@
       </div>
       <%# capacity %>
       <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0" %>
+        <%= p.label :capacity, "Capacité d'accueil* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :capacity, label: false%>
         </div>
@@ -72,19 +72,21 @@
       <% end %>
       <%# interval %>
       <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :interval, "Durée d'un créneau de rendez-vous estimée (en minutes):", class: "me-2 mb-0" %>
+        <%= p.label :interval, "Durée d'un créneau de rendez-vous estimée (en minutes)*:", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :interval, label: false, collection: intervals.map { |minutes, display| [display, minutes] } %>
         </div>
       </div>
       <%# description %>
       <div class="d-flex align-items-start justify-content-between">
-        <%= p.label :description, "Description :", class: "me-2 mb-0" %>
+        <%= p.label :description, "Description* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
         </div>
       </div>
+    <p></br></br>* : champs obligatoires</p>
     </div>
+    <%# opening hours %>
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <h5 class="text-center" style="text-decoration: underline">Les horaires d'ouvertures</h5>
       <p class="mb-4 text-center"style="font-size: 10px">S'il y a une fermeture d'une demie-journée, veuillez laisser le champs des heures vides.</p>
@@ -128,7 +130,7 @@
     </div>
     <%# submit button %>
     <div class="text-center my-4">
-      <%= p.button :submit, "Enregistrer", class: "btn_custom", data: {controller: "alert", action: "click->alert#loading" } %>
+      <%= p.button :submit, "Enregistrer", class: "btn_custom" %>
     </div>
   </div>
 </div>

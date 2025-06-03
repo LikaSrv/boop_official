@@ -1,4 +1,6 @@
 class PetsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_pet, only: [:show, :edit, :update]
 
   def index
     @pets = Pet.all
@@ -35,7 +37,6 @@ class PetsController < ApplicationController
   end
 
   def show
-    @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations.sort_by { |v| [v.name.downcase, v.next_booster_date] }
     @weight_histories = @pet.weight_histories
     @weight_histories_data = []
@@ -62,7 +63,6 @@ class PetsController < ApplicationController
   end
 
   def edit
-    @pet = Pet.find(params[:id])
     @vaccinations = @pet.vaccinations
     @weight_histories = @pet.weight_histories
     @weight_histories_data = []
@@ -74,7 +74,6 @@ class PetsController < ApplicationController
   end
 
   def update
-    @pet = Pet.find(params[:id])
     # Mise à jour de l'animal et de ses attributs principaux
     if @pet.update(pet_params)
       # Si la mise à jour réussit, on redirige avec un message de succès
@@ -114,6 +113,12 @@ class PetsController < ApplicationController
                             end
                           end
                         end
+  end
+
+  def set_pet
+    @pet = current_user.pets.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, alert: "Accès non autorisé ou animal introuvable."
   end
 
 end

@@ -28,4 +28,26 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  date:
+    abbr_day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "can't be blank"
+              invalid: "is not valid"
+              taken: "has already been taken"
+            password:
+              blank: "can't be blank"
+              confirmation: "doesn't match confirmation"
+              too_short: "must be at least %{count} characters"
+            password_confirmation:
+              confirmation: "doesn't match the password"
+            current_password:
+              blank: "can't be blank"
+            reset_password_token:
+              blank: "can't be blank"
+              invalid: "is not valid"

@@ -2,3 +2,23 @@ fr:
   date:
     abbr_day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
     month_names : [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              blank: "ne peut pas être vide"
+              invalid: "n'est pas valide"
+              taken: "est déjà utilisé"
+            password:
+              blank: "ne peut pas être vide"
+              confirmation: "ne correspond pas à la confirmation"
+              too_short: "doit contenir au moins %{count} caractères"
+            password_confirmation:
+              confirmation: "ne correspond pas au mot de passe"
+            current_password:
+              blank: "ne peut pas être vide"
+            reset_password_token:
+              blank: "ne peut pas être vide"
+              invalid: "n'est pas valide"

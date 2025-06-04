@@ -8,7 +8,7 @@
           <% if @user.photo.key?%>
             <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{@user.photo.key}", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover" %>
           <% else %>
-            <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/profil-default.jpg", alt:"photo_profil_default", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover"%>
+            <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//profil-default.webp", alt:"photo_profil_default", width: 100, style: "border-radius: 50%; margin: 20px; aspect-ratio: 1;", class:"object-fit-cover"%>
           <% end %>
           <p> <strong> Nom : </strong><%=@user.first_name%> </p>
           <p><strong>  Prénom : </strong> <%=@user.last_name%> </p>
@@ -27,7 +27,7 @@
           </div>
           <% if @pets.empty? %>
             <p class="mt-3">Vous n'avez pas d'animaux</p>
-            <img src="https://res.cloudinary.com/dsbteudoz/image/upload/v1734435780/dog-thinking-about-bone-removebg-preview_nlayll.png" alt="pas d'animaux" style="width: 200px; ">
+            <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//dog-thinking-about-bone-removebg-preview.webp" alt="pas d'animaux" style="width: 200px; ">
           <% else %>
             <div class="d-flex flex-row justify-content-start align-items-center h-75 overflow-auto custom-scroll" style="white-space: nowrap; max-width: 100%;">
               <% @pets.each do |pet| %>
@@ -35,7 +35,7 @@
                   <% if pet.photo.present? %>
                     <%= image_tag pet.photo_url, width: 200, style: "border-radius: 50%; aspect-ratio: 1;", class: "shadow object-fit-cover" %>
                   <% else %>
-                    <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//photo_pet_default.jpg", alt:"photo_pet_default",
+                    <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg", alt:"photo_pet_default",
                           class:"shadow object-fit-cover",
                           style:"border-radius: 50%; aspect-ratio: 1; width: 200px;")%>
                   <% end %>
@@ -52,7 +52,7 @@
       <% if @appointments.empty? %>
         <div class="text-center">
           <p >Vous n'avez pas de rendez-vous</p>
-          <%= image_tag("#{ENV['SUPABASE_URL']}/storage/v1/object/public/general_images/owner-playing-with-pet-dog.png", alt:"pas de rdv", style:"width: 200px;")%>
+          <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//owner-playing-with-pet-dog.webp", alt:"pas de rdv", style:"width: 200px;")%>
         </div>
       <% else %>
         <% @appointments.each do |a| %>

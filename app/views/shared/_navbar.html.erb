@@ -34,7 +34,7 @@
               <% if current_user.photo.key?%>
                 <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{current_user.photo.key}", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
               <% else %>
-                <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/profil-default.jpg", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
+                <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//profil-default.webp", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
               <% end %>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

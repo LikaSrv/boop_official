@@ -17,7 +17,7 @@
       <% if @pet.photo.present? %>
         <%= image_tag @pet.photo_url, class: "card-img-top w-100 h-100 object-fit-cover rounded"%>
       <% else %>
-        <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//photo_pet_default.jpg",
+        <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg",
                       alt: "photo_pet_default",
                       class: "card-img-top w-100 h-100 object-fit-cover rounded")%>
       <% end %>
@@ -117,7 +117,7 @@
                     <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
                   </p>
                 </div>
-                
+
               </div>
               <div class="d-flex flex-column justify-content-around">
                 <%= link_to raw("<i class='fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton'></i>"),

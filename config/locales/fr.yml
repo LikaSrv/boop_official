@@ -3,7 +3,21 @@ fr:
     abbr_day_names: [Dimanche, Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi]
     month_names : [~, Janvier, Février, Mars, Avril, Mai, Juin, Juillet, Août, Septembre, Octobre, Novembre, Décembre]
   activerecord:
+    models:
+      professional: "Professionnel"
+    attributes:
+      professional:
+        name: "Nom"
+        address: "Adresse"
+        email: "Email"
+        specialty: "Spécialité"
+        description: "Description"
+        capacity: "Capacité"
+        interval: "Intervalle"
+        phone: "Numéro de téléphone"
+
     errors:
+      format: "%{attribute} %{message}"
       models:
         user:
           attributes:
@@ -22,3 +36,22 @@ fr:
             reset_password_token:
               blank: "ne peut pas être vide"
               invalid: "n'est pas valide"
+        professional:
+          attributes :
+            name:
+              blank: "est obligatoire"
+            address:
+              blank: "est obligatoire"
+            email:
+              blank: "est obligatoire"
+            specialty:
+              blank: "est obligatoire"
+            description:
+              blank: "est obligatoire"
+            capacity:
+              blank: "est obligatoire"
+            interval:
+              blank: "est obligatoire"
+            phone:
+              blank: "est obligatoire"
+              invalid_phone: "n'est pas un numéro de téléphone valide"

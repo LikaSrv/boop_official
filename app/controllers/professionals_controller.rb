@@ -155,6 +155,7 @@ class ProfessionalsController < ApplicationController
 
 
     # nettoyage de la base de données photos
+    if valid_photos.any?
     @professional.photos.each do |photo|
       begin
         photo.purge
@@ -162,9 +163,10 @@ class ProfessionalsController < ApplicationController
         photo.purge_later # nettoie la base si Supabase a déjà supprimé le fichier
       end
     end
-
     # Attacher les fichiers AVANT le update
     @professional.photos.attach(valid_photos) if valid_photos.any?
+  end
+
 
     if @professional.update(filtered_params)
       photo_urls = @professional.photos.map do |photo|
@@ -456,6 +458,8 @@ end
                                           :photos,
                                           :capacity,
                                           :interval,
+                                          :homeVisit,
+                                          :acceptUrgentVisit,
                                           :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])
   end
 

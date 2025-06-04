@@ -3,12 +3,12 @@
         <div class="info-content">
           <h2 class="text-warning">PET ALERT !</h2>
           <p>Un regard rapide peut sauver une vie : animaux perdus et retrouvés.</p>
-          <a href="<%=pet_alerts_path%>" class="btn btn-outline-primary text-black">Publier une annonce</a>
+          <a href="<%=new_pet_alert_path%>" class="btn btn-outline-primary text-black">Publier une annonce</a>
         </div>
         <div class="carousel-section info-image">
           <% if @pet_alerts.empty? %>
             <div class="empty-state info-image">
-              <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//blog_banner.jpg", class: "info-image" %>
+              <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//blog_banner.webp", class: "info-image" %>
               <div class="empty-state-content">
                 <p>Pas d'annonces en cours 🤗</p>
                 <p class="empty-state-subtitle">Tous nos amis ont en sécurité !</p>

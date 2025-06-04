@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_03_132657) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_04_110225) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -209,6 +209,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_03_132657) do
     t.integer "capacity"
     t.integer "interval"
     t.jsonb "photos_url", default: []
+    t.boolean "homeVisit"
+    t.boolean "acceptUrgentVisit"
     t.index ["user_id"], name: "index_professionals_on_user_id"
   end
 

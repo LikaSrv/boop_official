@@ -105,7 +105,18 @@
            input_html: { class: "form-control", multiple: true, name: "professional[photos][]" } %>
         </div>
       </div>
+      <%# home viste%>
+      <div class="text-start align-middle">
+        <%= p.check_box :homeVisit %>
+        <%= p.label :closed, "Déplcement à domicile", class: "ms-2" %>
+      </div>
+      <%# accept urgent visit%>
+      <div class="text-start align-middle">
+        <%= p.check_box :acceptUrgentVisit %>
+        <%= p.label :closed, "Accepte les visites urgentes", class: "ms-2" %>
+      </div>
     </div>
+    <%# opeing hours %>
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <h5 class="text-center" style="text-decoration: underline">Les horaires d'ouvertures</h5>
       <p class="mb-4 text-center"style="font-size: 10px">S'il y a une fermeture d'une demie-journée, veuillez laisser le champs des heures vides.</p>

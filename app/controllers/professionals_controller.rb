@@ -456,6 +456,8 @@ end
                                           :photos,
                                           :capacity,
                                           :interval,
+                                          :homeVisit,
+                                          :acceptUrgentVisit,
                                           :opening_hours_attributes => [:id, :day_of_week, :open_time_morning, :close_time_morning, :open_time_afternoon, :close_time_afternoon, :closed, :_destroy])
   end
 

@@ -1,7 +1,7 @@
 class Professional < ApplicationRecord
 
   # validation
-  validates :name, :address, :email, :specialty, :description, :capacity, :interval, presence: true
+  validates :name, :address, :email, :specialty, :description, :capacity, :interval, :homeVisit, :acceptUrgentVisit, presence: true
   validates :phone, numericality: { only_integer: true }, presence: true
   validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
   validate :photo_presence, on: :create

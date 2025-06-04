@@ -7,7 +7,14 @@
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
 <%# form %>
-<%= simple_form_for @professional do |p|%>
+<%= simple_form_for @professional , html: {novalidate: true} do |p|%>
+  <% if @professional.errors[:base].any? %>
+    <div class="alert alert-danger">
+      <% @professional.errors[:base].each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
   <div class="row justify-content-center">
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 p-4">
       <%# name %>
@@ -87,13 +94,11 @@
       </div>
       <%# home viste%>
       <div class="text-start align-middle">
-        <%= p.check_box :homeVisit %>
-        <%= p.label :closed, "Déplcement à domicile", class: "ms-2" %>
+        <%= p.input :homeVisit, as: :boolean, label: "Déplacement à domicile", inline_label: true %>
       </div>
       <%# accept urgent visit%>
       <div class="text-start align-middle">
-        <%= p.check_box :acceptUrgentVisit %>
-        <%= p.label :closed, "Accepte les visites urgentes", class: "ms-2" %>
+        <%= p.input :acceptUrgentVisit, as: :boolean, label: "Accepte les visites urgentes", inline_label: true%>
       </div>
       <%# requirement text%>
       <p class="text-warning"></br></br>* : champs obligatoires</br>Veuillez indiquer au moins une horaire d'ouverture</p>

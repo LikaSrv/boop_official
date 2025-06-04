@@ -4,6 +4,10 @@
 @import "config/bootstrap_variables";
 
 // External libraries
+// 💡 1. Surcharge des variables AVANT d'importer Bootstrap
+$form-valid-color: #212529;
+$form-valid-border-color: #ced4da; // bordure grise neutre au lieu de vert fluo
+
 @import "bootstrap";
 @import "font-awesome";
 

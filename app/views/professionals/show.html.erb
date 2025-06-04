@@ -14,7 +14,7 @@
     <div class="col-lg-7 col-md-12">
       <div id="info-pro">
         <%# image %>
-        <div>
+        <div class="position-relative">
           <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
               <% @professional.photos_url.each_with_index do |photo_url, index| %>
@@ -32,6 +32,16 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
+          <% if @professional.homeVisit == true || @professional.acceptUrgentVisit == true %>
+                      <div class="position-absolute top-0 start-0 mt-3 ms-4 bg-dark bg-opacity-50 text-white px-3 py-2 rounded d-flex flex-column align-items-start">
+                        <% if @professional.homeVisit == true %>
+                          <p>🏠 Déplace à domicile</p>
+                        <% end %>
+                        <% if @professional.acceptUrgentVisit == true %>
+                          <p class="mt-1">‼️ Accepte les urgences</p>
+                        <% end %>
+                      </div>
+                    <% end %>
         </div>
         <%# info %>
         <div class="d-flex flex-column justify-content-center" style="width: 100%;">

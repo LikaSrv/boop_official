@@ -9,7 +9,14 @@
   <i class="fa-solid fa-paw float-end text-primary"></i>
 </div>
 <%# form %>
-<%= simple_form_for @professional, html: {multipart: true} do |p|%>
+<%= simple_form_for @professional, html: {multipart: true, novalidate: true} do |p|%>
+  <% if @professional.errors[:base].any? %>
+    <div class="alert alert-danger">
+      <% @professional.errors[:base].each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
   <div class="row justify-content-center">
     <div class="card_pro col-lg-5 col-md-5 col-sm-10 text-center">
       <h5 class="my-4">Profession : <strong><%=@professional.specialty%></strong></h5>
@@ -34,6 +41,7 @@
           <%= p.input :email, label: false, class: "form-control" %>
         </div>
       </div>
+
       <%# address %>
       <div class="d-flex align-items-start justify-content-between">
         <%= p.label :address, "Adresse :", class: "me-2 mb-0 text-start" %>
@@ -41,7 +49,8 @@
           <%= p.input :address,
                     label: false,
                     input_html: {value: @professional.address, data: {address_autocomplete_target: "address"}, class: "form-control"},
-                    wrapper_html: {data: {controller: "address-autocomplete", address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}}
+                    wrapper_html: {data: {controller: "address-autocomplete", address_autocomplete_api_key_value: ENV["MAPBOX_API_KEY"]}},
+                    readonly: true
                   %>
         </div>
       </div>
@@ -107,13 +116,11 @@
       </div>
       <%# home viste%>
       <div class="text-start align-middle">
-        <%= p.check_box :homeVisit %>
-        <%= p.label :closed, "Déplcement à domicile", class: "ms-2" %>
+        <%= p.input :homeVisit, as: :boolean, label: "Déplacement à domicile", inline_label: true %>
       </div>
       <%# accept urgent visit%>
       <div class="text-start align-middle">
-        <%= p.check_box :acceptUrgentVisit %>
-        <%= p.label :closed, "Accepte les visites urgentes", class: "ms-2" %>
+        <%= p.input :acceptUrgentVisit, as: :boolean, label: "Accepte les visites urgentes", inline_label: true%>
       </div>
     </div>
     <%# opeing hours %>
@@ -161,6 +168,6 @@
   </div>
   <%# submit button %>
   <div class="text-center my-4">
-    <%= p.button :submit, "Enregistrer", class: "btn_custom", data: {controller: "alert", action: "click->alert#loading" } %>
+    <%= p.button :submit, "Enregistrer", class: "btn btn-primary" %>
   </div>
 <% end %>

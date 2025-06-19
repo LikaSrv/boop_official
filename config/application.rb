@@ -31,5 +31,7 @@ module Boop
     # config.eager_load_paths << Rails.root.join("extras")
     config.i18n.default_locale = :fr
     config.time_zone = "Paris"
+    config.active_record.default_timezone = :utc
+
   end
 end

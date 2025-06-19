@@ -1,0 +1,29 @@
+<%= turbo_frame_tag :time_table do %>
+  <%# opening hours %>
+  <%= p.fields_for :opening_hours, @professional.opening_hours.sort_by(&:day_of_week) do |h|%>
+    <tbody class="nested-fields">
+      <tr>
+        <td>
+          <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
+          <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
+        </td>
+        <td>
+          <div class="d-flex flex-column">
+            <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.open_time_morning&.strftime('%H:%M') || '08:00') } %>
+            <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.close_time_morning&.strftime('%H:%M') || '12:00') } %>
+          </div>
+        </td>
+        <td>
+          <div class="d-flex flex-column">
+            <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.open_time_afternoon&.strftime('%H:%M') || '14:00') } %>
+            <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.close_time_afternoon&.strftime('%H:%M') || '17:00') } %>
+          </div>
+        </td>
+        <td class="text-center align-middle">
+          <%= h.check_box :closed %>
+          <%= h.label :closed, "Fermé", class: "ms-2" %>
+        </td>
+      </tr>
+    </tbody>
+  <% end %>
+<%end%>

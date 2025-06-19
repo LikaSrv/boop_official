@@ -1,8 +1,9 @@
 class Professional < ApplicationRecord
 
   # validation
-  validates :name, :address, :email, :specialty, :description, :capacity, :interval, presence: true
-validates :phone, presence: true, format: { with: /\A\+?\d[\d\s\-]+\z/, message: :invalid_phone }
+  validates :name, :address, :email, :specialty, :description, :interval, presence: true
+  validates :capacity, numericality: { only_integer: true, greater_than: 0 }
+  validates :phone, presence: true, format: { with: /\A\+?\d[\d\s\-]+\z/, message: :invalid_phone }
   validates :specialty, inclusion: {in: ["Vétérinaire", "Toiletteur", "Comportementaliste", "Educateur", "Pension", "Promeneur", "Nutritionniste", "Petsitter"]}
   validate :photo_presence, on: :create
   validate :at_least_one_day_open

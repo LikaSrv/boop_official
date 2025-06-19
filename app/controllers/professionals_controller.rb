@@ -253,8 +253,16 @@ def availabilitiesOfTheDay(professional, date)
 
   # Créneaux matin
   if opening_hour.open_time_morning.present? && opening_hour.close_time_morning.present?
-    start_time = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
-    end_time = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+    start_time = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.open_time_morning.hour,
+        opening_hour.open_time_morning.min
+      )
+      end_time = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.close_time_morning.hour,
+        opening_hour.close_time_morning.min
+      )
 
     while start_time + interval <= end_time
       opening_time_slots << start_time if isAvailable?(professional, date, start_time)
@@ -264,8 +272,17 @@ def availabilitiesOfTheDay(professional, date)
 
   # Créneaux après-midi
   if opening_hour.open_time_afternoon.present? && opening_hour.close_time_afternoon.present?
-    start_time = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
-    end_time = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+    # créneaux de l’après-midi
+      start_time = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.open_time_afternoon.hour,
+        opening_hour.open_time_afternoon.min
+      )
+      end_time = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.close_time_afternoon.hour,
+        opening_hour.close_time_afternoon.min
+      )
 
     while start_time + interval <= end_time
       opening_time_slots << start_time if isAvailable?(professional, date, start_time)
@@ -282,8 +299,16 @@ end
     if isOpened?(professional, date)
       opening_hour = OpeningHour.find_by(professional: professional, day_of_week: date.wday)
 
-      start_time_morning = DateTime.parse("#{date} #{opening_hour.open_time_morning}")
-      end_time_morning = DateTime.parse("#{date} #{opening_hour.close_time_morning}")
+      start_time_morning = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.open_time_morning.hour,
+        opening_hour.open_time_morning.min
+      )
+      end_time_morning = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.close_time_morning.hour,
+        opening_hour.close_time_morning.min
+      )
 
       while start_time_morning + professional.interval.minutes <= end_time_morning
 
@@ -293,8 +318,17 @@ end
         start_time_morning += professional.interval.minutes
       end
 
-      start_time_afternoon = DateTime.parse("#{date} #{opening_hour.open_time_afternoon}")
-      end_time_afternoon = DateTime.parse("#{date} #{opening_hour.close_time_afternoon}")
+      # créneaux de l’après-midi
+      start_time_afternoon = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.open_time_afternoon.hour,
+        opening_hour.open_time_afternoon.min
+      )
+      end_time_afternoon = Time.zone.local(
+        date.year, date.month, date.day,
+        opening_hour.close_time_afternoon.hour,
+        opening_hour.close_time_afternoon.min
+      )
 
       while start_time_afternoon + professional.interval.minutes <= end_time_afternoon
 

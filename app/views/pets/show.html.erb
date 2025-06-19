@@ -28,11 +28,16 @@
         <p class="my-2">Âge:
           <% if @pet.birthday.present? %>
             <% age_in_years = (Date.today - @pet.birthday).to_i / 365.25 %>
-            <% if age_in_years >= 0 %>
+            <% if age_in_years >= 1 %>
               <%= age_in_years.round %> ans
             <% else %>
-              <% age_in_months = (Date.today.month - @pet.birthday.month) + (Date.today.year - @pet.birthday.year) * 12 %>
-              <%= age_in_months.abs %> mois
+              <% age_in_months = (Date.today.year - @pet.birthday.year) * 12 + (Date.today.month - @pet.birthday.month) %>
+              <% if age_in_months.abs < 1 %>
+                <% age_in_days = (Date.today - @pet.birthday).to_i %>
+                <%= age_in_days.abs %> jour<%= 's' if age_in_days.abs > 1 %>
+              <% else %>
+                <%= age_in_months.abs %> mois
+              <% end %>
             <% end %>
           <% else %>
             0
@@ -112,12 +117,13 @@
                   <p class="mx-2 vaccin-administration-date"> <%= vaccin.administration_date.strftime("%d-%m-%Y")%></p>
                 </div>
                 <div class="d-flex flex-row">
-                  <p>Prochaine date : </p>
-                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date">
-                    <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
-                  </p>
+                  <% if vaccin.next_booster_date?%>
+                    <p>Prochaine date : </p>
+                    <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date">
+                      <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
+                    </p>
+                  <%end%>
                 </div>
-
               </div>
               <div class="d-flex flex-column justify-content-around">
                 <%= link_to raw("<i class='fa-solid fa-edit float-end text-primary bg-light shadow myCircleIcon p-3 hoveredCircleButton'></i>"),

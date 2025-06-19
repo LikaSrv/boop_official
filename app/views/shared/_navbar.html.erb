@@ -3,11 +3,9 @@
     <%= link_to "/", class: "navbar-brand" do %>
       <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20RVB.png", alt: "Boop Logo" %>
     <% end %>
-
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto d-flex align-items-center gap-4">
         <li class="nav-item">
@@ -25,26 +23,22 @@
         <li class="nav-item">
           <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link" %>
         </li>
-
-
-
         <% if user_signed_in? %>
+
           <li class="nav-item dropdown">
-            <a href="#" class="avatar" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <% if current_user.photo.key?%>
-                <%= image_tag "#{ENV['SUPABASE_URL']}/storage/v1/object/public/uploaded_photos/#{current_user.photo.key}", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
-              <% else %>
-                <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//profil-default.webp", class: "avatar", alt: "dropdown menu", style: "object-fit: cover"%>
-              <% end %>
+            <a href="#" class="d-flex align-items-center avatar-dropdown" id="navbarDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="text-decoration: none;">
+              <span class="nav-link" ><%= "#{current_user.first_name} #{current_user.last_name}" %></span>
             </a>
             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-              <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid")%>
-                <%= link_to "Mon organisme", pro_index_user_path(current_user), class: "dropdown-item" %>
-              <% elsif (current_user.orders.count > 1)%>
-                <%= link_to "Mon organisme", pro_index_user_path(current_user), class: "dropdown-item" %>
-              <% else%>
-              <%end%>
-              <%= link_to "Mon profil", user_path(current_user), class: "dropdown-item" %>
+
+            <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid")%>
+              <%= link_to "Mon organisme", pro_index_user_path(current_user),  class: "dropdown-item"%>
+            <% elsif (current_user.orders.count > 1)%>
+              <%= link_to "Mon organisme", pro_index_user_path(current_user),  class: "dropdown-item"%>
+            <% else%>
+            <%end%>
+          
+              <%= link_to "Mon compte", user_path(current_user), class: "dropdown-item" %>
               <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>
           </li>

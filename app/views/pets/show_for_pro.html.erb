@@ -20,8 +20,13 @@
             <% if age_in_years >= 0 %>
               <%= age_in_years.round %> ans
             <% else %>
-              <% age_in_months = (Date.today.month - @pet.birthday.month) + (Date.today.year - @pet.birthday.year) * 12 %>
-              <%= age_in_months.abs %> mois
+              <% age_in_months = (Date.today.year - @pet.birthday.year) * 12 + (Date.today.month - @pet.birthday.month) %>
+              <% if age_in_months.abs < 1 %>
+                <% age_in_days = (Date.today - @pet.birthday).to_i %>
+                <%= age_in_days.abs %> jour<%= 's' if age_in_days.abs > 1 %>
+              <% else %>
+                <%= age_in_months.abs %> mois
+              <% end %>
             <% end %>
           <% else %>
             0
@@ -49,21 +54,19 @@
     <% else %>
       <% @appointments.each do |a| %>
         <div class="col-lg-4 col-md-12 col-12">
-            <div class="card_pro p-4 m-1 text-start" >
-              <div class="text-end">
-                <div >
-                  <p><%= a.start_time.strftime("%d/%m/%Y")%> à <%= a.start_time.strftime("%H:%M")%></p>
-                </div>
+          <div class="card_pro p-4 m-1 text-start" >
+            <div class="text-end">
+              <div >
+                <p><%= a.start_time.strftime("%d/%m/%Y")%> à <%= a.start_time.strftime("%H:%M")%></p>
               </div>
-              <p>Professionnel : <strong><%= a.professional.name %></strong></p>
-              <p style="word-wrap: break-word; word-break: break-word;">Motif de la visite : <%= a.reason %></p>
-              <p style="word-wrap: break-word; word-break: break-word;">Commentaire : <%= a.comment ? a.comment : "Pas de commentaires" %></p>
             </div>
-
+            <p>Professionnel : <strong><%= a.professional.name %></strong></p>
+            <p style="word-wrap: break-word; word-break: break-word;">Motif de la visite : <%= a.reason %></p>
+            <p style="word-wrap: break-word; word-break: break-word;">Commentaire : <%= a.comment ? a.comment : "Pas de commentaires" %></p>
+          </div>
         </div>
       <% end %>
     <% end%>
-
   </div>
   <%# les vaccins %>
   <div class="card_pro d-flex flex-column justify-content-between p-4 position-relative" data-controller="alert" >
@@ -88,10 +91,12 @@
                   <p class="mx-2 vaccin-administration-date"> <%= vaccin.administration_date.strftime("%d-%m-%Y")%></p>
                 </div>
                 <div class="d-flex flex-row">
-                  <p>Prochaine date : </p>
-                  <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date">
-                    <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
-                  </p>
+                  <% if vaccin.next_booster_date?%>
+                    <p>Prochaine date : </p>
+                    <p class="mx-2 <%= vaccin.next_booster_date > Date.today ? 'text-success' : 'text-danger' %> vaccin-next-booster-date">
+                      <%=vaccin.next_booster_date.strftime("%d-%m-%Y")%>
+                    </p>
+                  <%end%>
                 </div>
               </div>
               <div class="d-flex flex-column justify-content-around">

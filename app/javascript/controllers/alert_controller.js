@@ -195,7 +195,7 @@ export default class extends Controller {
         const administrationDate = document.getElementById("administrationDate").value;
         const nextBoosterDate = document.getElementById("nextBoosterDate").value;
 
-        if (!vaccineName || !administrationDate || !nextBoosterDate) {
+        if (!vaccineName || !administrationDate) {
           Swal.showValidationMessage("Tous les champs sont obligatoires !");
           return false; // Empêche la fermeture si validation échoue
         }

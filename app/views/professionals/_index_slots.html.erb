@@ -8,7 +8,7 @@
   <% max_days_to_check = 30 %>
   <% opened_days = [] %>
 
-  <% while days_displayed < 7 && i < max_days_to_check %>
+  <% while days_displayed < 3 && i < max_days_to_check %>
     <% date = Date.current + i %>
     <% if isOpened?(professional, date) %>
       <% opened_days << date %>
@@ -26,6 +26,7 @@
         <div class="d-none d-flex justify-content-center mx-2"
              data-appointment-selected-target="times"
              style="display: flex; flex-wrap: wrap;">
+
           <% availabilitiesOfTheDay(professional, date).each do |a| %>
             <a href="<%= new_professional_appointment_path(professional) %>"
                class="btn btn-outline-primary m-1"

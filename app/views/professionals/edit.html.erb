@@ -58,7 +58,7 @@
       <div class="d-flex align-items-start justify-content-between">
         <%= p.label :capacity, "Capacité d'accueil :", class: "me-2 mb-0 text-start" %>
         <div style="width: 70%;">
-          <%= p.input :capacity, label: false %>
+          <%= p.input :capacity, label: false, input_html: { min: 1, step: 1, type: "number" } %>
         </div>
       </div>
       <%# interval definition %>
@@ -109,11 +109,12 @@
             </div>
           <% end %>
           <!-- Champ pour ajouter ou changer les photos -->
-          <%= p.input :photos, label: (@professional.photos_url.present? ? "Changer les photos :" : "Ajouter des photos :"),
-           as: :file,
-           input_html: { class: "form-control", multiple: true, name: "professional[photos][]" } %>
+            <%= p.input :photos, label: (@professional.photos_url.present? ? "Changer les photos :" : "Ajouter des photos :"),
+             as: :file,
+             input_html: { class: "form-control", multiple: true, name: "professional[photos][]", accept: "image/*", onchange: "if(this.files.length > 5){ alert('Vous ne pouvez sélectionner que 5 photos maximum.'); this.value = ''; }" } %>
         </div>
       </div>
+      <p class="my-4 text-start">Options : </p>
       <%# home viste%>
       <div class="text-start align-middle">
         <%= p.input :homeVisit, as: :boolean, label: "Déplacement à domicile", inline_label: true %>
@@ -141,24 +142,24 @@
           <tbody class="nested-fields">
             <tr>
               <td>
-                <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
-                <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
+          <%= h.hidden_field :day_of_week, value: h.object.day_of_week %>
+          <%= h.label "day_#{h.object.day_of_week}", I18n.t('date.abbr_day_names', locale: :fr)[h.object.day_of_week] %>
               </td>
               <td>
-                <div class="d-flex flex-column">
-                  <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_morning&.strftime('%H:%M') } %>
-                  <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_morning&.strftime('%H:%M') } %>
-                </div>
+          <div class="d-flex flex-column">
+            <%= h.input :open_time_morning, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.open_time_morning&.strftime('%H:%M') || '08:00') } %>
+            <%= h.input :close_time_morning, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.close_time_morning&.strftime('%H:%M') || '12:00') } %>
+          </div>
               </td>
               <td>
-                <div class="d-flex flex-column">
-                  <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.open_time_afternoon&.strftime('%H:%M') } %>
-                  <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: h.object.close_time_afternoon&.strftime('%H:%M') } %>
-                </div>
+          <div class="d-flex flex-column">
+            <%= h.input :open_time_afternoon, label: false, placeholder: "Ouverture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.open_time_afternoon&.strftime('%H:%M') || '14:00') } %>
+            <%= h.input :close_time_afternoon, label: false, placeholder: "Fermeture", as: :string, input_html: { class: "form-control", data: { controller: "timepicker" }, value: (h.object.close_time_afternoon&.strftime('%H:%M') || '17:00') } %>
+          </div>
               </td>
               <td class="text-center align-middle">
-                <%= h.check_box :closed %>
-                <%= h.label :closed, "Fermé", class: "ms-2" %>
+          <%= h.check_box :closed %>
+          <%= h.label :closed, "Fermé", class: "ms-2" %>
               </td>
             </tr>
           </tbody>

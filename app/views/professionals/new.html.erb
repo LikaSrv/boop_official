@@ -57,16 +57,9 @@
                   %>
         </div>
       </div>
-      <%# photo %>
-      <div class="d-flex align-items-center justify-content-between">
-        <%= p.label :photos, "Photos (max 5) :", class: "me-2 mb-0" %>
-        <div style="width: 65%;">
-          <%= p.input :photos, label: false, as: :file, input_html: { multiple: true, accept: "image/*", max: 5, onchange: "if(this.files.length>5){alert('Vous pouvez sélectionner jusqu\'à 5 photos.'); this.value='';}" } %>
-          <small class="text-muted">Vous pouvez sélectionner jusqu'à 5 photos.</small>
-        </div>
-      </div>
+
       <%# capacity %>
-      <div class="d-flex align-items-start justify-content-between">
+      <div class="d-flex align-items-center justify-content-between">
         <%= p.label :capacity, "Capacité d'accueil* :", class: "me-2 mb-0" %>
         <div style="width: 65%;">
           <%= p.input :capacity, label: false%>
@@ -93,6 +86,15 @@
           <%= p.input :description, label: false, as: :text, input_html: { rows: 4 } %>
         </div>
       </div>
+      <%# photo %>
+      <div class="d-flex align-items-center justify-content-between">
+        <%= p.label :photos, "Photos (max 5) :", class: "me-2 mb-0" %>
+        <div style="width: 65%;">
+          <%= p.input :photos, label: false, as: :file, input_html: { multiple: true, accept: "image/*", max: 5, onchange: "if(this.files.length>5){alert('Vous pouvez sélectionner jusqu\'à 5 photos.'); this.value='';}" } %>
+          <small class="text-muted">Vous pouvez sélectionner jusqu'à 5 photos.</small>
+        </div>
+      </div>
+      <p class="mt-5 mb-3">Veuillez préciser les options suivants : </p>
       <%# home viste%>
       <div class="text-start align-middle">
         <%= p.input :homeVisit, as: :boolean, label: "Déplacement à domicile", inline_label: true %>

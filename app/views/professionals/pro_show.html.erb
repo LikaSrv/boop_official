@@ -9,6 +9,8 @@
   <div>
     <%= render "all_service", selected_professional: @professional %>
   </div>
+  <div class="d-flex flex-row">
+  </div>
   <%# calendar %>
   <div class="text-center" style="width: 100%;">
     <%# title + button edit %>
@@ -16,8 +18,11 @@
       <h4> <strong> Bienvenue sur le planning de <%=@professional.name%> </strong></h4>
       <%# edit profil pro button %>
       <div class="text-end position-absolute top-0 end-0 me-4 mt-4">
-        <a href="<%=edit_professional_path(@professional)%>" class="btn btn-secondary">Modifier mon profil pro</a>
+          <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+            Paramètres
+          </a>
       </div>
+      <%= render "setting_sideBar", professional: @professional%>
     </div>
     <div class="custom-scroll" style="height: calc(85vh - 100px); overflow-y: auto">
       <%# calendar %>
@@ -30,9 +35,7 @@
       <div>
         <div class="d-flex flex-row justify-content-between">
           <p class="text-start mx-4">Les horaires du rendez-vous : </p>
-          <a href="<%=professional_edit_availibilities_path(@professional)%>" class="btn btn-secondary me-4">
-            Gérer mes créneaux
-          </a>
+
         </div>
         <%= turbo_frame_tag :all_slot do %>
           <%= render "all_slots", professional: @professional, selected_date: @selected_date %>

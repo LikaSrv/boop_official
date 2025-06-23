@@ -1,0 +1,28 @@
+.setting_button {
+  position: relative;        // pour que le ::after se positionne par rapport au lien
+  display: inline-block;     // pour que le pseudo-élément suive la largeur du texte
+  text-decoration: none;
+  color: #000;
+  transition: color 0.3s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #FF7A3D;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+  }
+
+  &:hover,
+  &.active {
+    color: #FF7A3D !important;
+
+    &::after {
+      width: 80%;
+    }
+  }
+}

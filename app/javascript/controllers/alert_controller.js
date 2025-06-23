@@ -981,13 +981,44 @@ export default class extends Controller {
   }
 
   commentSave(event) {
-    event.preventDefault();
 
     Swal.fire({
       position: "bottom-end",
       text: "Le commentaire est bien enregistré.",
       showConfirmButton: false,
-      timer: 1500
+      timer: 1000
+    });
+  }
+
+  shareLink(event) {
+    event.preventDefault();
+
+    const url = "https://www.myboop.fr/professionals/"+ this.element.dataset.professionalId;
+
+    Swal.fire({
+      title: "Partager le lien vers ma page de réservation",
+      input: "text",
+      inputValue: url,
+      showCancelButton: true,
+      confirmButtonText: "Copier",
+      cancelButtonText: "Annuler",
+      confirmButtonColor: '#EFA690',
+      customClass: {
+        cancelButton: "btn btn-body-color", // Classe pour le bouton "Annuler"
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        navigator.clipboard.writeText(result.value).then(() => {
+            Swal.fire({
+            title: "Lien copié!",
+            text: "Vous pouvez maintenant le partager.",
+            icon: "success",
+            confirmButtonColor: "#EFA690" // Bootstrap primary
+            });
+        }).catch(err => {
+          Swal.fire("Erreur", "Impossible de copier le lien.", "error");
+        });
+      }
     });
   }
 

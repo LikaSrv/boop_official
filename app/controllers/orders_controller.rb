@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
       }],
       mode: 'subscription',
       subscription_data: {
-        trial_period_days: 180 # 🎉 essai gratuit de 180 jours
+        trial_period_days: 30 # 🎉 essai gratuit de 180 jours
       },
       success_url: order_url(order),
       cancel_url: root_url # ou une page d'échec personnalisée

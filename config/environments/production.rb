@@ -110,4 +110,9 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
   config.action_dispatch.redirect_filter = [/^http:\/\/myboop\.fr/]
 
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{30.days.to_i}, immutable",
+    'Expires'       => "#{30.days.from_now.httpdate}"
+  }
+
 end

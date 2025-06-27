@@ -1,33 +1,79 @@
 <div>
   <%= render "shared/back"%>
 </div>
-<div class="container">
-
-  <h1 class="text-center my-4">À propos</h1>
-  <div class="row">
-    <div class="form-devise col-md-12">
-
-
-      <p>
-        Bienvenue sur notre page À propos. Ici, vous pouvez trouver des informations sur nos politiques et notre mission.
-      </p>
-      <h2>Notre Mission</h2>
-      <p>
-        Notre mission est de connecter les refuges, les familles et les experts pour des adoptions réussies. Nous croyons en l'importance de trouver des foyers aimants pour chaque animal.
-      </p>
-      <h2>Politiques</h2>
-      <p>
-        Nous nous engageons à respecter les normes les plus élevées en matière de bien-être animal. Nos politiques sont conçues pour assurer la sécurité et le bonheur de chaque animal adopté.
-      </p>
-      <h2>Politique de confidentialité</h2>
-      <p>
-        Nous respectons votre vie privée et nous nous engageons à protéger vos informations personnelles. Pour en savoir plus, veuillez consulter notre <%= link_to 'Politique de confidentialité', privacy_policy_path %>.
-      </p>
-      <h2>Conditions générales</h2>
-      <p>
-        En utilisant notre site, vous acceptez nos <%= link_to 'Conditions générales', terms_path %>. Veuillez les lire attentivement.
-      </p>
-
-
+<div class="about-page">
+  <!-- Présentation -->
+  <section class="about-hero">
+    <div class="d-flex flex-column align-items-center">
+      <h1 class="about-hero-title">
+        <span class="text-warning">QUI SOMMMES-NOUS ?</span>
+      </h1>
+      <div class="about-hero-content">
+        <div class="about-hero-img">
+          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//mathilde&edwin.webp", alt: "Mathilde & Edwin", class: "about-portrait" %>
+        </div>
+        <div class="about-hero-text">
+          <h2 class="about-script">Mathilde & Edwin</h2>
+          <p>
+            Nous sommes Mathilde et Edwin, deux grands amoureux des animaux, animés par une profonde empathie et un attachement sincère à toutes les petites vies qui nous entourent. Chaque battement de cœur félin, chaque remue de queue canin et chaque chant d’oiseau nous rappellent à quel point les animaux méritent respect et tendresse.
+          </p>
+          <p>
+            Notre objectif est clair : apporter aide, soins et attention à tous les compagnons qui en ont besoin. Guidés par nos valeurs d’empathie, de générosité et de dévouement, nous ferons tout notre possible pour que chaque animal reçoive l’amour et le soutien nécessaires afin de s’épanouir pleinement.
+          </p>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <div class="about-hero-text">
+        <h2 class="about-script">Lika & Marc</h2>
+        <p>
+          Nous sommes Lika et Marc, deux passionnés engagés au service du bien-être animal. Animés par la même vision de compassion et de respect pour tous les compagnons à poils, plumes ou écailles, nous avons rejoint l’aventure Boop pour porter haut les couleurs de l’entraide et de la bienveillance envers les animaux.
+        </p>
+        <p>
+          Notre mission est simple : accompagner chaque refuge, chaque association et chaque famille dans la quête d’un foyer aimant, en plaçant l’empathie et la solidarité au cœur de notre action. Guidés par nos valeurs de confiance, de transparence et de collaboration, nous mettons toute notre énergie à rapprocher les êtres humains et les animaux pour créer des liens durables et heureux.
+        </p>
+      </div>
+      <div class="about-hero-img">
+        <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//lika-marc.webp", alt: "Chanlika Servais @ Marc Servais", class:"about-portrait"%>
+      </div>
+    </div>
+  </section>
+  <!-- Parcours -->
+  <section class="about-section about-section-brown">
+    <h3 class="mx-3">COMMENT NOUS SOMMES ARRIVÉS LÀ ?</h3>
+<p>
+  Au début, nous nous sommes concentrés sur l’aide aux animaux en refuge, en oubliant parfois les besoins les plus simples de chaque compagnon. Nous avons d’abord créé une application mobile pour faciliter le travail des refuges, mais très vite nous avons réalisé que tous les animaux, partout, méritent des soins et de l’attention au quotidien. C’est pourquoi nous avons donné vie à Boop : pour simplifier la prise de rendez-vous et rendre les carnets de santé accessibles à tous, afin que chaque animal reçoive rapidement l’accompagnement et l’amour dont il a besoin.
+</p>
+
+    <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20BLANC.png", alt: "Boop logo", class: "about-logo" %>
+  </section>
+  <!-- Unicité -->
+  <section class="about-section about-unique">
+    <h3 class="about-script">Ce qui fait notre unicité</h3>
+    <div class="about-unique-list">
+      <div class="about-unique-item">
+        <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur1.png", alt: "Joie" %>
+        <p>Partager et comprendre les besoins des animaux</p>
+      </div>
+      <div class="about-unique-item">
+        <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur2.png", alt: "Écoute" %>
+        <p>Unir nos forces avec les refuges et pros</p>
+      </div>
+      <div class="about-unique-item">
+        <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur3.png", alt: "Envie" %>
+        <p>Communication claire et honnête</p>
+      </div>
+    </div>
+  </section>
+  <!-- Démo -->
+  <section class="about-section about-invite">
+    <div class="about-invite-text">
+      <h3 class="about-script">Comment prendre Boop en main ? </h3>
+    </div>
+    <div class="about-invite-img">
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//adoption.webp", alt: "Cartes", class: "about-cards" %>
+    </div>
+  </section>
+</div>

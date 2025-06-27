@@ -1,0 +1,181 @@
+.about-hero {
+  align-items: center;
+  width: 100%;
+  padding: 40px 40px;
+
+  .about-hero-title {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-weight: 800;
+    word-wrap: break-word;
+    text-align: center;
+
+    @media (max-width: 992px) {
+      font-size: 2.5rem;
+      padding: 20px 20px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+      padding: 20px 20px;
+    }
+  }
+
+  .about-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+    flex-direction: row;
+
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
+
+    }
+
+    .about-hero-img {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      padding: 40px 0 20px 0;
+
+      .about-portrait {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 60% 40% 60% 40%/50% 60% 40% 50%;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+
+        @media (max-width: 992px) {
+          width: 300px;
+          height: 300px;
+        }
+      }
+    }
+
+    .about-hero-text {
+      flex: 1;
+      padding-left: 40px;
+
+      @media (max-width: 768px) {
+        padding-left: 0;
+      }
+
+      .about-script {
+        font-size: 2.2rem;
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+}
+
+
+
+.about-section {
+  padding: 40px 0;
+
+  &.about-section-brown {
+    background: $primary;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h3 {
+      margin-top: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    p {
+      text-align: center;
+      width: 70%;
+      margin-top: 2rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-logo {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 60% 40% 60% 40%/50% 60% 40% 50%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+
+
+  &.about-invite {
+    text-align: center;
+    padding: 40px;
+
+    .about-invite-img {
+      margin: 20px;
+
+      .about-cards {
+        width: 70%;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+      }
+    }
+
+    .about-invite-text {
+      .about-script {
+
+        font-size: 2rem;
+      }
+
+      p {
+        font-size: 1.3rem;
+        margin-top: 8px;
+      }
+    }
+  }
+
+  &.about-unique {
+    text-align: center;
+    padding: 40px;
+
+    .about-script {
+      font-size: 2rem;
+      margin-bottom: 24px;
+    }
+
+    .about-unique-list {
+      display: flex;
+      justify-content: space-around;
+      gap: 40px;
+      margin-top: 2rem;
+
+      .about-unique-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+          width: 80px;
+          margin-bottom: 12px;
+        }
+
+        p {
+          font-size: 1rem;
+          max-width: 160px;
+        }
+      }
+    }
+  }
+}

@@ -5,22 +5,28 @@
   <% end %>
 </div>
 <%# title %>
-<div class=" text-center mb-4 d-flex flex-row justify-content-center">
-  <h1>Toutes les annonces</h1>
-  <i class="fa-solid fa-paw float-end text-primary"></i>
+<div>
+  <div class=" text-center mb-4 d-flex flex-row justify-content-center position-relative">
+    <h1>Toutes les annonces</h1>
+    <i class="fa-solid fa-paw float-end text-primary"></i>
+    <div class="position-absolute top-0 end-0 me-4 mt-3">
+    <%= link_to new_pet_alert_path, class:"btn btn-primary" do %>
+      <i class="fa-solid fa-plus"></i> Ajouter une annonce
+    <% end %>
+
+  </div>
+  </div>
+
 </div>
 <%# body  %>
 <% if @pet_alerts.empty?%>
-<div class="d-flex flex-column justify-content-center align-items-center">
-        <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg" alt="pet alert empty" style="width: 200px">
-        <p>Tous les animaux sont en sécurité.</p>
-      </div>
-       <% else %>
-<div class="grid-map">
-  <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
-
-
-
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg" alt="pet alert empty" style="width: 200px">
+    <p>Tous les animaux sont en sécurité.</p>
+  </div>
+<% else %>
+  <div class="grid-map">
+    <div class="d-flex flex-wrap justify-content-center" data-controller="animal-index">
       <% @pet_alerts.each do |animal| %>
         <a  href="<%=pet_alert_path(animal)%>"
             style="text-decoration: none; color: black; margin: 20px">
@@ -50,13 +56,12 @@
           </div>
         </a>
       <% end %>
-
-  </div>
-  <div class="map"
+    </div>
+    <div class="map"
         style="border-radius: 8px; max-height: 100vh; position: sticky; top: 100px;"
         data-controller="map"
         data-map-markers-value="<%= @markers.to_json %>"
         data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-  </div>
+    </div>
   <% end %>
 </div>

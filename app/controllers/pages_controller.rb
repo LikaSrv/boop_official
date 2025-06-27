@@ -9,31 +9,31 @@ class PagesController < ApplicationController
     @all_specialty = [
       {
         specialty: "Vétérinaire",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//veto.webp"
-      },
-      {
-        specialty: "Toiletteur",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//toiletteur.webp"
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//veto-400x.webp"
       },
       {
         specialty: "Comportementaliste",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//comportementalist.webp"
-      },
-      {
-        specialty: "Pension",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//pension.webp"
-      },
-      {
-        specialty: "Promeneur",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//promeneur.webp"
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//comportementalist-400x.webp"
       },
       {
         specialty: "Nutritionniste",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//nutritionniste.webp"
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//nutritionniste-400x.webp"
+      },
+      {
+        specialty: "Toiletteur",
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//toiletteur-400x.webp"
+      },
+      {
+        specialty: "Pension",
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//pension-400x.webp"
+      },
+      {
+        specialty: "Promeneur",
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//promeneur-400x.webp"
       },
       {
         specialty: "Petsitter",
-        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//petsitteur.webp"
+        photo: "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//petsitter-400x.webp"
       }
     ]
 

@@ -8,12 +8,12 @@
       <% if index == 0 || index == 1 %>
         <div class="price-display">
           <span class="amount"><%= humanized_money_with_symbol(pricings[index].price) %></span>
-          <span class="period">/mois</span>
+          <span class="period">TTC /mois</span>
         </div>
       <% elsif index == 3 || index == 4 %>
         <div class="price-display">
           <span class="amount"><%= humanized_money_with_symbol(pricings[index].price) %></span>
-          <span class="period">/an</span>
+          <span class="period">TTC /an</span>
         </div>
       <% end %>
     </div>

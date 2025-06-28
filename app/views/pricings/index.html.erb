@@ -2,122 +2,64 @@
   <div class="container">
     <div class="section-title text-center mb-3 mt-3">
       <h2>Souscription</h2>
-      <p class="m-3">Trouvez le programme idéal et bénéficiez de <span class="text-warning" style="font-weight: bold; font-size: x-large"> 90 jours d'essai gratuit </span> pour en profiter pleinement ! 🚀</p>
+      <p class="m-3">
+        Trouvez le programme idéal et bénéficiez de
+        <span class="text-primary" style="font-weight:bold; font-size:x-large">
+          30 jours d'essai gratuit
+        </span>
+        pour en profiter pleinement ! 🚀
+      </p>
     </div>
-    <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-5" style="overflow-x: auto;">
-      <%#boop 1%>
-      <div class="wow fadeInUp pricing_content"
-             data-wow-duration="1s"
-             data-wow-delay="0.1s"
-             data-wow-offset="0"
-             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp;">
-        <div class="pricing_design">
-          <div class="single-pricing" >
-            <div class="price-head">
-              <h3 class="text-warning">
-                <%= @pricings.present? && @pricings[0].present? ? @pricings[0].title : 'Titre non disponible' %>
-              </h3>
-              <div class="price-display">
-                <span class="amount"><%= humanized_money_with_symbol(@pricings[0].price) %></span>
-                <span class="period">/mois</span>
-              </div>
-            </div>
-            <div class="pricing_description">
-              <p><%= @pricings[0].description %></p>
-              <ul>
-                <li>Fiche de service détaillée</li>
-                <li>Gestion de rendez-vous</li>
-                <li>Gestion de capacité d'accueil</li>
-              </ul>
-            </div>
-            <% if user_signed_in? %>
-              <button
-                  class="btn text-white rounded-4 p-2 w-100"
-                  style="background-color: rgb(1, 116, 212)"
-                  data-controller="create-order"
-                  data-action="click->create-order#createOrder"
-                  data-create-order-user-id-value="<%= current_user.id %>"
-                  data-create-order-pricing-id-value="<%= @pricings[0].id %>"
-                  data-create-order-stripe-key-value="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>">
-              <h5>Payer</h5>
-              </button>
-            <% else %>
-              <%= link_to "Démarrer l'essai", new_user_session_path, class: "btn text-white rounded-4 p-2 w-100", style:"background-color: rgb(1, 116, 212)" %>
-            <% end %>
-          </div>
-        </div>
+
+    <!-- Toggle Mensuel / Annuel -->
+    <div class="d-flex justify-content-center my-4">
+      <div class="billing-toggle">
+        <input type="checkbox" id="billingSwitch">
+        <label for="billingSwitch" class="d-flex position-relative">
+          <div class="label monthly">Mensuel</div>
+          <div class="label yearly">Annuel</div>
+          <div class="slider"></div>
+        </label>
       </div>
-      <%#boop 5%>
-      <div class="wow fadeInUp pricing_content"
-             data-wow-duration="1s"
-             data-wow-delay="0.1s"
-             data-wow-offset="0"
-             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; ">
-        <div class="pricing_design">
-          <div class="single-pricing" >
-            <div class="price-head">
-              <h3 class="text-warning">
-                <%= @pricings.present? && @pricings[1].present? ? @pricings[1].title : 'Titre non disponible' %>
-              </h3>
-              <div class="price-display">
-                <span class="amount"><%= humanized_money_with_symbol(@pricings[1].price) %></span>
-                <span class="period">/mois</span>
-              </div>
-            </div>
-            <div class="pricing_description">
-              <p><%= @pricings[1].description %></p>
-              <ul>
-                <li>Toutes les fonctionnalités de Boop One</li>
-                <li>5 comptes professionnels</li>
-                <li>Dashboard dédié à la gestion globale</li>
-              </ul>
-            </div>
-            <script async
-              src="https://js.stripe.com/v3/buy-button.js"></script>
-            <% if user_signed_in? %>
-              <button
-                  class="btn text-white rounded-4 p-2 w-100"
-                  style="background-color: rgb(1, 116, 212)"
-                  data-controller="create-order"
-                  data-action="click->create-order#createOrder"
-                  data-create-order-user-id-value="<%= current_user.id %>"
-                  data-create-order-pricing-id-value="<%= @pricings[1].id %>"
-                  data-create-order-stripe-key-value="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>"
->
-              <h5>Payer</h5>
-              </button>
-            <% else %>
-              <%= link_to "Démarrer l'essai", new_user_session_path, class: "btn text-white rounded-4 p-2 w-100", style:"background-color: rgb(1, 116, 212)" %>
-            <% end %>
-          </div>
+    </div>
+
+    <!-- Container pour les cartes Mensuel (0..2) -->
+    <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-5" id="mensuel-cards">
+      <% [0,1,2].each do |i| %>
+        <div class="wow fadeInUp pricing_content"
+             data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0"
+             style="visibility: visible; animation-duration:1s; animation-delay:0.1s; animation-name:fadeInUp;">
+          <%= render "pricing_card", pricings: @pricings, index: i %>
         </div>
-      </div>
-      <%# boop custom %>
-      <div class="wow fadeInUp pricing_content"
-             data-wow-duration="1s"
-             data-wow-delay="0.1s"
-             data-wow-offset="0"
-             style="visibility: visible; animation-duration: 1s; animation-delay: 0.1s; animation-name: fadeInUp; ">
-        <div class="pricing_design auto-width">
-          <div class="single-pricing" >
-            <div class="price-head">
-              <h3 class="text-warning">
-                <%= @pricings.present? && @pricings[2].present? ? @pricings[2].title : 'Titre non disponible' %>
-              </h3>
-            </div>
-            <div class="pricing_description">
-              <p><%= @pricings[2].description %></p>
-              <ul>
-                <li>Toutes les fonctionnalités de Boop 5</li>
-                <li>Configuration avancée de votre compte</li>
-                <li>Support dédié pour vous accompagner </li>
-                <li>Évolutivité maximale avec la possibilité d'ajouter de nouvelles options</li>
-              </ul>
-            </div>
-            <%= link_to "Contactez-nous", contact_path, class: "btn text-white rounded-4 p-2", style: "background-color: rgb(1, 116, 212); width: 80%"%>
-          </div>
+      <% end %>
+    </div>
+
+    <!-- Container pour les cartes Annuel (3..5), caché par défaut -->
+    <div class="row flex-nowrap overflow-auto text-center custom-scroll mt-5 d-none" id="annuel-cards">
+      <% [3,4,5].each do |i| %>
+        <div class="wow fadeInUp pricing_content"
+             data-wow-duration="1s" data-wow-delay="0.1s" data-wow-offset="0"
+             style="visibility: visible; animation-duration:1s; animation-delay:0.1s; animation-name:fadeInUp;">
+          <%= render "pricing_card", pricings: @pricings, index: i %>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </section>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const billingSwitch = document.getElementById("billingSwitch");
+    const mensuelCards = document.getElementById("mensuel-cards");
+    const annuelCards = document.getElementById("annuel-cards");
+
+    billingSwitch.addEventListener("change", function() {
+      if (this.checked) {
+        mensuelCards.classList.add("d-none");
+        annuelCards.classList.remove("d-none");
+      } else {
+        mensuelCards.classList.remove("d-none");
+        annuelCards.classList.add("d-none");
+      }
+    });
+  });
+</script>

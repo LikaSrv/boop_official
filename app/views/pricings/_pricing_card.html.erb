@@ -1,0 +1,44 @@
+
+<div class="pricing_design">
+  <div class="single-pricing" >
+    <div class="price-head">
+      <h3 class="text-warning">
+        <%= pricings.present? && pricings[index].present? ? pricings[index].title : 'Titre non disponible' %>
+      </h3>
+      <% if index == 0 || index == 1 %>
+        <div class="price-display">
+          <span class="amount"><%= humanized_money_with_symbol(pricings[index].price) %></span>
+          <span class="period">/mois</span>
+        </div>
+      <% elsif index == 3 || index == 4 %>
+        <div class="price-display">
+          <span class="amount"><%= humanized_money_with_symbol(pricings[index].price) %></span>
+          <span class="period">/an</span>
+        </div>
+      <% end %>
+    </div>
+    <div class="pricing_description">
+      <p><%= pricings[index].description %></p>
+      <ul>
+        <% if pricings[index].respond_to?(:description_details) && pricings[index].description_details.present? %>
+          <% pricings[index].description_details.each do |detail| %>
+            <li><%= detail %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <% if user_signed_in? %>
+      <button
+                  class="btn btn_pricing_custom w-100"
+                  data-controller="create-order"
+                  data-action="click->create-order#createOrder"
+        data-create-order-user-id-value="<%= current_user.id %>"
+        data-create-order-pricing-id-value="<%= pricings[index].id %>"
+        data-create-order-stripe-key-value="<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>">
+        <h5>Payer</h5>
+      </button>
+    <% else %>
+      <%= link_to "Démarrer l'essai", new_user_session_path, class: "btn btn-custom" %>
+    <% end %>
+  </div>
+</div>

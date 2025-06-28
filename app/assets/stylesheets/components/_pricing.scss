@@ -5,7 +5,7 @@
 
 }
 .pricing_design .single-pricing{
-    background: $pink;
+    background: $warning;
     padding: 60px 40px;
     border-radius:30px;
     box-shadow: 0 10px 40px -10px rgba(0,64,128,.2);
@@ -178,3 +178,50 @@ text-decoration:none;
   max-width: 430px;
   margin: 10px auto;
 }
+
+
+.billing-toggle {
+    position: relative;
+    display: inline-block;
+    background: #e9ecef;
+    border-radius: 50px;
+    padding: 4px;
+    user-select: none;
+  }
+  .billing-toggle input {
+    display: none;
+  }
+  .billing-toggle .label {
+    position: relative;
+    z-index: 2;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color .3s;
+  }
+  .billing-toggle .slider {
+    position: absolute;
+    top: 1px; bottom: 1px;
+    left: 1px;
+    width: calc(50% - 8px);
+    background-color: $primary;
+    border-radius: 50px;
+    transition: left .3s ease;
+  }
+  /* État “checked” fait glisser le slider de 100% vers la droite */
+  #billingSwitch:checked + label .slider {
+    left: calc(50% + 4px);
+  }
+  /* Texte actif couleur blanche, inactif gris */
+  #billingSwitch:checked + label .label.yearly {
+    color: #fff;
+  }
+  #billingSwitch:not(:checked) + label .label.monthly {
+    color: #fff;
+  }

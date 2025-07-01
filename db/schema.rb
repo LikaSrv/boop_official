@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_28_104245) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_01_163954) do
   create_schema "auth"
   create_schema "extensions"
   create_schema "graphql"
@@ -87,22 +87,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_104245) do
     t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
-  create_table "blogs", force: :cascade do |t|
-    t.string "title"
-    t.string "meta_title"
-    t.string "text1"
-    t.string "photo1"
-    t.string "text2"
-    t.string "photo2"
-    t.string "text3"
-    t.string "photo3"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "intro"
-    t.string "conclusion"
-    t.string "introPhoto"
-  end
-
   create_table "closing_hours", force: :cascade do |t|
     t.bigint "professional_id", null: false
     t.datetime "start_time"
@@ -111,6 +95,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_104245) do
     t.datetime "updated_at", null: false
     t.boolean "whole_day", default: false
     t.index ["professional_id"], name: "index_closing_hours_on_professional_id"
+  end
+
+  create_table "content_blocks", force: :cascade do |t|
+    t.integer "position", null: false
+    t.text "body", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "image"
+    t.index ["post_id"], name: "index_content_blocks_on_post_id"
   end
 
   create_table "national_days_offs", force: :cascade do |t|
@@ -180,6 +174,21 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_104245) do
     t.string "medical_background"
     t.string "photo_url"
     t.index ["user_id"], name: "index_pets_on_user_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "meta_title", null: false
+    t.string "meta_description", null: false
+    t.text "intro", null: false
+    t.text "conclusion", null: false
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "cover_image"
+    t.string "meta_keywords", default: [], array: true
+    t.index ["slug"], name: "index_posts_on_slug", unique: true
   end
 
   create_table "pricings", force: :cascade do |t|
@@ -268,6 +277,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_28_104245) do
   add_foreign_key "appointments", "professionals"
   add_foreign_key "appointments", "users"
   add_foreign_key "closing_hours", "professionals"
+  add_foreign_key "content_blocks", "posts", name: "content_blocks_post_id_fkey", on_update: :cascade, on_delete: :cascade
   add_foreign_key "opening_hours", "professionals"
   add_foreign_key "orders", "pricings"
   add_foreign_key "orders", "users"

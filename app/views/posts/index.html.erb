@@ -1,14 +1,14 @@
 <%= render "banner_blogs"%>
 
 <div class="px-4 row justify-content-center align-items-center" style="overflow-x: hidden;  white-space: nowrap;">
-  <% if @blogs.empty?%>
+  <% if @posts.empty?%>
     <div class="d-flex flex-column justify-content-center align-items-center">
-      <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//business-solution-removebg-preview.png" alt="not found" >
-      <p>Nous n'avons pas encore de blogs.</p>
+      <img src="hhttps://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//blog_banner_new.webp" alt="not found" >
+      <p>Nous n'avons pas encore de posts.</p>
     </div>
   <% else %>
-    <% @blogs.each do |blog|%>
-      <a href="<%=blog_path(blog)%>" style="decoration: none; underline: none; color: black; width: fit-content;">
+    <% @posts.each do |blog|%>
+      <a href="<%=post_path(blog)%>" style="decoration: none; underline: none; color: black; width: fit-content;">
         <div class="card_blog p-4 d-flex flex-column justify-content-start align-items-center">
           <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg", alt:"chat", style:"width: 50%")%>
           <h5 class="my-4" style="text-wrap: wrap;"><%=blog.title%></h5>

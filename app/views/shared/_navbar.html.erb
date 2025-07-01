@@ -23,6 +23,9 @@
         <li class="nav-item">
           <%= link_to "Pet Alert", pet_alerts_path, class: "nav-link" %>
         </li>
+        <li class="nav-item">
+          <%= link_to "Blog", posts_path, class: "nav-link" %>
+        </li>
         <% if user_signed_in? %>
 
           <li class="nav-item dropdown">
@@ -37,7 +40,7 @@
               <%= link_to "Mon organisme", pro_index_user_path(current_user),  class: "dropdown-item"%>
             <% else%>
             <%end%>
-          
+
               <%= link_to "Mon compte", user_path(current_user), class: "dropdown-item" %>
               <%= link_to "Se déconnecter", destroy_user_session_path, data: {turbo_method: :delete}, class: "dropdown-item" %>
             </div>

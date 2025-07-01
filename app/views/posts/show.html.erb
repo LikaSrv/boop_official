@@ -1,0 +1,61 @@
+
+<%# --- Image de couverture en haut --- %>
+<div class="cover-image-hero mb-4">
+  <div class="position-relative">
+    <% if @post.cover_image.present? %>
+      <%= image_tag @post.cover_image, class: "img-fluid w-100", style: "max-height: 320px; object-fit: cover;" %>
+    <% else %>
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//blog_banner_defalut.webp", class: "img-fluid w-100", style: "max-height: 320px; object-fit: cover;" %>
+    <% end %>
+  <%# back button %>
+<div class="position-absolute top-0 start-0">
+  <%= link_to posts_path, class:"text-decoration-none text-primary", style:"font-size: 16px" do%>
+    <i class="fa-solid fa-chevron-left text-primary ms-4 me-3 mt-3"></i>Retour
+  <% end %>
+</div>
+  </div>
+</div>
+<%# --- Bloc principal centré --- %>
+<div class="container d-flex justify-content-center" style="margin-top: -100px;">
+  <div class="article-card bg-white shadow rounded-4 p-4" style="max-width: 700px; width: 100%;">
+    <%# Catégorie ou meta_title %>
+    <% if @post.meta_title.present? %>
+      <div class="text-uppercase text-muted mb-2" style="font-size: 0.9rem; letter-spacing: 1px;">
+        <%= @post.meta_title %>
+      </div>
+    <% end %>
+    <%# Titre %>
+    <h1 class="fw-bold mb-3" style="font-size: 2rem;"><%= @post.title %></h1>
+    <%# Infos auteur/date (à adapter selon tes attributs) %>
+    <div class="d-flex gap-3 mb-3" style="font-size: 0.95rem; color: #888;">
+      <%# Exemples, adapte selon tes champs %>
+      <span>Publié le <%= l(@post.published_at, format: :long) if @post.published_at %></span>
+      <%# <span>Par <%= @post.author_name %></span> %>
+  </div>
+  <%# Introduction %>
+  <% if @post.intro.present? %>
+    <div class="mb-4" style="font-size: 1.1rem;">
+      <%= simple_format(@post.intro) %>
+    </div>
+  <% end %>
+  <%# --- Blocs dynamiques (texte/image) --- %>
+  <% @content_blocks.each do |block| %>
+    <% if block.image %>
+      <div class="text-center mb-4">
+        <%= image_tag block.image, class: "img-fluid rounded", style: "max-width: 90%; max-height: 350px; object-fit: cover;" %>
+      </div>
+    <% end %>
+    <% if block.body %>
+      <div class="mb-4" style="font-size: 1.05rem;">
+        <%= simple_format(block.body) %>
+      </div>
+    <% end %>
+  <% end %>
+  <%# Conclusion %>
+  <% if @post.conclusion.present? %>
+    <div class="mt-4" style="font-size: 1.1rem;">
+      <%= simple_format(@post.conclusion) %>
+    </div>
+  <% end %>
+</div>
+</div>

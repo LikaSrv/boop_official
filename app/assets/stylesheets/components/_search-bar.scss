@@ -1,8 +1,18 @@
+.search-section {
+  background-color: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 20px;
+  margin-top: 20px;
+  box-shadow: 0 0 0 2px $light-pink;
+}
+
+
 .search-bar {
   border-radius: 32px;
   height: 70px;
   font-size: 20px;
-  border: 1px solid $secondary;
+  border: 2px solid $light-pink;
+
 
   @media (max-width: 768px) {
     height: 60px;
@@ -18,8 +28,6 @@
 }
 
 .w-form {
-  width: 80%;
-  margin: 0 auto;
 
   @media (max-width: 768px) {
     width: 95% !important;
@@ -37,14 +45,15 @@
   .form-control.search-bar {
     flex: 1;
     transition: all 0.3s ease;
+    border-color: $light-pink;
 
     &:first-child {
       flex: 2;
     }
 
     &:focus {
-      box-shadow: 0 0 0 2px $secondary;
-      border-color: $secondary;
+      box-shadow: 0 0 0 2px $light-pink;
+      border-color: $primary;
     }
   }
 
@@ -78,8 +87,7 @@
 .search-form-control {
   position: relative;
   margin: 1rem auto;
-  width: 100%;
-  display: flex;
+
   justify-content: center;
 
   @media (max-width: 768px) {

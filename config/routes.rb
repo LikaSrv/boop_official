@@ -14,9 +14,14 @@ Rails.application.routes.draw do
   get 'privacy_policy', to: 'pages#privacy_policy', as: 'privacy_policy'
   get 'contact', to: 'pages#contact', as: 'contact'
   get 'terms', to: 'pages#terms', as: 'terms'
+  get 'pourquoi-boop-pro', to: 'pages#why_boop_pro', as: 'why_boop_pro'
+  get 'pourquoi-boop', to: 'pages#why_boop', as: 'why_boop'
+
+  
   post 'professionals/duplicate', to: 'professionals#duplicate', as: 'duplicate_professional'
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
+
     # autres routes...
 
   # Defines the root path route ("/")

@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home, :about, :contact, :privacy_policy, :terms]
+  skip_before_action :authenticate_user!, only: [:home, :about, :contact, :privacy_policy, :terms, :why_boop_pro, :why_boop]
 
   def home
     if user_signed_in?
@@ -62,5 +62,13 @@ class PagesController < ApplicationController
 
   def terms
     # Logique pour les conditions générales
+  end
+
+  def why_boop_pro
+    # Logique pour la page "Pourquoi Boop Pro"
+  end
+
+  def why_boop
+    # Logique pour la page "Pourquoi Boop"
   end
 end

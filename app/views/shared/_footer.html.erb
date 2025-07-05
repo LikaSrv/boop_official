@@ -1,90 +1,66 @@
 <footer class="footer">
-  <div class="row d-flex justify-content-between">
-    <div class="col-lg-4 col-md-7 col-sm-7 footer-logo">
-      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20RVB.png", style: "width: 20%;" %>
-      <p style="font-size : 12px">
-        Prenez soin de votre animal, tout simplement.</br>
-      Plateforme de bien-être animal et carnet santé en ligne.
-    </p>
-  </div>
-  <div class="col-lg-8 col-sm-7 footer-sections">
-    <div class="footer-section">
-      <h5>Pour les propriétaires</h5>
-      <ul>
-        <li>
-          <% if user_signed_in? %>
-            <%= link_to 'Créer un carnet de santé numérique', user_path(current_user), class: 'footer-link' %>
-          <% else %>
-            <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class: 'footer-link' %>
-          <% end %>
-        </li>
-        <li>
-          <%= link_to 'Trouver un pro', professionals_path, class: 'footer-link' %>
-        </li>
-        <li>
-          <%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class: 'footer-link' %>
-        </li>
-      </ul>
+  <div class="footer-container">
+    <div class="footer-left">
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20RVB.png", style: "width: 100px;" %>
+      <p class="footer-slogan">Le bien-être de votre animal, en un seul endroit.</p>
     </div>
-    <div class="footer-section">
-      <h5>Pour les propos</h5>
-      <ul>
-        <li>
+
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h5>Pour les propriétaires</h5>
+        <ul>
           <li>
             <% if user_signed_in? %>
-              <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid")%>
-                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link'%>
-              <% elsif (current_user.orders.count > 1)%>
-                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link'%>
-              <%end%>
+              <%= link_to 'Créer un carnet de santé numérique', user_path(current_user), class: 'footer-link' %>
+            <% else %>
+              <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class: 'footer-link' %>
+            <% end %>
+          </li>
+          <li><%= link_to 'Trouver un pro', professionals_path, class: 'footer-link' %></li>
+          <li><%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class: 'footer-link' %></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h5>Pour les pros</h5>
+        <ul>
+          <li>
+            <% if user_signed_in? %>
+              <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid") %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+              <% elsif current_user.orders.count > 1 %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+              <% end %>
             <% else %>
               <%= link_to 'Créer ma fiche de service', new_user_session_path, class: 'footer-link' %>
             <% end %>
           </li>
-        </li>
-        <li>
-          <%= link_to 'Comment ça marche ?', why_boop_pro_path, class: 'footer-link' %>
-        </li>
-        <li>
-          <%= link_to 'Tarifs pros', pricings_path, class: 'footer-link' %>
-        </li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h5>Liens utilespropos</h5>
-      <ul>
-        <li>
-          <%= link_to 'Accueil', root_path, class: 'footer-link' %>
-        </li>
-        <li>
-          <%= link_to 'À propos', about_path, class: 'footer-link' %>
-        </li>
-        <li>
-          <%= link_to 'Contact', contact_path, class: 'footer-link' %>
-        </li>
-        <li>
-          <%= link_to 'Conditions générales', terms_path, class: 'footer-link' %>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <h5>Suivez-nous</h5>
-      <ul class="list-inline footer-links">
-        <li class="list-inline-item">
-          <a href="https://www.instagram.com/boop_officiel/" target="_blank" rel="noopener">
-            <i class="fab fa-instagram"></i>
-          </a>
-        </li>
-        <li class="list-inline-item">
-          <a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1" target="_blank" rel="noopener">
-            <i class="fab fa-tiktok"></i>
-          </a>
-        </li>
-      </ul>
+          <li><%= link_to 'Comment ça marche ?', why_boop_pro_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Tarifs pros', pricings_path, class: 'footer-link' %></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h5>Liens utiles</h5>
+        <ul>
+          <li><%= link_to 'Accueil', root_path, class: 'footer-link' %></li>
+          <li><%= link_to 'À propos', about_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Contact', contact_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Conditions générales', terms_path, class: 'footer-link' %></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h5>Suivez-nous</h5>
+        <ul class="social-links">
+          <li><a href="https://www.instagram.com/boop_officiel/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a></li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
-<div class="text-center p-3" style="background-color: #FFE4D6;">
-  © 2024 Boop. Tous droits réservés.
-</div>
+
+  <div class="footer-bottom">
+    © 2024 Boop. Tous droits réservés.
+  </div>
 </footer>

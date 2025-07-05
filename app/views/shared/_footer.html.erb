@@ -1,69 +1,66 @@
-<footer class="text-center text-lg-start" style="sticky-bottom: 0; margin-top: 20px">
-  <div class="container p-2">
-    <div class="row d-flex justify-content-between">
-      <div class="col-lg-8 col-md-7 col-sm-7 text-start">
-        <%= image_tag  "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20RVB.png", style:"width: 20%;" %>
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-left">
+      <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20RVB.png", style: "width: 100px;" %>
+      <p class="footer-slogan">Le bien-être de votre animal, en un seul endroit.</p>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h5>Pour les propriétaires</h5>
+        <ul>
+          <li>
+            <% if user_signed_in? %>
+              <%= link_to 'Créer un carnet de santé numérique', user_path(current_user), class: 'footer-link' %>
+            <% else %>
+              <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class: 'footer-link' %>
+            <% end %>
+          </li>
+          <li><%= link_to 'Trouver un pro', professionals_path, class: 'footer-link' %></li>
+          <li><%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class: 'footer-link' %></li>
+        </ul>
       </div>
-      <div class="col-lg-4 col-sm-7 d-flex flex-row">
-        <div>
-          <ul class="list-unstyled mb-0 text-start">
-           <h5 class="text-uppercase">Liens utiles</h5>
-            <li>
-              <%= link_to 'Accueil', root_path, class: 'text-dark' %>
-            </li>
-            <li>
-              <%= link_to 'À propos', about_path, class: 'text-dark' %>
-            </li>
-            <li>
-              <%= link_to 'Contact', contact_path, class: 'text-dark' %>
-            </li>
-            <li>
-              <%= link_to 'Conditions générales', terms_path, class: 'text-dark' %>
-            </li>
-          </ul>
-        </div>
 
-        <div class=" ms-4">
+      <div class="footer-column">
+        <h5>Pour les pros</h5>
+        <ul>
+          <li>
+            <% if user_signed_in? %>
+              <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid") %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+              <% elsif current_user.orders.count > 1 %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+              <% end %>
+            <% else %>
+              <%= link_to 'Créer ma fiche de service', new_user_session_path, class: 'footer-link' %>
+            <% end %>
+          </li>
+          <li><%= link_to 'Comment ça marche ?', why_boop_pro_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Tarifs pros', pricings_path, class: 'footer-link' %></li>
+        </ul>
+      </div>
 
-              <h5 class="text-uppercase">Suivez-nous</h5>
-                      <ul class="list-inline footer-links">
-                          <li class="list-inline-item">
-                              <a href="https://www.instagram.com/boop_officiel/" target="_blank">
-                                  <i class="fab fa-instagram"></i>
-                              </a>
-                          </li>
+      <div class="footer-column">
+        <h5>Liens utiles</h5>
+        <ul>
+          <li><%= link_to 'Accueil', root_path, class: 'footer-link' %></li>
+          <li><%= link_to 'À propos', about_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Contact', contact_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Conditions générales', terms_path, class: 'footer-link' %></li>
+        </ul>
+      </div>
 
-                          <li class="list-inline-item">
-                              <a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1" target="_blank">
-                                  <i class="fab fa-tiktok"></i>
-                              </a>
-                          </li>
-
-                          <%# <li class="list-inline-item">
-                              <a href="#">
-                                  <i class="fab fa-facebook"></i>
-                              </a>
-                          </li>
-
-                          <li class="list-inline-item">
-                              <a href="#">
-                                  <i class="fab fa-twitter"></i>
-                              </a>
-                          </li> %>
-
-                      </ul>
-                  </div>
-              </div>
-
-
-        </div>
+      <div class="footer-column">
+        <h5>Suivez-nous</h5>
+        <ul class="social-links">
+          <li><a href="https://www.instagram.com/boop_officiel/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="https://www.tiktok.com/@boop_officiel?_t=8s9jTobM5eo&_r=1" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a></li>
+        </ul>
       </div>
     </div>
   </div>
 
-
-
-  <div class="text-center p-3" style="background-color: #FFE4D6;">
+  <div class="footer-bottom">
     © 2024 Boop. Tous droits réservés.
   </div>
 </footer>

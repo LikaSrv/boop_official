@@ -1,46 +1,52 @@
-<div class="container mt-1 bg-custom">
-  <div class="row justify-content-center">
-    <div class="col-11 col-md-6 col-lg-5 col-xl-4">
-      <div class="form-devise">
-        <i class="fa-solid fa-paw float-end text-primary"></i>
-        <h2>S'inscrire</h2>
-
-        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-          <%= f.error_notification %>
-
-          <div class="form-inputs">
-
-            <%= f.input :last_name,
+<div class="devise-page" data-controller="toggle-password">
+  <div class="form-devise devise-form">
+    <i class="fa-solid fa-paw float-end text-primary"></i>
+    <h2 style="font-weight: 400">Bienvenue chez Boop<br><span style="font-size: medium;">Prenez soin de votre animal, facilement.</span></h2>
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= f.error_notification %>
+      <div class="form-inputs">
+        <%= f.input :last_name,
                         label: "Prénom",
                         required: true,
                         autofocus: true %>
-            <%= f.input :first_name,
+        <%= f.input :first_name,
                         label: "Nom",
                         required: true,
                         autofocus: true %>
-            <%= f.input :email,
+        <%= f.input :email,
                         required: true,
                         autofocus: true,
                         input_html: { autocomplete: "email" }%>
-            <%= f.input :password,
+        <div class="position-relative">
+          <%= f.input :password,
                         label: "Mot de passe",
                         required: true,
                         hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                        input_html: { autocomplete: "new-password" } %>
-            <%= f.input :password_confirmation,
+                        input_html: { autocomplete: "new-password", id: "password-field" } %>
+          <span id="toggle-password"
+                class="fa fa-eye position-absolute"
+                style="top: 55%; right: 15px; transform: translateY(-50%); cursor: pointer;">
+          </span>
+        </div>
+        <div class="position-relative">
+          <%= f.input :password_confirmation,
                         label: "Confirmez votre mot de passe",
                         required: true,
-                        input_html: { autocomplete: "new-password" } %>
-            <h6 style="color:rgb(54, 55, 56)">En vous inscrivant, vous acceptez les conditions générales d'utilisations de l'application BOOP.</h6>
-          </div>
-
-          <div class="form-actions mt-4">
-            <%= f.button :submit, "S'inscrire", class: "btn btn-primary" %>
-          </div>
-        <% end %>
-
-        <%= render "devise/shared/links" %>
+                        input_html: { autocomplete: "new-password", id: "confirm-password-field" } %>
+          <span id="toggle-confirm-password"
+                class="fa fa-eye position-absolute"
+                style="top: 75%; right: 15px; transform: translateY(-50%); cursor: pointer;">
+          </span>
+        </div>
+        <h6 style="color:rgb(54, 55, 56)">En vous inscrivant, vous acceptez les conditions générales d'utilisations de l'application BOOP.</h6>
       </div>
-    </div>
+      <div class="form-actions mt-4">
+        <%= f.button :submit, "S'inscrire", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    <%= render "devise/shared/links" %>
+  </div>
+  <div class="devise-logo">
+    <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//signIn-signUp.png", alt: "chat et chien heureux", class: "" %>
   </div>
 </div>

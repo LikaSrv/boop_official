@@ -16,6 +16,33 @@
   //   justify-content: center;
   // }
 
+  .image {
+    height: 30vh;
+  }
+
+  .card_list {
+    margin: .5rem 0 0;
+    padding: 1rem;
+    list-style: none;
+    width: 100%;
+    text-align: left;
+
+    li {
+      position: relative;
+      padding-left: 1.75rem;
+      margin: 0 0 .4rem;
+
+      &::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: $primary;
+        font-weight: 700;
+      }
+    }
+  }
+
 }
 
 .grid-professional-show {
@@ -66,4 +93,54 @@
   position: absolute;
   opacity: 0;
   pointer-events: none;
+}
+
+
+.badge-explosive {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  transform: rotate(-18deg);
+  background: #ff8345; // orange punchy
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulseBadge 1.8s infinite ease-in-out;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+@keyframes pulseBadge {
+  0%   { transform: rotate(-18deg) scale(1); }
+  50%  { transform: rotate(-18deg) scale(1.08); }
+  100% { transform: rotate(-18deg) scale(1); }
+}
+
+
+.badge-gratuit {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  transform: rotate(18deg);
+  background: #20c997; // vert clair vibrant (type success)
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.15),
+    inset 0 2px 6px rgba(255, 255, 255, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  animation: pulseBadgeRight 1.8s infinite ease-in-out;
+  z-index: 10;
+  white-space: nowrap;
 }

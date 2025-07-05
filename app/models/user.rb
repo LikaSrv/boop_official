@@ -13,4 +13,20 @@ class User < ApplicationRecord
 
   validates :first_name, :last_name, presence: true
   has_one_attached :photo
+
+  after_create :create_brevo_contact
+
+  private
+
+  def create_brevo_contact
+    return unless ENV['BREVO_API_KEY'].present?
+
+    response = BrevoClient.new.create_contact(
+      email: email,
+      first_name: first_name,
+      last_name: last_name
+    )
+      Rails.logger.info "BREVO RESPONSE: #{response.code} - #{response.body}"
+
+  end
 end

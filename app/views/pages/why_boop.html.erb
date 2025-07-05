@@ -3,44 +3,41 @@
   <!-- HERO -->
   <section class="wbp-hero">
     <div class="wbp-hero-content">
-      <h1>Pourquoi<br>utiliser <span>Boop</span> ?</h1>
-      <p>Boop vous aide à adopter un compagnon ou vous simplifie la vie avec vos animaux existants, le tout gratuitement.</p>
-          <a href="#" class="wbp-btn zoom-animate" style="background: #b6eac7 !important; color: rgb(0,0,0) !important;">TOUT EST GRATUIT</a>
+      <h1>Prenez soin de votre animal, tout simplement avec <span>Boop</span> ?</h1>
+      <p>Boop est un carnet de santé numérique pour votre chien ou chat. Gardez tout au même endroit, et trouvez des pros en un clic.</p>
+      <a href="#" class="wbp-btn zoom-animate" style="background: #b6eac7 !important; color: rgb(0,0,0) !important;">TOUT EST GRATUIT</a>
     </div>
     <div class="wbp-hero-img" style="position: relative;">
       <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//petsitter-400x.webp" alt="Illustration Boop">
     </div>
-
   </section>
-
   <!-- ACTIONS -->
   <section class="wbp-problemes" style="margin-top:0;">
     <h2 style="font-size:2rem;">Ce que vous pouvez faire avec Boop</h2>
     <div class="wbp-problemes-list">
       <div class="wbp-probleme">
-        <div class="wbp-icon" style="background:rgba(255,156,106,0.12);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem auto;">
-          <i class="fa-solid fa-paw" style="color:#ff9c6a;font-size:2rem;"></i>
-        </div>
-        <h3>Adoptez un animal</h3>
-        <p>Trouvez facilement<br>un compagnon en refuge</p>
-      </div>
-      <div class="wbp-probleme">
-        <div class="wbp-icon" style="background:rgba(255,156,106,0.12);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem auto;">
-          <i class="fa-solid fa-notes-medical" style="color:#ff9c6a;font-size:2rem;"></i>
+        <div class="wbp-icon">
+          <i class="fa-solid fa-book"></i>
         </div>
         <h3>Carnet de santé digital</h3>
-        <p>Suivez ses vaccins et<br>ses rappels facilement</p>
+        <p>Caccins, traitements, rdv à venir…</p>
+      </div>
+      <div class="wbp-probleme">
+        <div class="wbp-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <h3>Tous les pros autour de vous</h3>
+        <p>Toiletteurs, ostéos, promeneurs, comportementalistes, et plus encore</p>
       </div>
       <div class="wbp-probleme" style="position:relative;">
-        <div class="wbp-icon" style="background:rgba(255,156,106,0.12);border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem auto;">
-          <i class="fa-solid fa-location-dot" style="color:#ff9c6a;font-size:2rem;"></i>
+        <div class="wbp-icon">
+          <i class="fa-solid fa-bell"></i>
         </div>
-        <h3>Trouvez des pros proches</h3>
-        <p>Réservez des services de proximité</p>
+        <h3>Notifications intelligentes</h3>
+        <p>Ne ratez plus aucun rappel important</p>
       </div>
     </div>
   </section>
-
   <!-- TÉMOIGNAGES -->
   <section class="wbp-temoignages-tarif" style="margin-top:2.5rem;gap:2rem;">
     <div class="wbp-temoignages" style="flex:3;">
@@ -57,8 +54,42 @@
         </div>
         <div class="wbp-temoignage">
           <img src="https://images.unsplash.com/photo-1609847214764-eb745f0178a0?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Témoin 3">
-          <blockquote>« Le carnet de santé Boop est vraiment simple à utiliser ! »</blockquote>
+          <blockquote>« J’utilise Boop pour tout suivre : vaccins de mon chat, ses séances d’ostéo, même son vermifuge ! Un vrai soulagement. »</blockquote>
           <span class="wbp-temoin-nom">Kévin</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="text-center my-4">
+    <h3 class="mb-4">Recevez votre carnet de santé gratuit maintenant
+</h3>
+    <a href="<%=new_user_session_path%>" class="wbp-btn zoom-animate">Créer mon carnet de santé maintenant</a>
+  </div>
+  <section class="wbp-faq">
+    <h2>Foire aux questions</h2>
+    <div class="accordion wbp-faq-list" id="accordionExample">
+      <div class="accordion-item wbp-faq-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button wbp-faq-question collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            Combien ça coûte ?
+          </button>
+        </h3>
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            Non ! Boop est 100% gratuit pour les utilisateurs. Vous pouvez créer un carnet de santé pour votre animal, suivre ses soins, et trouver des professionnels près de chez vous sans débourser un centime.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item wbp-faq-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button wbp-faq-question collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Pourquoi une appli en plus ?
+          </button>
+        </h3>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            Parce que la santé de votre animal mérite mieux que des post-its ou des SMS perdus. Boop centralise tout, pour que vous puissiez vous concentrer sur ce qui compte : votre lien avec lui.
+          </div>
         </div>
       </div>
     </div>

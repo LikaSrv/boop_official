@@ -23,10 +23,6 @@ Rails.application.routes.draw do
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
 
-  # autres routes...
-
-  # Defines the root path route ("/")
-  # root "posts#index"
 
   resources :professionals do
     resources :appointments, only: [:new, :create, :show]
@@ -48,7 +44,6 @@ Rails.application.routes.draw do
     end
     resources :pets
   end
-
 
   resources :animals, only: [:index, :show]
 

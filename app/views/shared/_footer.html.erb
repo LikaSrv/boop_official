@@ -1,7 +1,9 @@
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-left">
+      <%= link_to root_path do %>
       <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/Boop%20-%20LOGO%20FINAL%20RVB.png", style: "width: 100px;" %>
+      <% end %>
       <p class="footer-slogan">Le bien-être de votre animal, en un seul endroit.</p>
     </div>
 
@@ -16,7 +18,7 @@
               <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class: 'footer-link' %>
             <% end %>
           </li>
-          <li><%= link_to 'Trouver un pro', professionals_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Trouver un pro', explore_path, class: 'footer-link' %></li>
           <li><%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class: 'footer-link' %></li>
         </ul>
       </div>

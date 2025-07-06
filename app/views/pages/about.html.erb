@@ -6,11 +6,12 @@
   <section class="about-hero">
     <div class="d-flex flex-column align-items-center">
       <h1 class="about-hero-title">
-        <span class="text-warning">QUI SOMMMES-NOUS ?</span>
+        <span class="text-primary">Notre équipe</span>
       </h1>
+      <h1 class="visually-hidden">Boop – Plateforme bien-être et santé animale</h1>
       <div class="about-hero-content">
         <div class="about-hero-img">
-          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//mathilde-edwin.webp", alt: "Mathilde & Edwin", class: "about-portrait" %>
+          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//mathilde-edwin.webp", alt: "Mathilde Sanchez & Edwin - Co-fondateurs de Boop, plateforme bien-être animal", class: "about-portrait" %>
         </div>
         <div class="about-hero-text">
           <h2 class="about-script">Mathilde & Edwin</h2>
@@ -33,35 +34,35 @@
           </p>
         </div>
         <div class="about-hero-img">
-          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//lika-marc.webp", alt: "Chanlika Servais @ Marc Servais", class:"about-portrait"%>
+          <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//lika-marc.webp", alt: "Chanlika Servais @ Marc Servais - Co-fondateurs de Boop, plateforme bien-être animal", class:"about-portrait"%>
         </div>
       </div>
     </div>
   </section>
   <!-- Parcours -->
   <section class="about-section about-section-brown">
-    <h3 class="mx-3">COMMENT NOUS SOMMES ARRIVÉS LÀ ?</h3>
+    <h2 class="mx-3">Notre histoire</h2>
     <p>
       Au départ, notre mission était simple : venir en aide aux animaux en refuge. Mais en chemin, nous avons compris quelque chose d’essentiel. Ce ne sont pas seulement les animaux abandonnés qui ont besoin de soutien, chaque chien, chaque chat, chaque petit compagnon mérite une attention de qualité au quotidien.
       Nous avions lancé une première version de Boop pour faciliter le travail des refuges, mais très vite, une évidence s’est imposée : tous les propriétaires d’animaux rencontrent un jour des difficultés pour organiser les soins, suivre les vaccins ou trouver un professionnel de confiance.
       C’est ainsi qu’est né Boop, une plateforme pensée pour simplifier la prise de rendez-vous vétérinaire, rendre le carnet de santé digital accessible à tous et connecter les propriétaires avec des professionnels animaliers de qualité.
       Notre objectif ? Que chaque animal reçoive l’amour, les soins et le suivi dont il a besoin, sans stress ni complications. Parce qu’un animal heureux, c’est aussi un humain serein 🐾
     </p>
-    <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20BLANC.png", alt: "Boop logo", class: "about-logo" %>
+    <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//Boop%20-%20LOGO%20FINAL%20BLANC.png", alt: "Valeur Boop – compréhension des besoins animaux", class: "about-logo" %>
   </section>
   <!-- Unicité -->
   <section class="about-section about-unique">
-    <h3 class="about-script">Ce qui fait notre unicité</h3>
+    <h2 class="about-script">Notre mission</h2>
     <div class="about-unique-list">
-      <div class="about-unique-item">
+      <div class="card_pro about-unique-item">
         <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur1.png", alt: "Joie" %>
         <p>Partager et comprendre les besoins des animaux</p>
       </div>
-      <div class="about-unique-item">
+      <div class="card_pro about-unique-item">
         <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur2.png", alt: "Écoute" %>
         <p>Unir nos forces avec les refuges et pros</p>
       </div>
-      <div class="about-unique-item">
+      <div class="card_pro about-unique-item">
         <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//valeur3.png", alt: "Envie" %>
         <p>Communication claire et honnête</p>
       </div>
@@ -70,13 +71,24 @@
   <!-- Démo -->
   <section class="about-section about-invite">
     <div class="about-invite-text">
-      <h3 class="about-script">Que fait Boop ? </h3>
+      <h2 class="about-script">Découvrez Boop en vidéo </h2>
     </div>
     <div class="about-invite-img">
-      <video class="about-video" controls poster="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//presentation-boop-thumbnail.jpg">
-        <source src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//presentation-boop.webm" type="video/webm">
+      <video class="about-video" controls poster="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//presentation-boop-thumnail.webp">
+        <source src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images/presentation-boop.webm" type="video/webm">
         Votre navigateur ne supporte pas la vidéo.
       </video>
     </div>
+  </section>
+  <section>
+    <section class="about-section about-links">
+      <h2>Explorer Boop</h2>
+      <ul>
+        <li class="btn btn_custom"><%= link_to "Découvrir Boop Pro", why_boop_pro_path %></li>
+        <li class="btn btn_custom"><%= link_to "Retour à l'accueil", root_path %></li>
+        <li class="btn btn_custom"><%= link_to "Prendre un rendez-vous", explore_path %></li>
+        <li class="btn btn_custom"><%= link_to "Nos valeurs", "#valeurs" %></li>
+      </ul>
+    </section>
   </section>
 </div>

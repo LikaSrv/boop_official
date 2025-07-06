@@ -1,4 +1,4 @@
-.why-boop-pro {
+.why-boop {
   background: $light-pink;
   min-height: 100vh;
   font-family: 'Inter', Arial, sans-serif;
@@ -19,26 +19,33 @@
 
     .wbp-hero-content {
       flex: 1;
+
       h1 {
         font-size: 2.5rem;
         font-weight: 700;
         line-height: 1.2;
         margin-bottom: 1.2rem;
-        span { color: $primary; }
+
+        span {
+          color: $primary;
+        }
       }
+
       p {
         font-size: 1.15rem;
         margin-bottom: 2rem;
         color: #444;
       }
     }
+
     .wbp-hero-img {
       flex: 1;
+
       img {
         width: 100%;
         border-radius: 18px;
         object-fit: cover;
-        box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+        box-shadow: 0 4px 32px rgba(0, 0, 0, 0.10);
       }
     }
   }
@@ -54,9 +61,11 @@
     text-decoration: none;
     transition: background 0.2s, transform 0.2s;
     display: inline-block;
+
     &:hover {
       transform: scale(1.06);
     }
+
     &:active {
       transform: scale(0.97);
     }
@@ -68,48 +77,56 @@
     margin: 2.5rem auto 0 auto;
     max-width: 1100px;
     padding: 2.5rem 2rem 2rem 2rem;
-    box-shadow: 0 2px 24px rgba(0,0,0,0.07);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.07);
+
     h2 {
       text-align: center;
       font-size: 1.6rem;
       font-weight: 700;
       margin-bottom: 2.2rem;
     }
+
     .wbp-problemes-list {
       display: flex;
       justify-content: space-between;
       gap: 2rem;
+
       @media (max-width: 900px) {
         flex-direction: column;
         gap: 1.5rem;
       }
+
       .wbp-probleme {
         flex: 1;
         text-align: center;
+
         .wbp-icon {
           font-size: 2.2rem;
           color: $primary;
           margin-bottom: 1rem;
-          background:rgba(255,156,106,0.12);
-          border-radius:50%;
-          width:56px;
-          height:56px;
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          margin:0 auto 1rem auto;
+          background: rgba(255, 156, 106, 0.12);
+          border-radius: 50%;
+          width: 56px;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1rem auto;
         }
+
         h3 {
           font-size: 1.15rem;
           font-weight: 600;
           margin-bottom: 0.7rem;
         }
+
         p {
           color: #666;
           font-size: 1rem;
         }
       }
     }
+
     .wbp-btn {
       margin-top: 2rem;
     }
@@ -125,15 +142,18 @@
     max-width: 1100px;
     padding: 2rem 1rem;
     font-weight: 600;
+
     @media (max-width: 900px) {
       flex-direction: column;
       gap: 1.5rem;
     }
+
     .wbp-chiffre {
       font-size: 2rem;
       color: $primary;
       display: block;
     }
+
     .wbp-chiffre-label {
       color: #444;
       font-size: 1.05rem;
@@ -149,31 +169,38 @@
     max-width: 1100px;
     margin: 2.5rem auto 0 auto;
     padding-bottom: 2.5rem;
+
     @media (max-width: 900px) {
       flex-direction: column;
       gap: 2rem;
       margin: 2.5rem;
     }
+
     .wbp-temoignages {
       flex: 2;
+
       h2 {
         font-size: 1.4rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
       }
+
       .wbp-temoignages-list {
         display: flex;
         gap: 1.5rem;
+
         @media (max-width: 700px) {
           flex-direction: column;
         }
+
         .wbp-temoignage {
           background: #fff;
           border-radius: 14px;
-          box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+          box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
           padding: 1.2rem 1rem;
           flex: 1;
           text-align: center;
+
           img {
             width: 200px;
             height: 200px;
@@ -181,12 +208,14 @@
             border-radius: 20px;
             margin-bottom: 1rem;
           }
+
           blockquote {
             font-size: 1.05rem;
             color: #444;
             margin-bottom: 0.7rem;
             font-style: italic;
           }
+
           .wbp-temoin-nom {
             display: block;
             color: $primary;
@@ -197,30 +226,37 @@
         }
       }
     }
+
     .wbp-tarif {
       flex: 1;
+
       h2 {
         font-size: 1.4rem;
         font-weight: 700;
         margin-bottom: 1.5rem;
       }
+
       .wbp-tarif-card {
         background: #fff7f2;
         border-radius: 14px;
-        box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         padding: 1.5rem 1.2rem;
+
         .wbp-tarif-title {
           font-weight: 700;
           font-size: 1.1rem;
           margin-bottom: 1rem;
+
           span {
             color: $primary;
             font-size: 1.3rem;
             font-weight: 700;
           }
         }
+
         ul {
           padding-left: 1.2rem;
+
           li {
             margin-bottom: 0.7rem;
             font-size: 1rem;
@@ -231,49 +267,65 @@
     }
   }
 
-  .wbp-faq {
-    background: #fff;
-    border-radius: 16px;
-    max-width: 1100px;
-    margin: 2.5rem auto 0 auto;
-    padding: 2.5rem 2rem;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .wbp-faq-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
 
-
-      .wbp-faq-item {
-        border-radius: 12px;
-        h3 {
-          font-size: 1.15rem;
-          font-weight: 600;
-        }
-        p {
-          color: #666;
-          font-size: 1rem;
-        }
-        .wbp-faq-question {
-        border-radius: 12px;
-      }
-      }
-    }
-  }
 }
 
 @keyframes zoomInOut {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.08); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
+
 .zoom-animate {
   animation: zoomInOut 1.5s infinite;
   transition: transform 0.2s;
+}
+
+.wbp-faq {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 1100px;
+  margin: 2.5rem auto 0 auto;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .wbp-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+
+    .wbp-faq-item {
+      border-radius: 12px;
+
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        font-size: 1rem;
+      }
+
+      .wbp-faq-question {
+        border-radius: 12px;
+      }
+    }
+  }
 }

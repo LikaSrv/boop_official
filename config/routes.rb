@@ -23,17 +23,17 @@ Rails.application.routes.draw do
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
 
-  get "professionals/:id/:name", to: 'professionals#show', as: 'professional_show'
-
-
-  resources :professionals do
+  resources :professionals, except: [:show] do
     resources :appointments, only: [:new, :create, :show]
     resources :reviews, only: [:new, :create]
-    get "update_slots", to: "update_slots"
-    get "update_edit_slots", to: "update_edit_slots"
+    member do
+      get :update_slots
+      get :update_edit_slots
+    end
     get 'pets/:id/show_for_pro', to: 'pets#show_for_pro', as: 'pet_show_for_pro'
-
   end
+
+  get 'professionals/:id/:name', to: 'professionals#show', as: 'show_professional'
 
   resources :appointments, only: [:update]
 

@@ -372,7 +372,7 @@ end
 
   def update_edit_slots
     @selected_date = params[:selected_date].present? ? params[:selected_date] : Date.today# Récupérer la nouvelle date
-    @professional = Professional.find(params[:professional_id]) # Exemple de récupération de professionnel
+    @professional = Professional.find(params[:id]) # Exemple de récupération de professionnel
     @opening_hours = OpeningHour.where(professional: @professional)
     @open_days = @opening_hours.where(closed: false).pluck(:day_of_week)
     # Logique pour récupérer les créneaux disponibles pour cette date

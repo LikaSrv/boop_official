@@ -62,7 +62,7 @@ class Professional < ApplicationRecord
     end
   end
 
-def create_brevo_company
+  def create_brevo_company
     return unless ENV['BREVO_API_KEY'].present?
     BrevoClient.new.create_company(name: name, email: email)
   end

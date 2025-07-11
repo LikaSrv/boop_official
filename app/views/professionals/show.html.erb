@@ -19,7 +19,7 @@
             <div class="carousel-inner">
               <% @professional.photos_url.each_with_index do |photo_url, index| %>
                 <div class="carousel-item <%= 'active' if index == 0 %>">
-                  <%= image_tag photo_url, class: "photo_show_pro"%>
+                  <%= image_tag photo_url, class: "photo_show_pro", alt:"professionnels animaliers sur Boop"%>
                 </div>
               <% end %>
             </div>
@@ -107,7 +107,7 @@
               <% if @reviews.empty? %>
                 <div class="d-flex flex-column justify-content-center align-items-center", style="width: 24%;">
                   <p class="text-center">Soyez le premier à mettre un avis !</p>
-                  <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//customer-feedback.webp"
+                  <img src="https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//customer-feedback.webp" alt="Avis des professionnels sur Boop"
                 style="height: 100px">
                 </div>
               <% else %>

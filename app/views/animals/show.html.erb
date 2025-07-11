@@ -9,7 +9,7 @@
   </div>
   <div class="profile-content">
     <div class="pet-image">
-      <%= image_tag @animal.photo if @animal.photo.present? %>
+      <%= image_tag(@animal.photo, alt: "Animal à adopter") if @animal.photo.present? %>
     </div>
     <div>
       <div class="pet-details-row">

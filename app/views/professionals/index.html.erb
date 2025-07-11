@@ -48,7 +48,7 @@
                       <div class="carousel-inner">
                         <% professional.photos_url.each_with_index do |photo_url, index| %>
                           <div class="carousel-item <%= 'active' if index == 0 %>">
-                            <%= image_tag photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 90%; aspect-ratio: 1.5; object-fit: cover" %>
+                            <%= image_tag photo_url, class:"rounded-3 d-block mx-auto img-fluid", style:"width: 90%; aspect-ratio: 1.5; object-fit: cover", alt:"professionnels animaliers sur Boop" %>
                           </div>
                         <% end %>
                       </div>

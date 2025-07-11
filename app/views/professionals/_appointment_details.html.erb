@@ -26,7 +26,7 @@
       </div>
       <div class="d-flex flex-column justify-content-start align-items-center">
         <% if Pet.find(@appointment.pet_id).photo.present? %>
-          <%= image_tag(Pet.find(@appointment.pet_id).photo_url,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;") %>
+          <%= image_tag(Pet.find(@appointment.pet_id).photo_url,  style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;", alt:"animaux sur Boop") %>
         <% else %>
           <%= image_tag("https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//cat.svg", alt:"photo_pet_default", style:"width: 100px; aspect-ratio:1; border-radius: 20px; object-fit: cover;")%>
         <% end %>

@@ -24,7 +24,7 @@
     <% @animals.each do |animal| %>
       <%= link_to animal_path(animal), class: "pet_card", data: { animal_index_target: "animal", action: "mouseover->animal-index#hover mouseout->animal-index#unhover" } do %>
         <div class="pet_image">
-          <%= image_tag animal.photo%>
+          <%= image_tag animal.photo, alt: "animaux à adopter"%>
         </div>
         <h3 class="pet_name"><%= animal.name %></h3>
       <% end %>

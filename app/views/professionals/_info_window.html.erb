@@ -4,7 +4,7 @@
       <div class="carousel-inner">
         <% professional.photos_url.each_with_index do |photo_url, index| %>
           <div class="carousel-item <%= 'active' if index == 0 %>">
-            <%= image_tag photo_url, crop: :fill, width: 180%>
+            <%= image_tag photo_url, crop: :fill, width: 180, alt:"animaux sur Boop"%>
           </div>
         <% end %>
       </div>

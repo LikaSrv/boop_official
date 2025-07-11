@@ -13,14 +13,14 @@
         <ul>
           <li>
             <% if user_signed_in? %>
-              <%= link_to 'Créer un carnet de santé numérique', user_path(current_user), class: 'footer-link' %>
+              <%= link_to 'Créer un carnet de santé numérique', user_path(current_user), class:"underline-btn" %>
             <% else %>
-              <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class: 'footer-link' %>
+              <%= link_to 'Créer un carnet de santé numérique', new_user_session_path, class:"underline-btn" %>
             <% end %>
           </li>
-          <li><%= link_to 'Comment ça marche ?', why_boop_path, class: 'footer-link' %></li>
-          <li><%= link_to 'Trouver un pro', explore_path, class: 'footer-link' %></li>
-          <li><%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class: 'footer-link' %></li>
+          <li><%= link_to 'Comment ça marche ?', why_boop_path, class:"underline-btn" %></li>
+          <li><%= link_to 'Trouver un pro', explore_path, class:"underline-btn" %></li>
+          <li><%= link_to 'FAQ', "#{why_boop_pro_path}#faq", class:"underline-btn" %></li>
         </ul>
       </div>
 
@@ -30,26 +30,26 @@
           <li>
             <% if user_signed_in? %>
               <% if (current_user.orders.count == 1) && (current_user.orders.first.state == "paid") %>
-                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class:"underline-btn" %>
               <% elsif current_user.orders.count > 1 %>
-                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class: 'footer-link' %>
+                <%= link_to "Créer ma fiche de service", pro_index_user_path(current_user), class:"underline-btn" %>
               <% end %>
             <% else %>
-              <%= link_to 'Créer ma fiche de service', new_user_session_path, class: 'footer-link' %>
+              <%= link_to 'Créer ma fiche de service', new_user_session_path, class:"underline-btn" %>
             <% end %>
           </li>
-          <li><%= link_to 'Comment ça marche ?', why_boop_pro_path, class: 'footer-link' %></li>
-          <li><%= link_to 'Tarifs pros', pricings_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Comment ça marche ?', why_boop_pro_path, class:"underline-btn" %></li>
+          <li><%= link_to 'Tarifs pros', pricings_path, class:"underline-btn" %></li>
         </ul>
       </div>
 
       <div class="footer-column">
         <h5>Liens utiles</h5>
         <ul>
-          <li><%= link_to 'Accueil', root_path, class: 'footer-link' %></li>
-          <li><%= link_to 'À propos', about_path, class: 'footer-link' %></li>
-          <li><%= link_to 'Contact', contact_path, class: 'footer-link' %></li>
-          <li><%= link_to 'Conditions générales', terms_path, class: 'footer-link' %></li>
+          <li><%= link_to 'Accueil', root_path, class:"underline-btn" %></li>
+          <li><%= link_to 'À propos', about_path, class:"underline-btn" %></li>
+          <li><%= link_to 'Contact', contact_path, class:"underline-btn" %></li>
+          <li><%= link_to 'Conditions générales', terms_path, class:"underline-btn" %></li>
         </ul>
       </div>
 

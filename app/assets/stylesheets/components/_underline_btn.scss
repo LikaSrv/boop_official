@@ -1,0 +1,25 @@
+.underline-btn {
+  text-decoration: none;
+  color: #716d6d;
+  position: relative;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #FF7A3D;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #FF7A3D;
+    transition: width 0.3s;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}

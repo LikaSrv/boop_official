@@ -5,9 +5,9 @@
   </div>
   <div class="offcanvas-body">
     <div class="d-flex flex-column align-items-center">
-      <a href="<%=edit_professional_path(professional)%>" class="setting_button">✏️ Modifier mon profil pro</a>
-      <a href="<%=professional_edit_availibilities_path(professional)%>" class="setting_button my-5">🗓️ Gérer mes créneaux</a>
-      <a href="#" class="setting_button" data-controller="alert" data-action="click -> alert#shareLink" data-professional-id="<%= professional.id %>" data-professional-name="<%= professional.name %>">🔗 Partager le lien</a>
+      <a href="<%=edit_professional_path(professional)%>" class="underline-btn text-black">✏️ Modifier mon profil pro</a>
+      <a href="<%=professional_edit_availibilities_path(professional)%>" class="underline-btn my-5 text-black">🗓️ Gérer mes créneaux</a>
+      <a href="#" class="underline-btn text-black" data-controller="alert" data-action="click -> alert#shareLink" data-professional-id="<%= professional.id %>" data-professional-name="<%= professional.name %>">🔗 Partager le lien</a>
     </div>
   </div>
 </div>

@@ -126,12 +126,12 @@
               <% if user_signed_in? %>
                 <%= link_to "Ajouter un avis",
                           "#",
-                          class: "btn_custom mt-3 active text-center",
+                          class: "cta-button mt-3 active text-center",
                           data: { controller: "alert", action: "click->alert#reviewSweetalert", professional_id: @professional.id } %>
               <% else %>
                 <%= link_to "Ajouter un avis",
                           new_user_session_path,
-                          class: "btn_custom mt-3",
+                          class: "cta-button mt-3",
                           data: { controller: "alert", action: "click->alert#notConnectedSweetalert"}%>
               <% end %>
             </div>

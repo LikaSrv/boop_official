@@ -29,7 +29,7 @@
     </div>
     <% if user_signed_in? %>
       <button
-                  class="btn btn_pricing_custom w-100"
+                  class="cta-button w-100"
                   data-controller="create-order"
                   data-action="click->create-order#createOrder"
         data-create-order-user-id-value="<%= current_user.id %>"
@@ -38,7 +38,7 @@
         <h5>Payer</h5>
       </button>
     <% else %>
-      <%= link_to "Démarrer l'essai", new_user_session_path, class: "btn btn_custom w-75" %>
+      <%= link_to "Démarrer l'essai", new_user_session_path, class: "cta-button w-75" %>
     <% end %>
   </div>
 </div>

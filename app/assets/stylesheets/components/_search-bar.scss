@@ -6,12 +6,23 @@
   box-shadow: 0 0 0 2px $light-pink;
 }
 
+.search-section-index {
+  width: 75%;
+  margin: 3rem auto;
+  padding: 0 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin : 1rem auto;
+  }
+}
+
 
 .search-bar {
   border-radius: 32px;
   height: 70px;
   font-size: 20px;
-  border: 2px solid $light-pink;
+  border: 1px solid $primary;
 
 
   @media (max-width: 768px) {
@@ -45,40 +56,15 @@
   .form-control.search-bar {
     flex: 1;
     transition: all 0.3s ease;
-    border-color: $light-pink;
+    border-color: $primary;
 
     &:first-child {
       flex: 2;
     }
 
     &:focus {
-      box-shadow: 0 0 0 2px $light-pink;
+      box-shadow: 0 0 0 2px $primary;
       border-color: $primary;
-    }
-  }
-
-  .btn_custom.search-bar {
-    margin: 0;
-    height: 70px;
-    min-width: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-
-    @media (max-width: 768px) {
-      height: 60px;
-      min-width: 120px;
-    }
-
-    @media (max-width: 480px) {
-      height: 50px;
-      min-width: 100px;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
   }
 
@@ -90,7 +76,9 @@
 
   justify-content: center;
 
+
   @media (max-width: 768px) {
     margin: 1rem auto;
+    width: 100%;
   }
 }

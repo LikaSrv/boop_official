@@ -25,13 +25,6 @@
   padding: 20px;
 }
 
-.alert_image {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
-  animation: zoomInOut 4s ease-in-out infinite; /* Définir l'animation */
-}
-
 /* Définir l'animation zoom */
 @keyframes zoomInOut {
   0% {

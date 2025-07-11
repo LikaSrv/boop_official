@@ -1,0 +1,17 @@
+<%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
+  <div class="search-form-control form-group mb-3">
+    <div class="search-inputs-container w-form">
+      <%= text_field_tag :query,
+            params[:query],
+            class: "form-control search-bar bg-white ps-5",
+            placeholder: "Rechercher un service..."
+        %>
+      <%= text_field_tag :query_address,
+            params[:query_address],
+            class: "form-control search-bar bg-white ps-5",
+            placeholder: "Ville..."
+        %>
+      <%= submit_tag "Rechercher", class: "cta-button search-bar ms-2" %>
+    </div>
+  </div>
+<% end %>

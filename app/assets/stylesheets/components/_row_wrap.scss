@@ -1,0 +1,33 @@
+.row_wrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 20px; // Adjust for padding
+  gap: 20px; // Space between items
+
+  @media (max-width: 768px) {
+    flex-direction: column; // Stack items on smaller screens
+    align-items: center; // Center items
+  }
+
+  .item {
+    flex: 1;
+    margin: 20px;
+
+    .video {
+      width: 100%;
+      height: auto;
+    }
+
+    .img {
+      width: 100%;
+      height: auto;
+
+      @media (max-width: 768px) {
+        width: 50%; // Ensure images are responsive
+      }
+    }
+  }
+
+}

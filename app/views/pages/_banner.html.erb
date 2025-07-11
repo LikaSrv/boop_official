@@ -7,33 +7,17 @@
         </h1>
         <p class="hero-subtitle">
           Trouvez et prenez rendez-vous en ligne instantanément avec les meilleurs professionnels animaliers.        </p>
-        <div class="cta-buttons">
-          <a href="<%=explore_path%>" class="btn btn-outline-primary text-black" aria-label="Prendre un rendez-vous">Je suis Propriétaire</a>
-          <a href="<%=pricings_path%>" class="btn btn-primary text-white" aria-label="Proposer un service">Je suis Pro</a>
+        <div class="d-flex flex-row">
+          <a href="<%=explore_path%>" class="cta-button-secondary" style="color: black !important, background-color: none !important, border-color: $primary !important" aria-label="Prendre un rendez-vous">Je suis Propriétaire</a>
+          <a href="<%=pricings_path%>" class="cta-button" aria-label="Proposer un service">Je suis Pro</a>
         </div>
       </div>
       <div class="hero-image">
         <%= image_tag "https://hgzbeyxwlmegxvrhxpws.supabase.co/storage/v1/object/public/general_images//home.webp", alt: "Vétérinaire examinant un chien dans sa clinique"%>
       </div>
     </div>
-    <div class="search-section">
-      <%= simple_form_for :search, url: professionals_path, method: :get do |f| %>
-        <div class="search-form-control form-group mb-3">
-          <div class="search-inputs-container w-form">
-            <%= text_field_tag :query,
-              params[:query],
-              class: "form-control search-bar bg-white ps-5",
-              placeholder: "Rechercher un service..."
-          %>
-            <%= text_field_tag :query_address,
-              params[:query_address],
-              class: "form-control search-bar bg-white ps-5",
-              placeholder: "Ville..."
-          %>
-            <%= submit_tag "Rechercher", class: "btn_custom search-bar ms-4" %>
-          </div>
-        </div>
-      <% end %>
-    </div>
+  <div class="search-section" >
+    <%= render 'shared/search'%>
+  </div>
   </div>
 </div>

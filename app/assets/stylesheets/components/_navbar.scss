@@ -68,7 +68,7 @@
 
 .navbar-collapse {
   flex-grow: 0;
-  background-color: #FFF5F1;
+  background-color: $light-pink;
 
   @media (max-width: 992px) {
     position: absolute;

@@ -20,11 +20,11 @@
   </div>
   <div class="d-flex flex-column align-items-center position-absolute bottom-0 end-0 m-4">
     <% if (token = last_valid_token_for_user(current_user)) %>
-      <a href="<%= new_professional_path(token: token) %>" class="btn_custom shadow">
+      <a href="<%= new_professional_path(token: token) %>" class="cta-button shadow">
         Ajouter un professionnel
       </a>
     <% else %>
-      <a href="<%= pricings_path %>" class="btn_custom shadow">
+      <a href="<%= pricings_path %>" class="cta-button shadow">
         Ajouter une souscription
       </a>
     <% end %>

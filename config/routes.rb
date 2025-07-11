@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   get 'professionals/:id/edit_availibilities', to: 'professionals#edit_availibilities', as: 'professional_edit_availibilities'
   get 'closing_hours/check', to: 'closing_hours#check', as: 'check_closing_hour'
 
+  get "professionals/:id/:name", to: 'professionals#show', as: 'professional_show'
+
 
   resources :professionals do
     resources :appointments, only: [:new, :create, :show]

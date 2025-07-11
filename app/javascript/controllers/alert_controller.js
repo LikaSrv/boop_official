@@ -993,7 +993,7 @@ export default class extends Controller {
   shareLink(event) {
     event.preventDefault();
 
-    const url = "https://www.myboop.fr/professionals/"+ this.element.dataset.professionalId;
+    const url = "https://www.myboop.fr/professionals/"+ this.element.dataset.professionalId+"/"+this.element.dataset.professionalName;
 
     Swal.fire({
       title: "Partager le lien vers ma page de réservation",
